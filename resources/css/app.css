@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/*
+ CSS for the main interaction
+*/
+.accordion > input[type="checkbox"] {
+    position: absolute;
+    left: -100vw;
+  }
+  
+  .accordion .content {
+    overflow-y: hidden;
+    height: 0;
+    transition: height 0.3s ease;
+  }
+  
+  .accordion > input[type="checkbox"]:checked ~ .content {
+    height: auto;
+    overflow: visible;
+  }
+  
+  .accordion label {
+    display: block;
+  }
+  
+  /*
+   Styling
+  */  
+  
+  .accordion > input[type="checkbox"]:checked ~ .content {
+    padding: 15px;
+    border: 1px solid #e8e8e8;
+    border-top: 0;
+  }
+  
+  .accordion .handle {
+    margin: 0;
+    font-size: 1.125em;
+    line-height: 1.2em;
+  }
+  
+  .accordion label {
+    cursor: pointer;
+    font-weight: normal;
+    padding: 15px;
+  }
+  
+
+  
+  .accordion .handle label:before {
+    font-family: 'fontawesome';
+    content: "\f054";
+    display: inline-block;
+    margin-right: 10px;
+    font-size: .58em;
+    line-height: 1.556em;
+    vertical-align: middle;
+  }
+  
+  .accordion > input[type="checkbox"]:checked ~ .handle label:before {
+    content: "\f078";
+  }
+
+  input#date {
+    display: inline-block;
+    position: relative;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+input#time_start {
+  display: inline-block;
+  position: relative;
+}
+
+input[type="time"]#time_start::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+}
+
+input#time_end {
+  display: inline-block;
+  position: relative;
+}
+
+input[type="time"]#time_end::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+}

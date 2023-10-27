@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Auth;
+use Carbon\Carbon;
+
+class Yumlog extends Model
+{
+    use HasFactory;
+
+    protected $guarded = [];
+
+    public function getCreatedAtAttribute($date)
+{
+	 return Carbon::parse($date)->setTimezone(Auth::user()->timezone)->format('Y-m-d h:i:s');
+}
+}
