@@ -1,6 +1,6 @@
 <div>
     <div class="text-2xl text-center my-4">Manage Leaderboards</div>
-    <button class="px-6 py-2 bg-green-500 rounded-md" onclick="Livewire.emit('openModal', 'admin.leaderboards.create')">
+    <button class="px-6 py-2 bg-green-500 rounded-md" onclick="Livewire.dispatch('openModal', { component: 'admin.leaderboards.create' })">
         <i class="mr-1 fas fa-plus-square"></i>
         <span class="uppercase">New Leaderboard</span>
     </button>
@@ -17,14 +17,22 @@
                 <tr class="bg-white">
                     <td class="p-4 border border-gray-400 text-sm italic">
                         <img class="h-12 mx-auto" src="{{ asset($leaderboard->image) }}" title="{{ $leaderboard->object->name }}" />
-                        <div>{{ $leaderboard->object_id }}</div>
+                        @if($leaderboard->multi)
+                            <div>
+                                @foreach(json_decode($leaderboard->multi_objects) as $object)
+                                    <span>@if(!$loop->last) {{ $object.',' }}  @else {{ $object }}  @endif</span>
+                                @endforeach
+                            </div>
+                        @else
+                            <div>{{ $leaderboard->object_id }}</div>
+                        @endif
                     </td>
                     <td class="p-4 border border-gray-400">
                         <div class="font-semibold">{{ $leaderboard->label }}</div>
                         <div class="text-sm italic">{{ $leaderboard->page_title }}</div>
                     </td>
                     <td class="p-4 border border-gray-400">
-                        <a wire:click="$emit('openModal', 'admin.leaderboards.edit', {{ json_encode(['id' => $leaderboard->id]) }})">
+                        <a wire:click="$dispatch('openModal', { component: 'admin.leaderboards.edit', arguments: {{ json_encode(['id' => $leaderboard->id]) }} })">
                             <i class="fas fa-edit"></i>
                         </a>
                     </td>

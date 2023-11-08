@@ -22,48 +22,50 @@
                 </thead>
                 <tbody>
                     @forelse($results as $result)
-                        <tr class="bg-white">
-                            <td class=" p-4 border border-gray-400">
-                                <img class="mx-auto h-10" src="{{ asset($result->image) }}" />
-                                <div class="mt-1 text-sm font-semibold">{{ $result->label }}</div>
-                            </td>
-                            <td class="p-4 text-xl font-bold border border-gray-400">
-                                {{ $result->record->amount ?? 0 }}
-                            </td>
-                            <td class="p-4 border border-gray-400">
-                                @if(isset($result->record->character->player_hash) && isset($result->record->playerName->leaderboard_name)) 
-                                    <a class="text-blue-400 font-semibold" href="{{ route('player.curses', ['hash' => $result->record->character->player_hash]) }}">
-                                        {{ $result->record->playerName->leaderboard_name }}
-                                    </a>
-                                @else
-                                    <span title="Check again after 9AM tomorrow for updated data">
-                                        - LEADERBOARD MISSING -
-                                    </span>
-                                @endif
-
-                                <div class="text-xs text-gray-600 italic">
-                                    - playing as -
-                                </div>
-                                <div class="mt-1 text-sm text-black lowercase capitalize">
-                                    @if(isset($result->record->lifeName->name)) 
-                                        {{ $result->record->lifeName->name }} 
+                        @if($result->leaderboard->enabled == 1)
+                            <tr class="bg-white">
+                                <td class=" p-4 border border-gray-400">
+                                    <img class="mx-auto h-10" src="{{ asset($result->leaderboard->image) }}" />
+                                    <div class="mt-1 text-sm font-semibold">{{ $result->leaderboard->label }}</div>
+                                </td>
+                                <td class="p-4 text-xl font-bold border border-gray-400">
+                                    {{ $result->amount ?? 0 }}
+                                </td>
+                                <td class="p-4 border border-gray-400">
+                                    @if(isset($result->character->player_hash) && isset($result->playerName->leaderboard_name)) 
+                                        <a class="text-blue-400 font-semibold" href="{{ route('player.curses', ['hash' => $result->character->player_hash]) }}">
+                                            {{ $result->playerName->contact->nickname ?? $result->playerName->leaderboard_name }}
+                                        </a>
                                     @else
                                         <span title="Check again after 9AM tomorrow for updated data">
-                                            (- NAME MISSING -)
+                                            - LEADERBOARD MISSING -
                                         </span>
-                                    @endif 
-                                </div>
-                            </td>
-                            <td class="p-4 border border-gray-400">
-                                @if(isset($result->record->timestamp))
-                                    {{ date('Y-m-d H:i', $result->record->timestamp) }}
-                                @else
-                                    <span title="Check again after 9AM tomorrow for updated data">
-                                        (- DATE MISSING -)
-                                    </span>
-                                @endif
-                            </td>
-                        </tr>
+                                    @endif
+
+                                    <div class="text-xs text-gray-600 italic">
+                                        - playing as -
+                                    </div>
+                                    <div class="mt-1 text-sm text-black lowercase capitalize">
+                                        @if(isset($result->lifeName->name)) 
+                                            {{ $result->lifeName->name }} 
+                                        @else
+                                            <span title="Check again after 9AM tomorrow for updated data">
+                                                (- NAME MISSING -)
+                                            </span>
+                                        @endif 
+                                    </div>
+                                </td>
+                                <td class="p-4 border border-gray-400">
+                                    @if(isset($result->timestamp))
+                                        {{ date('Y-m-d H:i', $result->timestamp) }}
+                                    @else
+                                        <span title="Check again after 9AM tomorrow for updated data">
+                                            (- DATE MISSING -)
+                                        </span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endif
                     @empty
 
                     @endforelse

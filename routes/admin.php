@@ -16,10 +16,10 @@ use App\Http\Controllers\LogScraper\GeneScoreScraper;
 use App\Http\Controllers\LogScraper\CurseLogScraper;
 use App\Http\Controllers\LogScraper\MapLogScraper;
 
-use App\Http\Livewire\Admin\Leaderboards\Index as LeaderboardsIndex;
+use App\Livewire\Admin\Leaderboards\Index as LeaderboardsIndex;
 
-use App\Http\Livewire\Admin\Logs\Map\Index as MapIndex;
-use App\Http\Livewire\Admin\Logs\Map\Area as MapArea;
+use App\Livewire\Admin\Logs\Map\Index as MapIndex;
+use App\Livewire\Admin\Logs\Map\Area as MapArea;
 
 /*
 |--------------------------------------------------------------------------

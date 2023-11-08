@@ -23,8 +23,7 @@ class AppServiceProvider extends ServiceProvider
         Component::macro('alert', function ($type, $message) {
             // $this will refer to the component class
             // not to the AppServiceProvider
-            $this->dispatchBrowserEvent('alert', 
-                ['type' => $type,  'message' => $message]);
+            $this->dispatch('alert', type: $type, message: $message);
         });
     }
 }

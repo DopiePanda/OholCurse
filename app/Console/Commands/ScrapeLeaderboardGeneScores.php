@@ -83,7 +83,7 @@ class ScrapeLeaderboardGeneScores extends Command
             $end = microtime(true);
             $time = round(($end - $start), 3);
             
-            Log::info("Successfully updated $count gene scores in $time seconds");
+            Log::channel('sync')->info("Successfully updated $count gene scores in $time seconds");
             $this->info("Successfully updated $count gene scores in $time seconds");
 
         } catch(\Exception $e) {
@@ -92,8 +92,8 @@ class ScrapeLeaderboardGeneScores extends Command
             DB::rollback();
 
             // Log exception message
-            Log::error('Exception returned when updating player curse score: ');
-            Log::error($e);
+            Log::channel('sync')->error('Exception returned when updating player curse score: ');
+            Log::channel('sync')->error($e);
 
             $this->info("Error while updating curse scores");
         }

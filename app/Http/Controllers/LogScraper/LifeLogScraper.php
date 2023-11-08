@@ -36,7 +36,7 @@ class LifeLogScraper extends Controller
     public function scrapeLog()
     {
         $time_start = microtime(true);
-        Log::info('LIFE LOG scraper started');
+        Log::channel('sync')->info('LIFE LOG scraper started');
 
         foreach($this->date_period as $key => $date)
         {
@@ -49,14 +49,14 @@ class LifeLogScraper extends Controller
 
         $time_end = microtime(true);
         $time = round(($time_end - $time_start), 3);
-        Log::info('LIFE LOG scraper finished in: '.$time.' seconds');
+        Log::channel('sync')->info('LIFE LOG scraper finished in: '.$time.' seconds');
     }
 
     private function downloadLog($file_name)
     {
         if(Storage::exists($this->storage_url.$file_name))
         {
-            Log::info("LIFE LOG already exist: ".$file_name);
+            Log::channel('sync')->info("LIFE LOG already exist: ".$file_name);
         }else
         {
             $file = file_get_contents($this->getLogFileUrl($file_name));

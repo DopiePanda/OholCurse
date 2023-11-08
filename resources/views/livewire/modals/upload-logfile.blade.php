@@ -7,7 +7,7 @@
         </div>
         <div class="my-6 border border-blue-400 text-center">
             <div class="h-full px-1 py-1 text-center">
-                <input class="block w-full h-full mx-auto" type="file" wire:model="log">
+                <input class="block w-full h-full mx-auto" type="file" wire:model.live="log">
                 <div wire:loading wire:target="log">Uploading...</div>
             </div>
         </div>

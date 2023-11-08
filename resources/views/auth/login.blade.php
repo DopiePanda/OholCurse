@@ -52,7 +52,7 @@
     </div>
 
     <div>
-        <button class="w-full p-2 mx-auto border border-blue-400 text-blue-400 rounded-lg" onclick="Livewire.emit('openModal', 'modals.authorize-modal')">
+        <button class="w-full p-2 mx-auto border border-blue-400 text-blue-400 rounded-lg" onclick="Livewire.dispatch('openModal', { component: 'modals.authorize-modal' })">
             Authorize
         </button>
     </div>    

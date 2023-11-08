@@ -25,6 +25,11 @@ class LeaderboardRecord extends Model
         return $this->belongsTo(Leaderboard::class, 'leaderboard_id', 'leaderboard_id');
     }
 
+    public function leaderboard()
+    {
+        return $this->belongsTo(GameLeaderboard::class, 'game_leaderboard_id', 'id');
+    }
+
     public function lifeName()
     {
         return $this->hasOne(LifeNameLog::class, 'character_id', 'character_id');
@@ -34,5 +39,6 @@ class LeaderboardRecord extends Model
     {
         return $this->hasOne(Leaderboard::class, 'leaderboard_id', 'leaderboard_id');
     }
+
 
 }

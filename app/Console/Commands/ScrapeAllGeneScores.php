@@ -82,14 +82,14 @@ class ScrapeAllGeneScores extends Command
             DB::rollback();
 
             // Log exception message
-            Log::error('Exception returned when syncing gene scores:');
-            Log::error($e);
+            Log::channel('sync')->error('Exception returned when syncing gene scores:');
+            Log::channel('sync')->error($e);
         }
 
         $end = microtime(true);
         $time = round(($end - $start), 3);
         
-        Log::info('GENE SCORE scraper finished in: '.$time.' seconds');
+        Log::channel('sync')->info('GENE SCORE scraper finished in: '.$time.' seconds');
         $this->info("Successfully scraped gene scores for IDs: $id_start - $id_end in $time seconds");
     }
 

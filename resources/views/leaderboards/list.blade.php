@@ -5,7 +5,16 @@
         </h2>
         @if($object)
             <img class="mx-auto h-22" src="{{ asset($object->image) }}" title="{{ $object->object->name }}" />
-            <div class="text-sm italic text-center">ID: {{ $object->object_id }}</div>
+            @if($object->multi)
+                <div class="text-center text-sm italic">
+                    Object ID(s): 
+                    @foreach(json_decode($object->multi_objects) as $single)
+                        <span>@if(!$loop->last) {{ $single.',' }}  @else {{ $single }}  @endif</span>
+                    @endforeach
+                </div>
+            @else
+                <div class="text-center text-sm italic">Object ID(s): {{ $object->object_id }}</div>
+            @endif
         @endif
     </x-slot>
     <div class="max-w-7xl py-1 overflow-x-scroll">
@@ -39,7 +48,9 @@
                             <td class="p-2">{{ $result->count }}</td>
                             <td class="p-2">
                                 @if(isset($result->life->leaderboard->player_hash) && isset($result->life->leaderboard->leaderboard_name)) 
-                                <a href="{{ route('player.curses', ['hash' => $result->life->leaderboard->player_hash]) }}">{{ $result->life->leaderboard->leaderboard_name }}</a>
+                                <a href="{{ route('player.curses', ['hash' => $result->life->leaderboard->player_hash]) }}">
+                                    {{ $result->life->leaderboard->contact->nickname ?? $result->life->leaderboard->leaderboard_name }}
+                                </a>
                                 @else
                                     <span title="Check again after 9AM tomorrow for updated data">
                                         - LEADERBOARD MISSING -

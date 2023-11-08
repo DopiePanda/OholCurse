@@ -34,14 +34,14 @@ class MapLogScraper extends Controller
 
         $time_end = microtime(true);
         $time = round(($time_end - $time_start), 3);
-        Log::info('MAP LOG scraper finished in: '.$time.' seconds');
+        Log::channel('sync')->info('MAP LOG scraper finished in: '.$time.' seconds');
     }
 
     public function processLog($file_name)
     {
         if(Storage::exists($this->storage_url.$file_name))
         {
-            Log::info('BEGIN MAP LOG TRANSACTION FOR: '.$file_name);
+            Log::channel('sync')->info('BEGIN MAP LOG TRANSACTION FOR: '.$file_name);
 
             try{
                 ini_set('max_execution_time', 300);
@@ -75,7 +75,7 @@ class MapLogScraper extends Controller
                 // Commit the DB transaction
                 DB::commit();
 
-                Log::info('COMPLETED MAP LOG TRANSACTION FOR: '.$file_name);
+                Log::channel('sync')->info('COMPLETED MAP LOG TRANSACTION FOR: '.$file_name);
 
             }catch(\Exception $e) {
             
@@ -83,8 +83,8 @@ class MapLogScraper extends Controller
                 DB::rollback();
 
                 // Log exception message
-                Log::error('Exception returned during database transaction for: '.$file_name);
-                Log::error($e->getMessage());
+                Log::channel('sync')->error('Exception returned during database transaction for: '.$file_name);
+                Log::channel('sync')->error($e->getMessage());
             }
         }
     }
@@ -95,13 +95,13 @@ class MapLogScraper extends Controller
 
         if(Storage::exists($this->storage_url.$file_name))
         {
-            Log::info("MAP LOG already exist: ".$file_name);
+            Log::channel('sync')->info("MAP LOG already exist: ".$file_name);
         }else
         {
             $data = file_get_contents($this->url.$file_name);
 
             Storage::disk('local')->put($this->storage_url.$file_name, $data);
-            Log::info("New MAP LOG downloaded: ".$file_name);
+            Log::channel('sync')->info("New MAP LOG downloaded: ".$file_name);
         }
     }
 

@@ -20,6 +20,11 @@ class GameLeaderboard extends Model
         return $this->hasOne(LeaderboardRecord::class, 'object_id', 'object_id')->orderBy('timestamp', 'desc');
     }
 
+    public function records()
+    {
+        return $this->hasMany(LeaderboardRecord::class, 'id', 'game_leaderboard_id')->orderBy('timestamp', 'desc');
+    }
+
     public function object()
     {
         return $this->hasOne(GameObject::class, 'id', 'object_id');

@@ -1,59 +1,66 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-xl text-gray-800 leading-tight break-all text-center">
-            <div class="font-semibold text-4xl">
-                @if(!empty($name->leaderboard_id) && !empty($name->leaderboard_id))
-                <a href="https://onehouronelife.com/fitnessServer/server.php?action=leaderboard_detail&id={{ $name->leaderboard_id}}"
-                    target="_blank">
-                    {{ $name->leaderboard_name }}
-                </a>
-                @else
-                    (Missing Player Name)
-                @endif
-            </div>
-            <div class="mt-2 italic">
-                {{ $hash }}
-            </div>
-        </h2>
-
+        <livewire:player.profile-header :hash="$hash">
     </x-slot>
-    <div class="py-1 overflow-x-scroll">
+    <div class="w-full lg:grow lg:max-w-5xl flex flex-col">
 
         <x-player.menu :hash="$hash" />
         
-        <table class="mt-4 border border-gray-600 overflow-x-scroll">
-            <thead class="p-2">
-                <tr class="p-2 border border-gray-600">
-                    <td class="p-2 bg-blue-400 text-white border border-gray-600">Name</td>
-                    <td class="p-2 bg-blue-400 text-white border border-gray-600">Life ID</td>
-                    <td class="p-2 bg-blue-400 text-white border border-gray-600">Age</td>
-                    <td class="p-2 bg-blue-400 text-white border border-gray-600">Gender</td>
-                    <td class="p-2 bg-blue-400 text-white border border-gray-600">Location</td>
-                    <td class="p-2 bg-blue-400 text-white border border-gray-600">Died to</td>
-                    <td class="p-2 bg-blue-400 text-white border border-gray-600">Died</td>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($lives as $life)
-                    <tr>
-                        <td class="p-2 border border-gray-200">{{ $life->name->name ?? '-UNNAMED-' }}</td>
-                        <td class="p-2 border border-gray-200">{{ $life->character_id }}</td>
-                        <td class="p-2 border border-gray-200">{{ $life->age }}</td>
-                        <td class="p-2 border border-gray-200">{{ $life->gender }}</td>
-                        <td class="p-2 border border-gray-200">{{ $life->location }}</td>
-                        <td class="p-2 border border-gray-200">{{ $life->died_to }}</td>
-                        <td class="p-2 border border-gray-200">{{ date('Y-m-d H:i:s ', $life->timestamp) }}</td>
-                    </tr>
-                @empty
-                    
-                @endforelse
-            </tbody>
-        </table>
-        @php
-            $time_end = microtime(true);
-    
-            $end = $time_end - $time;
-        @endphp
-        <div class="text-center text-sm mt-2 font-gray-400">Page load time: {{ round($end, 3) }}s</div>
+        <div class="mt-6 bg-gray-200 p-2 lg:p-6">
+
+            <div class="text-4xl mt-2 text-center">Number of lives lived</div>
+            <div class="text-lg mt-2 mb-6 text-center">Lives shorter than 3 years excluded</div>
+
+            <div class="relative my-6 p-4 border border-blue-400 rounded-xl overflow-x-scroll">
+                @if(count($lives) > 0)     
+                    <table class="w-full mx-auto mt-4">
+                        <thead class="p-2">
+                            <tr class="p-2">
+                                <td class="p-2 bg-blue-400 text-white border border-gray-600">#</td>
+                                <td class="p-2 bg-blue-400 text-white border border-gray-600">Name</td>
+                                <td class="p-2 bg-blue-400 text-white border border-gray-600">Life ID</td>
+                                <td class="p-2 bg-blue-400 text-white border border-gray-600">Age</td>
+                                <td class="p-2 bg-blue-400 text-white border border-gray-600">Gender</td>
+                                <td class="p-2 bg-blue-400 text-white border border-gray-600">Location</td>
+                                <td class="p-2 bg-blue-400 text-white border border-gray-600">Died to</td>
+                                <td class="p-2 bg-blue-400 text-white border border-gray-600">Died</td>
+                            </tr>
+                        </thead>
+                        <tbody class="p-2">
+                            @forelse ($lives as $life)
+                                @php
+                                    $coords = explode(',', $life->location);
+                                @endphp
+                                <tr class="even:bg-gray-300 odd:bg-white">
+                                    <td class="p-2 border border-gray-400">{{ (count($lives) - $loop->index) }}</td>
+                                    <td class="p-2 border border-gray-400">{{ $life->name->name ?? '-UNNAMED-' }}</td>
+                                    <td class="p-2 border border-gray-400">{{ $life->character_id }}</td>
+                                    <td class="p-2 border border-gray-400">{{ $life->age }}</td>
+                                    <td class="p-2 border border-gray-400">{{ $life->gender }}</td>
+                                    <td class="p-2 border border-gray-400">
+                                        <a target="_blank" href="https://onemap.wondible.com/#x={{ $coords[0] }}&y={{ $coords[1] }}&z=29&s=17&t={{ time() }}">
+                                            {{ $life->location }}
+                                        </a>
+                                    </td>
+                                    <td class="p-2 border border-gray-400">{{ $life->died_to }}</td>
+                                    <td class="p-2 border border-gray-400">{{ date('Y-m-d H:i:s ', $life->timestamp) }}</td>
+                                </tr>
+                            @empty
+                                
+                            @endforelse
+                        </tbody>
+                    </table>
+                @else
+                    <div class="px-2 text-center italic">No lives found for this player...</div>
+                @endif
+            </div>
+            @php
+                $time_end = microtime(true);
+        
+                $end = $time_end - $time;
+            @endphp
+            <div class="text-center text-sm mt-2 font-gray-400">Page load time: {{ round($end, 3) }}s</div>
+        </div>
     </div>
+    
 </x-app-layout>

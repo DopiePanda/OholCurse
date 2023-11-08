@@ -51,7 +51,7 @@ class UpdateLeaderboardRecords extends Command
             $end_time = microtime(true);
             $time = round(($end_time - $start_time), 3);
 
-            Log::info("Leaderboard Record For Item $object->object_id Updated in $time seconds");
+            Log::channel('sync')->info("Leaderboard Record For Item $object->object_id Updated in $time seconds");
         }else
         {
             $objects = GameLeaderboard::all();
@@ -63,14 +63,14 @@ class UpdateLeaderboardRecords extends Command
             $end_time = microtime(true);
             $time = round(($end_time - $start_time), 3);
 
-            Log::info("All Leaderboard Records Updated in $time seconds");
+            Log::channel('sync')->info("All Leaderboard Records Updated in $time seconds");
         }
 
     }
 
     public function updateLeaderboardRecord($object, $time_from, $time_to)
     {
-        if($object->multi == 0)
+        if($object->multi != 1)
         {
             $result = MapLog::with(['name:character_id,name', 'life.leaderboard:player_hash,leaderboard_name,leaderboard_id'])
                         ->select(DB::raw("(COUNT(object_id)) as count"), 'character_id')
@@ -105,6 +105,7 @@ class UpdateLeaderboardRecords extends Command
         if($record == null || $result->count > $record->amount)
         {
             LeaderboardRecord::create([
+                'game_leaderboard_id' => $object->id,
                 'object_id' => $object->object_id,
                 'multi' => $object->multi,
                 'multi_objects' => $object->multi_objects,

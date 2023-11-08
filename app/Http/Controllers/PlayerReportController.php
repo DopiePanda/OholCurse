@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
 use Log;
+use DB;
 
 use App\Models\CurseLog;
 use App\Models\LifeLog;
 use App\Models\LifeNameLog;
 use App\Models\Leaderboard;
+use App\Models\UserContact;
 use App\Models\PlayerScore;
 use App\Models\ProfileRestriction;
 use App\Models\Yumlog;
@@ -31,7 +33,7 @@ class PlayerReportController extends Controller
         }
 
         // All curses/forgives/trusts sent
-        $sent = CurseLog::with('leaderboard', 'scores')
+        $sent = CurseLog::with('leaderboard', 'scores', 'contact')
                         ->select('type', 'timestamp', 'character_id', 'reciever_hash')
                         ->where('player_hash', $hash)
                         ->where('type', '!=' ,'score')
@@ -41,7 +43,7 @@ class PlayerReportController extends Controller
         $sent = $this->categorizeSent($sent, $hash);
 
         // All curses/forgives/trusts recieved
-        $recieved = CurseLog::with('leaderboard_recieved', 'scores_recieved')
+        $recieved = CurseLog::with('leaderboard_recieved', 'scores_recieved', 'contact_recieved')
                             ->select('type', 'timestamp', 'character_id', 'player_hash')
                             ->where('reciever_hash', $hash)
                             ->where('type', '!=' ,'score')
@@ -50,35 +52,19 @@ class PlayerReportController extends Controller
 
         $recieved = $this->categorizeRecieved($recieved, $hash);
 
-        try{
-        // Total curse score
-        $profile = Leaderboard::where('player_hash', $hash)
-                            ->select('leaderboard_name', 'leaderboard_id')
-                            ->orderBy('id', 'desc')
-                            ->first();
-                            
-        } catch(\Exception $e) {
-            Log::error("Error while fetching profile for: $hash");
-            Log::error($e);
-        }
+        $profile = $this->getPlayerProfile($hash);
+        $scores = $this->getPlayerScores($profile, $hash);
 
-
-        try{
-
-        // Total curse score
-        $scores = PlayerScore::where('leaderboard_id', $profile->leaderboard_id)
-                            ->select('curse_score', 'gene_score')
-                            ->first();
-
-        } catch(\Exception $e) {
-            Log::error("Error while fetching scores for: $hash");
-            Log::error($e);
+        if(Auth::user())
+        {
+            $contact = $this->getUserContact($hash);
         }
 
         return view('player.curses', [
             'hash' => $hash, 
             'profile' => $profile,
             'scores' => $scores ?? null,
+            'contact' => $contact ?? null,
             'sent' => $sent, 
             'recieved' => $recieved, 
             'time' => $time_start,
@@ -98,6 +84,61 @@ class PlayerReportController extends Controller
 
         return false;
     }
+
+    public function getUserContact($hash)
+    {
+        try{
+            // Total curse score
+            $contact = UserContact::where('hash', $hash)
+                                ->where('user_id', Auth::user()->id)
+                                ->select('type', 'nickname', 'phex_hash')
+                                ->orderBy('id', 'desc')
+                                ->first();
+
+            if($contact)
+            {
+                return $contact;
+            }
+                                
+            } catch(\Exception $e) {
+                Log::error("Error while fetching contact for: $hash");
+                Log::error($e);
+            }
+
+            return null;
+    }
+
+    public function getPlayerProfile($hash)
+    {
+        try{
+            // Total curse score
+            return Leaderboard::where('player_hash', $hash)
+                                ->select('leaderboard_name', 'leaderboard_id', 'player_hash')
+                                ->orderBy('id', 'desc')
+                                ->first();
+                                
+            } catch(\Exception $e) {
+                Log::error("Error while fetching profile for: $hash");
+                Log::error($e);
+            }
+    }
+
+    public function getPlayerScores($profile, $hash)
+    {
+        try{
+
+            // Total curse score
+            return PlayerScore::where('leaderboard_id', $profile->leaderboard_id)
+                                ->select('curse_score', 'gene_score')
+                                ->first();
+    
+            } catch(\Exception $e) {
+                Log::error("Error while fetching scores for: $hash");
+                Log::error($e);
+            }
+    }
+
+    
 
     public function lives(Request $request, $hash)
     {
@@ -125,6 +166,22 @@ class PlayerReportController extends Controller
 
     public function reports(Request $request, $hash)
     {
+        if(Auth::user())
+        {
+            $role = Auth::user()->role;
+
+            if($role == 'admin')
+            {
+                $status = [0, 1, 2, 3, 4];
+            }else
+            {
+                $status = [1];
+            }
+        }else
+        {
+            $status = [1];
+        }
+
         $time_start = microtime(true);
 
         $name = Leaderboard::where('player_hash', $hash)
@@ -132,10 +189,11 @@ class PlayerReportController extends Controller
                             ->orderBy('id', 'desc')
                             ->first();
 
-        $reports = Yumlog::where('player_hash', $hash)
+        $reports = Yumlog::select(DB::raw("(COUNT(character_id)) as count"), 'character_name', 'character_id', 'curse_name', 'gender', 'age', 'died_to', 'timestamp', 'status')
+                    ->where('player_hash', $hash)
                     ->where('verified', 1)
-                    ->where('visible', 1)
-                    ->where('status', [1, 4])
+                    ->whereIn('status', $status)
+                    ->groupBy('character_id')
                     ->orderBy('character_id', 'desc')
                     ->get();
 
@@ -184,6 +242,7 @@ class PlayerReportController extends Controller
                         'player_hash' => $hash ?? $line->player_hash,
                         'reciever_hash' => $line->reciever_hash ?? null,
                         'leaderboard' => $line->leaderboard->leaderboard_name ?? null,
+                        'contact_name' => $line->contact->nickname ?? null,
                         'curse_score' => $line->scores->curse_score ?? null,
                         'gene_score' => $line->scores->gene_score ?? null,
                     ]);
@@ -196,6 +255,7 @@ class PlayerReportController extends Controller
                         'player_hash' => $hash ?? $line->player_hash,
                         'reciever_hash' => $line->reciever_hash ?? null,
                         'leaderboard' => $line->leaderboard->leaderboard_name ?? null,
+                        'contact_name' => $line->contact->nickname ?? null,
                         'curse_score' => $line->scores->curse_score ?? null,
                         'gene_score' => $line->scores->gene_score ?? null,
                     ]);
@@ -208,6 +268,7 @@ class PlayerReportController extends Controller
                         'player_hash' => $hash ?? $line->player_hash,
                         'reciever_hash' => $line->reciever_hash ?? null,
                         'leaderboard' => $line->leaderboard->leaderboard_name ?? null,
+                        'contact_name' => $line->contact->nickname ?? null,
                         'curse_score' => $line->scores->curse_score ?? null,
                         'gene_score' => $line->scores->gene_score ?? null,
                     ]);
@@ -220,6 +281,7 @@ class PlayerReportController extends Controller
                         'player_hash' => $hash ?? $line->player_hash,
                         'reciever_hash' => $line->reciever_hash ?? null,
                         'leaderboard' => $line->scores->leaderboard_name ?? null,
+                        'contact_name' => $line->contact->nickname ?? null,
                     ]);
                     break;         
             }
@@ -252,6 +314,7 @@ class PlayerReportController extends Controller
                         'player_hash' => $line->player_hash ?? null,
                         'reciever_hash' => $hash ?? $line->reciever_hash,
                         'leaderboard' => $line->leaderboard_recieved->leaderboard_name ?? null,
+                        'contact_name' => $line->contact_recieved->nickname ?? null,
                         'curse_score' => $line->scores_recieved->curse_score ?? null,
                         'gene_score' => $line->scores_recieved->gene_score ?? null,
                     ]);
@@ -264,6 +327,7 @@ class PlayerReportController extends Controller
                         'player_hash' => $line->player_hash ?? null,
                         'reciever_hash' => $hash ?? $line->reciever_hash,
                         'leaderboard' => $line->leaderboard_recieved->leaderboard_name ?? null,
+                        'contact_name' => $line->contact_recieved->nickname ?? null,
                         'curse_score' => $line->scores_recieved->curse_score ?? null,
                         'gene_score' => $line->scores_recieved->gene_score ?? null,
                     ]);
@@ -276,6 +340,7 @@ class PlayerReportController extends Controller
                         'player_hash' => $line->player_hash ?? null,
                         'reciever_hash' => $hash ?? $line->reciever_hash,
                         'leaderboard' => $line->leaderboard_recieved->leaderboard_name ?? null,
+                        'contact_name' => $line->contact_recieved->nickname ?? null,
                         'curse_score' => $line->scores_recieved->curse_score ?? null,
                         'gene_score' => $line->scores_recieved->gene_score ?? null,
                     ]);
@@ -288,6 +353,7 @@ class PlayerReportController extends Controller
                         'player_hash' => $line->player_hash ?? null,
                         'reciever_hash' => $hash ?? $line->reciever_hash,
                         'leaderboard' => $line->leaderboard_recieved->leaderboard_name ?? null,
+                        'contact_name' => $line->contact_recieved->nickname ?? null,
                     ]);
                     break;         
             }

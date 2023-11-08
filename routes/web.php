@@ -20,11 +20,11 @@ use App\Http\Controllers\Objects\GameObjectImporter;
 
 use App\Http\Controllers\Logs\ExportController;
 
-use App\Http\Livewire\Dashboard;
-use App\Http\Livewire\Home;
-use App\Http\Livewire\CharacterNames;
-use App\Http\Livewire\Map\Leaderboard;
-use App\Http\Livewire\Map\Leaderboard2;
+use App\Livewire\Dashboard;
+use App\Livewire\Home;
+use App\Livewire\CharacterNames;
+use App\Livewire\Map\Leaderboard;
+use App\Livewire\Map\Leaderboard2;
 
 use App\Models\LifeNameLog;
 use App\Models\LifeLog;
@@ -54,7 +54,8 @@ Route::middleware('web')->group(function() {
         Route::get('/', [LeaderboardController::class, 'index'])->name('index');
         Route::get('/daily', Leaderboard::class)->name('daily');
         Route::get('/weekly', [LeaderboardController::class, 'weekly'])->name('weekly');
-        Route::get('/weekly/{object_id}', [LeaderboardController::class, 'getObjectLeaderboard'])->name('view');
+        Route::get('/weekly/object/{object_id}', [LeaderboardController::class, 'getObjectLeaderboard'])->name('weekly.single');
+        Route::get('/weekly/multi/{id}', [LeaderboardController::class, 'getMultiObjectsLeaderboard'])->name('weekly.multi');
         Route::get('/all-time', [LeaderboardController::class, 'allTime'])->name('all-time');
 
     });

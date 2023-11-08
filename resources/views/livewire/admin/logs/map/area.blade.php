@@ -62,8 +62,7 @@
                     <td class="p-4 bg-blue-400 text-white border-r border-blue-500">#</td>
                     <td class="p-4 bg-blue-400 text-white border-r border-blue-500">Leaderboard</td>
                     <td class="p-4 bg-blue-400 text-white border-r border-blue-500">Character</td>
-                    <td class="p-4 bg-blue-400 text-white border-r border-blue-500">Pos X</td>
-                    <td class="p-4 bg-blue-400 text-white border-r border-blue-500">Pos Y</td>
+                    <td class="p-4 bg-blue-400 text-white border-r border-blue-500">Position</td>
                     <td class="p-4 bg-blue-400 text-white border-r border-blue-500">Object</td>
                     @if($this->group)
                         <td class="p-4 bg-blue-400 text-white border-r border-blue-500">Count</td>
@@ -98,10 +97,11 @@
                             </div>
                         </td>
                         <td class="p-1 border border-gray-400 text-sm">
-                            <div>{{ $log->pos_x ?? 0 }}</div>
-                        </td>
-                        <td class="p-1 border border-gray-400 text-sm">
-                            <div>{{ $log->pos_y ?? 0 }}</div>
+                            <div>
+                                <a target="_blank" href="https://onemap.wondible.com/#x={{ $log->pos_x }}&y={{ $log->pos_y }}&z=29&s=17&t={{ time() }}">
+                                    {{ $log->pos_x ?? 0 }} / {{ $log->pos_y ?? 0 }}
+                                </a>
+                            </div>
                         </td>
                         <td class="p-1 border border-gray-400 text-sm font-bold text-center">
                             <div>

@@ -80,7 +80,7 @@
         </div>
         @endif
     @else
-        <form wire:submit.prevent="authorize" class="max-h-screen overflow-y">
+        <form wire:submit.prevent="authorizeUser" class="max-h-screen overflow-y">
             <div class="flex">
                 <div class="grow items-justify-center mt-8">
                     <div class="text-2xl text-center">Authorize using the "Services" screen in OHOL</div>

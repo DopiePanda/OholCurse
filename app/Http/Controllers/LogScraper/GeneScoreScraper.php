@@ -40,7 +40,7 @@ class GeneScoreScraper extends Controller
         $end = microtime(true);
         $time = round(($end - $start), 3);
         
-        Log::info('GENE SCORE scraper finished in: '.$time.' seconds');
+        Log::channel('sync')->info('GENE SCORE scraper finished in: '.$time.' seconds');
     }
 
     public function getFullUrl($id)

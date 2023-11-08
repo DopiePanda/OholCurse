@@ -79,7 +79,19 @@
             </div>
         </div>
         
-        <button class="mt-4 p-2 w-full bg-blue-400 text-white" type="submit">Update leaderboard</button>
-
+        <div class="text-center">
+            <button class="mt-4 p-2 w-full bg-blue-400 text-white" type="submit">Update leaderboard</button>
+            <div class="w-2/3 mx-auto border-b border-gray-400 pt-4 mb-4"></div>
+            
+            @if($clicked_delete == false)
+                <button wire:click="confirmDelete" type="button" class="py-2 px-6 mx-auto text-red-400 border border-red-400 rounded-lg hover:bg-red-400 hover:text-white">
+                    Delete this leaderboard
+                </button>
+            @else
+                <button wire:click="delete" type="button" class="py-2 px-6 mx-auto text-red-400 border border-red-400 rounded-lg hover:bg-red-400 hover:text-white">
+                    Confirm delete
+                </button>
+            @endif
+        </div>
     </form>
 </div>

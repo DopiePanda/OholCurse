@@ -13,7 +13,6 @@
 
         <!-- Scripts -->
         <!-- Alpine Plugins -->
-        <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -37,14 +36,14 @@
             @endif
 
             <!-- Page Content -->
-            <main class="flex flex-grow justify-center pt-6 px-4 break-normal">
+            <main class="flex flex-grow justify-center pt-6 px-2 lg:px-4 break-normal">
                 {{ $slot }}
             </main>
             
         </div>
 
         
-        @livewire('livewire-ui-modal')
+        @livewire('wire-elements-modal')
         @livewireScripts
         @stack('scripts')
         <script type="text/javascript">

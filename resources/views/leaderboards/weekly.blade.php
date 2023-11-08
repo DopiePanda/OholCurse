@@ -10,8 +10,12 @@
         <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center text-xl">
                 @forelse ($lists as $list)
-                    <a href="{{ route('leaderboards.view', ['object_id' => $list->object_id]) }}">
-                        <div class="md:h-40 bg-white border border-yellow-500 p-4 text-yellow-800 rounded-lg font-bold">
+                    @if($list->multi)
+                        <a href="{{ route('leaderboards.weekly.multi', ['id' => $list->id]) }}">
+                    @else
+                        <a href="{{ route('leaderboards.weekly.single', ['object_id' => $list->object_id]) }}">
+                    @endif
+                        <div class="bg-white border border-yellow-500 p-4 text-yellow-800 rounded-lg font-bold">
                             <div><img class="mx-auto h-12 max-h-12" src="{{ asset($list->image) }}" /></div>
                             <div class="mt-2">{{ $list->label }}</div>
                         </div>

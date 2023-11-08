@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 
 use App\Models\MapLog;
 use App\Models\GameObject;
 use App\Models\GameLeaderboard;
+use App\Models\LeaderboardRecord;
 
 class LeaderboardController extends Controller
 {
@@ -38,8 +40,18 @@ class LeaderboardController extends Controller
 
     public function allTime()
     {
-        $results = GameLeaderboard::with('record')->where('enabled', 1)->orderBy('updated_at', 'desc')->get();
+        $results = LeaderboardRecord::with('leaderboard', 'lifeName', 'playerName', 'player', 'character')
+                    ->select('game_leaderboard_id', DB::raw("(MAX(amount)) as amount"), 'character_id', 'leaderboard_id', 'timestamp')
+                    ->where('game_leaderboard_id', '!=', null)
+                    ->groupBy('game_leaderboard_id')
+                    ->orderBy('game_leaderboard_id', 'desc')
+                    ->get();
 
+        /*$posts = Post::withCount(['votes', 'comments' => function (Builder $query) {
+            $query->where('content', 'like', 'code%');
+        }])->get();*/
+
+        
         return view('leaderboards.all-time', ['results' => $results]);
     }
 
@@ -67,27 +79,10 @@ class LeaderboardController extends Controller
         return view('leaderboards.list', ['object' => $object, 'results' => $this->results, 'start' => $start, 'end' => $end]);
     }
 
-    public function getMultipleObjectsLeaderboard($id)
+    public function getMultiObjectsLeaderboard($id)
     {
-        // $objects = GameLeaderboard::with('object')->whereIn('object_id', $objects)->get();
-        //$objects = GameObject::whereIn('id', $objects)->get();
-        /*
-        $objects = [
-            339,
-            3146,
-            343,
-            341,
-            342,
-            340,
-
-        ];
-        */
-
         $object = GameLeaderboard::find($id);
-        $objects = $object->multi_objects;
-
-        //dd($objects);
-        //dd(json_decode($objects->multi_objects));
+        $objects = json_decode($object->multi_objects);
 
         $start = Carbon::now('UTC')->subDays(7);
         $start = $start->setTimeFromTimeString('00:00:00');

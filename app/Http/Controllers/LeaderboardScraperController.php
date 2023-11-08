@@ -20,7 +20,7 @@ class LeaderboardScraperController extends Controller
         $url = config('services.yumdb.leaderboard_url');
 
         $start = microtime(true);
-        Log::info('LEADERBOARD scraper started');
+        Log::channel('sync')->info('LEADERBOARD scraper started');
 
         // Open HTTP connection and fetch data as JSON
         $this->connection = Http::get($url);
@@ -90,7 +90,7 @@ class LeaderboardScraperController extends Controller
         $time = round(($end-$start), 3);
         $new_count = count($records);
 
-        Log::info("Updated leaderboard. $count to $new_count entries in: $time");
+        Log::channel('sync')->info("Updated leaderboard. $count to $new_count entries in: $time");
     }
 
 }

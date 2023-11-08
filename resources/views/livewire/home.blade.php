@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="w-full text-center">
-                <input type="text" wire:model="query" wire:keyup='search' class="mx-auto mt-2 w-11/12 lg:w-full h-14 rounded-lg"
+                <input type="text" wire:model.live="query" wire:keyup='search' class="mx-auto mt-2 w-11/12 lg:w-full h-14 rounded-lg"
 
                 @if($filter == 'character_name') placeholder="Search by typing a character name here..." @endif
                 @if($filter == 'curse_name') placeholder="Search by typing a curse name here..." @endif
@@ -110,9 +110,9 @@
                     @forelse($results as $result)
                         @if($result)
                             @if(isset($result->player_hash))
-                                <a href="{{ route('player.reports', [ 'hash' => $result->player_hash ]) }}" class="text-white">
+                                <a wire:key="id-{{ $result->id }}" href="{{ route('player.reports', [ 'hash' => $result->player_hash ]) }}" class="text-white">
                             @else
-                                <a href="#" class="text-white">
+                                <a wire:key="id-{{ $result->id }}" href="#" class="text-white">
                             @endif
                                 <div class="w-full bg-blue-400 p-3 text-md hover:bg-blue-500">
                                     @if(isset($result->curse_name)){{ $result->curse_name }}@endif @if(isset($result->timestamp)) ({{ gmdate('Y-m-d H:i:s', $result->timestamp) }}) @endif

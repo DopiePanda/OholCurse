@@ -47,7 +47,7 @@
                 <tbody>
                     @forelse($results as $log)
                         <tr class="bg-white">
-                            <td class="p-1 border border-gray-400">{{ $loop->index }}</td>
+                            <td class="p-1 border border-gray-400">{{ (count($results) - $loop->index) }}</td>
                             <td class="p-1 border border-gray-400">
                                 @if(isset($log->life->leaderboard->leaderboard_name)) 
                                     <a class="text-blue-400 font-semibold" href="{{ route('player.curses', ['hash' => $log->life->leaderboard->player_hash]) }}">
@@ -71,7 +71,11 @@
                                 </div>
                             </td>
                             <td class="p-1 border border-gray-400 text-sm">
-                                <div>{{ $log->pos_x ?? 0 }} / {{ $log->pos_y ?? 0 }}</div>
+                                <div>
+                                    <a target="_blank" href="https://onemap.wondible.com/#x={{ $log->pos_x }}&y={{ $log->pos_y }}&z=29&s=17&t={{ time() }}">
+                                        {{ $log->pos_x ?? 0 }} / {{ $log->pos_y ?? 0 }}
+                                    </a>
+                                </div>
                             </td>
                             <td class="p-1 border border-gray-400 text-sm font-bold text-center">
                                 <div>
@@ -81,7 +85,7 @@
                                         {{ $log->object_id }}
                                     @endif
                                 </div>
-                                <div>{{ $log->object->name ?? 'Name missing' }}</div>
+                                <div>{{ $log->object->name ?? 'Name missing' }} (Use: {{ $log->object->use ?? '0' }})</div>
                             </td>
                             <td class="p-1 border border-gray-400">
                                 @if(isset($log->timestamp))

@@ -8,7 +8,7 @@
             <div class="py-2 text-gray-800 text-sm uppercase font-bold">Multi objects?</div>
             
             <div class="p-4 border border-blue-400 rounded-lg">
-                <input type="checkbox" wire:model="multi" />
+                <input type="checkbox" wire:model="multi" wire:click="toggleMulti" />
             </div>
 
             <div class="mt-1 text-red-400 italic text-sm font-bold">
