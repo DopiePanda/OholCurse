@@ -1,6 +1,3 @@
-console.log("Defult theme: "+defaultTheme);
-console.log("User theme: "+userTheme);
-
 if (userTheme != null && userTheme != '') 
 {
     if (userTheme === 'dark')
