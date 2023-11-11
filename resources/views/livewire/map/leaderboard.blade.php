@@ -5,7 +5,10 @@
 
 <div class="w-full">
     <div class="py-6 max-w-4xl mx-auto sm:px-6 lg:px-8">
-        <div class="my-6 text-lg uppercase font-bold text-center">
+        <div class="mt-6 text-3xl font-bold text-center dark:text-gray-200">
+            Search the daily leaderboards
+        </div>
+        <div class="mt-1 mb-6 text-lg uppercase font-bold text-center dark:text-gray-400">
             Period: {{ $start }} to {{ $end }}
         </div>
 
@@ -17,7 +20,7 @@
                     @endforeach
                 </select>
             </div>
-            <div wire:ignore class="text-right">Show: 
+            <div wire:ignore class="text-right dark:text-gray-400">Show: 
                 <select id="resultLimit">
                     <option value="10" @if(session('limit') == 10) selected @endif>10</option>
                     <option value="25" @if(session('limit') == 25) selected @endif>25</option>
@@ -37,10 +40,10 @@
             <table wire:loading.remove class="mt-3 w-full text-center border border-gray-400 shadow-lg overflow-x-scroll">
                 <thead>
                     <tr class="border-b border-gray-400">
-                        <td class="p-2 border-r border-gray-400">Place</td>
-                        <td class="p-2 border-r border-gray-400">Score</td>
-                        <td class="p-2 border-r border-gray-400">Leaderboard name</td>
-                        <td class="p-2">Character name (Character ID)</td>
+                        <td class="p-2 border-r border-gray-400 dark:bg-red-500">Place</td>
+                        <td class="p-2 border-r border-gray-400 dark:bg-red-500">Score</td>
+                        <td class="p-2 border-r border-gray-400 dark:bg-red-500">Leaderboard name</td>
+                        <td class="p-2 dark:bg-red-500">Character name (Character ID)</td>
                     </tr>
                 </thead>
                 <tbody>

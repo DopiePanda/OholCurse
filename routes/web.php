@@ -14,6 +14,7 @@ use App\Http\Controllers\MapLeaderboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PlayerReportController;
 use App\Http\Controllers\ReportVerificationController;
+use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\TestController;
 
 use App\Http\Controllers\Objects\GameObjectImporter;
@@ -66,12 +67,15 @@ Route::middleware('web')->group(function() {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::patch('/profile/timezone', [ProfileController::class, 'updateTimezone'])->name('timezone.update');
+        Route::patch('/profile/theme', [ProfileController::class, 'updateTheme'])->name('theme.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
         Route::get('/dashboard', Dashboard::class)->name('dashboard');
         Route::get('/verify-reports/{id}', [ReportVerificationController::class, 'verifyAllByUser']);
 
         Route::get('/logs/export', [ExportController::class, 'index'])->name('logs.export');
+
+        Route::get('/stats', [StatisticController::class, 'index'])->name('stats.index');
     });
 
     

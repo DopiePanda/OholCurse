@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-3xl text-gray-800 break-word leading-tight text-center">
+        <h2 class="text-3xl text-gray-800 break-word leading-tight text-center dark:text-gray-200">
             Weekly top list of pro-gamers
         </h2>
 
@@ -15,7 +15,7 @@
                     @else
                         <a href="{{ route('leaderboards.weekly.single', ['object_id' => $list->object_id]) }}">
                     @endif
-                        <div class="bg-white border border-yellow-500 p-4 text-yellow-800 rounded-lg font-bold">
+                        <div class="bg-white border border-yellow-500 p-4 text-yellow-800 rounded-lg font-bold dark:bg-slate-600 dark:text-gray-200 dark:border-0 dark:hover:bg-slate-700">
                             <div><img class="mx-auto h-12 max-h-12" src="{{ asset($list->image) }}" /></div>
                             <div class="mt-2">{{ $list->label }}</div>
                         </div>

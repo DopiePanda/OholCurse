@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\TimezoneUpdateRequest;
+use App\Http\Requests\ThemeUpdateRequest;
+
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +40,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'timezone-updated');
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**
@@ -51,7 +53,27 @@ class ProfileController extends Controller
         $request->user()->timezone = $validated['timezone'];
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.edit')->with('status', 'timezone-updated');
+    }
+
+    /**
+     * Update the user's theme.
+     */
+    public function updateTheme(ThemeUpdateRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        if($validated['theme'] == 'auto')
+        {
+            $request->user()->theme = null;
+        }else
+        {
+            $request->user()->theme = $validated['theme'];
+        }
+        
+        $request->user()->save();
+
+        return Redirect::route('profile.edit')->with('status', 'theme-updated');
     }
 
     /**

@@ -6,28 +6,28 @@
     <div class="w-full lg:grow lg:max-w-5xl flex flex-col">
         <x-player.menu :hash="$hash" />
 
-        <div class="mt-6 bg-gray-200 p-2 lg:p-6">
+        <div class="mt-6 bg-gray-200 p-2 lg:p-6 dark:bg-slate-700">
 
-            <div class="text-3xl mt-2 mb-6 text-center">Reports submitted by verified users</div>
+            <div class="text-4xl mt-2 text-center dark:text-gray-400">Reports submitted by verified users</div>
 
-            <div class="my-6 p-4 border border-blue-400 rounded-xl overflow-x-scroll">
+            <div class="relative my-6 p-4 border border-blue-400 rounded-xl overflow-x-scroll dark:border-red-500">
                 @if(count($reports) > 0)
                     <table class="w-full mx-auto mt-4">
                         <thead class="p-2">
                             <tr class="p-2">
-                                <td class="p-2 bg-blue-400 text-white border border-gray-600">Reports</td>
-                                <td class="p-2 bg-blue-400 text-white border border-gray-600">Status</td>
-                                <td class="p-2 bg-blue-400 text-white border border-gray-600">Life ID</td>
-                                <td class="p-2 bg-blue-400 text-white border border-gray-600">Life name</td>
-                                <td class="p-2 bg-blue-400 text-white border border-gray-600">Curse name</td>
-                                <td class="p-2 bg-blue-400 text-white border border-gray-600">Age</td>
-                                <td class="p-2 bg-blue-400 text-white border border-gray-600">Died to</td>
-                                <td class="p-2 bg-blue-400 text-white border border-gray-600">Reported at</td>
+                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-gray-600">Reports</td>
+                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-gray-600">Status</td>
+                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-gray-600">Life ID</td>
+                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-gray-600">Life name</td>
+                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-gray-600">Curse name</td>
+                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-gray-600">Age</td>
+                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-gray-600">Died to</td>
+                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-gray-600">Reported at</td>
                             </tr>
                         </thead>
                         <tbody class="p-2">
                             @forelse ($reports as $report)
-                                <tr class="even:bg-gray-300 odd:bg-white">
+                                <tr class="even:bg-gray-300 odd:bg-white dark:even:bg-slate-600 dark:odd:bg-slate-500 dark:text-gray-300">
                                     <td class="p-2 border border-gray-400">{{ $report->count }}</td>
                                     <td class="p-2 border border-gray-400">
                                         @if($report->status == 0)
@@ -62,7 +62,7 @@
                         </tbody>
                     </table>
                 @else
-                    <div class="px-2 text-center italic">No reports submitted by verified users.. Yet...</div>
+                    <div class="px-2 text-center italic dark:text-gray-400">No reports submitted by verified users.. Yet...</div>
                 @endif
             </div>
             @php
@@ -70,7 +70,7 @@
         
                 $end = $time_end - $time;
             @endphp
-            <div class="text-center text-sm mt-2 font-gray-400">Page load time: {{ round($end, 3) }}s</div>
+            <div class="text-center text-sm mt-2 text-gray-400">Page load time: {{ round($end, 3) }}s</div>
         </div>
     </div>
 </x-app-layout>
