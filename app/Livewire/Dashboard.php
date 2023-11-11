@@ -33,11 +33,15 @@ class Dashboard extends Component
 
     private $status = [];
 
-    public $show;
 
     public function mount()
     {
-        $show = 'contacts';
+
+    }
+
+    public function render()
+    {
+
         $role = Auth::user()->role;
 
         if($role == 'admin')
@@ -47,11 +51,6 @@ class Dashboard extends Component
         {
             $this->status = [0, 1];
         }
-    }
-
-    public function render()
-    {
-        $this->reports = Report::where('user_id', Auth::user()->id)->orderBy('unix_to', 'desc')->get();
 
         $this->yumlogs = Yumlog::where('user_id', Auth::user()->id)
                         ->where('verification_tries', '<', $this->maxVerifyAttempts)
