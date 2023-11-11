@@ -66,7 +66,7 @@
                             @if(session()->get('showAdminMenu'))
                                 <div  id="hideAdminMenu"><i class="block fa-solid fa-eye"></i></div>
                             @else
-                                <div id="showAdminMenu" class="hidden"><i class="block fa-solid fa-eye-slash"></i></div>
+                                <div id="showAdminMenu"><i class="block fa-solid fa-eye-slash"></i></div>
                             @endif
                         </div>
                     @endif
