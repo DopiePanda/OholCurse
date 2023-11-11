@@ -14,6 +14,7 @@ use App\Http\Controllers\MapLeaderboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PlayerReportController;
 use App\Http\Controllers\ReportVerificationController;
+use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\TestController;
 
 use App\Http\Controllers\Objects\GameObjectImporter;
@@ -72,6 +73,8 @@ Route::middleware('web')->group(function() {
         Route::get('/verify-reports/{id}', [ReportVerificationController::class, 'verifyAllByUser']);
 
         Route::get('/logs/export', [ExportController::class, 'index'])->name('logs.export');
+
+        Route::get('/stats', [StatisticController::class, 'index'])->name('stats.index');
     });
 
     
