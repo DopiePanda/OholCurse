@@ -1,5 +1,5 @@
 <div>
-    <h2 class="text-xl text-gray-800 leading-tight break-words text-center">
+    <h2 class="text-xl text-gray-800 dark:text-gray-200 leading-tight break-words text-center">
         <div>
             @if(!empty($profile->leaderboard_id) && !empty($profile->leaderboard_name))
                 @if($contact)

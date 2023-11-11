@@ -31,31 +31,27 @@ class Dashboard extends Component
     private $forgiveOffset = 180;
     private $maxVerifyAttempts = 5;
 
-    private $status = [];
-
-    public $show;
 
     public function mount()
     {
-        $show = 'contacts';
-        $role = Auth::user()->role;
-
-        if($role == 'admin')
-        {
-            $this->status = [0, 1, 2, 3, 4];
-        }else
-        {
-            $this->status = [0, 1];
-        }
+        
     }
 
     public function render()
     {
-        $this->reports = Report::where('user_id', Auth::user()->id)->orderBy('unix_to', 'desc')->get();
+        $role = Auth::user()->role;
+
+        if($role == 'admin')
+        {
+            $status = [0, 1, 2, 3, 4];
+        }else
+        {
+            $status = [0, 1];
+        }
 
         $this->yumlogs = Yumlog::where('user_id', Auth::user()->id)
                         ->where('verification_tries', '<', $this->maxVerifyAttempts)
-                        ->whereIn('status', $this->status)
+                        ->whereIn('status', $status)
                         ->select('timestamp', 'character_id', 'character_name', 'curse_name', 'player_hash', 'verified', 'status', 'created_at')
                         ->groupBy('curse_name')
                         ->orderBy('timestamp', 'desc')

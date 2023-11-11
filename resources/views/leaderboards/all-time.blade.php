@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-3xl font-bold text-gray-800 text-center">
+        <h2 class="text-3xl font-bold text-gray-800 text-center dark:text-gray-200">
             <div>Undefeated All-time <span id="ohol">OHOL</span> Champions</div>
         </h2>
 
@@ -14,16 +14,16 @@
             <table wire:loading.remove class="overflow-x-scroll mt-3 w-full text-center border border-gray-400 shadow-lg overflow-x-scroll">
                 <thead>
                     <tr class="border-b border-gray-400">
-                        <td class="p-4 bg-blue-400 text-white border-r border-blue-500">Category</td>
-                        <td class="p-4 bg-blue-400 text-white border-r border-blue-500">Score</td>
-                        <td class="p-4 bg-blue-400 text-white border-r border-blue-500">Leaderboard name</td>
-                        <td class="p-4 bg-blue-400 text-white">Date</td>
+                        <td class="p-4 bg-blue-400 text-white border-r border-gray-400 dark:bg-red-500">Category</td>
+                        <td class="p-4 bg-blue-400 text-white border-r border-gray-400 dark:bg-red-500">Score</td>
+                        <td class="p-4 bg-blue-400 text-white border-r border-gray-400 dark:bg-red-500">Leaderboard name</td>
+                        <td class="p-4 bg-blue-400 text-white dark:bg-red-500">Date</td>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($results as $result)
                         @if($result->leaderboard->enabled == 1)
-                            <tr class="bg-white">
+                        <tr class="bg-white even:bg-gray-300 odd:bg-white dark:even:bg-slate-600 dark:odd:bg-slate-500 dark:text-gray-300">
                                 <td class=" p-4 border border-gray-400">
                                     <img class="mx-auto h-10" src="{{ asset($result->leaderboard->image) }}" />
                                     <div class="mt-1 text-sm font-semibold">{{ $result->leaderboard->label }}</div>
@@ -33,7 +33,7 @@
                                 </td>
                                 <td class="p-4 border border-gray-400">
                                     @if(isset($result->character->player_hash) && isset($result->playerName->leaderboard_name)) 
-                                        <a class="text-blue-400 font-semibold" href="{{ route('player.curses', ['hash' => $result->character->player_hash]) }}">
+                                        <a class="text-blue-400 font-semibold dark:text-red-400" href="{{ route('player.curses', ['hash' => $result->character->player_hash]) }}">
                                             {{ $result->playerName->contact->nickname ?? $result->playerName->leaderboard_name }}
                                         </a>
                                     @else
@@ -42,10 +42,10 @@
                                         </span>
                                     @endif
 
-                                    <div class="text-xs text-gray-600 italic">
+                                    <div class="text-xs text-gray-600 italic dark:text-gray-800">
                                         - playing as -
                                     </div>
-                                    <div class="mt-1 text-sm text-black lowercase capitalize">
+                                    <div class="mt-1 text-sm text-black lowercase capitalize dark:text-gray-200">
                                         @if(isset($result->lifeName->name)) 
                                             {{ $result->lifeName->name }} 
                                         @else

@@ -1,36 +1,36 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-3xl fond-bold text-gray-800 leading-tight text-center">
-            {{ $object->page_title ?? 'Top 10 Last 7 Days' }}
-        </h2>
         @if($object)
             <img class="mx-auto h-22" src="{{ asset($object->image) }}" title="{{ $object->object->name }}" />
             @if($object->multi)
-                <div class="text-center text-sm italic">
+                <div class="text-center text-sm italic dark:text-gray-400">
                     Object ID(s): 
                     @foreach(json_decode($object->multi_objects) as $single)
                         <span>@if(!$loop->last) {{ $single.',' }}  @else {{ $single }}  @endif</span>
                     @endforeach
                 </div>
             @else
-                <div class="text-center text-sm italic">Object ID(s): {{ $object->object_id }}</div>
+                <div class="text-center text-sm italic dark:text-gray-400">Object ID(s): {{ $object->object_id }}</div>
             @endif
         @endif
+        <h2 class="block mt-2 text-3xl fond-bold text-gray-800 leading-tight text-center dark:text-gray-200">
+            {{ $object->page_title ?? 'Top 10 Last 7 Days' }}
+        </h2>
     </x-slot>
-    <div class="max-w-7xl py-1 overflow-x-scroll">
-        <div class="my-2 py-2 text-center">
+    <div class="max-w-7xl py-1">
+        <div class="my-2 py-2 text-center dark:text-gray-400">
             <div class="font-bold text-xl">Period:</div>
             <div class="text-lg">{{ $start->format('Y-m-d H:i') }} -  {{ $end->format('Y-m-d H:i') }}</div>
         </div>
-        <div class="overflow-x-scroll py-6 max-w-screen mx-auto sm:px-6 lg:px-8">
-            <table wire:loading.remove class="overflow-x-scroll mt-3 w-full text-center border border-gray-400 shadow-lg overflow-x-scroll">
+        <div class="relative overflow-x-scroll py-6 max-w-screen mx-auto sm:px-6 lg:px-8">
+            <table wire:loading.remove class="mt-3 w-full text-center border border-gray-400 shadow-lg overflow-x-scroll">
                 <thead>
                     <tr class="border-b border-gray-400">
-                        <td class="p-2 border-r border-gray-400">Place</td>
-                        <td class="p-2 border-r border-gray-400">Score</td>
-                        <td class="p-2 border-r border-gray-400">Leaderboard name</td>
-                        <td class="p-2 border-r border-gray-400">Character name (Character ID)</td>
-                        <td class="p-2">Date</td>
+                        <td class="p-2 border-r border-gray-400 dark:bg-red-500">Place</td>
+                        <td class="p-2 border-r border-gray-400 dark:bg-red-500">Score</td>
+                        <td class="p-2 border-r border-gray-400 dark:bg-red-500">Leaderboard name</td>
+                        <td class="p-2 border-r border-gray-400 dark:bg-red-500">Character name (Character ID)</td>
+                        <td class="p-2 dark:bg-red-500">Date</td>
                     </tr>
                 </thead>
                 <tbody>

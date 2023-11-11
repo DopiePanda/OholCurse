@@ -1,10 +1,10 @@
 <section>
     <header>
-        <h2 class="text-lg font-medium text-gray-900">
+        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-200">
             {{ __('Set your Timezone') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600">
+        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
             {{ __("Select the timezone you wish all dates to be displayed as.") }}
         </p>
     </header>
@@ -14,8 +14,8 @@
         @method('patch')
 
         <div>
-            <x-input-label for="timezone" :value="__('Timezone')" />
-            <select id="timezone" name="timezone" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+            <x-input-label class="dark:text-gray-200" for="timezone" :value="__('Timezone')" />
+            <select id="timezone" name="timezone" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600">
                 @foreach ($timezones as $tz)
                     <option value="{{ $tz->name }}" @if($user->timezone == $tz->name) selected @endif>{{ $tz->name }} ({{ $tz->offset }})</option>
                 @endforeach
