@@ -1,9 +1,7 @@
 <div>
     @auth
         @if(Auth::user()->role == 'admin')
-        Show: {{ session()->get('showAdminMenu') }}
             @if(session()->get('showAdminMenu'))
-                
                 <div id="adminMenu" class="w-full mt-2 mx-auto inset-x-0 z-10 rounded-lg bg-gray-300 lg:text-center py-4">
                     <div class="pl-4 flex flex-col lg:flex-row lg:justify-center">
                         <a class="p-2 border-r border-gray-400" href="/admin/logs">
