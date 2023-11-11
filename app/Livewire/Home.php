@@ -64,7 +64,7 @@ class Home extends Component
             switch($this->filter)
             {
                 case 'player_hash':
-                    $this->results = CurseLog::select('player_hash')
+                    $this->results = CurseLog::select('id', 'player_hash')
                                         ->where('player_hash', 'like', rtrim($this->query).'%')
                                         ->groupBy('player_hash')
                                         ->orderBy('timestamp', 'desc')

@@ -66,6 +66,7 @@ Route::middleware('web')->group(function() {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::patch('/profile/timezone', [ProfileController::class, 'updateTimezone'])->name('timezone.update');
+        Route::patch('/profile/theme', [ProfileController::class, 'updateTheme'])->name('theme.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
         Route::get('/dashboard', Dashboard::class)->name('dashboard');

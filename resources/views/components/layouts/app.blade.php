@@ -23,12 +23,12 @@
         @yield('before-head-end')
     </head>
     <body class="font-sans antialiased">
-        <div class="flex flex-col min-h-screen bg-gray-100">
+        <div class="flex flex-col min-h-screen bg-gray-100 dark:bg-slate-800">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-white shadow">
+                <header class="bg-white dark:bg-slate-700 shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
@@ -36,7 +36,7 @@
             @endif
 
             <!-- Page Content -->
-            <main class="flex flex-grow justify-center pt-6 px-4 break-normal">
+            <main class="flex flex-grow justify-center pt-6 px-2 lg:px-4 break-normal">
                 {{ $slot }}
             </main>
             
@@ -47,6 +47,10 @@
         @livewireScripts
         @stack('scripts')
         <script type="text/javascript">
+
+            let defaultTheme = "{{ env('DEFAULT_THEME') }}";
+            let userTheme = "{{ auth()->user()->theme ?? null }}";
+
             $( document ).ready(function() {
                 window.addEventListener('alert', event => { 
                          toastr[event.detail.type](event.detail.message, 
@@ -57,6 +61,8 @@
                         });
             });
         </script>
+
+        <script src="{{ asset('assets/js/theme-selector.js') }}"></script>
         <!-- 
         Hot and amazing people:
             - Nezima
