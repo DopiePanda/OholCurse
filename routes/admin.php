@@ -5,6 +5,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\SessionController;
 use App\Http\Controllers\Objects\GameObjectImporter;
 
 use App\Http\Controllers\LeaderboardController;
@@ -52,6 +53,11 @@ Route::middleware(['web', 'admin'])->name('admin.')->group(function () {
 
     Route::prefix('scrape')->name('scrape.')->group(function () {
         Route::get('/maplog/{offset?}', [MapLogScraper::class, 'scrapeLog'])->name('maplog');
+    });
+
+    Route::prefix('session')->name('session.')->group(function () {
+        Route::get('/menu/hide', [SessionController::class, 'hideMenu'])->name('menu.hide');
+        Route::get('/menu/show', [SessionController::class, 'showMenu'])->name('menu.show');
     });
  
     Route::get('/user/profile', function () {
