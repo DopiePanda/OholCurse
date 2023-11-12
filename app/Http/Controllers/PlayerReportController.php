@@ -243,7 +243,7 @@ class PlayerReportController extends Controller
                         'player_hash' => $hash ?? $line->player_hash,
                         'reciever_hash' => $line->reciever_hash ?? null,
                         'leaderboard' => $line->leaderboard->leaderboard_name ?? null,
-                        'contact_name' => $line->contact->nickname ?? null,
+                        'contact_name' => $line->contact ?? null,
                         'curse_score' => $line->scores->curse_score ?? null,
                         'gene_score' => $line->scores->gene_score ?? null,
                     ]);
@@ -257,7 +257,7 @@ class PlayerReportController extends Controller
                         'player_hash' => $hash ?? $line->player_hash,
                         'reciever_hash' => $line->reciever_hash ?? null,
                         'leaderboard' => $line->leaderboard->leaderboard_name ?? null,
-                        'contact_name' => $line->contact->nickname ?? null,
+                        'contact_name' => $line->contact ?? null,
                         'curse_score' => $line->scores->curse_score ?? null,
                         'gene_score' => $line->scores->gene_score ?? null,
                     ]);
@@ -271,7 +271,7 @@ class PlayerReportController extends Controller
                         'player_hash' => $hash ?? $line->player_hash,
                         'reciever_hash' => $line->reciever_hash ?? null,
                         'leaderboard' => $line->leaderboard->leaderboard_name ?? null,
-                        'contact_name' => $line->contact->nickname ?? null,
+                        'contact_name' => $line->contact ?? null,
                         'curse_score' => $line->scores->curse_score ?? null,
                         'gene_score' => $line->scores->gene_score ?? null,
                     ]);
@@ -285,7 +285,6 @@ class PlayerReportController extends Controller
                         'player_hash' => $hash ?? $line->player_hash,
                         'reciever_hash' => $line->reciever_hash ?? null,
                         'leaderboard' => $line->scores->leaderboard_name ?? null,
-                        'contact_name' => $line->contact->nickname ?? null,
                     ]);
                     break;         
             }
@@ -319,7 +318,7 @@ class PlayerReportController extends Controller
                         'player_hash' => $line->player_hash ?? null,
                         'reciever_hash' => $hash ?? $line->reciever_hash,
                         'leaderboard' => $line->leaderboard_recieved->leaderboard_name ?? null,
-                        'contact_name' => $line->contact_recieved->nickname ?? null,
+                        'contact_name' => $line->contact_recieved ?? null,
                         'curse_score' => $line->scores_recieved->curse_score ?? null,
                         'gene_score' => $line->scores_recieved->gene_score ?? null,
                     ]);
@@ -333,7 +332,7 @@ class PlayerReportController extends Controller
                         'player_hash' => $line->player_hash ?? null,
                         'reciever_hash' => $hash ?? $line->reciever_hash,
                         'leaderboard' => $line->leaderboard_recieved->leaderboard_name ?? null,
-                        'contact_name' => $line->contact_recieved->nickname ?? null,
+                        'contact_name' => $line->contact_recieved ?? null,
                         'curse_score' => $line->scores_recieved->curse_score ?? null,
                         'gene_score' => $line->scores_recieved->gene_score ?? null,
                     ]);
@@ -347,7 +346,7 @@ class PlayerReportController extends Controller
                         'player_hash' => $line->player_hash ?? null,
                         'reciever_hash' => $hash ?? $line->reciever_hash,
                         'leaderboard' => $line->leaderboard_recieved->leaderboard_name ?? null,
-                        'contact_name' => $line->contact_recieved->nickname ?? null,
+                        'contact_name' => $line->contact_recieved ?? null,
                         'curse_score' => $line->scores_recieved->curse_score ?? null,
                         'gene_score' => $line->scores_recieved->gene_score ?? null,
                     ]);
@@ -361,7 +360,6 @@ class PlayerReportController extends Controller
                         'player_hash' => $line->player_hash ?? null,
                         'reciever_hash' => $hash ?? $line->reciever_hash,
                         'leaderboard' => $line->leaderboard_recieved->leaderboard_name ?? null,
-                        'contact_name' => $line->contact_recieved->nickname ?? null,
                     ]);
                     break;         
             }
