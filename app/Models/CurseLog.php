@@ -37,7 +37,7 @@ class CurseLog extends Model
 
     public function contact()
     {
-        return $this->hasOne(UserContact::class, 'hash', 'player_hash')->where('user_id', Auth::user()->id ?? null);      
+        return $this->hasOne(UserContact::class, 'hash', 'reciever_hash')->where('user_id', Auth::user()->id ?? null);      
     }
 
     public function contact_recieved()
