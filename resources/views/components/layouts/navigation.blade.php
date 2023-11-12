@@ -61,6 +61,15 @@
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 @auth
+                    @if(Auth::user()->role && Auth::user()->role == "admin")
+                    <div class="mr-2 text-gray-800 dark:text-gray-400">
+                        @if(session()->get('showAdminMenu'))
+                            <div  id="hideAdminMenu"><i class="block fa-solid fa-eye"></i></div>
+                        @else
+                            <div id="showAdminMenu" class="hidden"><i class="block fa-solid fa-eye-slash"></i></div>
+                        @endif
+                    </div>
+            @endif
                 <!-- <button class="p-2 border bg-red-400 text-white rounded-lg text-sm" onclick="Livewire.dispatch('openModal', { component: 'modals.submit-report' })">
                     Report Griefer
                 </button> -->
@@ -173,6 +182,41 @@
         </div>
         @endauth
     </div>
+    @if(Auth::user())
+        @if(Auth::user()->role == 'admin')
+            @section('before-body-end')
+                <script type="text/javascript">
+                    const hideAdminMenu = $("#hideAdminMenu");
+                    const showAdminMenu = $("#showAdminMenu");
 
+                    $("#hideAdminMenu").on("click", function() {
+                        hideAdminMenu.hide();
+                        showAdminMenu.show();
+
+                        $.ajax({
+                            type: "GET",
+                            url: '/admin/session/menu/hide',
+                            success: function() {}
+                        });
+
+                        $("#adminMenu").slideUp('slow');
+                    });
+
+                    $("#showAdminMenu").on("click", function() {
+                        hideAdminMenu.show();
+                        showAdminMenu.hide();
+
+                        $.ajax({
+                            type: "GET",
+                            url: '/admin/session/menu/show',
+                            success: function() {}
+                        });
+
+                        $("#adminMenu").slideDown('slow');
+                    });
+                </script>
+            @endsection
+        @endif
+    @endif
     <x-admin-menu />
 </nav>

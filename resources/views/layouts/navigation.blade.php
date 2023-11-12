@@ -115,7 +115,7 @@
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
                 @guest
-                    <button class="p-2 border border-blue-400 text-blue-400 rounded-lg" onclick="Livewire.dispatch('openModal', { component: 'modals.authorize-modal' })">Auth</button>
+                    <button class="p-2 border border-blue-400 text-blue-400 dark:border-red-600 dark:text-red-600 rounded-lg" onclick="Livewire.dispatch('openModal', { component: 'modals.authorize-modal' })">Auth</button>
                 @endguest
                 <button @click="open = ! open" class="ml-2 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out dark:focus:bg-slate-700">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -177,39 +177,41 @@
         </div>
         @endauth
     </div>
-    @if(Auth::user()->role == 'admin')
-        @section('before-body-end')
-            <script type="text/javascript">
-                const hideAdminMenu = $("#hideAdminMenu");
-                const showAdminMenu = $("#showAdminMenu");
+    @if(Auth::user())
+        @if(Auth::user()->role == 'admin')
+            @section('before-body-end')
+                <script type="text/javascript">
+                    const hideAdminMenu = $("#hideAdminMenu");
+                    const showAdminMenu = $("#showAdminMenu");
 
-                $("#hideAdminMenu").on("click", function() {
-                    hideAdminMenu.hide();
-                    showAdminMenu.show();
+                    $("#hideAdminMenu").on("click", function() {
+                        hideAdminMenu.hide();
+                        showAdminMenu.show();
 
-                    $.ajax({
-                        type: "GET",
-                        url: '/admin/session/menu/hide',
-                        success: function() {}
+                        $.ajax({
+                            type: "GET",
+                            url: '/admin/session/menu/hide',
+                            success: function() {}
+                        });
+
+                        $("#adminMenu").slideUp('slow');
                     });
 
-                    $("#adminMenu").slideUp('slow');
-                });
+                    $("#showAdminMenu").on("click", function() {
+                        hideAdminMenu.show();
+                        showAdminMenu.hide();
 
-                $("#showAdminMenu").on("click", function() {
-                    hideAdminMenu.show();
-                    showAdminMenu.hide();
+                        $.ajax({
+                            type: "GET",
+                            url: '/admin/session/menu/show',
+                            success: function() {}
+                        });
 
-                    $.ajax({
-                        type: "GET",
-                        url: '/admin/session/menu/show',
-                        success: function() {}
+                        $("#adminMenu").slideDown('slow');
                     });
-
-                    $("#adminMenu").slideDown('slow');
-                });
-            </script>
-        @endsection
+                </script>
+            @endsection
+        @endif
     @endif
     <x-admin-menu />
 </nav>
