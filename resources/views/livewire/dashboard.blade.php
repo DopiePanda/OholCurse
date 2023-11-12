@@ -4,6 +4,11 @@ date_default_timezone_set($timezone);
 
 @endphp
 
+@section("page-title")
+    - Dashboard
+@endsection
+
+
 <div class="w-full">
     <x-slot name="header">
         <div class="flex flex-row">
