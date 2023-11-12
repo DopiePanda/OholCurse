@@ -1,4 +1,13 @@
 <x-app-layout>
+
+    @section("page-title")
+        @if( $name )
+            - Lives for {{ $name->leaderboard_name }}
+        @else
+            - Lives
+        @endif
+    @endsection
+
     <x-slot name="header">
         <livewire:player.profile-header :hash="$hash">
     </x-slot>

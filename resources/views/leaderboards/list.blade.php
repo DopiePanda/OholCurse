@@ -1,4 +1,16 @@
 <x-app-layout>
+
+    @section("page-title")
+        @if($object)
+            @if($object->object->name)
+                - Weekly leaderboard for {{ $object->object->name }}
+            @else
+                - Weekly leaderboard for object {{ $object->id }}
+            @endif
+        @else
+        @endif
+    @endsection
+
     <x-slot name="header">
         @if($object)
             <img class="mx-auto h-22" src="{{ asset($object->image) }}" title="{{ $object->object->name }}" />
