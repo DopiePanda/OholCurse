@@ -69,15 +69,28 @@
 
                                         <a href="{{ route('player.curses', ['hash' => $line['reciever_hash'] ?? 'error']) }}" title="{{ $line['reciever_hash'] }}"> 
                                             @if(isset($line['reciever_hash']))
-                                                <div class="break-all text-blue-600 font-bold dark:text-red-500">{{ $line['contact_name'] ?? $line['leaderboard'] }} 
+                                                <div class="break-all text-blue-600 font-bold dark:text-red-500">
+
+                                                    @if($line['contact_name'])
+                                                        <span class="text-green-600 dark:text-green-400">
+                                                            {{ $line['contact_name'] }}
+                                                        </span>
+                                                    @elseif($line['leaderboard'])
+                                                        {{  $line['leaderboard'] }}
+                                                    @else
+                                                        <span title="Leaderboard name missing" class="text-gray-800 dark:text-gray-200">
+                                                            <i>{{  $line['character_name'] ?? 'Leaderboard missing' }}</i>
+                                                        </span>
+                                                    @endif
+
                                                     <div class="text-gray-700 font-bold inline-block">
                                                         (
                                                             <span class="text-green-500">
-                                                            {{ $line['gene_score'] ? $line['gene_score'] : 0; }}
+                                                                {{ $line['gene_score'] ? $line['gene_score'] : 0; }}
                                                             </span>
                                                              / 
                                                             <span class="text-red-500">
-                                                            {{ $line['curse_score'] ? $line['curse_score'] : 0; }}
+                                                                {{ $line['curse_score'] ? $line['curse_score'] : 0; }}
                                                             </span>
                                                         )
                                                     </div>
@@ -114,7 +127,19 @@
                                         <a href="{{ route('player.curses', ['hash' => $line['player_hash'] ?? 'error']) }}" title="{{ $line['player_hash'] }}"> 
                                             @if(isset($line['player_hash']))
                                                 <div class="break-all text-blue-600 font-bold dark:text-red-500">
-                                                    {{ $line['contact_name'] ?? $line['leaderboard'] }} 
+
+                                                    @if($line['contact_name'])
+                                                        <span class="text-green-600 dark:text-green-400">
+                                                            {{ $line['contact_name'] }}
+                                                        </span>
+                                                    @elseif($line['leaderboard'])
+                                                        {{  $line['leaderboard'] }}
+                                                    @else
+                                                        <span title="Leaderboard name missing" class="text-gray-800 dark:text-gray-200">
+                                                            <i>{{  $line['character_name'] ?? 'Leaderboard missing' }}</i>
+                                                        </span>
+                                                    @endif
+
                                                     <div class="text-gray-700 font-bold inline-block">
                                                         (
                                                             <span class="text-green-500">
@@ -159,7 +184,19 @@
                                         <a href="{{ route('player.curses', ['hash' => $line['reciever_hash'] ?? 'error']) }}" title="{{ $line['reciever_hash'] }}"> 
                                             @if(isset($line['reciever_hash']))
                                                 <div class="break-all text-blue-600 font-bold dark:text-red-500">
-                                                    {{ $line['contact_name'] ?? $line['leaderboard'] }} 
+                                                    
+                                                    @if($line['contact_name'])
+                                                        <span class="text-green-600 dark:text-green-400">
+                                                            {{ $line['contact_name'] }}
+                                                        </span>
+                                                    @elseif($line['leaderboard'])
+                                                        {{  $line['leaderboard'] }}
+                                                    @else
+                                                        <span title="Leaderboard name missing" class="text-gray-800 dark:text-gray-200">
+                                                            <i>{{  $line['character_name'] ?? 'Leaderboard missing' }}</i>
+                                                        </span>
+                                                    @endif
+
                                                     <div class="text-gray-700 font-bold inline-block">
                                                         (
                                                             <span class="text-green-500">
@@ -204,7 +241,19 @@
                                         <a href="{{ route('player.curses', ['hash' => $line['player_hash'] ?? 'error']) }}" title="{{ $line['player_hash'] }}"> 
                                             @if(isset($line['player_hash']))
                                                 <div class="break-all text-blue-600 font-bold dark:text-red-500">
-                                                    {{ $line['contact_name'] ?? $line['leaderboard'] }} 
+                                                    
+                                                    @if($line['contact_name'])
+                                                        <span class="text-green-600 dark:text-green-400">
+                                                            {{ $line['contact_name'] }}
+                                                        </span>
+                                                    @elseif($line['leaderboard'])
+                                                        {{  $line['leaderboard'] }}
+                                                    @else
+                                                        <span title="Leaderboard name missing" class="text-gray-800 dark:text-gray-200">
+                                                            <i>{{  $line['character_name'] ?? 'Leaderboard missing' }}</i>
+                                                        </span>
+                                                    @endif
+
                                                     <div class="text-gray-700 font-bold inline-block">
                                                         (
                                                             <span class="text-green-500">
@@ -273,7 +322,19 @@
                                         <a href="{{ route('player.curses', ['hash' => $line['reciever_hash'] ?? 'error']) }}" title="{{ $line['reciever_hash'] }}"> 
                                             @if(isset($line['reciever_hash']))
                                                 <div class="break-all text-blue-600 font-bold dark:text-red-500">
-                                                    {{ $line['contact_name'] ?? $line['leaderboard'] }} 
+                                                    
+                                                    @if($line['contact_name'])
+                                                        <span class="text-green-600 dark:text-green-400">
+                                                            {{ $line['contact_name'] }}
+                                                        </span>
+                                                    @elseif($line['leaderboard'])
+                                                        {{  $line['leaderboard'] }}
+                                                    @else
+                                                        <span title="Leaderboard name missing" class="text-gray-800 dark:text-gray-200">
+                                                            <i>{{  $line['character_name'] ?? 'Leaderboard missing' }}</i>
+                                                        </span>
+                                                    @endif
+
                                                     <div class="text-gray-700 font-bold inline-block">
                                                         (
                                                             <span class="text-green-500">
@@ -288,7 +349,7 @@
                                                 </div>
                                                 <div class="break-all text-xs dark:text-gray-600">{{ $line['reciever_hash'] }}</div>
                                             @else
-                                                {{ $line['character_id'] }}
+                                                {{ $line['character_id'] ?? null }}
                                             @endif
                                         </a>
                                     </div>
@@ -318,7 +379,19 @@
                                         <a href="{{ route('player.curses', ['hash' => $line['player_hash'] ?? 'error']) }}" title="{{ $line['player_hash'] }}"> 
                                             @if(isset($line['player_hash']))
                                                 <div class="break-all text-blue-600 font-bold dark:text-red-500">
-                                                    {{ $line['contact_name'] ?? $line['leaderboard'] }} 
+                                                    
+                                                    @if($line['contact_name'])
+                                                        <span class="text-green-600 dark:text-green-400">
+                                                            {{ $line['contact_name'] }}
+                                                        </span>
+                                                    @elseif($line['leaderboard'])
+                                                        {{  $line['leaderboard'] }}
+                                                    @else
+                                                        <span title="Leaderboard name missing" class="text-gray-800 dark:text-gray-200">
+                                                            <i>{{  $line['character_name'] ?? 'Leaderboard missing' }}</i>
+                                                        </span>
+                                                    @endif
+
                                                     <div class="text-gray-700 font-bold inline-block">
                                                         (
                                                             <span class="text-green-500">

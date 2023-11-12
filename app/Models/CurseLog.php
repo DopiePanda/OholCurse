@@ -30,6 +30,11 @@ class CurseLog extends Model
         return $this->hasOne(LifeNameLog::class, 'character_id', 'character_id');
     }
 
+    public function name_recieved()
+    {
+        return $this->hasOne(LifeNameLog::class, 'character_id', 'character_id');
+    }
+
     public function contact()
     {
         return $this->hasOne(UserContact::class, 'hash', 'player_hash')->where('user_id', Auth::user()->id ?? null);      

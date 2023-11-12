@@ -47,7 +47,7 @@
                                     <td class="p-2 border border-gray-400">{{ $life->age }}</td>
                                     <td class="p-2 border border-gray-400">{{ $life->gender }}</td>
                                     <td class="p-2 border border-gray-400">
-                                        <a target="_blank" href="https://onemap.wondible.com/#x={{ $coords[0] }}&y={{ $coords[1] }}&z=29&s=17&t={{ time() }}">
+                                        <a target="_blank" title="View on Wondible's OneMap" href="https://onemap.wondible.com/#x={{ $coords[0] }}&y={{ $coords[1] }}&z=29&s=17&t={{ time() }}">
                                             {{ $life->location }}
                                         </a>
                                     </td>
