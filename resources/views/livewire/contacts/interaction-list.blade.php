@@ -167,9 +167,9 @@
         @endif
         <div class="w-full flex flex-row mt-auto mx-2 p-4 self-end dark:text-gray-400">
             <div class="flex-1 text-left">Total records: {{ $result_count }}</div>
-
-            <div class="flex-1">Page: {{ ceil(($skip + $take) / $take) }} / {{ ceil($result_count / $take) }}</div>
-
+            @if($result_count > 10)
+                <div class="flex-1">Page: {{ ceil(($skip + $take) / $take) }} / {{ ceil($result_count / $take) }}</div>
+            @endif
             <div class="flex-1 text-right">
                 @if($result_count > $take)
                     @if($skip > 0)
