@@ -1,4 +1,9 @@
 <x-app-layout>
+
+    @section("page-title")
+        - All-time leaderboards
+    @endsection
+
     <x-slot name="header">
         <h2 class="text-3xl font-bold text-gray-800 text-center dark:text-gray-200">
             <div>Undefeated All-time <span id="ohol">OHOL</span> Champions</div>

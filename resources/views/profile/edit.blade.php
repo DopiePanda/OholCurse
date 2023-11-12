@@ -1,4 +1,8 @@
 <x-app-layout>
+    @section("page-title")
+        - Profile settings
+    @endsection
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Profile') }}

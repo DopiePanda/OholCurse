@@ -1,4 +1,7 @@
 <div class="lg:w-2/6">
+    @section("page-title")
+    - Search OHOL profiles
+    @endsection
     <div class="flex flex-col items-center">
         <img class="w-96" src="{{ asset('assets/uploads/images/new-logo-transparent.png') }}" alt="oholcurse-logo" />
        

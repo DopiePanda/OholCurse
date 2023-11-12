@@ -61,7 +61,7 @@
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 @auth
-                    @if(Auth::user()->role == "admin")
+                    @if(Auth::user() && Auth::user()->role == "admin")
                         <div class="mr-2 text-gray-800 dark:text-gray-400">
                             @if(session()->get('showAdminMenu'))
                                 <div  id="hideAdminMenu"><i class="block fa-solid fa-eye"></i></div>
