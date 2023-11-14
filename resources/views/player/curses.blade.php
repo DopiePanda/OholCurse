@@ -74,17 +74,17 @@
                                                     @if($line['contact_name'])
                                                         <span>
                                                             @if($line['contact_name']->type == 'friend')
-                                                                <span class="text-red-600 dark:text-red-400">
+                                                                <span class="text-green-600 dark:text-green-400">
                                                                     <i class="fas fa-heart"></i>
                                                                     {{ $line['contact_name']->nickname }}
                                                                 </span>
                                                             @elseif($line['contact_name']->type == 'dubious')
-                                                                <span class="text-green-orange dark:text-orange-400">
+                                                                <span class="text-orange-600 dark:text-orange-400">
                                                                     <i class="fas fa-question"></i>
                                                                     {{ $line['contact_name']->nickname }}
                                                                 </span>
                                                             @else
-                                                                <span class="text-brown-600 dark:text-brown-400">
+                                                                <span class="text-amber-700">
                                                                     <i class="fas fa-poop"></i>
                                                                     {{ $line['contact_name']->nickname }}
                                                                 </span>
@@ -146,17 +146,17 @@
                                                     @if($line['contact_name'])
                                                         <span>
                                                             @if($line['contact_name']->type == 'friend')
-                                                                <span class="text-red-600 dark:text-red-400">
+                                                                <span class="text-green-600 dark:text-green-400">
                                                                     <i class="fas fa-heart"></i>
                                                                     {{ $line['contact_name']->nickname }}
                                                                 </span>
                                                             @elseif($line['contact_name']->type == 'dubious')
-                                                                <span class="text-green-orange dark:text-orange-400">
+                                                                <span class="text-orange-600 dark:text-orange-400">
                                                                     <i class="fas fa-question"></i>
                                                                     {{ $line['contact_name']->nickname }}
                                                                 </span>
                                                             @else
-                                                                <span class="text-brown-600 dark:text-brown-400">
+                                                                <span class="text-amber-700">
                                                                     <i class="fas fa-poop"></i>
                                                                     {{ $line['contact_name']->nickname }}
                                                                 </span>
@@ -218,17 +218,17 @@
                                                     @if($line['contact_name'])
                                                         <span>
                                                             @if($line['contact_name']->type == 'friend')
-                                                                <span class="text-red-600 dark:text-red-400">
+                                                                <span class="text-green-600 dark:text-green-400">
                                                                     <i class="fas fa-heart"></i>
                                                                     {{ $line['contact_name']->nickname }}
                                                                 </span>
                                                             @elseif($line['contact_name']->type == 'dubious')
-                                                                <span class="text-green-orange dark:text-orange-400">
+                                                                <span class="text-orange-600 dark:text-orange-400">
                                                                     <i class="fas fa-question"></i>
                                                                     {{ $line['contact_name']->nickname }}
                                                                 </span>
                                                             @else
-                                                                <span class="text-brown-600 dark:text-brown-400">
+                                                                <span class="text-amber-700">
                                                                     <i class="fas fa-poop"></i>
                                                                     {{ $line['contact_name']->nickname }}
                                                                 </span>
@@ -290,17 +290,17 @@
                                                     @if($line['contact_name'])
                                                         <span>
                                                             @if($line['contact_name']->type == 'friend')
-                                                                <span class="text-red-600 dark:text-red-400">
+                                                                <span class="text-green-600 dark:text-green-400">
                                                                     <i class="fas fa-heart"></i>
                                                                     {{ $line['contact_name']->nickname }}
                                                                 </span>
                                                             @elseif($line['contact_name']->type == 'dubious')
-                                                                <span class="text-green-orange dark:text-orange-400">
+                                                                <span class="text-orange-600 dark:text-orange-400">
                                                                     <i class="fas fa-question"></i>
                                                                     {{ $line['contact_name']->nickname }}
                                                                 </span>
                                                             @else
-                                                                <span class="text-brown-600 dark:text-brown-400">
+                                                                <span class="text-amber-700">
                                                                     <i class="fas fa-poop"></i>
                                                                     {{ $line['contact_name']->nickname }}
                                                                 </span>
@@ -386,17 +386,17 @@
                                                     @if($line['contact_name'])
                                                         <span>
                                                             @if($line['contact_name']->type == 'friend')
-                                                                <span class="text-red-600 dark:text-red-400">
+                                                                <span class="text-green-600 dark:text-green-400">
                                                                     <i class="fas fa-heart"></i>
                                                                     {{ $line['contact_name']->nickname }}
                                                                 </span>
                                                             @elseif($line['contact_name']->type == 'dubious')
-                                                                <span class="text-green-orange dark:text-orange-400">
+                                                                <span class="text-orange-600 dark:text-orange-400">
                                                                     <i class="fas fa-question"></i>
                                                                     {{ $line['contact_name']->nickname }}
                                                                 </span>
                                                             @else
-                                                                <span class="text-brown-600 dark:text-brown-400">
+                                                                <span class="text-amber-700">
                                                                     <i class="fas fa-poop"></i>
                                                                     {{ $line['contact_name']->nickname }}
                                                                 </span>
@@ -458,17 +458,17 @@
                                                     @if($line['contact_name'])
                                                         <span>
                                                             @if($line['contact_name']->type == 'friend')
-                                                                <span class="text-red-600 dark:text-red-400">
+                                                                <span class="text-green-600 dark:text-green-400">
                                                                     <i class="fas fa-heart"></i>
                                                                     {{ $line['contact_name']->nickname }}
                                                                 </span>
                                                             @elseif($line['contact_name']->type == 'dubious')
-                                                                <span class="text-green-orange dark:text-orange-400">
+                                                                <span class="text-orange-600 dark:text-orange-400">
                                                                     <i class="fas fa-question"></i>
                                                                     {{ $line['contact_name']->nickname }}
                                                                 </span>
                                                             @else
-                                                                <span class="text-brown-600 dark:text-brown-400">
+                                                                <span class="text-amber-700">
                                                                     <i class="fas fa-poop"></i>
                                                                     {{ $line['contact_name']->nickname }}
                                                                 </span>
