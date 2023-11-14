@@ -62,6 +62,7 @@
   .accordion > input[type="checkbox"]:checked ~ .handle label:before {
     content: "\f078";
   }
+  
 
   input#date {
     display: inline-block;
