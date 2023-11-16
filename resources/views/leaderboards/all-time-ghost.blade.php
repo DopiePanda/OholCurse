@@ -1,25 +1,21 @@
 <x-app-layout>
 
     @section("page-title")
-        - All-time leaderboards
+        - All-time Ghost Leaderboards
     @endsection
 
     <x-slot name="header">
         <h2 class="text-3xl font-bold text-gray-800 text-center dark:text-gray-200">
-            <div>Undefeated All-time <span id="ohol">OHOL</span> Champions</div>
+            <div>Undefeated All-time <span id="ohol">OHOL</span> Ghosts</div>
         </h2>
 
     </x-slot>
     <div class="w-full lg:max-w-7xl py-1">
         <div class="text-center text-gray-800 dark:text-gray-400">
-            <a href="{{ route('leaderboards.all-time-ghost') }}">
-                <i class="fa-solid fa-ghost fa-2x"></i>
-                <div class="mt-1">View ghost leaderboards</div>
+            <a href="{{ route('leaderboards.all-time') }}">
+                <i class="fa-solid fa-user-check fa-2x"></i>
+                <div class="mt-1">View non-ghost leaderboards</div>
             </a>
-        </div>
-        <div id="g2h55" class="hidden bg-white border border-blue-400 rounded-xl p-4 text-center">
-            <img class="mx-auto h-64" src="{{ asset('assets/extra/din.jpg') }}" />
-            <div class="mt-4 text-xl italic">"I guess life is one hour if you life about it"</div>
         </div>
         <div class="relative overflow-x-scroll py-6 mx-auto sm:px-6 lg:px-8">
             <table wire:loading.remove class="mx-auto mt-3 text-center border border-gray-400 shadow-lg">
@@ -85,9 +81,4 @@
             <!-- If your name is on the page, you owe a thank you to Hopie 8-) -->
         </div>
     </div>
-
-    @section("before-body-end")
-        <script src="{{ asset('assets/js/extra.js') }}"></script> 
-    @endsection
-
 </x-app-layout>
