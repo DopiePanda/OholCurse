@@ -43,16 +43,25 @@ class LeaderboardController extends Controller
         $results = LeaderboardRecord::with('leaderboard', 'lifeName', 'playerName', 'player', 'character')
                     ->select('game_leaderboard_id', DB::raw("(MAX(amount)) as amount"), 'character_id', 'leaderboard_id', 'timestamp')
                     ->where('game_leaderboard_id', '!=', null)
+                    ->where('ghost', 0)
                     ->groupBy('game_leaderboard_id')
                     ->orderBy('game_leaderboard_id', 'desc')
                     ->get();
-
-        /*$posts = Post::withCount(['votes', 'comments' => function (Builder $query) {
-            $query->where('content', 'like', 'code%');
-        }])->get();*/
-
         
         return view('leaderboards.all-time', ['results' => $results]);
+    }
+
+    public function allTimeGhost()
+    {
+        $results = LeaderboardRecord::with('leaderboard', 'lifeName', 'playerName', 'player', 'character')
+                    ->select('game_leaderboard_id', DB::raw("(MAX(amount)) as amount"), 'character_id', 'leaderboard_id', 'timestamp')
+                    ->where('game_leaderboard_id', '!=', null)
+                    ->where('ghost', 1)
+                    ->groupBy('game_leaderboard_id')
+                    ->orderBy('game_leaderboard_id', 'desc')
+                    ->get();
+        
+        return view('leaderboards.all-time-ghost', ['results' => $results]);
     }
 
     public function getObjectLeaderboard($object_id)

@@ -58,6 +58,7 @@ Route::middleware('web')->group(function() {
         Route::get('/weekly/object/{object_id}', [LeaderboardController::class, 'getObjectLeaderboard'])->name('weekly.single');
         Route::get('/weekly/multi/{id}', [LeaderboardController::class, 'getMultiObjectsLeaderboard'])->name('weekly.multi');
         Route::get('/all-time', [LeaderboardController::class, 'allTime'])->name('all-time');
+        Route::get('/all-time/ghost', [LeaderboardController::class, 'allTimeGhost'])->name('all-time-ghost');
 
     });
 
