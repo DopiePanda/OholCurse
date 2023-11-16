@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Log;
 use DB;
 
+use App\Models\LifeLog;
 use App\Models\GameLeaderboard;
 use App\Models\MapLog;
 use App\Models\LeaderboardRecord;
@@ -102,18 +103,37 @@ class UpdateLeaderboardRecords extends Command
             //dd($record);
         }
 
-        if($record == null || $result->count > $record->amount)
+        $birth = LifeLog::where('character_id', $result->name->character_id)->where('type', 'birth')->first();
+        $death = LifeLog::where('character_id', $result->name->character_id)->where('type', 'death')->first();
+
+        if($birth && $death)
         {
-            LeaderboardRecord::create([
-                'game_leaderboard_id' => $object->id,
-                'object_id' => $object->object_id,
-                'multi' => $object->multi,
-                'multi_objects' => $object->multi_objects,
-                'leaderboard_id' => $result->life->leaderboard->leaderboard_id,
-                'character_id' => $result->name->character_id,
-                'amount' => $result->count,
-                'timestamp' => $result->life->timestamp,
-            ]);
+            
+            $time_alive = ($death->timestamp - $birth->timestamp);
+
+            if($time_alive <= 3600 )
+            {
+                $ghost = false;
+            }
+            else
+            {
+                $ghost = true;
+            }
+
+            if($record == null || $result->count > $record->amount)
+            {
+                LeaderboardRecord::create([
+                    'game_leaderboard_id' => $object->id,
+                    'ghost' => $ghost,
+                    'object_id' => $object->object_id,
+                    'multi' => $object->multi,
+                    'multi_objects' => $object->multi_objects,
+                    'leaderboard_id' => $result->life->leaderboard->leaderboard_id,
+                    'character_id' => $result->name->character_id,
+                    'amount' => $result->count,
+                    'timestamp' => $result->life->timestamp,
+                ]);
+            }
         }
     }
 
