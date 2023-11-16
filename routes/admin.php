@@ -59,6 +59,33 @@ Route::middleware(['web', 'admin'])->name('admin.')->group(function () {
         Route::get('/menu/hide', [SessionController::class, 'hideMenu'])->name('menu.hide');
         Route::get('/menu/show', [SessionController::class, 'showMenu'])->name('menu.show');
     });
+
+    Route::get('/ghost/{character_id}', function ($id) 
+    {
+        $birth = \App\Models\LifeLog::where('character_id', $id)->where('type', 'birth')->first();
+        $death = \App\Models\LifeLog::where('character_id', $id)->where('type', 'death')->first();
+
+        if($birth)
+        {
+            if($death)
+            {
+                $time_alive = $death->timestamp - $birth->timestamp;
+                if($time_alive <= 3600)
+                {
+                    print 'Player was not a ghost';
+                }else
+                {
+                    print 'Player WAS a ghost';
+                }
+            }else
+            {
+                print 'Player death not yet recorded';
+            }
+        }else
+        {
+            print 'Player birth not yet recorded';
+        }
+    });
  
     Route::get('/user/profile', function () {
         // Uses first & second middleware...
