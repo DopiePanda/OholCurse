@@ -63,8 +63,8 @@ Route::middleware('web')->group(function() {
 
     });
 
-    Route::get('/family/{character_id}', [FamilyController::class, 'getEve'])->name('family.eve');
-    Route::get('/positions', [FamilyController::class, 'moveLocationColoumn']);
+    Route::get('/family/eve/{character_id}', [FamilyController::class, 'getEve'])->name('family.eve');
+    Route::get('/family/sync/', [FamilyController::class, 'syncFamilyRecords']);
 
     Route::get('/lives/find', [LifeDataController::class, 'find'])->name('lives.find');
 

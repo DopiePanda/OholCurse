@@ -18,6 +18,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:handle-life-logs')->dailyAt('08:40');
         $schedule->command('app:handle-life-name-logs')->dailyAt('08:40');
         $schedule->command('app:handle-curse-logs')->dailyAt('08:40');
+
+        $schedule->command('app:update-family-lineage')->dailyAt('08:50');
         
         // Fetch updated leaderboards from Selb's API
         $schedule->command('app:handle-leaderboard-logs')->dailyAt('08:50');

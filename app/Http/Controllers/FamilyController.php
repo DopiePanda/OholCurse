@@ -60,39 +60,42 @@ class FamilyController extends Controller
             $i++;
         }
 
-        dd($this->lives);
+        //dd($this->lives);
     }
 
     public function syncFamilyRecords()
     {
-
-    }
-
-    public function moveLocationColoumn()
-    {
-        $take = 50000;
-        $skip = 560000;
-
-        $lives = LifeLog::where('id', '>', 0)
-                        ->select('id', 'location')
-                        ->take($take)
-                        ->skip($skip)
+        $lives = LifeLog::where('type', 'birth')
+                        ->where('pos_x', '>', -190000000)
+                        ->where('pos_x', '<', 5000000)
+                        ->where('parent_id', '!=', 0)
+                        ->where('timestamp', '<=', 1700179092)
+                        ->where('timestamp', '>=', 1700030900)
+                        ->select('character_id', 'parent_id')
                         ->get();
+
+        foreach($lives as $life)
+        {
+            $this->getEve($life->character_id);
+        }
 
         // Begin database transaction
         DB::beginTransaction();
 
-        foreach($lives as $life)
+        foreach($this->lives as $life)
         {
-            $pos = explode(',', $life->location);
-            $life->pos_x = $pos[0];
-            $life->pos_y = $pos[1];
-            $life->save();
+            Family::updateOrCreate(
+                [
+                    'character_id' => $life["character_id"],
+                ],
+                [
+                    'parent_id' => $life["parent_id"],
+                    'eve_id' => $life["eve_id"],
+                ]
+            );
         }
 
         // Commit the DB transaction
         DB::commit();
-
-        print "skipped $skip";
     }
 }
