@@ -37,9 +37,6 @@
                         </thead>
                         <tbody class="p-2">
                             @forelse ($lives as $life)
-                                @php
-                                    $coords = explode(',', $life->location);
-                                @endphp
                                 <tr class="even:bg-gray-300 odd:bg-white dark:even:bg-slate-600 dark:odd:bg-slate-500 dark:text-gray-300">
                                     <td class="p-2 border border-gray-400">{{ (count($lives) - $loop->index) }}</td>
                                     <td class="p-2 border border-gray-400">{{ $life->name->name ?? '-UNNAMED-' }}</td>
@@ -47,8 +44,8 @@
                                     <td class="p-2 border border-gray-400">{{ $life->age }}</td>
                                     <td class="p-2 border border-gray-400">{{ $life->gender }}</td>
                                     <td class="p-2 border border-gray-400">
-                                        <a target="_blank" title="View on Wondible's OneMap" href="https://onemap.wondible.com/#x={{ $coords[0] }}&y={{ $coords[1] }}&z=29&s=17&t={{ time() }}">
-                                            {{ $life->location }}
+                                        <a target="_blank" title="View on Wondible's OneMap" href="https://onemap.wondible.com/#x={{ $life->pos_x }}&y={{ $life->pos_y }}&z=29&s=17&t={{ time() }}">
+                                            {{ $life->pos_x  }} / {{ $life->pos_y  }}
                                         </a>
                                     </td>
                                     <td class="p-2 border border-gray-400">{{ $life->died_to }}</td>

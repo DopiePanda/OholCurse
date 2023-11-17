@@ -6,6 +6,7 @@ use Carbon\Carbon;
 
 use App\Http\Controllers\CurseLogController;
 use App\Http\Controllers\CurseScraperController;
+use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\LeaderboardScraperController;
 use App\Http\Controllers\LifeScraperController;
@@ -61,6 +62,9 @@ Route::middleware('web')->group(function() {
         Route::get('/all-time/ghost', [LeaderboardController::class, 'allTimeGhost'])->name('all-time-ghost');
 
     });
+
+    Route::get('/family/{character_id}', [FamilyController::class, 'getEve'])->name('family.eve');
+    Route::get('/positions', [FamilyController::class, 'moveLocationColoumn']);
 
     Route::get('/lives/find', [LifeDataController::class, 'find'])->name('lives.find');
 

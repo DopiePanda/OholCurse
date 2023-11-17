@@ -141,6 +141,8 @@ class LifeLogScraper extends Controller
             $line[9] = 'language';
         }
 
+        $pos = explode(',', $line[5]);
+
         LifeLog::updateOrCreate(
             [
                 'character_id' => $line[2],
@@ -150,7 +152,8 @@ class LifeLogScraper extends Controller
                 'timestamp' => $line[1],
                 'player_hash' => $line[3],
                 'gender' => $line[4],
-                'location' => $line[5],
+                'pos_x' => $pos[0],
+                'pos_y' => $pos[1],
                 'parent_id' => $line[6],
                 'population' => $line[7],
                 'yum_chain' => $line[8],
@@ -172,6 +175,8 @@ class LifeLogScraper extends Controller
             $line[5] = 'male';
         }
 
+        $pos = explode(',', $line[6]);
+
         LifeLog::updateOrCreate(
             [
                 'character_id' => $line[2],
@@ -182,7 +187,8 @@ class LifeLogScraper extends Controller
                 'player_hash' => $line[3],
                 'age' => $line[4],
                 'gender' => $line[5],
-                'location' => $line[6],
+                'pos_x' => $pos[0],
+                'pos_y' => $pos[1],
                 'died_to' => $line[7],
                 'population' => $line[8],
             ]

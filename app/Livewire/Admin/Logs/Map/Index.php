@@ -174,8 +174,10 @@ class Index extends Component
                         ->where('character_id', '!=', '-1')
                         ->where('character_id', $this->selected_character)
                         ->orderBy('timestamp', 'desc')
+                        ->groupBy('timestamp')
                         ->limit($this->limit)
                         ->get();
+                        
         }else
         {
 
