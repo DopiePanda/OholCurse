@@ -55,9 +55,8 @@ class Area extends Component
 
         if($character)
         {
-            $birth = explode(',', $character->location);
-            $this->birth_x = $birth[0];
-            $this->birth_y = $birth[1];
+            $this->birth_x = $character->pos_x;
+            $this->birth_y = $character->pos_y;
 
             if($this->offset_x > 0)
             {

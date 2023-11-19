@@ -1,46 +1,46 @@
 <div class="w-full lg:w-2/3">
     <div class="w-full lg:w-1/3 mx-auto">
-        <div wire:ignore class="mx-auto p-4 border border-blue-400 rounded-lg">
+        <div wire:ignore class="mx-auto p-4 rounded-lg dark:bg-slate-700">
             <div class="p-2">
-                <div><label class="text-sm font-semibold" for="character_start">Character ID Start Point:</label></div>
-                <div><input wire:model="character_start" class="w-full rounded-lg" type="text" placeholder="6739939" /></div>
+                <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="character_start">Character ID Start Point:</label></div>
+                <div><input wire:model="character_start" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="text" placeholder="6739939" /></div>
                 <div>@error('character_start') <div class="mt-1 text-red-400 font-semibold text-sm italic">{{ $message }}</div> @enderror</div>
             </div>
             <div class="p-2">
-                <div><label class="text-sm font-semibold" for="object_id">Game Object ID:</label></div>
-                <div><input wire:model="object_id" class="w-full rounded-lg" type="text" placeholder="1268" /></div>
+                <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="object_id">Game Object ID:</label></div>
+                <div><input wire:model="object_id" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="text" placeholder="1268" /></div>
                 <div>@error('object_id') <div class="mt-1 text-red-400 font-semibold text-sm italic">{{ $message }}</div> @enderror</div>
             </div>
             <div class="p-2">
-                <div><label class="text-sm font-semibold" for="offset_x">Offset X:</label></div>
-                <div><input wire:model="offset_x" class="w-full rounded-lg" type="text" placeholder="400" /></div>
+                <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="offset_x">Offset X:</label></div>
+                <div><input wire:model="offset_x" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="text" placeholder="400" /></div>
                 <div>@error('offset_x') <div class="mt-1 text-red-400 font-semibold text-sm italic">{{ $message }}</div> @enderror</div>
             </div>
             <div class="p-2">
-                <div><label class="text-sm font-semibold" for="offset_y">Offset Y:</label></div>
-                <div><input wire:model="offset_y" class="w-full rounded-lg" type="text" placeholder="-200" /></div>
+                <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="offset_y">Offset Y:</label></div>
+                <div><input wire:model="offset_y" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="text" placeholder="-200" /></div>
                 <div>@error('offset_y') <div class="mt-1 text-red-400 font-semibold text-sm italic">{{ $message }}</div> @enderror</div>
             </div>
 
             <div class="p-2">
-                <div><label class="text-sm font-semibold" for="radius_size">Radius Size:</label></div>
-                <div><input wire:model="radius_size" class="w-full rounded-lg" type="number" placeholder="400" /></div>
+                <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="radius_size">Radius Size:</label></div>
+                <div><input wire:model="radius_size" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="number" placeholder="400" /></div>
                 <div>@error('radius_size') <div class="mt-1 text-red-400 font-semibold text-sm italic">{{ $message }}</div> @enderror</div>
             </div>
 
             <div class="p-2">
-                <div><label class="text-sm font-semibold" for="radius_size">Group By Character:</label></div>
-                <div><input wire:model="group" class="rounded-lg" type="checkbox"/></div>
+                <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="radius_size">Group By Character:</label></div>
+                <div><input wire:model="group" class="rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="checkbox"/></div>
                 <div>@error('group') <div class="mt-1 text-red-400 font-semibold text-sm italic">{{ $message }}</div> @enderror</div>
             </div>
 
             <div class="p-2">
-                <div><button wire:click="getResults" class="p-3 text-white text-center w-full bg-blue-400 rounded-lg" type="button">Fetch results</button></div>
+                <div><button wire:click="getResults" class="p-3 text-white text-center w-full bg-blue-400 rounded-lg dark:bg-red-500" type="button">Fetch results</button></div>
             </div>
         </div>
 
         @if($results)
-            <div class="mt-4 min-w-1/3 p-4 border border-gray-400 rounded-md">
+            <div class="mt-4 min-w-1/3 p-4 border border-gray-400 rounded-md text-gray-800 dark:text-gray-400">
                 <div class="grid grid-cols-2">
                     <div class="p-2 border-b border-r border-gray-400">Birth X: {{ $birth_x }}</div>
                     <div class="p-2 border-b border-gray-400">Birth Y: {{ $birth_y }}</div>
@@ -55,28 +55,28 @@
 
     <div class="overflow-x-scroll py-6 max-w-screen mx-auto sm:px-6 lg:px-8">
         @if( $results )
-        <div class="text-right text-lg">Amount of results: {{ count($results) }}</div>
+        <div class="text-right text-lg text-gray-800 dark:text-gray-400">Amount of results: {{ count($results) }}</div>
         <table wire:loading.remove class="overflow-x-scroll mt-3 w-full text-center border border-gray-400 shadow-lg overflow-x-scroll">
             <thead>
                 <tr class="border-b border-gray-400">
-                    <td class="p-4 bg-blue-400 text-white border-r border-blue-500">#</td>
-                    <td class="p-4 bg-blue-400 text-white border-r border-blue-500">Leaderboard</td>
-                    <td class="p-4 bg-blue-400 text-white border-r border-blue-500">Character</td>
-                    <td class="p-4 bg-blue-400 text-white border-r border-blue-500">Position</td>
-                    <td class="p-4 bg-blue-400 text-white border-r border-blue-500">Object</td>
+                    <td class="p-4 bg-blue-400 text-white border-r border-blue-500 dark:bg-red-500 dark:border-red-600">#</td>
+                    <td class="p-4 bg-blue-400 text-white border-r border-blue-500 dark:bg-red-500 dark:border-red-600">Leaderboard</td>
+                    <td class="p-4 bg-blue-400 text-white border-r border-blue-500 dark:bg-red-500 dark:border-red-600">Character</td>
+                    <td class="p-4 bg-blue-400 text-white border-r border-blue-500 dark:bg-red-500 dark:border-red-600">Position</td>
+                    <td class="p-4 bg-blue-400 text-white border-r border-blue-500 dark:bg-red-500 dark:border-red-600">Object</td>
                     @if($this->group)
-                        <td class="p-4 bg-blue-400 text-white border-r border-blue-500">Count</td>
+                        <td class="p-4 bg-blue-400 text-white border-r border-blue-500 dark:bg-red-500 dark:border-red-600">Count</td>
                     @endif
-                    <td class="p-4 bg-blue-400 text-white">Date</td>
+                    <td class="p-4 bg-blue-400 text-white dark:bg-red-500 dark:border-red-600">Date</td>
                 </tr>
             </thead>
             <tbody>
                 @forelse($results as $log)
-                    <tr class="bg-white">
+                    <tr class="even:bg-gray-300 odd:bg-white dark:even:bg-slate-600 dark:odd:bg-slate-500 dark:text-gray-300">
                         <td class="p-1 border border-gray-400">{{ $loop->index }}</td>
                         <td class="p-1 border border-gray-400">
                             @if(isset($log->life->leaderboard->leaderboard_name)) 
-                                <a class="text-blue-400 font-semibold" href="{{ route('player.curses', ['hash' => $log->life->leaderboard->player_hash]) }}">
+                                <a class="text-blue-400 font-semibold dark:text-red-400" href="{{ route('player.curses', ['hash' => $log->life->leaderboard->player_hash]) }}">
                                     {{ $log->life->leaderboard->leaderboard_name }}
                                 </a>
                             @else
@@ -86,7 +86,7 @@
                             @endif
                         </td>
                         <td class=" p-1 border border-gray-400">
-                            <div class="mt-1 text-sm text-black lowercase capitalize">
+                            <div class="mt-1 text-sm text-black lowercase capitalize dark:text-gray-200">
                                 @if(isset($log->name->name)) 
                                     {{ $log->name->name }} 
                                 @else
@@ -129,7 +129,7 @@
                         </td>
                     </tr>
                 @empty
-                    <span>Nothing here.</span>
+                    <span class="text-gray-800 dark:text-gray-400">Nothing here.</span>
                 @endforelse
             </tbody>
         </table>
