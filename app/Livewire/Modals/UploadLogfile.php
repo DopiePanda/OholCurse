@@ -62,6 +62,8 @@ class UploadLogfile extends ModalComponent
         $this->alert('success', 'Your log was successfully processed!');
         $this->dispatch('logProcessed');
         $this->closeModal();
+        
+        return redirect(route('dashboard'));
     }
 
     public function processLog()

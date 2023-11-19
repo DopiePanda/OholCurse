@@ -1,5 +1,5 @@
 <div class="lg:h-full">
-    <div class="w-full h-full flex flex-col items-stretch bg-white pt-4 lg:ml-2 border border-blue-400 rounded-xl dark:bg-slate-700 dark:border-0">
+    <div class="w-full h-full flex flex-col items-stretch bg-white pt-4 border border-blue-400 rounded-xl dark:bg-slate-700 dark:border-0">
 
         <div class="mx-auto text-4xl mb-2 dark:text-gray-200">Contact list</div>
         <div class="text-md dark:text-gray-400">Profiles saved to your account are private and non-public</div>

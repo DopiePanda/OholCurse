@@ -116,15 +116,13 @@ class Dashboard extends Component
     }
 
     public function setCurseVerified($report, $life)
-    {
-        $pos = explode(',', $life->location);
-
+    {   
         $report->player_hash = $life->player_hash;
         $report->gender = $life->gender;
         $report->age = $life->age;
         $report->died_to = $life->died_to;
-        $report->pos_x = $pos[0];
-        $report->pos_y = $pos[1];
+        $report->pos_x = $life->pos_x;
+        $report->pos_y = $life->pos_y;
         $report->verified = 1;
         $report->status = 1;
         $report->visible = 1;

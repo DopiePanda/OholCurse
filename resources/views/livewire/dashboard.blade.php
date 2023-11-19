@@ -9,7 +9,7 @@ date_default_timezone_set($timezone);
 @endsection
 
 
-<div class="w-full">
+<div class="w-full lg:max-w-2/3">
     <x-slot name="header">
         <div class="flex flex-row">
             <div class="flex-1">
@@ -32,13 +32,13 @@ date_default_timezone_set($timezone);
     </x-slot>
 
     <div class="w-full lg:w-2/3 lg:max-w-2/3 mt-6 mx-auto text-center p-2">
-        <div class="flex flex-col lg:flex-row justify-center">
+        <div class="flex flex-col lg:flex-row justify-between">
             <div class="flex-1 mt-2 w-full lg:w-1/2"><livewire:contacts.contact-list /></div>
             <div class="flex-1 items-end mt-2 w-full lg:w-1/2 lg:ml-2"><livewire:contacts.interaction-list /></div>
         </div>
     </div>
-    <div class="mt-2 lg:py-12">
-        <div class="w-full mx-auto sm:px-6 lg:px-8 py-4 border border-blue-400 rounded-lg dark:bg-slate-700 dark:border-0">
+    <div class="mt-4 w-full mx-auto">
+        <div class="w-full mx-auto sm:px-6 py-4 border border-blue-400 rounded-lg dark:bg-slate-700 dark:border-0">
             @if(count($yumlogs) > 0)
                 <div class="w-full mx-auto px-2 mt-4">
                     <div class="grid grid-cols-2">
@@ -116,7 +116,12 @@ date_default_timezone_set($timezone);
                     </div>   
                 </div>
             @else
-                <div class="w-full text-center">No yumlogs uploaded</div>
+                <div class="w-full text-center text-gray-800 dark:text-gray-400">No yumlogs uploaded</div>
+                <div>
+                    <button class="mt-2 mx-2 px-4 py-2 bg-gray-300 rounded-md" onclick="Livewire.dispatch('openModal', { component: 'modals.upload-logfile' })">
+                        Upload Yumlog
+                    </button>
+                </div>
             @endif
         </div>
     </div>
