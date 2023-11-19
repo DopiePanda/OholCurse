@@ -16,6 +16,32 @@ class FamilyController extends Controller
     public $eve;
     public $lives = [];
 
+    public function index()
+    {
+        $eves = LifeLog::where('type', 'birth')
+                        ->where('pos_x', '>', -190000000)
+                        ->where('pos_x', '<', 5000000)
+                        ->where('parent_id', 0)
+                        ->select('id', 'character_id', 'parent_id', 'family_type', 'timestamp')
+                        ->with('name:character_id,name')
+                        ->take(50)
+                        ->orderBy('id', 'desc')
+                        ->get();
+
+        return view('families.index', ['eves' => $eves]);
+    }
+
+    public function view($character_id)
+    {
+        $members = LifeLog::where('character_id', $character_id)
+                        ->where('type', 'birth')
+                        ->select('character_id', 'parent_id')
+                        ->with('children', 'name:character_id,name')
+                        ->get();
+        //dd($members);
+        return view('families.view', ['members' => $members]);
+    }
+
     public function getEve($character_id)
     {
         $this->character = LifeLog::where('character_id', $character_id)->where('type', 'birth')->first();
@@ -60,7 +86,7 @@ class FamilyController extends Controller
             $i++;
         }
 
-        //dd($this->lives);
+        dd($this->lives);
     }
 
     public function syncFamilyRecords()
@@ -97,5 +123,47 @@ class FamilyController extends Controller
 
         // Commit the DB transaction
         DB::commit();
+    }
+
+    public function selbSolution()
+    {
+        $lives = LifeLog::where('type', 'birth')
+                        ->where('pos_x', '>', -190000000)
+                        ->where('pos_x', '<', 5000000)
+                        ->take(10000)
+                        ->orderBy('id', 'desc')
+                        ->get();
+
+        $eves = [];
+
+        foreach($lives as $life)
+        {
+            if($life->parent_id == 0)
+            {
+                $eves[$life->character_id] = $life->character_id;
+            }else
+            {
+                if(array_key_exists($life->parent_id, $eves))
+                {
+                    $eves[$life->character_id] = $eves[$life->parent_id];
+                }else{
+                    //print $life->character_id.'<br>';
+                }
+            }
+        }
+
+        dd($eves);
+    }
+
+    public function getChildren($character_id)
+    {
+        $lives = LifeLog::where('character_id', $character_id)
+                        ->where('type', 'birth')
+                        ->select('character_id', 'parent_id')
+                        ->with('children', 'name:character_id,name')
+                        ->get()
+                        ->toArray();
+
+        dd($lives);
     }
 }
