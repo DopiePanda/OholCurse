@@ -62,7 +62,7 @@ class Area extends Component
             {
                 $offset_x_min = $this->birth_x+$this->offset_x;
                 $offset_x_max = $this->birth_x+$this->offset_x;
-                $this->x_min = $offset_x_min+$this->radius_size;;
+                $this->x_min = $offset_x_min+$this->radius_size;
                 $this->x_max = $offset_x_max-$this->radius_size;
             }else
             {
