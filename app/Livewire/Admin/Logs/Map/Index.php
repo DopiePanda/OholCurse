@@ -38,7 +38,7 @@ class Index extends Component
 
     public function mount()
     {
-        $this->date_from = Carbon::now()->subDays(14)->timestamp;
+        $this->date_from = Carbon::now()->subDays(100)->timestamp;
         $this->date_to = Carbon::now()->timestamp;
 
         $this->objects = GameObject::select('id', 'name')->orderBy('id', 'asc')->get();

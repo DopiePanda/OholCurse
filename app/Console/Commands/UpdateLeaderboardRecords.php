@@ -38,7 +38,7 @@ class UpdateLeaderboardRecords extends Command
 
         $id = $this->argument('id');
 
-        $start = Carbon::now('UTC')->subDays(30);
+        $start = Carbon::now('UTC')->subDays(14);
         $start = $start->setTimeFromTimeString('00:00:00');
 
         $end = Carbon::now('UTC')->subDays(1);
@@ -73,7 +73,7 @@ class UpdateLeaderboardRecords extends Command
     {
         if($object->multi != 1)
         {
-            $result = MapLog::with(['name:character_id,name', 'life.leaderboard:player_hash,leaderboard_name,leaderboard_id'])
+            $results = MapLog::with(['lives:character_id,timestamp', 'name:character_id,name', 'life.leaderboard:player_hash,leaderboard_name,leaderboard_id'])
                         ->select(DB::raw("(COUNT(object_id)) as count"), 'character_id')
                         ->where('object_id', $object->object_id)
                         ->where('timestamp', '<=', $time_to)
@@ -81,13 +81,11 @@ class UpdateLeaderboardRecords extends Command
                         ->where('character_id', '!=', '-1')
                         ->groupBy('character_id')
                         ->orderBy('count', 'desc')
-                        ->first();
-
-            $record = LeaderboardRecord::where('object_id', $object->object_id)->orderBy('amount', 'desc')->first();
+                        ->take(10)
+                        ->get();
         }else
         {
-            //dd($object->multi_objects);
-            $result = MapLog::with(['name:character_id,name', 'life.leaderboard:player_hash,leaderboard_name,leaderboard_id'])
+            $results = MapLog::with(['lives:character_id,timestamp', 'name:character_id,name', 'life.leaderboard:player_hash,leaderboard_name,leaderboard_id'])
                         ->select(DB::raw("(COUNT(object_id)) as count"), 'character_id')
                         ->whereIn('object_id', json_decode($object->multi_objects))
                         ->where('timestamp', '<=', $time_to)
@@ -95,44 +93,50 @@ class UpdateLeaderboardRecords extends Command
                         ->where('character_id', '!=', '-1')
                         ->groupBy('character_id')
                         ->orderBy('count', 'desc')
-                        ->first();
-
-            //dd($result->count);
-
-            $record = LeaderboardRecord::where('multi_objects', $object->multi_objects)->orderBy('amount', 'desc')->first();
-            //dd($record);
+                        ->take(10)
+                        ->get();
         }
 
-        $birth = LifeLog::where('character_id', $result->name->character_id)->where('type', 'birth')->first();
-        $death = LifeLog::where('character_id', $result->name->character_id)->where('type', 'death')->first();
-
-        if($birth && $death)
+        foreach($results as $result)
         {
-            
-            $time_alive = ($death->timestamp - $birth->timestamp);
+            if(count($result->lives) == 2)
+            {
+                
+                $time_alive = ($result->lives[1]->timestamp - $result->lives[0]->timestamp);
 
-            if($time_alive <= 3600 )
-            {
-                $ghost = false;
-            }
-            else
-            {
-                $ghost = true;
-            }
+                if($time_alive <= 3600 )
+                {
+                    $ghost = false;
+                    $record = LeaderboardRecord::where('object_id', $object->object_id)
+                                            ->where('ghost', 0)
+                                            ->orderBy('amount', 'desc')
+                                            ->first();
+                }
+                else
+                {
+                    $ghost = true;
+                    $record = LeaderboardRecord::where('object_id', $object->object_id)
+                                            ->where('ghost', 1)
+                                            ->orderBy('amount', 'desc')
+                                            ->first();
+                }
 
-            if($record == null || $result->count > $record->amount)
-            {
-                LeaderboardRecord::create([
-                    'game_leaderboard_id' => $object->id,
-                    'ghost' => $ghost,
-                    'object_id' => $object->object_id,
-                    'multi' => $object->multi,
-                    'multi_objects' => $object->multi_objects,
-                    'leaderboard_id' => $result->life->leaderboard->leaderboard_id,
-                    'character_id' => $result->name->character_id,
-                    'amount' => $result->count,
-                    'timestamp' => $result->life->timestamp,
-                ]);
+                if($record == null || $result->count > $record->amount)
+                {
+                    
+                    LeaderboardRecord::create([
+                        'game_leaderboard_id' => $object->id,
+                        'ghost' => $ghost,
+                        'object_id' => $object->object_id,
+                        'multi' => $object->multi,
+                        'multi_objects' => $object->multi_objects,
+                        'leaderboard_id' => $result->life->leaderboard->leaderboard_id,
+                        'character_id' => $result->name->character_id,
+                        'amount' => $result->count,
+                        'timestamp' => $result->life->timestamp,
+                    ]);
+                    
+                }
             }
         }
     }
