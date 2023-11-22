@@ -70,6 +70,11 @@
                                 @endif
                             </td>
                             <td class="p-2">
+                                @if(count($result->lives) == 2)
+                                    @if(($result->lives[1]->timestamp - $result->lives[0]->timestamp) > 3600)
+                                        <span><i class="fa-solid fa-ghost text-gray-200 dark:text-gray-600 pr-1"></i></span>
+                                    @endif
+                                @endif
                                 @if(isset($result->name->name)) 
                                     {{ $result->name->name }} 
                                 @else
