@@ -56,7 +56,7 @@ class Leaderboard extends Component
 
     public function getMapLeaderboard($object)
     {
-        $this->results = MapLog::with('name:character_id,name', 'life.leaderboard:player_hash,leaderboard_name')
+        $this->results = MapLog::with('lives', 'name:character_id,name', 'life.leaderboard:player_hash,leaderboard_name')
                         ->select(DB::raw("(COUNT(object_id)) as count"), 'character_id')
                         ->where('object_id', $object)
                         ->where('timestamp', '<=', $this->end->timestamp)
