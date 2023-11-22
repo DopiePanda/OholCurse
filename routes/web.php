@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Http\Controllers\CurseLogController;
 use App\Http\Controllers\CurseScraperController;
 use App\Http\Controllers\FamilyController;
+use App\Http\Controllers\GuideController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\LeaderboardScraperController;
 use App\Http\Controllers\LifeScraperController;
@@ -63,8 +64,12 @@ Route::middleware('web')->group(function() {
 
     });
 
-    Route::get('/family/eve/{character_id}', [FamilyController::class, 'getEve'])->name('family.eve');
+    Route::get('/families/index', [FamilyController::class, 'index'])->name('families.index');
+    Route::get('/families/view/{character_id}', [FamilyController::class, 'view'])->name('families.view');
+    
+    Route::get('/family/children/{character_id}', [FamilyController::class, 'getChildren'])->name('family.children');
     Route::get('/family/sync/', [FamilyController::class, 'syncFamilyRecords']);
+    Route::get('/family/selb', [FamilyController::class, 'selbSolution']);
 
     Route::get('/lives/find', [LifeDataController::class, 'find'])->name('lives.find');
 
@@ -81,6 +86,12 @@ Route::middleware('web')->group(function() {
         Route::get('/logs/export', [ExportController::class, 'index'])->name('logs.export');
 
         Route::get('/stats', [StatisticController::class, 'index'])->name('stats.index');
+
+        Route::resource('guides', GuideController::class);
+        Route::get('/guides/view/{slug}', [GuideController::class, 'show'])->name('guides.view');
+        Route::post('upload', [GuideController::class, 'upload'])->name('upload');
+
+        Route::get('/all-time', [LeaderboardController::class, 'getAllNormalLives'])->name('all-time');
     });
 
     
