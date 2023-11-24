@@ -83,6 +83,7 @@ class LeaderboardController extends Controller
                         ->where('character_id', '!=', '-1')
                         ->groupBy('character_id')
                         ->orderBy('count', 'desc')
+                        ->orderBy('character_id', 'asc')
                         ->limit($object->limit ?? 10)
                         ->get();
 
