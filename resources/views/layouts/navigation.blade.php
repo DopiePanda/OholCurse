@@ -56,6 +56,41 @@
                         {{ __('Names') }}
                     </x-nav-link>
 
+                    <x-dropdown align="left" width="56" :active="request()->routeIs('leaderboards.*')">
+                        <x-slot name="trigger">
+                            <button class="inline-flex items-center px-1 pt-6 pb-5 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 dark:text-gray-600 hover:text-gray-700 dark:hover:text-gray-400 hover:border-gray-300 dark:hover:border-transparent focus:outline-none focus:text-gray-700 focus:border-gray-300 dark:focus:border-transparent transition duration-150 ease-in-out">
+                                <div class="">Resources</div>
+    
+                                <div class="ml-1">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+                        </x-slot>
+    
+                        <x-slot name="content">
+                            <x-dropdown-link :href="'https://discord.gg/zmk5BfpX3E'">
+                                {{ __('OHOL Discord') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="'https://www.reddit.com/r/onehouronelife/'">
+                                {{ __('OHOL Reddit') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="'https://onehouronelife.com/forums/'">
+                                {{ __('OHOL Forum') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="'https://onetech.info/'" target="_blank">
+                                {{ __('Recipe Guides') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="'https://github.com/selb/YumLife/releases'" target="_blank">
+                                {{ __('YumLife Mod') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="'https://onemap.wondible.com/'" target="_blank">
+                                {{ __('Wondible World Map') }}
+                            </x-dropdown-link>
+                        </x-slot>
+                    </x-dropdown>
+
                 </div>
             </div>
             <!-- Settings Dropdown -->
