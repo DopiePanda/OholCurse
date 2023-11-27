@@ -227,14 +227,19 @@ class PlayerReportController extends Controller
                             ->select('leaderboard_name', 'leaderboard_id')
                             ->orderBy('id', 'desc')
                             ->first();
-
-        $records = LeaderboardRecord::with('character', 'lifeName:character_id,name', 'leaderboard:id,image,label,object_id')
+        if($player)
+        {
+            $records = LeaderboardRecord::with('character', 'lifeName:character_id,name', 'leaderboard:id,image,label,object_id')
                             ->select('game_leaderboard_id','object_id', 'leaderboard_id', 'character_id', 'amount', 'timestamp', 'ghost', DB::raw('MAX(amount) as max_amount'))
                             ->where('leaderboard_id', $player->leaderboard_id)
                             ->groupBy('object_id')
                             ->orderBy('timestamp', 'desc')
-                            
                             ->get();
+        }else
+        {
+            $records = [];
+        }
+        
 
         $object_ids = array();
 
