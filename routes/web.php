@@ -50,6 +50,7 @@ Route::middleware('web')->group(function() {
     Route::get('/player/hash/{hash}', [PlayerReportController::class, 'fetch'])->name('player.curses');
     Route::get('/player/lives/{hash}', [PlayerReportController::class, 'lives'])->name('player.lives');
     Route::get('/player/reports/{hash}', [PlayerReportController::class, 'reports'])->name('player.reports');
+    Route::get('/player/records/{hash}', [PlayerReportController::class, 'records'])->name('player.records');
     
     Route::get('/names', CharacterNames::class)->name('names');
 

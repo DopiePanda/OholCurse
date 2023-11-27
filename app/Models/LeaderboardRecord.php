@@ -40,5 +40,10 @@ class LeaderboardRecord extends Model
         return $this->hasOne(Leaderboard::class, 'leaderboard_id', 'leaderboard_id');
     }
 
+    public function currentRecord()
+    {
+        return $this->hasOne(LeaderboardRecord::class, 'object_id', 'object_id')->orderBy('amount', 'desc');
+    }
+
 
 }
