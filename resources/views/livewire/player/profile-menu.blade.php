@@ -26,7 +26,7 @@
 
 
             <div class="mt-2 lg:px-4">
-                <a href="{{ route('player.records', ['hash' => $hash]) }}" class="block py-2 rounded-xl border border-white dark:border-red-600 @if(request()->routeIs('player.reports')) bg-white dark:bg-red-600 text-gray-800 dark:text-white border-0 @else text-white dark:text-red-600 @endif">
+                <a href="{{ route('player.records', ['hash' => $hash]) }}" class="block py-2 rounded-xl border border-white dark:border-red-600 @if(request()->routeIs('player.records')) bg-white dark:bg-red-600 text-gray-800 dark:text-white border-0 @else text-white dark:text-red-600 @endif">
                     Records ({{ count($counts['records']) }})
                 </a>
             </div>
