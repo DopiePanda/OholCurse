@@ -15,7 +15,7 @@
     </x-slot>
     <div class="grow max-w-5xl flex flex-col">
 
-        <x-player.menu :hash="$hash" />
+        <livewire:player.profile-menu :hash="$hash">
 
         <div class="w-full mt-6 bg-gray-200 dark:bg-slate-700 p-2 lg:p-6">
             <div class="p-4 mb-4 text-center">

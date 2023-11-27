@@ -12,6 +12,7 @@ use App\Models\CurseLog;
 use App\Models\LifeLog;
 use App\Models\LifeNameLog;
 use App\Models\Leaderboard;
+use App\Models\LeaderboardRecord;
 use App\Models\UserContact;
 use App\Models\PlayerScore;
 use App\Models\ProfileRestriction;
@@ -216,6 +217,52 @@ class PlayerReportController extends Controller
         $result['forgiven_all'] = CurseLog::where('player_hash', $hash)->where('type', 'all')->orderBy('timestamp', 'desc')->get();
 
         return view('player-report2', ['results' => $result, 'hash' => $hash]);
+    }
+
+    public function records(Request $request, $hash)
+    {
+        $time_start = microtime(true);
+
+        $player = Leaderboard::where('player_hash', $hash)
+                            ->select('leaderboard_name', 'leaderboard_id')
+                            ->orderBy('id', 'desc')
+                            ->first();
+
+        $records = LeaderboardRecord::with('character', 'lifeName:character_id,name', 'leaderboard:id,image,label,object_id')
+                            ->select('game_leaderboard_id','object_id', 'leaderboard_id', 'character_id', 'amount', 'timestamp', 'ghost', DB::raw('MAX(amount) as max_amount'))
+                            ->where('leaderboard_id', $player->leaderboard_id)
+                            ->groupBy('object_id')
+                            ->orderBy('timestamp', 'desc')
+                            
+                            ->get();
+
+        $object_ids = array();
+
+        foreach ($records as $record) 
+        {
+            array_push($object_ids, $record->object_id);
+        }
+
+        //dd($object_ids);
+
+        $maxRecords = LeaderboardRecord::with('player:player_hash,leaderboard_name')
+                            ->select('object_id', 'leaderboard_id', 'character_id', 'amount', 'timestamp', 'ghost', DB::raw('MAX(amount) as max_amount'))
+                            ->whereIn('object_id', $object_ids)
+                            ->groupBy('object_id')
+                            ->orderBy('max_amount', 'desc')
+                            ->get();
+
+
+        //dd($records);
+        //dd($maxRecords);
+
+        return view('player.records', [
+            'hash' => $hash, 
+            'records' => $records,
+            'maxRecords' => $maxRecords,
+            'player' => $player,
+            'time' => $time_start,
+        ]);
     }
 
     private function categorizeSent($object, $hash)
