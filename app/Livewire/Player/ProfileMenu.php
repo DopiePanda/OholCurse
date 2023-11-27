@@ -43,11 +43,16 @@ class ProfileMenu extends Component
                         ->where('age', '>', 3)
                         ->where('type', 'death')
                         ->count();
-
-        $records = LeaderboardRecord::where('leaderboard_id', $player->leaderboard_id)
+        if($player)
+        {
+            $records = LeaderboardRecord::where('leaderboard_id', $player->leaderboard_id)
                             ->select('object_id')
                             ->groupBy('object_id')
                             ->get();
+        }else{
+            $records = [];
+        }
+        
 
 
         if(Auth::user())
