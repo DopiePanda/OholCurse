@@ -70,13 +70,13 @@
                         </x-slot>
     
                         <x-slot name="content">
-                            <x-dropdown-link :href="'https://discord.gg/zmk5BfpX3E'">
+                            <x-dropdown-link :href="'https://discord.gg/zmk5BfpX3E'" target="_blank">
                                 {{ __('OHOL Discord') }}
                             </x-dropdown-link>
-                            <x-dropdown-link :href="'https://www.reddit.com/r/onehouronelife/'">
+                            <x-dropdown-link :href="'https://www.reddit.com/r/onehouronelife/'" target="_blank">
                                 {{ __('OHOL Reddit') }}
                             </x-dropdown-link>
-                            <x-dropdown-link :href="'https://onehouronelife.com/forums/'">
+                            <x-dropdown-link :href="'https://onehouronelife.com/forums/'" target="_blank">
                                 {{ __('OHOL Forum') }}
                             </x-dropdown-link>
                             <x-dropdown-link :href="'https://onetech.info/'" target="_blank">
