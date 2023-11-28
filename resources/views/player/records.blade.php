@@ -24,7 +24,7 @@
                 @foreach ($records as $record)
                     @foreach ($maxRecords as $max)
                         @if ($max->object_id == $record->object_id)
-                            <div class="p-2 text-center rounded-lg border @if($max->max_amount > $record->max_amount) bg-gray-800 border-gray-400 dark:border-gray-500 dark:text-gray-400  @else border-blue-400 dark:border-red-500 dark:text-gray-400 @endif">
+                            <div class="p-2 text-center rounded-lg border @if($max->max_amount > $record->max_amount) bg-gray-400 text-gray-800 dark:bg-gray-800 border-gray-400 dark:border-gray-500 dark:text-gray-400  @else border-blue-400 dark:border-red-500 dark:text-gray-400 @endif">
                                 <div class="h-20 mx-auto text-center">
                                     <img class="h-20 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="" title="{{ asset($record->leaderboard->image) ?? '' }}">
                                 </div>
@@ -33,18 +33,18 @@
                                 </div>
                                 <div class="text-2xl font-bold dark:text-red-500">             
                                     @if($max->max_amount > $record->max_amount)
-                                        <div class="text-gray-400 decoration-4 line-through decoration-gray-800">
+                                        <div class="text-gray-600 decoration-4 line-through decoration-gray-800">
                                             <span class="">
                                                 {{ $record->max_amount }}
                                             </span>
                                         </div>
                                     @else
-                                        <span>
+                                        <span class="text-blue-400 dark:text-red-500">
                                             {{ $record->max_amount }}
                                         </span>
                                     @endif      
                                 </div>
-                                <div class="p-1 mt-3 rounded-full bg-gray-600 text-slate-900 text-sm font-semibold italic">
+                                <div class="p-1 mt-3 rounded-full bg-white dark:bg-gray-600 text-slate-900 text-sm font-semibold italic">
                                     <span class="">
                                         {{ $record->lifeName->name ?? 'missing' }}
                                         @if ($record->ghost)
