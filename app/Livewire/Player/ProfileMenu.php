@@ -46,6 +46,7 @@ class ProfileMenu extends Component
         if($player)
         {
             $records = LeaderboardRecord::where('leaderboard_id', $player->leaderboard_id)
+                            ->whereHas('leaderboard', function($query) { return $query->where('enabled', '=', 1); })
                             ->select('object_id')
                             ->groupBy('object_id')
                             ->get();

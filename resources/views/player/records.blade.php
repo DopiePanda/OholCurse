@@ -44,11 +44,11 @@
                                         </span>
                                     @endif      
                                 </div>
-                                <div class="mt-3 text-slate-950 text-sm italic">
+                                <div class="p-1 mt-3 rounded-full bg-gray-600 text-slate-900 text-sm font-semibold italic">
                                     <span class="">
                                         {{ $record->lifeName->name ?? 'missing' }}
                                         @if ($record->ghost)
-                                            <i class="ml-2 fa-solid fa-ghost text-gray-400 dark:text-gray-400 pr-1"></i>
+                                            <i class="ml-2 fa-solid fa-ghost text-gray-400 dark:text-gray-400 pr-1" title="OBTAINED AS GHOST"></i>
                                         @endif
                                     </span>
                                 </div>
