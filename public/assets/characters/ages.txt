@@ -1,0 +1,14 @@
+BABY (Age 0 - 3 years old)
+CHILD (Age 4 - 13 years old)
+YOUNG ADULT (Age 14 - 24 years old)
+ADULT (Age 25 - 39 years old)
+ELDERLY (Age 40 - 60 years old)
+
+
+Arctic
+Language
+Jungle
+Desert
+
+Male
+Female
