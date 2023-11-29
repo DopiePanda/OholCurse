@@ -21,7 +21,7 @@
             <div class="text-4xl mt-2 text-center dark:text-gray-400">Attained leaderboard records</div>
 
             <div class="mt-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                @foreach ($records as $record)
+                @forelse ($records as $record)
                     @foreach ($maxRecords as $max)
                         @if ($max->object_id == $record->object_id)
                             <div class="p-2 text-center rounded-lg border @if($max->max_amount > $record->max_amount) bg-gray-400 text-gray-800 dark:bg-gray-800 border-gray-400 dark:border-gray-500 dark:text-gray-400  @else border-blue-400 dark:border-red-500 dark:text-gray-400 @endif">
@@ -60,13 +60,15 @@
 
                         @endif        
                     @endforeach
-                @endforeach
+                @empty
+                    <div class="text-center">This player have not yet attained any leaderboard placements</div>
+                @endforelse
             </div>
 
             <div class="mt-8 text-4xl mt-2 text-center dark:text-gray-400">Ghost leaderboard records</div>
 
             <div class="mt-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                @foreach ($ghostRecords as $record)
+                @forelse ($ghostRecords as $record)
                     @foreach ($maxRecordsGhosts as $max)
                         @if ($max->object_id == $record->object_id)
                             <div class="p-2 text-center rounded-lg border @if($max->max_amount > $record->max_amount) bg-gray-400 text-gray-800 dark:bg-gray-800 border-gray-400 dark:border-gray-500 dark:text-gray-400  @else border-blue-400 dark:border-red-500 dark:text-gray-400 @endif">
@@ -105,7 +107,9 @@
 
                         @endif        
                     @endforeach
-                @endforeach
+                @empty
+                    <div class="text-center">This player have not yet attained any ghost leaderboard placements</div>
+                @endforelse
             </div>
             
             @php
