@@ -3,14 +3,27 @@
 namespace App\Livewire\Modals\Character;
 
 use LivewireUI\Modal\ModalComponent;
+use DB;
 
 use App\Models\LifeLog;
+use App\Models\LeaderboardRecord;
+use App\Models\CurseLog;
+use App\Models\MapLog;
 
 class Details extends ModalComponent
 {
 
     public $life;
     public $death;
+
+    public $curses;
+    public $trusts;
+    public $forgives;
+
+    public $records;
+
+    public $object;
+
     public $sprite;
 
     public function mount($character_id)
@@ -23,6 +36,29 @@ class Details extends ModalComponent
         $this->death = LifeLog::where('character_id', $character_id)
                     ->where('type', 'death')
                     ->first();
+
+        $this->curses = CurseLog::where('character_id', $character_id)
+                                ->where('type', 'curse')
+                                ->count();
+
+        $this->trusts = CurseLog::where('character_id', $character_id)
+                                ->where('type', 'trust')
+                                ->count();
+
+        $this->forgives = CurseLog::where('character_id', $character_id)
+                                ->where('type', 'forgive')
+                                ->count();
+
+        $this->records = LeaderboardRecord::where('character_id', $character_id)
+                                ->count();
+
+        $this->object = MapLog::where('character_id', $character_id)
+                                ->with('object')
+                                ->where('object_id', '!=', 0)
+                                ->select('object_id', DB::raw('SUM(object_id) as amount'))
+                                ->groupBy('object_id')
+                                ->orderBy('amount', 'desc')
+                                ->first();
 
         $this->getCharacterSprite($this->life->gender, $this->death->age, $this->life->family_type);
     }
