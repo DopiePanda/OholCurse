@@ -55,7 +55,7 @@ class Details extends ModalComponent
         $this->object = MapLog::where('character_id', $character_id)
                                 ->with('object')
                                 ->where('object_id', '!=', 0)
-                                ->select('object_id', DB::raw('SUM(object_id) as amount'))
+                                ->select('object_id', DB::raw('COUNT(object_id) as amount'))
                                 ->groupBy('object_id')
                                 ->orderBy('amount', 'desc')
                                 ->first();
