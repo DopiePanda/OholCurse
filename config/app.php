@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://oholcurse.com'),
+    'url' => env('APP_URL', 'http://beta.oholcurse.com'),
 
     'asset_url' => env('ASSET_URL'),
 
