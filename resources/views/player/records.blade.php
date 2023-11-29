@@ -18,7 +18,7 @@
 
         <div class="mt-6 bg-gray-200 p-2 lg:p-6 dark:bg-slate-700">
 
-            <div class="text-4xl mt-2 text-center dark:text-gray-400">Attained leaderboard records</div>
+            <div class="text-4xl mt-2 text-center text-blue-400 dark:text-red-500">Attained leaderboard records</div>
 
             <div class="mt-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 @forelse ($records as $record)
@@ -61,11 +61,13 @@
                         @endif        
                     @endforeach
                 @empty
-                    <div class="text-center">This player have not yet attained any leaderboard placements</div>
+                    <div class="col-span-1 md:col-span-3 lg:col-span-4 text-center text-gray-400 dark:text-gray-400">
+                        This player have not yet attained any leaderboard placements
+                    </div>
                 @endforelse
             </div>
 
-            <div class="mt-8 text-4xl mt-2 text-center dark:text-gray-400">Ghost leaderboard records</div>
+            <div class="mt-8 text-4xl mt-2 text-center text-blue-400 dark:text-red-500">Ghost leaderboard records</div>
 
             <div class="mt-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 @forelse ($ghostRecords as $record)
@@ -108,16 +110,17 @@
                         @endif        
                     @endforeach
                 @empty
-                    <div class="text-center">This player have not yet attained any ghost leaderboard placements</div>
+                    <div class="col-span-1 md:col-span-3 lg:col-span-4 text-center text-gray-400 dark:text-gray-400">
+                        This player have not yet attained any ghost leaderboard placements
+                    </div>
                 @endforelse
             </div>
-            
-            @php
+        </div>
+        @php
                 $time_end = microtime(true);
         
                 $end = $time_end - $time;
             @endphp
             <div class="text-center text-sm mt-2 text-gray-400">Page load time: {{ round($end, 3) }}s</div>
-        </div>
     </div>
 </x-app-layout>
