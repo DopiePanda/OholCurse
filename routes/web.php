@@ -32,6 +32,8 @@ use App\Livewire\Map\Leaderboard2;
 use App\Models\LifeNameLog;
 use App\Models\LifeLog;
 
+use Spatie\Sitemap\SitemapGenerator;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,6 +47,10 @@ use App\Models\LifeLog;
 
 
 Route::middleware('web')->group(function() {
+
+    Route::get('/sitemap', function(){
+        SitemapGenerator::create('https://oholcurse.com')->getSitemap()->writeToDisk('public', 'sitemap.xml');
+    });
     
     Route::get('/', Home::class)->middleware(['web'])->name('search');
     Route::get('/player/hash/{hash}', [PlayerReportController::class, 'fetch'])->name('player.curses');
