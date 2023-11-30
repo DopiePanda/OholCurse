@@ -284,10 +284,10 @@ class PlayerReportController extends Controller
 
         return view('player.records', [
             'hash' => $hash, 
-            'records' => $records,
-            'maxRecords' => $maxRecords,
-            'ghostRecords' => $ghostRecords,
-            'maxRecordsGhosts' => $maxRecordsGhosts,
+            'records' => $records ?? [],
+            'maxRecords' => $maxRecords ?? [],
+            'ghostRecords' => $ghostRecords ?? [],
+            'maxRecordsGhosts' => $maxRecordsGhosts ?? [],
             'player' => $player,
             'time' => $time_start,
         ]);
