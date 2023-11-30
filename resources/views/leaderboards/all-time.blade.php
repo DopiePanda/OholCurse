@@ -43,7 +43,7 @@
                                     {{ $result->amount ?? 0 }}
                                     @if($result->playerName->leaderboard_id == 53)
                                         <div class="text-center">
-                                            <img title="Second place paricipation award" class="mx-auto h-6" src="{{ asset('assets/images/leaderboard/participation-award.png') }}" />
+                                            <img title="Second place paricipation award" class="mx-auto h-6" src="{{ asset('assets/leaderboard/participation-award.png') }}" />
                                         </div>
                                     @endif
                                 </td>
