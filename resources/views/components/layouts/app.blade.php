@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="dark" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
+
+        <!-- Meta information -->
         <meta charset="utf-8">
+        <meta name="description" content="Browse the player profiles from One Hour One Life and grab your spot on the leaderboards">
+        <meta name="robots" content="all">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }} @yield('page-title')</title>
+        <!-- Page title and icon -->
+        <title>{{ config('app.name', 'OHOL Curse') }} @yield('page-title')</title>
+        <link rel="icon" href="{{ asset('favicon.png') }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -19,6 +25,9 @@
         <script src="https://kit.fontawesome.com/737926afbe.js" crossorigin="anonymous"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css">
 
         @yield('before-head-end')
     </head>
@@ -46,6 +55,7 @@
         @livewire('wire-elements-modal')
         @livewireScripts
         @stack('scripts')
+    
         <script type="text/javascript">
 
             let defaultTheme = "{{ env('DEFAULT_THEME') }}";
@@ -63,6 +73,7 @@
         </script>
 
         <script src="{{ asset('assets/js/theme-selector.js') }}"></script>
+
         <!-- 
         Hot and amazing people:
             - Nezima
