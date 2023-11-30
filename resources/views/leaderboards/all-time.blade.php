@@ -41,11 +41,11 @@
                                 </td>
                                 <td class="p-4 text-xl font-bold border border-gray-400">
                                     {{ $result->amount ?? 0 }}
-                                    @if($result->playerName->leaderboard_id == 53)
+                                    <!-- @if($result->playerName->leaderboard_id == 53)
                                         <div class="text-center">
                                             <img title="Second place paricipation award" class="mx-auto h-6" src="{{ asset('assets/leaderboard/participation-award.png') }}" />
                                         </div>
-                                    @endif
+                                    @endif -->
                                 </td>
                                 <td class="p-4 border border-gray-400">
                                     @if(isset($result->character->player_hash) && isset($result->playerName->leaderboard_name)) 
