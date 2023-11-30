@@ -229,7 +229,7 @@ class PlayerReportController extends Controller
                             ->first();
         if($player)
         {
-            $records = LeaderboardRecord::with('character', 'lifeName:character_id,name', 'leaderboard:id,image,label,object_id')
+            $records = LeaderboardRecord::with('character', 'lifeName:character_id,name', 'leaderboard:id,image,label,object_id', 'player:leaderboard_id')
                             ->whereHas('leaderboard', function($query) { return $query->where('enabled', '=', 1); })
                             ->select('game_leaderboard_id','object_id', 'leaderboard_id', 'character_id', 'amount', 'timestamp', 'ghost', DB::raw('MAX(amount) as max_amount'))
                             ->where('leaderboard_id', $player->leaderboard_id)
@@ -238,7 +238,7 @@ class PlayerReportController extends Controller
                             ->orderBy('max_amount', 'desc')
                             ->get();
 
-            $ghostRecords = LeaderboardRecord::with('character', 'lifeName:character_id,name', 'leaderboard:id,image,label,object_id')
+            $ghostRecords = LeaderboardRecord::with('character', 'lifeName:character_id,name', 'leaderboard:id,image,label,object_id', 'player:leaderboard_id')
                             ->whereHas('leaderboard', function($query) { return $query->where('enabled', '=', 1); })
                             ->select('game_leaderboard_id','object_id', 'leaderboard_id', 'character_id', 'amount', 'timestamp', 'ghost', DB::raw('MAX(amount) as max_amount'))
                             ->where('leaderboard_id', $player->leaderboard_id)
