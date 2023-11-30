@@ -11,7 +11,7 @@
 
         <!-- Page title and icon -->
         <title>{{ config('app.name', 'OHOL Curse') }} @yield('page-title')</title>
-        <link rel="icon" href="{{ asset('favicon.png') }}">
+        <link rel="icon" href="{{ asset('assets/favicon.png') }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
