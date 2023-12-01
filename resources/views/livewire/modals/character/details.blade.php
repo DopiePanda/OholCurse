@@ -26,7 +26,11 @@
                     born in the <span class="font-semibold">{{ ucfirst($life->family_type) }} biome</span> 
                     by {{ $pronoun[1] }} mother <span class="font-semibold">
                         <a href="{{ route('player.curses', $life->parent->player_hash) }}" class="text-blue-400 dark:text-red-600" tabindex="-1">
-                            {{ ucwords(strtolower($life->parent->name->name), ' ') }}
+                            @if($life->parent->name)
+                                {{ ucwords(strtolower($life->parent->name->name), ' ') }}
+                            @else
+                                UNNAMED
+                            @endif
                         </a></span>
                 </div>
             @endif
