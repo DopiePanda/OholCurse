@@ -40,7 +40,7 @@
                                 <tr class="even:bg-gray-300 odd:bg-white dark:even:bg-slate-600 dark:odd:bg-slate-500 dark:text-gray-300">
                                     <td class="p-2 border border-gray-400">{{ (count($lives) - $loop->index) }}</td>
                                     <td class="p-2 border border-gray-400">
-                                        <div onclick="Livewire.dispatch('openModal', {component: 'modals.character.details', arguments: {character_id: {{$life->character_id}}}})">{{ $life->name->name ?? '-UNNAMED-' }}</div>
+                                        <div class="cursor-pointer hover:text-blue-400 dark:hover:text-red-600" onclick="Livewire.dispatch('openModal', {component: 'modals.character.details', arguments: {character_id: {{$life->character_id}}}})">{{ $life->name->name ?? '-UNNAMED-' }}</div>
                                     </td>
                                     <td class="p-2 border border-gray-400">{{ $life->character_id }}</td>
                                     <td class="p-2 border border-gray-400">{{ $life->age }}</td>

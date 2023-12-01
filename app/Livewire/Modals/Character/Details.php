@@ -16,6 +16,9 @@ class Details extends ModalComponent
     public $life;
     public $death;
 
+    public $name;
+    public $pronoun;
+
     public $curses;
     public $trusts;
     public $forgives;
@@ -23,6 +26,8 @@ class Details extends ModalComponent
     public $records;
 
     public $object;
+    public $actions;
+    public $activity;
 
     public $sprite;
 
@@ -30,13 +35,53 @@ class Details extends ModalComponent
     {
         $this->life = LifeLog::where('character_id', $character_id)
                     ->where('type', 'birth')
-                    ->with('leaderboard:leaderboard_id,leaderboard_name', 'name:character_id,name')
+                    ->with('leaderboard:leaderboard_id,leaderboard_name', 'name:character_id,name', 'parent')
                     ->first();
 
         $this->death = LifeLog::where('character_id', $character_id)
                     ->where('type', 'death')
                     ->first();
+   
+        if($this->life->name)
+        {
+            $name = ucwords(strtolower($this->life->name->name), ' ') ?? 'UNNAMED';
+            $name = explode(' ', $name);
+        }else
+        {
+            $name = ['UNNAMED', 'UNNAMED'];
+        }
+        
 
+        $this->name = [
+            'first' => $name[0],
+            'last' => $name[1] ?? 'UNNAMED'
+        ];
+
+        if($this->life->gender == 'female')
+        {
+            $this->pronoun = [
+                'she',
+                'her'
+            ];
+        }else
+        {
+            $this->pronoun = [
+                'he',
+                'his'
+            ];
+        }
+        
+        $this->getInteractions($character_id);
+        $this->getCharacterSprite($this->life->gender, $this->death->age, $this->life->family_type);
+    }
+
+    public function render()
+    {
+        return view('livewire.modals.character.details');
+    }
+
+    public function getInteractions($character_id)
+    {
         $this->curses = CurseLog::where('character_id', $character_id)
                                 ->where('type', 'curse')
                                 ->count();
@@ -53,24 +98,35 @@ class Details extends ModalComponent
                                 ->count();
 
         $this->object = MapLog::where('character_id', $character_id)
-                                ->with('object')
+                                ->with('object:id,name')
                                 ->where('object_id', '!=', 0)
                                 ->select('object_id', DB::raw('COUNT(object_id) as amount'))
                                 ->groupBy('object_id')
                                 ->orderBy('amount', 'desc')
                                 ->first();
 
-        $this->getCharacterSprite($this->life->gender, $this->death->age, $this->life->family_type);
-    }
+        $this->actions = MapLog::where('character_id', $character_id)
+                                ->where('object_id', '!=', 0)
+                                ->count();
 
-    public function render()
-    {
-        return view('livewire.modals.character.details');
+        if ($this->actions < 50)
+        {
+            $this->activity = 'not very';
+        }elseif ($this->actions >= 50 && $this->actions < 250)
+        {
+            $this->activity = 'fairly';
+        }elseif ($this->actions >= 250 && $this->actions < 500)
+        {
+            $this->activity = 'very';
+        }elseif ($this->actions >= 500)
+        {
+            $this->activity = 'extremely';
+        }
     }
 
     public function getCharacterSprite($gender, $age, $race)
     {
-        $url = "assets/characters/sprites/$race/$gender/";
+        $url = env("CHARACTER_URL")."/sprites/$race/$gender/";
 
         if ($age <= 3) 
         {
