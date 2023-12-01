@@ -1,8 +1,6 @@
 <x-app-layout>
 
-    @section("page-title")
-        - All-time leaderboards
-    @endsection
+    @section("page-title")- All-time leaderboards @endsection
 
     <x-slot name="header">
         <h2 class="text-3xl font-bold text-gray-800 text-center dark:text-gray-200">

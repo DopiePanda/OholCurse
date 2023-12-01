@@ -1,11 +1,7 @@
 <x-app-layout>
 
     @section("page-title")
-        @if( $profile )
-            - Interactions for {{ $profile->leaderboard_name }}
-        @else
-            - Interactions
-        @endif
+        @if( $profile )- Interactions for {{ $profile->leaderboard_name }}@else- Interactions @endif
     @endsection
 
     <x-slot name="header">

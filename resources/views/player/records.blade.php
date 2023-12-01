@@ -1,11 +1,7 @@
 <x-app-layout>
 
     @section("page-title")
-        @if( $player )
-            - {{ $player->leaderboard_name }}'s Records
-        @else
-            - Records
-        @endif
+        @if( $player )- {{ $player->leaderboard_name }}'s Records @else- Records @endif
     @endsection
 
     <x-slot name="header">
