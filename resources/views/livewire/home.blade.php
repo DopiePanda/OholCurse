@@ -75,7 +75,7 @@
                     @forelse($results as $result)
                         @if($result)
                             @if(isset($result->character->player_hash))
-                                <a href="{{ route('player.curses', [ 'hash' => $result->character->player_hash ]) }}" class="text-white">
+                                <a href="{{ route('player.lives', [ 'hash' => $result->character->player_hash ]) }}" class="text-white">
                             @else
                                 <a href="#" class="text-white">
                             @endif
