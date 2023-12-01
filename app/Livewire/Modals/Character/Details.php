@@ -112,15 +112,21 @@ class Details extends ModalComponent
         if ($this->actions < 50)
         {
             $this->activity = 'not very';
-        }elseif ($this->actions >= 50 && $this->actions < 250)
+        }elseif ($this->actions < 250)
         {
             $this->activity = 'fairly';
-        }elseif ($this->actions >= 250 && $this->actions < 500)
+        }elseif ($this->actions < 500)
         {
             $this->activity = 'very';
-        }elseif ($this->actions >= 500)
+        }elseif ($this->actions < 1000)
         {
             $this->activity = 'extremely';
+        }elseif ($this->actions < 2500)
+        {
+            $this->activity = 'ridiculously';
+        }else
+        {
+            $this->activity = 'preposterously';
         }
     }
 
