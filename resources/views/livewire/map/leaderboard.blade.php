@@ -3,9 +3,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @endsection
 <div class="w-full">
-    @section("page-title")
-        - Daily leaderboards
-    @endsection
+    @section("page-title")- Daily leaderboards @endsection
 
     <div class="py-6 max-w-4xl mx-auto sm:px-6 lg:px-8">
         <div class="mt-6 text-3xl font-bold text-center dark:text-gray-200">

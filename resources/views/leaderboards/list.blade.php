@@ -2,10 +2,8 @@
 
     @section("page-title")
         @if($object)
-            @if($object->object->name)
-                - Weekly leaderboard for {{ $object->object->name }}
-            @else
-                - Weekly leaderboard for object {{ $object->id }}
+            @if($object->object->name)- Weekly leaderboard for {{ $object->object->name }}
+            @else- Weekly leaderboard for object {{ $object->id }}
             @endif
         @else
         @endif

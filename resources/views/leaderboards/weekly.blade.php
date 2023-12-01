@@ -1,8 +1,6 @@
 <x-app-layout>
 
-    @section("page-title")
-        - Weekly leaderboards
-    @endsection
+    @section("page-title")- Weekly leaderboards @endsection
 
     <x-slot name="header">
         <h2 class="text-3xl text-gray-800 break-word leading-tight text-center dark:text-gray-200">

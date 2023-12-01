@@ -4,9 +4,7 @@ date_default_timezone_set($timezone);
 
 @endphp
 
-@section("page-title")
-    - Dashboard
-@endsection
+@section("page-title")- Dashboard @endsection
 
 
 <div class="w-full">
