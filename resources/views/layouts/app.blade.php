@@ -32,12 +32,12 @@
         @yield('before-head-end')
     </head>
     <body class="font-sans antialiased">
-        <div class="flex flex-col min-h-screen bg-gray-100 dark:bg-slate-800">
+        <div class="z-10 flex flex-col min-h-screen bg-gray-100 dark:bg-slate-800">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-white dark:bg-slate-700 shadow">
+                <header class="z-10 bg-white dark:bg-slate-700 shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
@@ -45,10 +45,11 @@
             @endif
 
             <!-- Page Content -->
-            <main class="flex flex-grow justify-center pt-6 px-2 lg:px-4 break-normal">
+            <main class="z-10 flex flex-grow justify-center pt-6 px-2 lg:px-4 break-normal">
                 {{ $slot }}
+                
             </main>
-            
+            <x-effects.snow/>
         </div>
 
         

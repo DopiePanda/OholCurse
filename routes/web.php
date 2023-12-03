@@ -67,12 +67,6 @@ Route::middleware('web')->group(function() {
 
     Route::get('/families/index', [FamilyController::class, 'index'])->name('families.index');
     Route::get('/families/view/{character_id}', [FamilyController::class, 'view'])->name('families.view');
-    
-    Route::get('/family/children/{character_id}', [FamilyController::class, 'getChildren'])->name('family.children');
-    Route::get('/family/sync/', [FamilyController::class, 'syncFamilyRecords']);
-    Route::get('/family/selb', [FamilyController::class, 'selbSolution']);
-
-    Route::get('/lives/find', [LifeDataController::class, 'find'])->name('lives.find');
 
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -92,7 +86,6 @@ Route::middleware('web')->group(function() {
         Route::get('/guides/view/{slug}', [GuideController::class, 'show'])->name('guides.view');
         Route::post('upload', [GuideController::class, 'upload'])->name('upload');
 
-        Route::get('/all-time', [LeaderboardController::class, 'getAllNormalLives'])->name('all-time');
     });
 
     
