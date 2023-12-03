@@ -60,6 +60,14 @@ Route::middleware(['web', 'admin'])->name('admin.')->group(function () {
         Route::get('/menu/show', [SessionController::class, 'showMenu'])->name('menu.show');
     });
 
+    Route::get('/family/children/{character_id}', [FamilyController::class, 'getChildren'])->name('family.children');
+    Route::get('/family/sync/', [FamilyController::class, 'syncFamilyRecords']);
+    Route::get('/family/selb', [FamilyController::class, 'selbSolution']);
+
+    Route::get('/lives/find', [LifeDataController::class, 'find'])->name('lives.find');
+
+    Route::get('/foods/{character_id}', [TestController::class, 'getFoodEaten']);
+
     Route::get('/ghost/{character_id}', function ($id) 
     {
         $birth = \App\Models\LifeLog::where('character_id', $id)->where('type', 'birth')->first();
