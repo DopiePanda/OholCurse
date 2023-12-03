@@ -9,6 +9,7 @@ use DB;
 
 use App\Models\Yumlog;
 use App\Models\CurseLog;
+use App\Models\FoodLog;
 use App\Models\LifeLog;
 use App\Models\LifeNameLog;
 use App\Models\Leaderboard;
@@ -151,6 +152,24 @@ class TestController extends Controller
             // Log exception message
             Log::error('Exception returned when moving leaderboard player hashes:');
             Log::error($e);
+        }
+    }
+
+    public function getFoodEaten(Request $request, $character_id)
+    {
+        $foods = FoodLog::where('character_id', $character_id)
+                    ->with('object:id,name')
+                    ->select('timestamp', 'object_id', DB::raw('COUNT(object_id) as count'))
+                    ->groupBy('object_id')
+                    ->orderBy('timestamp', 'asc')
+                    ->get();
+
+        if($foods)
+        {
+            dd($foods->toArray());
+        }else
+        {
+            print 'Life not found';
         }
     }
 }

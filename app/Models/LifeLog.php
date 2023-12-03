@@ -37,6 +37,11 @@ class LifeLog extends Model
         return $this->hasMany(CurseLog::class, 'character_id', 'character_id');
     }
 
+    public function foods(): HasMany
+    {
+        return $this->hasMany(FoodLog::class, 'character_id', 'character_id');
+    }
+
     public function leaderboard()
     {
         return $this->hasOne(Leaderboard::class, 'player_hash', 'player_hash');
