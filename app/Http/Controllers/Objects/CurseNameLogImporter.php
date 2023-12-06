@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 use Auth;
 use Log;
 
-use App\Models\YumLog;
+use App\Models\Yumlog;
 
 
 class CurseNameLogImporter extends Controller
