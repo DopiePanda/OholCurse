@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\SessionController;
 use App\Http\Controllers\Objects\GameObjectImporter;
+use App\Http\Controllers\Objects\CurseNameLogImporter;
 
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\CharacterNameController;
@@ -48,6 +49,7 @@ Route::middleware(['web', 'admin'])->name('admin.')->group(function () {
 
     Route::prefix('/import')->name('import.')->group(function () {
         Route::get('/objects', [GameObjectImporter::class, 'parseObjectsFile'])->name('objects');
+        Route::get('/curse-names', [CurseNameLogImporter::class, 'parseYumLogFile'])->name('curse-names');
         Route::get('/names', [CharacterNameController::class, 'importNames'])->name('names');
     });
 
