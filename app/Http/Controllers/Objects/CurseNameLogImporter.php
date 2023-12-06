@@ -12,7 +12,7 @@ use Log;
 use App\Models\YumLog;
 
 
-class CurseNameImporter extends Controller
+class CurseNameLogImporter extends Controller
 {
     private $file = 'ohol/curse_names_yum_log.txt';
 
