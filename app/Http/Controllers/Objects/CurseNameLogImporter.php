@@ -21,7 +21,7 @@ class CurseNameImporter extends Controller
     public $curses = [];
 
 
-    public function parseObjectsFile()
+    public function parseYumLogFile()
     {
         $start_time = microtime(true);
 
@@ -43,7 +43,7 @@ class CurseNameImporter extends Controller
                 }
             });
 
-            $this->deleteLog();
+            //$this->deleteLog();
         }
     }
 
