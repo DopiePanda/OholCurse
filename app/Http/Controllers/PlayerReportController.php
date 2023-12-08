@@ -173,7 +173,7 @@ class PlayerReportController extends Controller
 
             if($role == 'admin')
             {
-                $status = [0, 1, 2, 3, 4];
+                $status = [0, 1, 2, 3, 4, 5];
             }else
             {
                 $status = [1];

@@ -35,7 +35,7 @@ date_default_timezone_set($timezone);
             <div class="flex-1 items-end mt-2 w-full lg:w-1/2 lg:ml-2"><livewire:contacts.interaction-list /></div>
         </div>
     </div>
-    <div class="mt-2 lg:py-12">
+    <div class="w-full lg:w-2/3 lg:max-w-2/3 mx-auto mt-2 lg:py-12">
         <div class="w-full mx-auto sm:px-6 lg:px-8 py-4 border border-blue-400 rounded-lg dark:bg-slate-700 dark:border-0">
             @if(count($yumlogs) > 0)
                 <div class="w-full mx-auto px-2 mt-4">
@@ -93,9 +93,12 @@ date_default_timezone_set($timezone);
                                                 <i title="Archived" class="text-red-400 fa-solid fa-circle-xmark"></i>
                                             @elseif($log->status == 3)
                                                 <i title="Curse-check" class="text-blue-400 fa-solid fa-magnifying-glass-minus"></i>
+                                            @elseif($log->status == 4)
+                                                <i title="Forgiven later" class="text-blue-400 fa-solid fa-magnifying-glass-minus"></i>
                                             @else
-                                                <i title="Forgiven later" class="text-gray-300 fa-solid fa-clock-rotate-left"></i>
+                                                <i title="Other" class="text-purple-400 fa-solid fa-question"></i>
                                             @endif
+
                                         </td>
                                         <td class="p-2 border border-gray-400 text-center">
                                             @if($log->verified)
@@ -111,7 +114,19 @@ date_default_timezone_set($timezone);
                                 @endforelse
                             </tbody>
                         </table>
-                    </div>   
+                    </div>
+                    <div class="mt-2 grid grid-cols-2">
+                        <div class="text-left">
+                            <span wire:click="previousPage()" class="cursor-pointer w-auto p-2 border border-blue-400 dark:border-red-500">
+                                Previous
+                            </span>
+                        </div>
+                        <div class="text-right">
+                            <span wire:click="nextPage()" class="cursor-pointer w-auto p-2 border border-blue-400 dark:border-red-500">
+                                Next
+                            </span>
+                        </div>
+                    </div>
                 </div>
             @else
                 <div class="w-full text-center">No yumlogs uploaded</div>

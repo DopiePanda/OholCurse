@@ -24,7 +24,7 @@
             <div class="p-4 mx-2">
                 <div class="text-lg dark:text-gray-400">To access this section you need to upload your first YumLog</div>
                 <div class="mt-4">
-                    <button class="mx-2 px-4 py-2 bg-blue-400 text-white rounded-md dark:bg-red-500" onclick="Livewire.emit('openModal', 'modals.upload-logfile')">
+                    <button class="mx-2 px-4 py-2 bg-blue-400 text-white rounded-md dark:bg-red-500" onclick="Livewire.dispatch('openModal', 'modals.upload-logfile')">
                         Upload Yumlog
                     </button>
                 </div>
