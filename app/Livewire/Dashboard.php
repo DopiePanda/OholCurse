@@ -25,29 +25,27 @@ class Dashboard extends Component
     ];
 
     public $reports = [];
-    public $yumlogs = [];
+    public $yumlogs;
 
     private $curseOffset = 3;
     private $forgiveOffset = 180;
     private $maxVerifyAttempts = 5;
 
+    public $skip;
+    public $take;
+    public $limit;
+    private $status = [];
 
     public function mount()
-    {
-        
+    {   
+        $this->skip = 0;
+        $this->take = 25;
+        $this->limit = 25;
     }
 
     public function render()
     {
-        $role = Auth::user()->role;
-
-        if($role == 'admin')
-        {
-            $status = [0, 1, 2, 3, 4];
-        }else
-        {
-            $status = [0, 1];
-        }
+        $status = $this->getStatus();
 
         $this->yumlogs = Yumlog::where('user_id', Auth::user()->id)
                         ->where('verification_tries', '<', $this->maxVerifyAttempts)
@@ -55,11 +53,70 @@ class Dashboard extends Component
                         ->select('timestamp', 'character_id', 'character_name', 'curse_name', 'player_hash', 'verified', 'status', 'created_at')
                         ->groupBy('curse_name')
                         ->orderBy('timestamp', 'desc')
+                        ->skip($this->skip)
+                        ->take($this->take)
                         ->get();
 
         //dd($this->yumlogs);
 
         return view('livewire.dashboard');
+    }
+
+    public function getStatus()
+    {
+        $role = Auth::user()->role;
+
+            if($role == 'admin')
+            {
+                $status = [0, 1, 2, 3, 4, 5];
+            }else
+            {
+                $status = [0, 1];
+            }
+
+        return $status;
+    }
+
+    public function nextPage()
+    {
+        if($this->take >= 25)
+        {
+            $this->skip = $this->skip + $this->limit;
+            $status = $this->getStatus();
+
+            $this->yumlogs = Yumlog::where('user_id', Auth::user()->id)
+                        ->where('verification_tries', '<', $this->maxVerifyAttempts)
+                        ->whereIn('status', $status)
+                        ->select('timestamp', 'character_id', 'character_name', 'curse_name', 'player_hash', 'verified', 'status', 'created_at')
+                        ->groupBy('curse_name')
+                        ->orderBy('timestamp', 'desc')
+                        ->skip($this->skip)
+                        ->take($this->take)
+                        ->get();
+
+            //dd($this->skip);
+        }
+    }
+
+    public function previousPage()
+    {
+        if($this->take >= 25 && $this->skip >= 0)
+        {
+            $this->skip = $this->skip - $this->limit;
+            $status = $this->getStatus();
+
+            $this->yumlogs = Yumlog::where('user_id', Auth::user()->id)
+                        ->where('verification_tries', '<', $this->maxVerifyAttempts)
+                        ->whereIn('status', $status)
+                        ->select('timestamp', 'character_id', 'character_name', 'curse_name', 'player_hash', 'verified', 'status', 'created_at')
+                        ->groupBy('curse_name')
+                        ->orderBy('timestamp', 'desc')
+                        ->skip($this->skip)
+                        ->take($this->take)
+                        ->get();
+
+            //dd($this->skip);
+        }
     }
 
     public function verifyCurses()
@@ -68,6 +125,7 @@ class Dashboard extends Component
                     ->where('verified', 0)
                     ->where('verification_tries', '<', $this->maxVerifyAttempts)
                     ->where('status', '!=', 2)
+                    ->where('status', '!=', 5)
                     ->get();
 
         foreach($yumlogs as $report)
@@ -98,15 +156,19 @@ class Dashboard extends Component
             {
 
                 $curseVerified = $this->verifyCurseLogEntry($life->player_hash, $report->timestamp);
+                $forgiveVerified = $this->verifyForgiveLogEntry($life->player_hash, $report->timestamp);
                 $lifeNameVerified = $this->verifyLifeNameLogEntry($report->character_id, $report->character_name);
 
                 //$this->alert('success', 'Checkpoint two reached');
 
-                if($curseVerified == true && $lifeNameVerified == true)
+                if($curseVerified == true || $forgiveVerified == true)
                 {
-                    $this->setCurseVerified($report, $life);
-                    $this->isCurseCheck($report, $life);
-                    $this->alert('success', 'Verified report for: '.$report->character_name);
+                    if($lifeNameVerified == true)
+                    {
+                        $this->setCurseVerified($report, $life, $forgiveVerified ? true : false);
+                        $this->isCurseCheck($report, $life);
+                        $this->alert('success', 'Verified report for: '.$report->character_name);
+                    }
                 }
             }
         }
@@ -115,16 +177,18 @@ class Dashboard extends Component
         $this->alert('info', 'Attempt to verify curses was successful');
     }
 
-    public function setCurseVerified($report, $life)
-    {   
+    public function setCurseVerified($report, $life, $forgive = null)
+    {
+        $pos = explode(',', $life->location);
+  
         $report->player_hash = $life->player_hash;
         $report->gender = $life->gender;
         $report->age = $life->age;
         $report->died_to = $life->died_to;
-        $report->pos_x = $life->pos_x;
-        $report->pos_y = $life->pos_y;
+        $report->pos_x = $pos[0] ?? null;
+        $report->pos_y = $pos[1] ?? null;
         $report->verified = 1;
-        $report->status = 1;
+        $report->status = $forgive ? 1 : 5;
         $report->visible = 1;
         $report->save();
 
@@ -177,6 +241,30 @@ class Dashboard extends Component
                         ->where('timestamp', '<=', ($timestamp + $this->curseOffset))
                         ->where('reciever_hash', $hash)
                         ->where('type', 'curse')
+                        ->count();
+
+            if($count > 0)
+            {
+                //$this->alert('success', 'Found curse entry for : '.$hash);
+                return true;
+            }
+
+        } catch (\Throwable $th) 
+        {
+            Log::error('Could not find curse with hash: '.$hash);
+        }
+
+        return false;
+    }
+
+    public function verifyForgiveLogEntry($hash, $timestamp)
+    {
+        try 
+        {
+            $count = CurseLog::where('timestamp', '>=', ($timestamp - $this->curseOffset))
+                        ->where('timestamp', '<=', ($timestamp + $this->curseOffset))
+                        ->where('reciever_hash', $hash)
+                        ->where('type', 'forgive')
                         ->count();
 
             if($count > 0)

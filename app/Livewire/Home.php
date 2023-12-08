@@ -40,7 +40,7 @@ class Home extends Component
 
             if($role == 'admin')
             {
-                $this->status = [0, 1, 2, 3, 4];
+                $this->status = [0, 1, 2, 3, 4, 5];
             }else
             {
                 $this->status = [0, 1];
