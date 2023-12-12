@@ -71,6 +71,10 @@ Route::middleware('web')->group(function() {
         Route::get('/dashboard', Dashboard::class)->name('dashboard');
         Route::get('/verify-reports/{id}', [ReportVerificationController::class, 'verifyAllByUser']);
 
+        Route::get('/phpinfo', function () {
+            return false;
+            //return phpinfo();
+        });
     });
 
     
