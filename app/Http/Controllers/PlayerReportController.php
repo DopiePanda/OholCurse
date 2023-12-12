@@ -27,7 +27,7 @@ class PlayerReportController extends Controller
 
         if($this->isProfileRestricted($hash))
         {
-            if(!Auth::user() || Auth::user()->role != 'admin')
+            if(!Auth::user() || Auth::user()->id != 1)
             {
                 return redirect()->route('search');
             }
@@ -169,9 +169,9 @@ class PlayerReportController extends Controller
     {
         if(Auth::user())
         {
-            $role = Auth::user()->role;
+            $role = Auth::user()->id;
 
-            if($role == 'admin')
+            if($role == 1)
             {
                 $status = [0, 1, 2, 3, 4, 5];
             }else

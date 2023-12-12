@@ -1,6 +1,6 @@
 <div>
     @auth
-        @if(Auth::user()->role == 'admin')
+        @if(Auth::user()->id == 1)
             @if(session()->get('showAdminMenu'))
                 <div id="adminMenu" class="w-full mt-2 mx-auto inset-x-0 z-10 rounded-lg bg-gray-300 lg:text-center py-4">
                     <div class="pl-4 flex flex-col lg:flex-row lg:justify-center">

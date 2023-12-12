@@ -96,18 +96,6 @@
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 @auth
-                    @if(Auth::user() && Auth::user()->role == "admin")
-                        <div class="mr-2 text-gray-800 dark:text-gray-400">
-                            @if(session()->get('showAdminMenu'))
-                                <div  id="hideAdminMenu"><i class="block fa-solid fa-eye"></i></div>
-                            @else
-                                <div id="showAdminMenu"><i class="block fa-solid fa-eye-slash"></i></div>
-                            @endif
-                        </div>
-                    @endif
-                <!-- <button class="p-2 border bg-red-400 text-white rounded-lg text-sm" onclick="Livewire.dispatch('openModal', { component: 'modals.submit-report' })">
-                    Report Griefer
-                </button> -->
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150 dark:bg-transparent dark:border-red-500 dark:text-red-500">
@@ -212,41 +200,4 @@
         </div>
         @endauth
     </div>
-    @if(Auth::user())
-        @if(Auth::user()->role == 'admin')
-            @section('before-body-end')
-                <script type="text/javascript">
-                    const hideAdminMenu = $("#hideAdminMenu");
-                    const showAdminMenu = $("#showAdminMenu");
-
-                    $("#hideAdminMenu").on("click", function() {
-                        hideAdminMenu.hide();
-                        showAdminMenu.show();
-
-                        $.ajax({
-                            type: "GET",
-                            url: '/admin/session/menu/hide',
-                            success: function() {}
-                        });
-
-                        $("#adminMenu").slideUp('slow');
-                    });
-
-                    $("#showAdminMenu").on("click", function() {
-                        hideAdminMenu.show();
-                        showAdminMenu.hide();
-
-                        $.ajax({
-                            type: "GET",
-                            url: '/admin/session/menu/show',
-                            success: function() {}
-                        });
-
-                        $("#adminMenu").slideDown('slow');
-                    });
-                </script>
-            @endsection
-        @endif
-    @endif
-    <x-admin-menu />
 </nav>
