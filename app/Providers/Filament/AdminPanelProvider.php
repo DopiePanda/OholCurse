@@ -18,6 +18,11 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
+use Phpsa\FilamentAuthentication\FilamentAuthentication;
+use Phpsa\FilamentAuthentication\Widgets\LatestUsersWidget;
+
+use App\Filament\Pages\Auth\Login;
+
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -26,7 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(Login::class)
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -35,10 +40,15 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 Pages\Dashboard::class,
             ])
+            ->profile()
+            ->resources(
+                FilamentAuthentication::resources()
+            )
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+                LatestUsersWidget::make(['limit' => 5, 'paginate' => true]),
             ])
             ->middleware([
                 EncryptCookies::class,

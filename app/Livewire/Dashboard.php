@@ -64,9 +64,7 @@ class Dashboard extends Component
 
     public function getStatus()
     {
-        $role = Auth::user()->id;
-
-            if($role == 1)
+            if(Auth::user()->can('view all reports'))
             {
                 $status = [0, 1, 2, 3, 4, 5];
             }else
