@@ -15,7 +15,7 @@
     RewriteRule ^ %1 [L,R=301]
 
     # Send Requests To Front Controller...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
+    RewriteCond %{HTTP_HOST} ^staging.oholcurse.com$ [OR]
+    RewriteCond %{HTTP_HOST} ^www.staging.oholcurse.com$
+    RewriteRule (.*)$ https://oholcurse.com/$1 [R=301,L]
 </IfModule>

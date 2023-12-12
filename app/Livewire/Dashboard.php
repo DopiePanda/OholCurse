@@ -180,7 +180,7 @@ class Dashboard extends Component
     public function setCurseVerified($report, $life, $forgive = null)
     {
         $pos = explode(',', $life->location);
-
+  
         $report->player_hash = $life->player_hash;
         $report->gender = $life->gender;
         $report->age = $life->age;

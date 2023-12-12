@@ -194,7 +194,6 @@ class ProcessYumLog extends Command
                 $user->player_hash = $hashes[0];
                 $user->save();
                 Log::debug('User Player Hash has been set');
-                $this->dispatch('userPlayerHashVerified');
             }
         }
     }
