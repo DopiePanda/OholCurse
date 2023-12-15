@@ -12,8 +12,6 @@ use App\Models\PlayerScore;
 
 class LeaderboardScraperController extends Controller
 {
-    public $connection;
-
     public function execute()
     {
         // Get authorization values
@@ -23,11 +21,14 @@ class LeaderboardScraperController extends Controller
         Log::channel('sync')->info('LEADERBOARD scraper started');
 
         // Open HTTP connection and fetch data as JSON
-        $this->connection = Http::get($url);
-        $records = $this->connection->json();
+        $connection = Http::get($url);
+        $records = $connection->json();
+
+        Log::channel('sync')->info("Fetched ".count($records)." records from Selb's API");
 
         // Get total count of entries in database
-        $count = Leaderboard::all()->count();
+        $count = Leaderboard::all();
+        Log::channel('sync')->info("Current records in database: ".$count->count());
 
         // If the amount of fetched records are greater than or equal to the amount of stored records, run query.
         if(count($records) > $count)
@@ -73,11 +74,11 @@ class LeaderboardScraperController extends Controller
                 DB::rollback();
 
                 // Log exception message
-                Log::error('Exception returned when updating leaderboard entries:');
-                Log::error($e);
+                Log::channel('sync')->error('Exception returned when updating leaderboard entries:');
+                Log::channel('sync')->error($e);
             }
         }else{
-            Log::error('Fewer leaderboard entries than stored.');
+            Log::channel('sync')->error('Fewer leaderboard entries than stored.');
         }
 
         $end = microtime(true);
