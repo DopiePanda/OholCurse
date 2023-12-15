@@ -104,6 +104,7 @@ class MaplogResource extends Resource
     {
         return [
             'index' => Pages\ListMaplogs::route('/'),
+            'area' => Pages\AreaSearch::route('/area'),
         ];
     }
 
