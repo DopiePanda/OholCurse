@@ -44,8 +44,10 @@
                                             <i title="Archived" class="text-red-400 fa-solid fa-circle-xmark"></i>
                                         @elseif($report->status == 3)
                                             <i title="Curse-check" class="text-blue-400 fa-solid fa-magnifying-glass-minus"></i>
-                                        @else
+                                        @elseif($report->status == 4)
                                             <i title="Forgiven later" class="text-gray-300 fa-solid fa-clock-rotate-left"></i>
+                                        @else
+                                            <i title="Other" class="text-purple-400 fa-solid fa-question"></i>
                                         @endif
                                     </td>
                                     <td class="p-2 border border-gray-400">{{ $report->character_id }}</td>

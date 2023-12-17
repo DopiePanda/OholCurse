@@ -11,6 +11,11 @@ use App\Http\Controllers\Objects\CurseNameLogImporter;
 
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\CharacterNameController;
+use App\Http\Controllers\StatisticController;
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\GuideController;
+
+use App\Http\Controllers\Logs\ExportController;
 
 use App\Http\Controllers\LogScraper\LifeLogScraper;
 use App\Http\Controllers\LogScraper\LifeNameLogScraper;
@@ -34,6 +39,7 @@ use App\Livewire\Admin\Logs\Map\Area as MapArea;
 |
 */
 
+/*
 Route::middleware(['web', 'admin'])->name('admin.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -70,6 +76,14 @@ Route::middleware(['web', 'admin'])->name('admin.')->group(function () {
 
     Route::get('/foods/{character_id}', [TestController::class, 'getFoodEaten']);
 
+    Route::get('/logs/export', [ExportController::class, 'index'])->name('logs.export');
+
+    Route::get('/stats', [StatisticController::class, 'index'])->name('stats.index');
+
+    Route::resource('guides', GuideController::class);
+    Route::get('/guides/view/{slug}', [GuideController::class, 'show'])->name('guides.view');
+    Route::post('upload', [GuideController::class, 'upload'])->name('upload');
+
     Route::get('/ghost/{character_id}', function ($id) 
     {
         $birth = \App\Models\LifeLog::where('character_id', $id)->where('type', 'birth')->first();
@@ -101,3 +115,4 @@ Route::middleware(['web', 'admin'])->name('admin.')->group(function () {
         // Uses first & second middleware...
     });
 });
+*/

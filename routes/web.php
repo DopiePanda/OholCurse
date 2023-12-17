@@ -7,7 +7,6 @@ use Carbon\Carbon;
 use App\Http\Controllers\CurseLogController;
 use App\Http\Controllers\CurseScraperController;
 use App\Http\Controllers\FamilyController;
-use App\Http\Controllers\GuideController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\LeaderboardScraperController;
 use App\Http\Controllers\LifeScraperController;
@@ -16,12 +15,6 @@ use App\Http\Controllers\MapLeaderboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PlayerReportController;
 use App\Http\Controllers\ReportVerificationController;
-use App\Http\Controllers\StatisticController;
-use App\Http\Controllers\TestController;
-
-use App\Http\Controllers\Objects\GameObjectImporter;
-
-use App\Http\Controllers\Logs\ExportController;
 
 use App\Livewire\Dashboard;
 use App\Livewire\Home;
@@ -84,14 +77,10 @@ Route::middleware('web')->group(function() {
         Route::get('/dashboard', Dashboard::class)->name('dashboard');
         Route::get('/verify-reports/{id}', [ReportVerificationController::class, 'verifyAllByUser']);
 
-        Route::get('/logs/export', [ExportController::class, 'index'])->name('logs.export');
-
-        Route::get('/stats', [StatisticController::class, 'index'])->name('stats.index');
-
-        Route::resource('guides', GuideController::class);
-        Route::get('/guides/view/{slug}', [GuideController::class, 'show'])->name('guides.view');
-        Route::post('upload', [GuideController::class, 'upload'])->name('upload');
-
+        Route::get('/phpinfo', function () {
+            return false;
+            //return phpinfo();
+        });
     });
 
     

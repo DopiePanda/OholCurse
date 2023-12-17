@@ -44,6 +44,14 @@ return [
             'throw' => false,
         ],
 
+        'filament' => [
+            'driver' => 'local',
+            'root' => dirname(__DIR__,2).'/www',
+            'url' => env('APP_URL'),
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
