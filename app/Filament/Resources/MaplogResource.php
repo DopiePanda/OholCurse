@@ -66,7 +66,7 @@ class MaplogResource extends Resource
                 TextColumn::make('object_id')
                 ->searchable(isIndividual: true, query: function (Builder $query, string $search): Builder {
                     return $query
-                        ->where('object_id', 'like', $search.'%');
+                        ->where('object_id', $search);
                 }),
                 TextColumn::make('pos_x')
                 ->searchable(isIndividual: true, query: function (Builder $query, string $search): Builder {
