@@ -1,6 +1,6 @@
 <div class="w-full lg:w-2/3">
     @section("page-title")- Name search/generator @endsection
-
+    
     <div class="p-4 dark:bg-slate-700 rounded-lg">
         <div class="text-center text-4xl dark:text-gray-200">Name search/generator</div>
         
