@@ -39,6 +39,7 @@ class GameObjectResource extends Resource
                 ->searchable(),
             ])
             ->defaultSort('id')
+            ->defaultPaginationPageOption(50)
             ->filters([
                 //
             ])

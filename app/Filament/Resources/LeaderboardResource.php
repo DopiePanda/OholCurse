@@ -78,6 +78,8 @@ class LeaderboardResource extends Resource
                 Tables\Columns\IconColumn::make('multi')
                 ->boolean(),
             ])
+            ->defaultSort('id', 'desc')
+            ->defaultPaginationPageOption(50)
             ->filters([
                 //
             ])

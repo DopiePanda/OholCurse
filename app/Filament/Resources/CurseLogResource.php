@@ -72,6 +72,7 @@ class CurseLogResource extends Resource
                 ->label('Reciever'),
             ])
             ->defaultSort('timestamp', 'desc')
+            ->defaultPaginationPageOption(50)
             ->groups([
 
             ])

@@ -72,6 +72,7 @@ class FoodLogResource extends Resource
             ])
 
             ->defaultSort('timestamp', 'desc')
+            ->defaultPaginationPageOption(50)
             ->filters([
                 SelectFilter::make('objectId')
                 ->relationship('object', 'id')
