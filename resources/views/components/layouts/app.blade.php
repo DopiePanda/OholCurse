@@ -19,6 +19,7 @@
 
         <!-- Scripts -->
         <!-- Alpine Plugins -->
+        @filamentStyles
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -51,7 +52,7 @@
             <x-effects.snow/>
         </div>
 
-        
+        @filamentScripts
         @livewire('wire-elements-modal')
         @livewireScripts
         @stack('scripts')
