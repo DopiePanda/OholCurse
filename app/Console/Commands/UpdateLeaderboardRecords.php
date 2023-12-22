@@ -106,22 +106,24 @@ class UpdateLeaderboardRecords extends Command
 
                 if($time_alive <= 3600 )
                 {
-                    $ghost = false;
+                    $ghost = 0;
                     $record = LeaderboardRecord::where('object_id', $object->object_id)
                                             ->where('ghost', 0)
+                                            ->where('multi', $object->multi)
                                             ->orderBy('amount', 'desc')
                                             ->first();
                 }
                 else
                 {
-                    $ghost = true;
+                    $ghost = 1;
                     $record = LeaderboardRecord::where('object_id', $object->object_id)
                                             ->where('ghost', 1)
+                                            ->where('multi', $object->multi)
                                             ->orderBy('amount', 'desc')
                                             ->first();
                 }
 
-                if($record == null || $result->count > $record->amount)
+                if($record == null || $result->count > $record->amount && $record->ghost == $ghost)
                 {
                     
                     LeaderboardRecord::create([
@@ -135,7 +137,12 @@ class UpdateLeaderboardRecords extends Command
                         'amount' => $result->count,
                         'timestamp' => $result->life->timestamp,
                     ]);
+
+                    Log::channel('sync')->info("New record set for object $object->object_id with amount $result->count");
                     
+                }else
+                {
+                    //Log::channel('sync')->info("Record not updated for object $object->object_id. $result->count does not beat $record->amount");
                 }
             }
         }
