@@ -18,6 +18,16 @@ class Yumlog extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function character(): BelongsTo
+    {
+        return $this->belongsTo(LifeLog::class, 'character_id', 'character_id');
+    }
+
+    public function leaderboard()
+    {
+        return $this->hasOne(Leaderboard::class, 'player_hash', 'player_hash');
+    }
+
     public function getCreatedAtAttribute($date)
     {
         return Carbon::parse($date)->setTimezone(Auth::user()->timezone)->format('Y-m-d h:i:s');

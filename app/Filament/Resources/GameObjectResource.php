@@ -18,7 +18,7 @@ class GameObjectResource extends Resource
 {
     protected static ?string $model = GameObject::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-puzzle-piece';
 
     public static function form(Form $form): Form
     {
@@ -39,6 +39,7 @@ class GameObjectResource extends Resource
                 ->searchable(),
             ])
             ->defaultSort('id')
+            ->defaultPaginationPageOption(50)
             ->filters([
                 //
             ])

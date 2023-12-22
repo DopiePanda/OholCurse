@@ -32,7 +32,7 @@ class LeaderboardRecord extends Model
 
     public function lifeName()
     {
-        return $this->hasOne(LifeNameLog::class, 'character_id', 'character_id');
+        return $this->belongsTo(LifeNameLog::class, 'character_id', 'character_id');
     }
 
     public function playerName()

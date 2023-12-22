@@ -19,6 +19,7 @@ use App\Http\Controllers\ReportVerificationController;
 use App\Livewire\Dashboard;
 use App\Livewire\Home;
 use App\Livewire\CharacterNames;
+use App\Livewire\Statistics;
 use App\Livewire\Map\Leaderboard;
 use App\Livewire\Map\Leaderboard2;
 
@@ -46,6 +47,7 @@ Route::middleware('web')->group(function() {
     Route::get('/player/records/{hash}', [PlayerReportController::class, 'records'])->name('player.records');
     
     Route::get('/names', CharacterNames::class)->name('names');
+    Route::get('/statistics', Statistics::class)->name('statistics');
 
     Route::prefix('/leaderboards')->name('leaderboards.')->group(function () {
         Route::get('/', [LeaderboardController::class, 'index'])->name('index');

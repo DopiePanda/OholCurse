@@ -20,6 +20,16 @@ class FoodLog extends Model
         return $this->belongsTo(LifeLog::class, 'character_id', 'character_id');
     }
 
+    public function birth(): BelongsTo
+    {
+        return $this->belongsTo(LifeLog::class, 'character_id', 'character_id')->where('type', 'birth');
+    }
+
+    public function name(): HasOne
+    {
+        return $this->hasOne(LifeNameLog::class, 'character_id', 'character_id');
+    }
+
     public function object(): HasOne
     {
         return $this->hasOne(GameObject::class, 'id', 'object_id');
