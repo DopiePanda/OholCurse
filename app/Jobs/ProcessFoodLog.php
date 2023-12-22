@@ -1,32 +1,24 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Jobs;
 
-use Illuminate\Console\Command;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\LazyCollection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\LazyCollection;
 use Carbon\Carbon;
 use Log;
-use DB;
 
 use App\Models\FoodLog;
 
-class HandleFoodLogs extends Command
+class ProcessFoodLog implements ShouldQueue
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'app:handle-food-logs';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Command description';
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private $url = "http://publicdata.onehouronelife.com/foodLogDetails/foodLogDetail_bigserver2.onehouronelife.com/";
     private $storage_url = "logs/foodlogs/";
@@ -36,21 +28,28 @@ class HandleFoodLogs extends Command
 
     private $date_period;
 
-    protected $start_time;
+    /**
+     * Create a new job instance.
+     */
+    public function __construct(
+        public FoodLog $log,
+    )
+    {
+        //
+    }
 
     /**
-     * Execute the console command.
+     * Execute the job.
      */
-    public function handle()
+    public function handle(): void
     {
-        $this->setDatePeriod();
-        $this->scrapeLog();
+        //
     }
 
     public function setDatePeriod()
     {
-        $start = Carbon::now()->subDays(0);
-        $end = Carbon::now()->subDays(2);
+        $start = Carbon::now()->subDays(4);
+        $end = Carbon::now()->subDays(10);
 
         $this->date_period = new \DatePeriod(
             new \DateTime($end->format('Y-m-d')),
@@ -62,11 +61,10 @@ class HandleFoodLogs extends Command
     public function scrapeLog()
     {
         $time_start = microtime(true);
-        //Log::channel('sync')->info('FOOD DETAIL LOG scraper started');
+        Log::channel('sync')->info('FOOD DETAIL LOG scraper started');
 
         foreach($this->date_period as $key => $date)
         {
-            $this->start_time = microtime(true);
             $file_name = $this->getLogFileName($date->format($this->file_name_format));
             
             $this->downloadLog($file_name);
@@ -83,56 +81,62 @@ class HandleFoodLogs extends Command
     {
         if(Storage::exists($this->storage_url.$file_name))
         {
-            //Log::channel('sync')->info("FOOD DETAIL LOG already exist: ".$file_name);
+            Log::channel('sync')->info("FOOD DETAIL LOG already exist: ".$file_name);
         }else
         {
             $file_headers = @get_headers($this->getLogFileUrl($file_name));
 
             if($file_headers[0] == 'HTTP/1.1 404 Not Found') {
-                //Log::channel('sync')->info("FOOD DETAIL LOG does not exist: ".$file_name);
+                Log::channel('sync')->info("FOOD DETAIL LOG does not exist: ".$file_name);
             }
             else 
             {
                 $file = file_get_contents($this->getLogFileUrl($file_name));
                 Storage::disk('local')->put($this->storage_url.$file_name, $file);
-                //Log::channel('sync')->info("FOOD DETAIL LOG downloaded: ".$file_name);
+                Log::channel('sync')->info("FOOD DETAIL LOG downloaded: ".$file_name);
             }
         }
-
-        $time = round((microtime(true) - $this->start_time), 3);
-        Log::channel('sync')->info("Log download finished after $time seconds");
     }
 
     public function processLog($file_name)
     {
         if(Storage::exists($this->storage_url.$file_name))
         {
+            /*
+            File::lines(Storage::path($this->storage_url.$file_name))->each(function ($line) {
+                
+                $line = explode(' ', $line);
+                //print_r($line);
+                //print '<br/>';
 
-            $path = $this->storage_url.$file_name;
+                if(count($line) == 3)
+                {
+                    FoodLog::updateOrCreate(
+                        [
+                            'timestamp' => $line[0],
+                            'character_id' => $line[1],
+                        ],
+                        [
+                            'object_id' => $line[2]
+                        ]
+                    );
+                }
+            });
+            */
 
-            LazyCollection::make(function () use ($path) {
-                $handle = fopen(Storage::path($path), 'r');
+            LazyCollection::make(function () {
+                $handle = fopen(Storage::path($this->storage_url.$file_name), 'r');
              
                 while (($line = fgets($handle)) !== false) {
                     yield $line;
                 }
-            })->chunk(500)->each(function ($lines) {
-                foreach ($lines as $line) {
-                    $data = explode(' ', rtrim($line));
-
-                    if(count($data) == 3)
-                    {
-                        DB::table('food_logs')
-                            ->updateOrInsert(
-                                ['timestamp' => $data[0], 'character_id' => $data[1]],
-                                ['object_id' => $data[2]]
-                            );
-                    }
-                }
+            })->chunk(4)->map(function (array $lines) {
+                return FoodLog::fromLines($lines);
+            })->each(function (FoodLog $logEntry) {
+                dd($logEntry);
             });
 
-            $time = round((microtime(true) - $this->start_time), 3);
-            Log::channel('sync')->info("Log processing finished after $time seconds");
+            Log::channel('sync')->info("FOOD DETAIL LOG processed: ".$file_name);
         }
     }
 
@@ -141,11 +145,8 @@ class HandleFoodLogs extends Command
         if(Storage::exists($this->storage_url.$file_name))
         {
             Storage::delete($this->storage_url.$file_name);
-            //Log::channel('sync')->info("FOOD DETAIL LOG deleted: ".$file_name);
+            Log::channel('sync')->info("FOOD DETAIL LOG deleted: ".$file_name);
         }
-
-        $time = round((microtime(true) - $this->start_time), 3);
-        Log::channel('sync')->info("Log deleted after $time seconds");
     }
 
     private function getLogFileName($date)

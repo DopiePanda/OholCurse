@@ -2,23 +2,22 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\GameObjectResource\Pages;
-use App\Filament\Resources\GameObjectResource\RelationManagers;
-use App\Models\GameObject;
+use App\Filament\Resources\ProfileRestrictionResource\Pages;
+use App\Filament\Resources\ProfileRestrictionResource\RelationManagers;
+use App\Models\ProfileRestriction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class GameObjectResource extends Resource
+class ProfileRestrictionResource extends Resource
 {
-    protected static ?string $model = GameObject::class;
+    protected static ?string $model = ProfileRestriction::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-puzzle-piece';
+    protected static ?string $navigationIcon = 'heroicon-o-exclamation-triangle';
 
     public static function form(Form $form): Form
     {
@@ -32,19 +31,18 @@ class GameObjectResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                ->sortable(),
-                TextColumn::make('name')
-                ->sortable()
-                ->searchable(),
+                //
             ])
-            ->defaultSort('id')
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ]);
     }
 
@@ -58,7 +56,9 @@ class GameObjectResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListGameObjects::route('/'),
+            'index' => Pages\ListProfileRestrictions::route('/'),
+            'create' => Pages\CreateProfileRestriction::route('/create'),
+            'edit' => Pages\EditProfileRestriction::route('/{record}/edit'),
         ];
     }
 }

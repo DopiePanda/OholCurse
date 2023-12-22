@@ -2,23 +2,22 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\GameObjectResource\Pages;
-use App\Filament\Resources\GameObjectResource\RelationManagers;
-use App\Models\GameObject;
+use App\Filament\Resources\YumlogResource\Pages;
+use App\Filament\Resources\YumlogResource\RelationManagers;
+use App\Models\Yumlog;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class GameObjectResource extends Resource
+class YumlogResource extends Resource
 {
-    protected static ?string $model = GameObject::class;
+    protected static ?string $model = Yumlog::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-puzzle-piece';
+    protected static ?string $navigationIcon = 'heroicon-o-document-arrow-up';
 
     public static function form(Form $form): Form
     {
@@ -32,19 +31,18 @@ class GameObjectResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                ->sortable(),
-                TextColumn::make('name')
-                ->sortable()
-                ->searchable(),
+                //
             ])
-            ->defaultSort('id')
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ]);
     }
 
@@ -58,7 +56,9 @@ class GameObjectResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListGameObjects::route('/'),
+            'index' => Pages\ListYumlogs::route('/'),
+            'create' => Pages\CreateYumlog::route('/create'),
+            'edit' => Pages\EditYumlog::route('/{record}/edit'),
         ];
     }
 }

@@ -37,7 +37,7 @@ class MaplogResource extends Resource
 {
     protected static ?string $model = MapLog::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-map-pin';
 
     public static function form(Form $form): Form
     {
