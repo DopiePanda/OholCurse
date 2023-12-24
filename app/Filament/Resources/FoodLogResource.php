@@ -25,6 +25,8 @@ class FoodLogResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-cake';
 
+    protected static ?string $navigationGroup = 'Logs';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -88,10 +90,10 @@ class FoodLogResource extends Resource
                 'object_id',
             ])
             ->actions([
-
+             
             ])
             ->bulkActions([
-
+                
             ]);
     }
 
