@@ -18,6 +18,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Grouping\Group;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -26,6 +27,8 @@ class YumlogResource extends Resource
     protected static ?string $model = Yumlog::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-arrow-up';
+
+    protected static ?string $navigationGroup = 'Accounts';
 
     public static function form(Form $form): Form
     {
@@ -86,6 +89,10 @@ class YumlogResource extends Resource
             ])
             ->defaultSort('timestamp', 'desc')
             ->defaultPaginationPageOption(50)
+            ->groups([
+                Group::make('curse_name')
+                    ->groupQueryUsing(fn (Builder $query) => $query->groupBy('curse_name')),
+            ])
             ->filters([
                 //
             ])
@@ -116,5 +123,12 @@ class YumlogResource extends Resource
         return [
             'index' => Pages\ListYumlogs::route('/'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+                    ->select('*')
+                    ->groupBy('curse_name');
     }
 }

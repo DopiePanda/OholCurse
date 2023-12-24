@@ -25,6 +25,8 @@ class CurseLogResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-shield-check';
 
+    protected static ?string $navigationGroup = 'Logs';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -55,10 +57,7 @@ class CurseLogResource extends Resource
                         ->where('character_id', 'like', $search.'%');
                 }),
                 TextColumn::make('name.name')
-                ->searchable(isIndividual: true, query: function (Builder $query, string $search): Builder {
-                    return $query
-                        ->where('name', 'like', $search.'%');
-                })
+                ->searchable(['name'], isIndividual: true)
                 ->label('Character name'),
                 TextColumn::make('leaderboard_recieved.leaderboard_name')
                 ->searchable(['leaderboard_name'], isIndividual: true)
@@ -92,7 +91,7 @@ class CurseLogResource extends Resource
 
             ])
             ->bulkActions([
-
+                
             ]);
     }
 

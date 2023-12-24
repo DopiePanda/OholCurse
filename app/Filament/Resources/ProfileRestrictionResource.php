@@ -29,6 +29,8 @@ class ProfileRestrictionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-exclamation-triangle';
 
+    protected static ?string $navigationGroup = 'Accounts';
+
     public static function form(Form $form): Form
     {
         return $form
