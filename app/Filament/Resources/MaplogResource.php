@@ -39,6 +39,8 @@ class MaplogResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
 
+    protected static ?string $navigationGroup = 'Logs';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -88,6 +90,9 @@ class MaplogResource extends Resource
             ])
             ->actions([
 
+            ])
+            ->bulkActions([
+                
             ])
             ->paginated([10, 25, 50, 100, 'all'])
             ->defaultPaginationPageOption(10);
