@@ -19,7 +19,7 @@ class ProcessMapLog extends Command
      *
      * @var string
      */
-    protected $signature = 'app:process-map-log';
+    protected $signature = 'app:process-map-log {index=0}';
 
     /**
      * The console command description.
@@ -69,16 +69,27 @@ class ProcessMapLog extends Command
 
     public function getLatestLog()
     {
+        // Instanciate Goutte web scraper client
         $client = new Client();
     
+        // Fetch the public map log page
         $website = $client->request('GET', $this->url);
         
+        // Filter out all of the links and return the link names as an array (ex. 1703174827time_mapLog.txt)
         $links = $website->filter('a')->each(function ($node) {
             return $node->text();
         });
 
-        $this->file_name = array_pop($links);
+        // Remove all links that are not map logs and reverse the array to get newest log at top
+        $links = array_slice(array_reverse($links), 0, 15);
 
+        // Get the index of the log that should be downloaded. Defaults to 0
+        $index = $this->argument('index');
+
+        // Set the log file name based on the provided index
+        $this->file_name = $links[$index];
+
+        // Unset Goutte client and varibles for memory
         unset($client);
         unset($website);
         unset($links);
@@ -140,17 +151,17 @@ class ProcessMapLog extends Command
                 while (($line = fgets($handle)) !== false) {
                     yield $line;
                 }
-            })->chunk(1000)->each(function ($lines) {
+            })->chunk(100)->each(function ($lines) {
                 foreach ($lines as $line) {
-                    $array = explode(' ', rtrim($line));
-
+                    $array = explode(' ', $line);
+        
                     if(count($array) == 2)
                     {
                         $this->timestamp_start = $array[1];
                     }else
                     {
-                        $object = explode('u', $line[3]);
-                        $now = date("Y-m-d H:i:s");
+                        $object = explode('u', $array[3]);
+
                         $payload[] = [
                             'timestamp' => ($this->timestamp_start + $array[0]),
                             'pos_x'=> $array[1],
@@ -158,8 +169,6 @@ class ProcessMapLog extends Command
                             'object_id'=> $object[0],
                             'use'=> $object[1] ?? null,
                             'character_id'=> $array[4],
-                            'updated_at' => $now,
-                            'created_at' => $now
                         ];
                     }
                 }
