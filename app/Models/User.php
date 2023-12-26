@@ -56,6 +56,16 @@ class User extends Authenticatable implements FilamentUser
             return true;
         }
 
+        if($this->hasRole('system'))
+        {
+            return true;
+        }
+
+        if($this->hasRole('mod'))
+        {
+            return true;
+        }
+
         return false;
     }
 

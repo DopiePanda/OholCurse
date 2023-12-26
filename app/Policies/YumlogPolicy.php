@@ -13,7 +13,7 @@ class YumlogPolicy
      */
     public function viewAny(User $user): bool
     {
-        if($user->can('access admin panel'))
+        if($user->can('can view yumlogs'))
         {
             return true;
         }
@@ -32,7 +32,7 @@ class YumlogPolicy
      */
     public function create(User $user): bool
     {
-        if($user->can('access admin panel'))
+        if($user->can('can view yumlogs'))
         {
             return true;
         }

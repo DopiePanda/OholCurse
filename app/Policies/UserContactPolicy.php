@@ -13,7 +13,7 @@ class UserContactPolicy
      */
     public function viewAny(User $user): bool
     {
-        if($user->can('access admin panel'))
+        if($user->can('can view user contacts'))
         {
             return true;
         }
@@ -32,7 +32,7 @@ class UserContactPolicy
      */
     public function create(User $user): bool
     {
-        if($user->can('access admin panel'))
+        if($user->can('can view user contacts'))
         {
             return true;
         }
