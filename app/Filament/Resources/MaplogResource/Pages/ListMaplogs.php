@@ -25,9 +25,4 @@ class ListMaplogs extends ListRecords
     {
         return $query->simplePaginate(($this->getTableRecordsPerPage() === '10') ? $query->count() : $this->getTableRecordsPerPage());
     }
-
-    protected function getTableQuery(): Builder 
-    {
-        return parent::getTableQuery()->with('name');
-    }
 }

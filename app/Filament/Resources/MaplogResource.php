@@ -118,8 +118,6 @@ class MaplogResource extends Resource
         return parent::getEloquentQuery()
                     ->where('character_id', '!=', -1)
                     ->where('object_id', '!=', 0)
-                    ->whereHas('name', function ($query) {
-                        return $query->where('name', '!=', null);
-                    });
+                    ->whereHas('name');
     }
 }
