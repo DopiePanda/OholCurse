@@ -42,7 +42,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->profile()
             ->resources(
-                FilamentAuthentication::resources()
+                FilamentAuthentication::resources([config('filament-logger.activity_resource')]),
             )
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
