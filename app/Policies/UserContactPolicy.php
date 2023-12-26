@@ -17,6 +17,8 @@ class UserContactPolicy
         {
             return true;
         }
+
+        return false;
     }
 
     /**
@@ -24,7 +26,7 @@ class UserContactPolicy
      */
     public function view(User $user, UserContact $userContact): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -36,6 +38,8 @@ class UserContactPolicy
         {
             return true;
         }
+
+        return false;
     }
 
     /**
@@ -43,7 +47,7 @@ class UserContactPolicy
      */
     public function update(User $user, UserContact $userContact): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -51,7 +55,7 @@ class UserContactPolicy
      */
     public function delete(User $user, UserContact $userContact): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -59,7 +63,7 @@ class UserContactPolicy
      */
     public function restore(User $user, UserContact $userContact): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -67,6 +71,6 @@ class UserContactPolicy
      */
     public function forceDelete(User $user, UserContact $userContact): bool
     {
-        //
+        return false;
     }
 }

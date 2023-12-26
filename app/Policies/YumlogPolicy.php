@@ -17,6 +17,8 @@ class YumlogPolicy
         {
             return true;
         }
+
+        return false;
     }
 
     /**
@@ -24,7 +26,7 @@ class YumlogPolicy
      */
     public function view(User $user, Yumlog $yumlog): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -36,6 +38,8 @@ class YumlogPolicy
         {
             return true;
         }
+
+        return false;
     }
 
     /**
@@ -43,7 +47,7 @@ class YumlogPolicy
      */
     public function update(User $user, Yumlog $yumlog): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -51,7 +55,7 @@ class YumlogPolicy
      */
     public function delete(User $user, Yumlog $yumlog): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -59,7 +63,7 @@ class YumlogPolicy
      */
     public function restore(User $user, Yumlog $yumlog): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -67,6 +71,6 @@ class YumlogPolicy
      */
     public function forceDelete(User $user, Yumlog $yumlog): bool
     {
-        //
+        return false;
     }
 }
