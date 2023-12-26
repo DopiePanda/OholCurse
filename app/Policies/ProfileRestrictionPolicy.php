@@ -13,7 +13,7 @@ class ProfileRestrictionPolicy
      */
     public function viewAny(User $user): bool
     {
-        if($user->can('access admin panel'))
+        if($user->can('can view profile restrictions'))
         {
             return true;
         }
@@ -32,7 +32,7 @@ class ProfileRestrictionPolicy
      */
     public function create(User $user): bool
     {
-        if($user->can('access admin panel'))
+        if($user->can('can view profile restrictions'))
         {
             return true;
         }
@@ -43,7 +43,7 @@ class ProfileRestrictionPolicy
      */
     public function update(User $user, ProfileRestriction $profileRestriction): bool
     {
-        if($user->can('access admin panel'))
+        if($user->can('can view profile restrictions'))
         {
             return true;
         }
@@ -54,7 +54,7 @@ class ProfileRestrictionPolicy
      */
     public function delete(User $user, ProfileRestriction $profileRestriction): bool
     {
-        if($user->can('access admin panel'))
+        if($user->can('can view profile restrictions'))
         {
             return true;
         }
