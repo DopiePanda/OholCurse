@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use Spatie\Activitylog\Models\Activity;
+use App\Policies\ActivityPolicy;
+
 use Spatie\Permission\Models\Role;
 use App\Policies\RolePolicy;
 
@@ -24,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
+        Activity::class => ActivityPolicy::class, // <- add this
         Role::class => RolePolicy::class,
         Permission::class => PermissionPolicy::class,
         User::class => UserPolicy::class,
@@ -37,5 +41,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::before(function ($user, $ability) {
             return $user->hasRole('system') ? true : null;
         });
+
+        $this->registerPolicies();
     }
 }
