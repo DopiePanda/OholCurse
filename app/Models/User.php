@@ -61,8 +61,12 @@ class User extends Authenticatable implements FilamentUser
             return true;
         }
 
-        return redirect(route('search'));
-        //return str_ends_with($this->email, '@yourdomain.com') && $this->hasVerifiedEmail();
+        if($this->hasRole('mod'))
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public function getNameAttribute()
