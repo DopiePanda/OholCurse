@@ -17,6 +17,8 @@ class ProfileRestrictionPolicy
         {
             return true;
         }
+
+        return false;
     }
 
     /**
@@ -36,6 +38,8 @@ class ProfileRestrictionPolicy
         {
             return true;
         }
+
+        return false;
     }
 
     /**
@@ -47,6 +51,8 @@ class ProfileRestrictionPolicy
         {
             return true;
         }
+
+        return false;
     }
 
     /**
@@ -58,6 +64,8 @@ class ProfileRestrictionPolicy
         {
             return true;
         }
+
+        return false;
     }
 
     /**
@@ -65,7 +73,7 @@ class ProfileRestrictionPolicy
      */
     public function restore(User $user, ProfileRestriction $profileRestriction): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -73,6 +81,6 @@ class ProfileRestrictionPolicy
      */
     public function forceDelete(User $user, ProfileRestriction $profileRestriction): bool
     {
-        //
+        return false;
     }
 }
