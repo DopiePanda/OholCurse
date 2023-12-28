@@ -25,6 +25,7 @@ use App\Livewire\Map\Leaderboard;
 
 use App\Livewire\Roadmap\Ideas;
 use App\Livewire\Roadmap\Ideas\Create as IdeaCreate;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,6 +39,10 @@ use App\Livewire\Roadmap\Ideas\Create as IdeaCreate;
 
 
 Route::middleware('web')->group(function() {
+
+    Route::get('/sitemap', function(){
+        SitemapGenerator::create('https://oholcurse.com')->getSitemap()->writeToDisk('public', 'sitemap.xml');
+    });
     
     Route::get('/', Home::class)->middleware(['web'])->name('search');
     Route::get('/player/hash/{hash}', [PlayerReportController::class, 'fetch'])->name('player.curses');
