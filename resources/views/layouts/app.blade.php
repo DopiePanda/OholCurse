@@ -54,6 +54,7 @@
         </div>
 
         @filamentScripts
+        {{-- modalwidth comment for tailwind purge, used widths: sm:max-w-sm sm:max-w-md sm:max-w-lg sm:max-w-xl sm:max-w-2xl sm:max-w-3xl sm:max-w-4xl sm:max-w-5xl sm:max-w-6xl sm:max-w-7xl --}}
         @livewire('wire-elements-modal')
         @livewireScripts
         @stack('scripts')

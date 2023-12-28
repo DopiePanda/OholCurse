@@ -19,7 +19,7 @@ class ActivityPolicy
      */
     public function viewAny(User $user): bool
     {
-        if($user->can('access view activity logs'))
+        if($user->can('view all activity logs'))
         {
             return true;
         }

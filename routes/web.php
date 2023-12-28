@@ -12,6 +12,7 @@ use App\Http\Controllers\LeaderboardScraperController;
 use App\Http\Controllers\LifeScraperController;
 use App\Http\Controllers\LifeDataController;
 use App\Http\Controllers\MapLeaderboardController;
+use App\Http\Controllers\GuideController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PlayerReportController;
 use App\Http\Controllers\ReportVerificationController;
@@ -21,11 +22,9 @@ use App\Livewire\Home;
 use App\Livewire\CharacterNames;
 use App\Livewire\Statistics;
 use App\Livewire\Map\Leaderboard;
-use App\Livewire\Map\Leaderboard2;
 
-use App\Models\LifeNameLog;
-use App\Models\LifeLog;
-
+use App\Livewire\Roadmap\Ideas;
+use App\Livewire\Roadmap\Ideas\Create as IdeaCreate;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,6 +47,10 @@ Route::middleware('web')->group(function() {
     
     Route::get('/names', CharacterNames::class)->name('names');
     Route::get('/statistics', Statistics::class)->name('statistics');
+
+    Route::prefix('/roadmap')->name('roadmap.')->group(function () {
+        Route::get('/', Ideas::class)->name('index');
+    });
 
     Route::prefix('/leaderboards')->name('leaderboards.')->group(function () {
         Route::get('/', [LeaderboardController::class, 'index'])->name('index');
@@ -72,6 +75,12 @@ Route::middleware('web')->group(function() {
 
         Route::get('/dashboard', Dashboard::class)->name('dashboard');
         Route::get('/verify-reports/{id}', [ReportVerificationController::class, 'verifyAllByUser']);
+
+        Route::resource('guides', GuideController::class);
+        Route::get('/guides/view/{slug}', [GuideController::class, 'show'])->name('guides.view');
+        Route::post('upload', [GuideController::class, 'upload'])->name('upload');
+
+        Route::get('/roadmap/ideas/create', IdeaCreate::class)->name('roadmap.idea.create');
 
         Route::get('/phpinfo', function () {
             return false;
