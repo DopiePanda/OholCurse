@@ -87,11 +87,6 @@
                                         <span class="text-blue-400 dark:text-red-500">
                                             {{ $record->max_amount }}
                                         </span>
-                                        <!-- @if($record->player->leaderboard_id == 53)
-                                            <div class="text-center">
-                                                <img title="Second place paricipation award" class="mx-auto h-6" src="{{ asset('assets/leaderboard/participation-award.png') }}" />
-                                            </div>
-                                        @endif -->
                                     @endif      
                                 </div>
                                 <div class="p-1 mt-3 rounded-full bg-white dark:bg-gray-600 text-slate-900 text-sm font-semibold italic">
