@@ -177,7 +177,7 @@ class ProcessMapLog extends Command
                     DB::disableQueryLog();
                     DB::beginTransaction();
     
-                    DB::table('test_map_logs')
+                    DB::table('map_logs')
                             ->insert(
                                 $payload
                             );

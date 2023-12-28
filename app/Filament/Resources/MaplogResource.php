@@ -6,6 +6,7 @@ use App\Filament\Resources\MaplogResource\Pages;
 use App\Filament\Resources\MaplogResource\RelationManagers;
 
 use App\Models\MapLog;
+use App\Models\LifeLog;
 
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -20,6 +21,7 @@ use Filament\Tables\Columns\TextInputColumn;
 use Filament\Tables\Columns\Summarizers\Count;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\QueryBuilder\Constraints\BooleanConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
@@ -65,6 +67,11 @@ class MaplogResource extends Resource
                 }),
                 TextColumn::make('name.name')
                 ->searchable(['name'], isIndividual: true),
+                TextColumn::make('object.name')
+                ->searchable(isIndividual: true, query: function (Builder $query, string $search): Builder {
+                    return $query
+                        ->where('name', $search);
+                }),
                 TextColumn::make('object_id')
                 ->searchable(isIndividual: true, query: function (Builder $query, string $search): Builder {
                     return $query
@@ -86,7 +93,10 @@ class MaplogResource extends Resource
                 'object_id',
             ])
             ->filters([
-
+                SelectFilter::make('objectName')
+                ->relationship('object', 'name')
+                ->searchable()
+                ->preload(),
             ])
             ->actions([
 

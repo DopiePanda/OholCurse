@@ -71,3 +71,4 @@ class LeaderboardPolicy
     {
         return false;
     }
+}
