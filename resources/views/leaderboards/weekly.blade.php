@@ -18,7 +18,7 @@
                     @else
                         <a href="{{ route('leaderboards.weekly.single', ['object_id' => $list->object_id]) }}">
                     @endif
-                        <div class="bg-white border border-yellow-500 p-4 text-yellow-800 rounded-lg font-bold dark:bg-slate-600 dark:text-gray-200 dark:border-0 dark:hover:bg-slate-700">
+                        <div class="text-skin-base dark:text-skin-base-dark bg-skin-fill-muted border p-4 rounded-lg font-bold dark:bg-skin-fill-muted-dark border-skin-base dark:border-skin-base-dark">
                             <div><img class="mx-auto h-12 max-h-12" src="{{ asset($list->image) }}" /></div>
                             <div class="mt-2">{{ $list->label }}</div>
                         </div>

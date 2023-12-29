@@ -1,8 +1,8 @@
-<div class="py-6 px-4 dark:bg-slate-800">
-    <div class="text-md text-center dark:text-gray-400">
+<div class="py-6 px-4 bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
+    <div class="text-md text-center text-skin-muted dark:text-skin-muted-dark">
         Manage affiliation with
     </div>
-    <div class="text-2xl text-center dark:text-gray-200">
+    <div class="text-2xl text-center text-skin-base dark:text-skin-base-dark">
         {{ $player->leaderboard_name }}
     </div>
 

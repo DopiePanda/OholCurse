@@ -12,50 +12,51 @@
 
         <livewire:player.profile-menu :hash="$hash">
 
-        <div class="mt-6 bg-gray-200 p-2 lg:p-6 dark:bg-slate-700">
+        <div class="bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark mt-6 p-2 lg:p-6">
 
-            <div class="text-4xl mt-2 text-center text-blue-400 dark:text-red-500">Attained leaderboard records</div>
+            <div class="text-4xl mt-2 text-center text-skin-base dark:text-skin-base-dark">Attained leaderboard records</div>
 
-            <div class="mt-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
                 @forelse ($records as $record)
-                    @foreach ($maxRecords as $max)
-                        @if ($max->object_id == $record->object_id)
-                            <div class="p-2 text-center rounded-lg border @if($max->max_amount > $record->max_amount) bg-gray-400 text-gray-800 dark:bg-gray-800 border-gray-400 dark:border-gray-500 dark:text-gray-400  @else border-blue-400 dark:border-red-500 dark:text-gray-400 @endif">
-                                <div class="h-20 mx-auto text-center">
-                                    <img class="h-20 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="" title="{{ asset($record->leaderboard->image) ?? '' }}">
+                    @if($record->currentRecord->amount > $record->amount)
+                        @if($record->currentRecord->leaderboard_id == $record->leaderboard_id)
+                            <div class="p-2 text-skin-muted dark:text-skin-muted-dark bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark text-center">
+                                <div class="h-12 mx-auto text-center">
+                                    <img class="h-12 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="" title="{{ asset($record->leaderboard->image) ?? '' }}">
                                 </div>
-                                <div>
-                                    {{ $record->leaderboard->label }}
-                                </div>
-                                <div class="text-2xl font-bold dark:text-red-500">             
-                                    @if($max->max_amount > $record->max_amount)
-                                        <div class="text-gray-600 decoration-4 line-through decoration-gray-800">
-                                            <span class="">
-                                                {{ $record->max_amount }}
-                                            </span>
-                                        </div>
-                                    @else
-                                        <span class="text-blue-400 dark:text-red-500">
-                                            {{ $record->max_amount }}
-                                        </span>
-                                    @endif      
-                                </div>
-                                <div class="p-1 mt-3 rounded-full bg-white dark:bg-gray-600 text-slate-900 text-sm font-semibold italic">
-                                    <span class="">
-                                        {{ $record->lifeName->name ?? 'missing' }}
-                                        @if ($record->ghost)
-                                            <i class="ml-2 fa-solid fa-ghost text-gray-400 dark:text-gray-400 pr-1" title="OBTAINED AS GHOST"></i>
-                                        @endif
-                                    </span>
-                                </div>
-                                <div class="mt-3 text-sm italic">
-                                    {{ date('Y-m-d H:i:s', $record->timestamp) }}
+                                <div>{{ $record->currentRecord->leaderboard->label }}</div>
+                                <div class="my-2 text-3xl text-skin-base dark:text-skin-base-dark">{{ $record->currentRecord->amount }}</div>
+                                <div class="p-1 mt-3 rounded-full bg-skin-fill dark:bg-skin-fill-dark text-white text-sm">
+                                    {{ ucwords(strtolower($record->currentRecord->lifeName->name)) }}
+                                    <div>{{ date('Y-m-d H:i:s', $record->currentRecord->timestamp) }}</div>
                                 </div>
                             </div>
                         @else
-
-                        @endif        
-                    @endforeach
+                            <div class="p-2 text-white border border-dashed border-gray-400 text-center">
+                                <div class="h-12 mx-auto text-center">
+                                    <img class="h-12 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="" title="{{ asset($record->leaderboard->image) ?? '' }}">
+                                </div>
+                                <div class="line-through">{{ $record->leaderboard->label }}</div>
+                                <div class="my-2 text-3xl text-skin-muted dark:text-skin-muted-dark"><span class="line-through">{{ $record->amount }}</span> > <span class="text-skin-base dark:text-skin-base-dark">{{ $record->currentRecord->amount }}</span></div>
+                                <div class="p-1 mt-3 rounded-full bg-skin-fill dark:bg-skin-fill-dark text-white text-sm">
+                                    {{ ucwords(strtolower($record->lifeName->name)) }}
+                                    <div>{{ date('Y-m-d H:i:s', $record->currentRecord->timestamp) }}</div>
+                                </div>
+                            </div>
+                        @endif
+                    @else
+                        <div class="p-2 text-skin-muted dark:text-skin-muted-dark bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark text-center">
+                            <div class="h-12 mx-auto text-center">
+                                <img class="h-12 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="" title="{{ asset($record->leaderboard->image) ?? '' }}">
+                            </div>
+                            <div>{{ $record->leaderboard->label }}</div>
+                            <div class="my-2 text-3xl text-skin-base dark:text-skin-base-dark">{{ $record->amount }}</div>
+                            <div class="p-1 mt-3 rounded-full bg-skin-fill dark:bg-skin-fill-dark text-white text-sm">
+                                {{ ucwords(strtolower($record->lifeName->name)) }}
+                                <div>{{ date('Y-m-d H:i:s', $record->timestamp) }}</div>
+                            </div>
+                        </div>
+                    @endif
                 @empty
                     <div class="col-span-1 md:col-span-3 lg:col-span-4 text-center text-gray-400 dark:text-gray-400">
                         This player have not yet attained any leaderboard placements
@@ -63,49 +64,50 @@
                 @endforelse
             </div>
 
-            <div class="mt-8 text-4xl mt-2 text-center text-blue-400 dark:text-red-500">Ghost leaderboard records</div>
+            <div class="text-4xl mt-2 text-center text-skin-base dark:text-skin-base-dark">Ghost leaderboard records</div>
 
-            <div class="mt-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
                 @forelse ($ghostRecords as $record)
-                    @foreach ($maxRecordsGhosts as $max)
-                        @if ($max->object_id == $record->object_id)
-                            <div class="p-2 text-center rounded-lg border @if($max->max_amount > $record->max_amount) bg-gray-400 text-gray-800 dark:bg-gray-800 border-gray-400 dark:border-gray-500 dark:text-gray-400  @else border-blue-400 dark:border-red-500 dark:text-gray-400 @endif">
-                                <div class="h-20 mx-auto text-center">
-                                    <img class="h-20 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="" title="{{ asset($record->leaderboard->image) ?? '' }}">
+                    @if($record->currentGhostRecord->amount > $record->amount)
+                            @if($record->currentGhostRecord->leaderboard_id == $record->leaderboard_id)
+                                <div class="p-2 text-skin-muted dark:text-skin-muted-dark bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark text-center">
+                                    <div class="h-12 mx-auto text-center">
+                                        <img class="h-12 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="" title="{{ asset($record->leaderboard->image) ?? '' }}">
+                                    </div>
+                                    <div>{{ $record->currentGhostRecord->leaderboard->label }}</div>
+                                    <div class="my-2 text-3xl text-skin-base dark:text-skin-base-dark">{{ $record->currentGhostRecord->amount }}</div>
+                                    <div class="p-1 mt-3 rounded-full bg-skin-fill dark:bg-skin-fill-dark text-white text-sm">
+                                        {{ ucwords(strtolower($record->currentGhostRecord->lifeName->name)) }}
+                                        <div>{{ date('Y-m-d H:i:s', $record->currentGhostRecord->timestamp) }}</div>
+                                    </div>
                                 </div>
-                                <div>
-                                    {{ $record->leaderboard->label }}
+                            @else
+                                <div class="p-2 text-white border border-dashed border-gray-400 text-center">
+                                    <div class="h-12 mx-auto text-center">
+                                        <img class="h-12 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="" title="{{ asset($record->leaderboard->image) ?? '' }}">
+                                    </div>
+                                    <div class="line-through">{{ $record->leaderboard->label }}</div>
+                                    <div class="my-2 text-3xl text-skin-muted dark:text-skin-muted-dark"><span class="line-through">{{ $record->amount }}</span> > <span class="text-skin-base dark:text-skin-base-dark">{{ $record->currentGhostRecord->amount }}</span></div>
+                                    <div class="p-1 mt-3 rounded-full bg-skin-fill dark:bg-skin-fill-dark text-white text-sm">
+                                        {{ ucwords(strtolower($record->lifeName->name)) }}
+                                        <div>{{ date('Y-m-d H:i:s', $record->currentGhostRecord->timestamp) }}</div>
+                                    </div>
                                 </div>
-                                <div class="text-2xl font-bold dark:text-red-500">             
-                                    @if($max->max_amount > $record->max_amount)
-                                        <div class="text-gray-600 decoration-4 line-through decoration-gray-800">
-                                            <span class="">
-                                                {{ $record->max_amount }}
-                                            </span>
-                                        </div>
-                                    @else
-                                        <span class="text-blue-400 dark:text-red-500">
-                                            {{ $record->max_amount }}
-                                        </span>
-                                    @endif      
+                            @endif
+                        @else
+                            <div class="p-2 text-skin-muted dark:text-skin-muted-dark bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark text-center">
+                                <div class="h-12 mx-auto text-center">
+                                    <img class="h-12 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="" title="{{ asset($record->leaderboard->image) ?? '' }}">
                                 </div>
-                                <div class="p-1 mt-3 rounded-full bg-white dark:bg-gray-600 text-slate-900 text-sm font-semibold italic">
-                                    <span class="">
-                                        {{ $record->lifeName->name ?? 'missing' }}
-                                        @if ($record->ghost)
-                                            <i class="ml-2 fa-solid fa-ghost text-gray-400 dark:text-gray-400 pr-1" title="OBTAINED AS GHOST"></i>
-                                        @endif
-                                    </span>
-                                </div>
-                                <div class="mt-3 text-sm italic">
-                                    {{ date('Y-m-d H:i:s', $record->timestamp) }}
+                                <div>{{ $record->leaderboard->label }}</div>
+                                <div class="my-2 text-3xl text-skin-base dark:text-skin-base-dark">{{ $record->amount }}</div>
+                                <div class="p-1 mt-3 rounded-full bg-skin-fill dark:bg-skin-fill-dark text-white text-sm">
+                                    {{ ucwords(strtolower($record->lifeName->name)) }}
+                                    <div>{{ date('Y-m-d H:i:s', $record->timestamp) }}</div>
                                 </div>
                             </div>
-                        @else
-
-                        @endif        
-                    @endforeach
-                @empty
+                        @endif
+                    @empty
                     <div class="col-span-1 md:col-span-3 lg:col-span-4 text-center text-gray-400 dark:text-gray-400">
                         This player have not yet attained any ghost leaderboard placements
                     </div>

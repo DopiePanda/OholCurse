@@ -233,4 +233,9 @@ class AuthorizeModal extends ModalComponent
 
         return redirect(RouteServiceProvider::HOME);
     }
+
+    public static function modalMaxWidth(): string
+    {
+        return 'xl';
+    }
 }

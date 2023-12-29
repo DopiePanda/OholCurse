@@ -219,4 +219,9 @@ class UploadLogfile extends ModalComponent
             //Log::info('Log deleted');
         }
     }
+
+    public static function modalMaxWidth(): string
+    {
+        return 'xl';
+    }
 }

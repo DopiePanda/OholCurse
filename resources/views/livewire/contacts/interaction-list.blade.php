@@ -1,21 +1,21 @@
 <div class="h-full">
-    <div class="w-full h-full flex flex-col items-stretch bg-white pt-4 lg:ml-2 border border-blue-400 rounded-xl dark:bg-slate-700 dark:border-0">
+    <div class="w-full h-full flex flex-col items-stretch pt-4 lg:ml-2 bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark border rounded-xl border-skin-base dark:border-skin-base-dark">
         
-        <div class="mx-auto text-4xl mb-2 dark:text-gray-200">Latest interactions</div>
-        <div class="text-md dark:text-gray-400">Incoming interactions from other players to you</div>
+        <div class="mx-auto text-4xl mb-2 text-skin-base dark:text-skin-base-dark">Latest interactions</div>
+        <div class="text-md text-skin-muted dark:text-skin-muted-dark">Incoming interactions from other players to you</div>
         <div class="w-1/3 my-4 mx-auto border-b border-gray-300 dark:border-gray-600"></div>
 
         @if($hash)
             <div class="flex flex-row p-2 justify-center">
-                <div wire:click="getInteractions('curse')" class="h-20 w-24 mx-2 p-4 rounded-lg cursor-pointer @if($selected == 'curse') bg-gray-200 border-2 border-blue-400 dark:bg-slate-900 dark:border-red-500 @else bg-gray-200 dark:bg-slate-800 @endif">
+                <div wire:click="getInteractions('curse')" class="h-20 w-24 mx-2 p-4 rounded-lg cursor-pointer @if($selected == 'curse') bg-skin-fill-muted dark:bg-skin-fill-muted-dark border-2 border-skin-base dark:border-skin-base-dark @else bg-gray-200 dark:bg-slate-800 @endif">
                     <i class="fa-solid fa-book-skull fa-2x dark:text-gray-600"></i>
                     <div class="text-xs dark:text-gray-300">Curses</div>
                 </div>
-                <div wire:click="getInteractions('trust')" class="h-20 w-24 mx-2 p-4 rounded-lg cursor-pointer @if($selected == 'trust') bg-gray-200 border-2 border-blue-400 dark:bg-slate-900 dark:border-red-500 @else bg-gray-200 dark:bg-slate-800 @endif">
+                <div wire:click="getInteractions('trust')" class="h-20 w-24 mx-2 p-4 rounded-lg cursor-pointer @if($selected == 'trust') bg-skin-fill-muted dark:bg-skin-fill-muted-dark border-2 border-skin-base dark:border-skin-base-dark @else bg-gray-200 dark:bg-slate-800 @endif">
                     <i class="text-green-400 fa-solid fa-handshake-simple fa-2x"></i>
                     <div class="text-xs dark:text-gray-300">Trusts</div>
                 </div>
-                <div wire:click="getInteractions('forgive')" class=" h-20 w-24 mx-2 p-4 rounded-lg cursor-pointer @if($selected == 'forgive') bg-gray-200 border-2 border-blue-400 dark:bg-slate-900 dark:border-red-500 @else bg-gray-200 dark:bg-slate-800 @endif">
+                <div wire:click="getInteractions('forgive')" class=" h-20 w-24 mx-2 p-4 rounded-lg cursor-pointer @if($selected == 'forgive') bg-skin-fill-muted dark:bg-skin-fill-muted-dark border-2 border-skin-base dark:border-skin-base-dark @else bg-gray-200 dark:bg-slate-800 @endif">
                     <i class="text-orange-400 fa-solid fa-heart-circle-exclamation fa-2x"></i>
                     <div class="text-xs dark:text-gray-300">Forgives</div>
                 </div>
@@ -42,9 +42,9 @@
                         <table class="w-full mt-4 mx-auto">
                             <thead>
                                 <tr>
-                                    <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-white dark:border-gray-600">Leaderboard</td>
-                                    <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-white dark:border-gray-600">Character name</td>
-                                    <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-white dark:border-gray-600">Added</td>
+                                    <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Leaderboard</td>
+                                    <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Character name</td>
+                                    <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Added</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -83,9 +83,9 @@
                         <table class="w-full mt-4 mx-auto">
                             <thead>
                                 <tr>
-                                    <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-white dark:border-gray-600">Leaderboard</td>
-                                    <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-white dark:border-gray-600">Character name</td>
-                                    <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-white dark:border-gray-600">Added</td>
+                                    <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Leaderboard</td>
+                                    <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Character name</td>
+                                    <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Added</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -128,9 +128,9 @@
                     <table class="w-full mt-4 mx-auto">
                         <thead>
                             <tr>
-                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-white dark:border-gray-600">Leaderboard</td>
-                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-white dark:border-gray-600">Character name</td>
-                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-white dark:border-gray-600">Added</td>
+                                <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Leaderboard</td>
+                                <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Character name</td>
+                                <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Added</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -165,18 +165,22 @@
             </div>
             
         @endif
-        <div class="w-full flex flex-row mt-auto mx-2 p-4 self-end dark:text-gray-400">
+        <div class="w-full flex flex-row mt-auto mx-2 p-4 self-end text-skin-muted dark:text-skin-muted-dark">
             <div class="flex-1 text-left">Total records: {{ $result_count }}</div>
-            @if($result_count > 10)
-                <div class="flex-1">Page: {{ ceil(($skip + $take) / $take) }} / {{ ceil($result_count / $take) }}</div>
-            @endif
+
+            <div class="flex-1">
+                @if($result_count && ceil($result_count / $take) > 0)
+                    Page: {{ ceil(($skip + $take) / $take) }} / {{ ceil($result_count / $take) }}
+                @endif
+            </div>
+
             <div class="flex-1 text-right">
                 @if($result_count > $take)
                     @if($skip > 0)
-                        <div wire:click="previousPage" class="inline-block p-2 rounded-lg border border-blue-400 text-blue-400 dark:border-red-500 dark:text-red-500"><button type="button">Previous</button></div>
+                        <div wire:click="previousPage" class="inline-block p-2 rounded-lg text-white bg-skin-base dark:bg-skin-fill-dark"><button type="button">Previous</button></div>
                     @endif
                     @if($skip + $take <= $result_count)
-                        <div wire:click="nextPage" class="inline-block p-2 rounded-lg border border-blue-400 text-blue-400 dark:border-red-500 dark:text-red-500"><button type="button">Next</button></div>
+                        <div wire:click="nextPage" class="inline-block p-2 rounded-lg text-white bg-skin-base dark:bg-skin-fill-dark"><button type="button">Next</button></div>
                     @endif
                 @endif
             </div>

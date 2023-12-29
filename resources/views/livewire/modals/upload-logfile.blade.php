@@ -16,6 +16,6 @@
         </div>
         <div class="mt-4 text-sm italic dark:text-gray-400">Wait untill the logfile has finished uploading before clicking "Process log"</div>
      
-        <button class="mt-4 p-2 w-full bg-blue-400 text-white dark:bg-red-500" type="submit">Process log</button>
+        <button class="mt-4 p-2 w-full text-white bg-skin-fill dark:bg-skin-fill-dark" type="submit">Process log</button>
     </form>
 </div>

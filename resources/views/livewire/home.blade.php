@@ -7,16 +7,16 @@
             <div class="mt-8 w-full text-center uppercase text-sm font-bold dark:text-gray-400">Filter search by:</div>
             <div class="mt-2 w-full text-center">
                 <div class="w-11/12 mx-auto lg:w-full flex flex-row items-center text-xs md:text-sm border border-gray-600 dark:border-slate-600 rounded-lg">
-                    <button type="button" class="grow rounded-l-lg row py-2 px-4 @if($filter == 'character_name') bg-blue-400 text-gray-800 dark:bg-red-600 dark:text-gray-200 font-semibold @else bg-gray-200 dark:bg-slate-600 dark:text-gray-300 @endif" wire:click="setSearchFilter('character_name')">
+                    <button type="button" class="grow rounded-l-lg row py-2 px-4 @if($filter == 'character_name') bg-skin-fill dark:bg-skin-fill-dark text-white font-semibold @else bg-gray-200 dark:bg-slate-600 dark:text-gray-300 @endif" wire:click="setSearchFilter('character_name')">
                         Character name
                     </button>
-                    <button type="button" class="grow py-2 px-4 border-l border-r border-gray-400 dark:border-gray-500 @if($filter == 'curse_name') bg-blue-400 text-gray-800 dark:bg-red-600 dark:text-gray-200 font-semibold @else bg-gray-200 dark:bg-slate-600 dark:text-gray-300 @endif" wire:click="setSearchFilter('curse_name')">
+                    <button type="button" class="grow py-2 px-4 border-l border-r border-gray-400 dark:border-gray-500 @if($filter == 'curse_name') bg-skin-fill dark:bg-skin-fill-dark text-white font-semibold @else bg-gray-200 dark:bg-slate-600 dark:text-gray-300 @endif" wire:click="setSearchFilter('curse_name')">
                         Curse name
                     </button>
-                    <button type="button" class="grow py-2 px-4 border-r border-gray-400 dark:border-gray-500 @if($filter == 'leaderboard') bg-blue-400 text-gray-800 dark:bg-red-600 dark:text-gray-200 font-semibold @else bg-gray-200 dark:bg-slate-600 dark:text-gray-300 @endif" wire:click="setSearchFilter('leaderboard')">
+                    <button type="button" class="grow py-2 px-4 border-r border-gray-400 dark:border-gray-500 @if($filter == 'leaderboard') bg-skin-fill dark:bg-skin-fill-dark text-white font-semibold @else bg-gray-200 dark:bg-slate-600 dark:text-gray-300 @endif" wire:click="setSearchFilter('leaderboard')">
                         Leaderboard name
                     </button>
-                    <button type="button" class="grow rounded-r-lg py-2 px-4 @if($filter == 'player_hash') bg-blue-400 text-gray-800 dark:bg-red-600 dark:text-gray-200 font-semibold @else bg-gray-200 dark:bg-slate-600 dark:text-gray-300 @endif" wire:click="setSearchFilter('player_hash')">
+                    <button type="button" class="grow rounded-r-lg py-2 px-4 @if($filter == 'player_hash') bg-skin-fill dark:bg-skin-fill-dark text-white font-semibold @else bg-gray-200 dark:bg-slate-600 dark:text-gray-300 @endif" wire:click="setSearchFilter('player_hash')">
                         Player hash
                     </button>
                 </div>
@@ -39,7 +39,7 @@
                     @forelse($results as $result)
                         @if($result)
                             <a wire:key="id-{{ $result->id }}" href="{{ route('player.curses', [ 'hash' => $result->player_hash ?? 'missing' ]) }}" class="text-white">
-                                <div class="w-full bg-blue-400 dark:bg-red-800 p-3 text-md hover:bg-blue-500">
+                                <div class="w-full bg-skin-fill dark:bg-skin-fill-dark text-white p-3 text-md hover:bg-blue-500">
                                     {{ strtolower($result->player_hash ?? 'missing') }}
                                 </div>
                             </a>
@@ -52,12 +52,12 @@
 
                     @if($count > count($results))
                         <div class="flex flex-row justify-between">
-                            <div class="w-16 min-w-16 py-2 px-6 bg-blue-500 dark:bg-red-600 text-white">
+                            <div class="w-16 min-w-16 py-2 px-6 bg-skin-fill dark:bg-skin-fill-dark text-white">
                                 @if($fetchCursor >= $fetchLimit)
                                     <button class="text-white font-bold text-xl" type="button" wire:click="decreaseCursor()"><</button>
                                 @endif
                             </div>
-                            <div class="pt-2 bg-gray-200 dark:bg-transparent dark:text-red-600">
+                            <div class="pt-2 bg-transparent text-skin-base dark:text-skin-base-dark">
                                 <div>Page: {{ ($fetchCursor / 10) + ($fetchLimit / 10) }} / {{ ceil($count/10) }}</div>
                             </div>
                             <div class="w-16 min-w-16 py-2 px-6 bg-blue-500 dark:bg-red-600 text-white">
@@ -77,7 +77,7 @@
                             @else
                                 <a href="#" class="text-white">
                             @endif
-                                <div class="w-full bg-blue-400 dark:bg-red-800 p-3 text-md hover:bg-blue-500">
+                                <div class="w-full bg-skin-fill dark:bg-skin-fill-dark text-white p-3 text-md hover:bg-blue-500">
                                     @if(isset($result->name)){{ $result->name }}@endif @if(isset($result->character->timestamp)) ({{ gmdate('Y-m-d H:i:s', $result->character->timestamp) }}) @endif
                                 </div>
                             </a>
@@ -90,15 +90,15 @@
 
                     @if($count > count($results))
                         <div class="flex flex-row justify-between">
-                            <div class="w-16 min-w-16 py-2 px-6 bg-blue-500 dark:bg-red-600 text-white">
+                            <div class="w-16 min-w-16 py-2 px-6 bg-skin-fill dark:bg-skin-fill-dark text-white">
                                 @if($fetchCursor >= $fetchLimit)
                                     <button class="text-white font-bold text-xl" type="button" wire:click="decreaseCursor()"><</button>
                                 @endif
                             </div>
-                            <div class="pt-2 bg-gray-200 dark:bg-transparent dark:text-red-600">
+                            <div class="pt-2 bg-transparent text-skin-base dark:text-skin-base-dark">
                                 <div>Page: {{ ($fetchCursor / 10) + ($fetchLimit / 10) }} / {{ ceil($count/10) }}</div>
                             </div>
-                            <div class="w-16 min-w-16 py-2 px-6 bg-blue-500 dark:bg-red-600 text-white">
+                            <div class="w-16 min-w-16 py-2 px-6 bg-skin-fill dark:bg-skin-fill-dark text-white">
                                 @if(($fetchCursor + $fetchLimit) < $count)
                                     <button class="font-bold text-xl" type="button" wire:click="increaseCursor()">></button>
                                 @endif
@@ -115,7 +115,7 @@
                             @else
                                 <a wire:key="id-{{ $result->id }}" href="#" class="text-white">
                             @endif
-                                <div class="w-full bg-blue-400 dark:bg-red-800 p-3 text-md hover:bg-blue-500">
+                                <div class="w-full bg-skin-fill dark:bg-skin-fill-dark text-white p-3 text-md hover:bg-blue-500">
                                     @if(isset($result->curse_name)){{ $result->curse_name }}@endif @if(isset($result->timestamp)) ({{ gmdate('Y-m-d H:i:s', $result->timestamp) }}) @endif
                                 </div>
                             </a>
@@ -128,15 +128,15 @@
 
                     @if($count > count($results))
                         <div class="flex flex-row justify-between">
-                            <div class="w-16 min-w-16 py-2 px-6 bg-blue-500 dark:bg-red-600 text-white">
+                            <div class="w-16 min-w-16 py-2 px-6 bg-skin-fill dark:bg-skin-fill-dark text-white">
                                 @if($fetchCursor >= $fetchLimit)
                                     <button class="text-white font-bold text-xl" type="button" wire:click="decreaseCursor()"><</button>
                                 @endif
                             </div>
-                            <div class="pt-2 bg-gray-200 dark:bg-transparent dark:text-red-600">
+                            <div class="pt-2 bg-transparent text-skin-base dark:text-skin-base-dark">
                                 <div>Page: {{ ($fetchCursor / 10) + ($fetchLimit / 10) }} / {{ ceil($count/10) }}</div>
                             </div>
-                            <div class="w-16 min-w-16 py-2 px-6 bg-blue-500 dark:bg-red-600 text-white">
+                            <div class="w-16 min-w-16 py-2 px-6 bg-skin-fill dark:bg-skin-fill-dark text-white">
                                 @if(($fetchCursor + $fetchLimit) < $count)
                                     <button class="font-bold text-xl" type="button" wire:click="increaseCursor()">></button>
                                 @endif
@@ -153,7 +153,7 @@
                             @else
                                 <a href="#" class="text-white">
                             @endif
-                                <div class="w-full bg-blue-400 dark:bg-red-800 p-3 text-md hover:bg-blue-500">
+                                <div class="w-full bg-skin-fill dark:bg-skin-fill-dark text-white p-3 text-md hover:bg-blue-500">
                                     @if(isset($result->leaderboard_name)){{ $result->leaderboard_name }}@endif @if(isset($result->leaderboard_id)) (ID: {{ $result->leaderboard_id }}) @endif
                                 </div>
                             </a>
@@ -166,15 +166,15 @@
 
                     @if($count > count($results))
                         <div class="flex flex-row justify-between">
-                            <div class="w-16 min-w-16 py-2 px-6 bg-blue-500 dark:bg-red-600 text-white">
+                            <div class="w-16 min-w-16 py-2 px-6 bg-skin-fill dark:bg-skin-fill-dark text-white">
                                 @if($fetchCursor >= $fetchLimit)
                                     <button class="text-white font-bold text-xl" type="button" wire:click="decreaseCursor()"><</button>
                                 @endif
                             </div>
-                            <div class="pt-2 bg-gray-200 dark:bg-transparent dark:text-red-600">
+                            <div class="pt-2 bg-transparent text-skin-base dark:text-skin-base-dark">
                                 <div>Page: {{ ($fetchCursor / 10) + ($fetchLimit / 10) }} / {{ ceil($count/10) }}</div>
                             </div>
-                            <div class="w-16 min-w-16 py-2 px-6 bg-blue-500 dark:bg-red-600 text-white">
+                            <div class="w-16 min-w-16 py-2 px-6 bg-skin-fill dark:bg-skin-fill-dark text-white">
                                 @if(($fetchCursor + $fetchLimit) < $count)
                                     <button class="font-bold text-xl" type="button" wire:click="increaseCursor()">></button>
                                 @endif

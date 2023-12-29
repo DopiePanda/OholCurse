@@ -47,9 +47,7 @@ class ProfileMenu extends Component
         {
             $records = LeaderboardRecord::where('leaderboard_id', $player->leaderboard_id)
                             ->whereHas('leaderboard', function($query) { return $query->where('enabled', '=', 1); })
-                            ->select('object_id')
-                            ->groupBy('object_id')
-                            ->get();
+                            ->count();
         }else{
             $records = [];
         }
@@ -77,7 +75,7 @@ class ProfileMenu extends Component
                             ->whereIn('status', $status)
                             ->count();
         
-        $counts = ['curses' => $curses, 'lives' => $lives, 'reports' => $reports, 'records' => $records];
+        $counts = ['curses' => $curses, 'lives' => $lives, 'reports' => $reports, 'recordsCount' => $records];
 
         $this->counts = $counts;
     }

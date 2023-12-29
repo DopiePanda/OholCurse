@@ -11,32 +11,32 @@
 
         <livewire:player.profile-menu :hash="$hash">
         
-        <div class="mt-6 bg-gray-200 p-2 lg:p-6 dark:bg-slate-700">
+        <div class="bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark mt-6 p-2 lg:p-6">
 
-            <div class="text-4xl mt-2 text-center dark:text-gray-400">Number of lives lived</div>
-            <div class="text-lg mt-2 mb-6 text-center dark:text-gray-900">Lives shorter than 3 years excluded</div>
+            <div class="text-4xl mt-2 text-center text-skin-base dark:text-skin-base-dark">Number of lives lived</div>
+            <div class="text-lg mt-2 mb-6 text-center text-skin-muted dark:text-skin-muted-dark">Lives shorter than 3 years excluded</div>
 
-            <div class="relative my-6 p-4 border border-blue-400 rounded-xl overflow-x-scroll dark:border-red-500">
+            <div class="relative my-6 p-4 border border-skin-base rounded-xl overflow-x-scroll dark:border-skin-base-dark">
                 @if(count($lives) > 0)     
                     <table class="w-full mx-auto mt-4">
                         <thead class="p-2">
                             <tr class="p-2">
-                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-gray-600">#</td>
-                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-gray-600">Name</td>
-                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-gray-600">Life ID</td>
-                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-gray-600">Age</td>
-                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-gray-600">Gender</td>
-                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-gray-600">Location</td>
-                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-gray-600">Died to</td>
-                                <td class="p-2 bg-blue-400 dark:bg-red-500 text-white border border-gray-600">Died</td>
+                                <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">#</td>
+                                <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Name</td>
+                                <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Life ID</td>
+                                <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Age</td>
+                                <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Gender</td>
+                                <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Location</td>
+                                <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Died to</td>
+                                <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Died</td>
                             </tr>
                         </thead>
                         <tbody class="p-2">
                             @forelse ($lives as $life)
-                                <tr class="even:bg-gray-300 odd:bg-white dark:even:bg-slate-600 dark:odd:bg-slate-500 dark:text-gray-300">
+                                <tr class="even:bg-gray-300 odd:bg-white dark:even:bg-slate-700 dark:odd:bg-slate-800 dark:text-gray-300">
                                     <td class="p-2 border border-gray-400">{{ (count($lives) - $loop->index) }}</td>
                                     <td class="p-2 border border-gray-400">
-                                        <div class="cursor-pointer hover:text-blue-400 dark:hover:text-red-600" onclick="Livewire.dispatch('openModal', {component: 'modals.character.details', arguments: {character_id: {{$life->character_id}}}})">{{ $life->name->name ?? '-UNNAMED-' }}</div>
+                                        <div class="cursor-pointer hover:text-skin-base dark:hover:text-skin-base-dark" onclick="Livewire.dispatch('openModal', {component: 'modals.character.details', arguments: {character_id: {{$life->character_id}}}})">{{ $life->name->name ?? '-UNNAMED-' }}</div>
                                     </td>
                                     <td class="p-2 border border-gray-400">{{ $life->character_id }}</td>
                                     <td class="p-2 border border-gray-400">{{ $life->age }}</td>

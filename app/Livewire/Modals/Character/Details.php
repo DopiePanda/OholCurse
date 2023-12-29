@@ -154,4 +154,9 @@ class Details extends ModalComponent
         //return asset($url."/1.png");
         $this->sprite = $url."/1.png";
     }
+
+    public static function modalMaxWidth(): string
+    {
+        return 'xl';
+    }
 }

@@ -23,16 +23,16 @@
             <table wire:loading.remove class="mx-auto mt-3 text-center border border-gray-400 shadow-lg">
                 <thead>
                     <tr class="border-b border-gray-400">
-                        <td class="p-4 bg-blue-400 text-white border-r border-gray-400 dark:bg-red-500">Category</td>
-                        <td class="p-4 bg-blue-400 text-white border-r border-gray-400 dark:bg-red-500">Score</td>
-                        <td class="p-4 bg-blue-400 text-white border-r border-gray-400 dark:bg-red-500">Leaderboard name</td>
-                        <td class="p-4 bg-blue-400 text-white dark:bg-red-500">Date</td>
+                        <td class="p-4 text-white border-r border-gray-400 bg-skin-fill dark:bg-skin-fill-dark">Category</td>
+                        <td class="p-4 text-white border-r border-gray-400 bg-skin-fill dark:bg-skin-fill-dark">Score</td>
+                        <td class="p-4 text-white border-r border-gray-400 bg-skin-fill dark:bg-skin-fill-dark">Leaderboard name</td>
+                        <td class="p-4 text-white bg-skin-fill dark:bg-skin-fill-dark">Date</td>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($results as $result)
                         @if($result->leaderboard->enabled == 1)
-                        <tr class="bg-white even:bg-gray-300 odd:bg-white dark:even:bg-slate-600 dark:odd:bg-slate-500 dark:text-gray-300">
+                            <tr class="even:bg-gray-300 odd:bg-white dark:even:bg-slate-700 dark:odd:bg-slate-800 dark:text-gray-300">
                                 <td class=" p-4 border border-gray-400">
                                     <img class="mx-auto h-10" src="{{ asset($result->leaderboard->image) }}" />
                                     <div class="mt-1 text-sm font-semibold">{{ $result->leaderboard->label }}</div>
@@ -47,7 +47,7 @@
                                 </td>
                                 <td class="p-4 border border-gray-400">
                                     @if(isset($result->character->player_hash) && isset($result->playerName->leaderboard_name)) 
-                                        <a class="text-blue-400 font-semibold dark:text-red-400" href="{{ route('player.curses', ['hash' => $result->character->player_hash]) }}">
+                                        <a class="font-semibold text-skin-base dark:text-skin-base-dark" href="{{ route('player.curses', ['hash' => $result->character->player_hash]) }}">
                                             {{ $result->playerName->contact->nickname ?? $result->playerName->leaderboard_name }}
                                         </a>
                                     @else
