@@ -41,10 +41,10 @@
             <table wire:loading.remove class="mt-3 w-full text-center border border-gray-400 shadow-lg overflow-x-scroll">
                 <thead>
                     <tr class="border-b border-gray-400">
-                        <td class="p-2 border-r border-gray-400 dark:bg-red-500">Place</td>
-                        <td class="p-2 border-r border-gray-400 dark:bg-red-500">Score</td>
-                        <td class="p-2 border-r border-gray-400 dark:bg-red-500">Leaderboard name</td>
-                        <td class="p-2 dark:bg-red-500">Character name (Character ID)</td>
+                        <td class="p-2 border-r border-gray-400 bg-skin-fill dark:bg-skin-fill-dark">Place</td>
+                        <td class="p-2 border-r border-gray-400 bg-skin-fill dark:bg-skin-fill-dark">Score</td>
+                        <td class="p-2 border-r border-gray-400 bg-skin-fill dark:bg-skin-fill-dark">Leaderboard name</td>
+                        <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark">Character name (Character ID)</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -104,7 +104,7 @@
     
             $end = $time_end - $time_start;
         @endphp
-        <div class="text-center text-sm mt-2 font-gray-400">Page load time: {{ round($end, 3) }}s</div>
+        <div class="text-center text-sm mt-2 text-gray-400">Page load time: {{ round($end, 3) }}s</div>
     </div>
 </div>
 

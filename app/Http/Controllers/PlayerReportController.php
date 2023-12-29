@@ -227,68 +227,35 @@ class PlayerReportController extends Controller
                             ->first();
         if($player)
         {
-            $records = LeaderboardRecord::with('lifeName', 'leaderboard')
+            $records = LeaderboardRecord::with('lifeName:character_id,name', 'leaderboard:id,enabled,object_id,label,image', 'currentRecord:game_leaderboard_id,leaderboard_id,character_id,amount,timestamp')
                             ->whereHas('leaderboard', function($query) { return $query->where('enabled', '=', 1); })
-                            ->select('game_leaderboard_id', 'object_id', 'character_id', DB::raw('MAX(amount) as max_amount'))
+                            ->select('game_leaderboard_id', 'object_id', 'leaderboard_id', 'character_id', 'timestamp', 'amount', 'created_at')
                             ->where('leaderboard_id', $player->leaderboard_id)
                             ->where('ghost', 0)
-                            ->orderBy('max_amount', 'desc')
-                            ->groupBy(['object_id', 'game_leaderboard_id', 'character_id'])
+                            ->orderBy('amount', 'desc')
+                            ->groupBy('game_leaderboard_id')
                             ->get();
 
-            $ghostRecords = LeaderboardRecord::with('lifeName', 'leaderboard')
+            $ghostRecords = LeaderboardRecord::with('lifeName:character_id,name', 'leaderboard:id,enabled,object_id,label,image', 'currentGhostRecord:game_leaderboard_id,leaderboard_id,character_id,amount,timestamp')
                             ->whereHas('leaderboard', function($query) { return $query->where('enabled', '=', 1); })
-                            ->select('game_leaderboard_id', 'object_id', 'character_id', DB::raw('MAX(amount) as max_amount'))
+                            ->select('game_leaderboard_id', 'object_id', 'leaderboard_id', 'character_id', 'timestamp', 'amount', 'created_at')
                             ->where('leaderboard_id', $player->leaderboard_id)
                             ->where('ghost', 1)
-                            ->orderBy('max_amount', 'desc')
-                            ->groupBy(['object_id', 'game_leaderboard_id', 'character_id'])
+                            ->orderBy('amount', 'desc')
+                            ->groupBy('game_leaderboard_id')
                             ->get();
-        }else
-        {
-            $records = [];
+
+
         }
-        
-
-        $object_ids = array();
-
-        foreach ($records as $record) 
-        {
-            array_push($object_ids, $record->object_id);
-        }
-
-        //dd($object_ids);
-
-        $maxRecords = LeaderboardRecord::with('player:player_hash,leaderboard_name', 'lifeName:character_id,name')
-                            ->select('object_id', 'leaderboard_id', 'character_id', 'amount', 'timestamp', 'ghost', DB::raw('MAX(amount) as max_amount'))
-                            ->whereIn('object_id', $object_ids)
-                            ->where('ghost', 0)
-                            ->groupBy('object_id')
-                            ->orderBy('max_amount', 'desc')
-                            ->get();
-
-        $maxRecordsGhosts = LeaderboardRecord::with('player:player_hash,leaderboard_name', 'lifeName:character_id,name')
-                            ->select('object_id', 'leaderboard_id', 'character_id', 'amount', 'timestamp', 'ghost', DB::raw('MAX(amount) as max_amount'))
-                            ->whereIn('object_id', $object_ids)
-                            ->where('ghost', 1)
-                            ->groupBy('object_id')
-                            ->orderBy('max_amount', 'desc')
-                            ->get();
-
-
-
-        //dd($records);
-        //dd($maxRecords);
 
         return view('player.records', [
             'hash' => $hash, 
             'records' => $records ?? [],
-            'maxRecords' => $maxRecords ?? [],
             'ghostRecords' => $ghostRecords ?? [],
-            'maxRecordsGhosts' => $maxRecordsGhosts ?? [],
             'player' => $player,
             'time' => $time_start,
         ]);
+        
     }
 
     private function categorizeSent($object, $hash)

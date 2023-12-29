@@ -7,16 +7,16 @@
 
         <!-- Email Address -->
         <div>
-            <x-input-label class="dark:text-gray-400" for="username" :value="__('Username')" />
-            <x-text-input  placeholder="Enter username" id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus autocomplete="username" />
+            <x-input-label class="my-1 text-skin-base dark:text-skin-base-dark" for="username" :value="__('Username')" />
+            <x-text-input  placeholder="Enter username" id="username" class="block mt-2 w-full" type="text" name="username" :value="old('username')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('username')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label class="dark:text-gray-400" for="password" :value="__('Password')" />
+            <x-input-label class="my-1 text-skin-base dark:text-skin-base-dark" for="password" :value="__('Password')" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
+            <x-text-input id="password" class="block mt-2 w-full"
                             placeholder="Enter password"
                             type="password"
                             name="password"
@@ -29,7 +29,7 @@
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
                 <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ml-2 text-sm text-gray-600 dark:text-gray-200">{{ __('Remember me') }}</span>
+                <span class="ml-2 text-sm text-skin-muted dark:text-skin-muted-dark">{{ __('Remember me') }}</span>
             </label>
         </div>
 
@@ -40,7 +40,7 @@
                 </a>
             @endif
             <div class="text-center w-full">
-                <button class="w-full p-2 mx-auto bg-blue-400 text-white rounded-lg dark:bg-red-500" type="submit">
+                <button class="w-full p-2 mx-auto text-white rounded-lg bg-skin-fill dark:bg-skin-fill-dark" type="submit">
                     Log in
                 </button>
             </div>
@@ -48,12 +48,12 @@
         </div>
     </form>
 
-    <div class="w-full text-center py-3 my-2 dark:text-gray-400"> 
+    <div class="w-full text-center py-3 my-2 text-skin-muted dark:text-skin-muted-dark"> 
         Or 
     </div>
 
     <div>
-        <button class="w-full p-2 mx-auto border border-blue-400 text-blue-400 rounded-lg dark:text-red-500 dark:border-red-500" onclick="Livewire.dispatch('openModal', { component: 'modals.authorize-modal' })">
+        <button class="w-full p-2 mx-auto border border-skin-base dark:border-skin-base-dark text-skin-base rounded-lg dark:text-skin-base-dark" onclick="Livewire.dispatch('openModal', { component: 'modals.authorize-modal' })">
             Authorize
         </button>
     </div>    

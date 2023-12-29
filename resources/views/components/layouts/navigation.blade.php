@@ -64,7 +64,7 @@
 
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-3 py-2 border border-skin-base text-skin-base text-sm leading-4 font-medium rounded-md hover:text-gray-700 focus:outline-none transition ease-in-out duration-150 dark:bg-transparent dark:border-skin-base-dark dark:text-skin-base-dark">
                             <div>{{ Auth::user()->username }}</div>
 
                             <div class="ml-1">
@@ -97,14 +97,14 @@
                 </x-dropdown>
                 @endauth
                 @guest
-                    <button class="p-2 border border-blue-400 text-blue-400 rounded-lg" onclick="Livewire.dispatch('openModal', { component: 'modals.authorize-modal' })">Authorize</button>
+                    <button class="p-2 border border-skin-base dark:border-skin-base-dark text-skin-base dark:text-skin-base-dark rounded-lg" onclick="Livewire.dispatch('openModal', { component: 'modals.authorize-modal' })">Authorize</button>
                     <a class="block ml-2 p-2" href="{{ route('login') }}">Login</a>
                 @endguest
             </div>
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
                 @guest
-                    <button class="p-2 border border-blue-400 text-blue-400 rounded-lg" onclick="Livewire.dispatch('openModal', { component: 'modals.authorize-modal' })">Auth</button>
+                    <button class="p-2 border border-skin-base dark:border-skin-base-dark text-skin-base dark:text-skin-base-dark rounded-lg" onclick="Livewire.dispatch('openModal', { component: 'modals.authorize-modal' })">Auth</button>
                 @endguest
 
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">

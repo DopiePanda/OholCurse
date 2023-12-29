@@ -1,3 +1,4 @@
+let defaultDarkmode = "{{ env('DEFAULT_DARKMODE') }}";
 let defaultTheme = "{{ env('DEFAULT_THEME') }}";
 let userTheme = "{{ auth()->user()->theme ?? null }}";
 
@@ -24,7 +25,7 @@ if (userTheme != null && userTheme != '')
         console.log('User system dark');
     } else
     {
-        if(defaultTheme == 'dark')
+        if(defaultDarkmode == 'dark')
         {
             document.documentElement.classList.add('dark')
             console.log('Default theme dark');

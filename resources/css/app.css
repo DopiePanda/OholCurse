@@ -1,7 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,400;0,700;0,900;1,400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
+@layer base {
+
+  html {
+    font-family: 'Lato', sans-serif;
+  }
+
+  :root {
+    --color-text-base: #2563eb;
+    --color-text-base-dark: #dc2626;
+    --color-text-muted: #6b7280;
+    --color-text-muted-dark: #6b7280;
+    --color-text-inverted: #ffffff;
+    --color-text-inverted-dark: #ffffff;
+    --color-fill: #2563eb;
+    --color-fill-dark: #dc2626;
+    --color-fill-wrapper: #e5e7eb;
+    --color-fill-wrapper-dark: #111827;
+    --color-fill-muted: #e5e7eb;
+    --color-fill-muted-dark: #0c1120;
+    --color-button-accent: #201d1d;
+    --color-button-accent-dark: #201d1d;
+    --color-button-accent-hover: #ffffff;
+    --color-button-accent-hover-dark: #ffffff;
+    --color-button-muted: #ffffff;
+    --color-button-muted-dark: #ffffff;
+    --color-border-base: #2563eb;
+    --color-border-base-dark: #dc2626;
+  }
+
+  .theme-dark-blue {
+    --color-text-base: #dc2626;
+    --color-text-base-dark: #2563eb;
+    --color-text-muted: #6b7280;
+    --color-text-muted-dark: #6b7280;
+    --color-text-inverted: #ffffff;
+    --color-text-inverted-dark: #ffffff;
+    --color-fill: #dc2626;
+    --color-fill-dark: #2563eb;
+    --color-fill-wrapper: #e5e7eb;
+    --color-fill-wrapper-dark: #111827;
+    --color-fill-muted: #e5e7eb;
+    --color-fill-muted-dark: #0c1120;
+    --color-button-accent: #201d1d;
+    --color-button-accent-dark: #201d1d;
+    --color-button-accent-hover: #ffffff;
+    --color-button-accent-hover-dark: #ffffff;
+    --color-button-muted: #ffffff;
+    --color-button-muted-dark: #ffffff;
+    --color-border-base: #dc2626;
+    --color-border-base-dark: #2563eb;
+  }
+
+}
 
 /*
  CSS for the main interaction

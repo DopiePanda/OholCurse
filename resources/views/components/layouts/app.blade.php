@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="dark" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
 
         <!-- Meta information -->
@@ -32,7 +32,7 @@
 
         @yield('before-head-end')
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased {{ env('DEFAULT_THEME') }}">
         <div class="z-10 flex flex-col min-h-screen bg-gray-100 dark:bg-slate-800">
             @include('layouts.navigation')
 
@@ -60,6 +60,7 @@
     
         <script type="text/javascript">
 
+            let defaultDarkmode = "{{ env('DEFAULT_DARKMODE') }}";
             let defaultTheme = "{{ env('DEFAULT_THEME') }}";
             let userTheme = "{{ auth()->user()->theme ?? null }}";
 

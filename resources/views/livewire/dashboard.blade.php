@@ -11,14 +11,14 @@ date_default_timezone_set($timezone);
     <x-slot name="header">
         <div class="flex flex-row">
             <div class="flex-1">
-                <h2 class="font-semibold text-xl text-gray-300 leading-tight">
+                <h2 class="font-semibold text-xl text-skin-base dark:text-skin-base-dark leading-tight">
                     {{ __('Dashboard') }}
                 </h2>
             </div>
             <div class="flex-1 text-right">
                 @if(Auth::user()->player_hash != null)
                     <div>
-                        <a class="w-full px-4 py-2 bg-blue-400 text-white rounded-md" href="{{ route('player.curses', Auth::user()->player_hash) }}">
+                        <a class="w-full px-4 py-2 text-white bg-skin-fill dark:bg-skin-fill-dark rounded-md" href="{{ route('player.curses', Auth::user()->player_hash) }}">
                             Go to my profile
                         </a>
                     </div>
@@ -54,13 +54,13 @@ date_default_timezone_set($timezone);
                         <table class="mt-4 w-full mt-4 p-2 mx-auto border-spacing-2 border border-gray-400">
                             <thead>
                                 <tr class="text-left">
-                                    <th class="py-2 px-4 bg-blue-400 text-white dark:bg-red-500 dark:border-gray-600">Date (UTC)</th>
-                                    <th class="py-2 px-4 bg-blue-400 text-white dark:bg-red-500 dark:border-gray-600">Character ID</th>
-                                    <th class="py-2 px-4 bg-blue-400 text-white dark:bg-red-500 dark:border-gray-600">Character name</th>
-                                    <th class="py-2 px-4 bg-blue-400 text-white dark:bg-red-500 dark:border-gray-600">Curse name</th>
-                                    <th class="py-2 px-4 bg-blue-400 text-white dark:bg-red-500 dark:border-gray-600">Status</th>
-                                    <th class="py-2 px-4 bg-blue-400 text-white dark:bg-red-500 dark:border-gray-600">Verified</th>
-                                    <th class="py-2 px-4 bg-blue-400 text-white dark:bg-red-500 dark:border-gray-600">Uploaded at (UTC)</th>
+                                    <th class="py-2 px-4 text-white bg-skin-fill dark:bg-skin-fill-dark border-r dark:border-gray-600">Date (UTC)</th>
+                                    <th class="py-2 px-4 text-white bg-skin-fill dark:bg-skin-fill-dark border-r dark:border-gray-600">Character ID</th>
+                                    <th class="py-2 px-4 text-white bg-skin-fill dark:bg-skin-fill-dark border-r dark:border-gray-600">Character name</th>
+                                    <th class="py-2 px-4 text-white bg-skin-fill dark:bg-skin-fill-dark border-r dark:border-gray-600">Curse name</th>
+                                    <th class="py-2 px-4 text-white bg-skin-fill dark:bg-skin-fill-dark border-r dark:border-gray-600">Status</th>
+                                    <th class="py-2 px-4 text-white bg-skin-fill dark:bg-skin-fill-dark border-r dark:border-gray-600">Verified</th>
+                                    <th class="py-2 px-4 text-white bg-skin-fill dark:bg-skin-fill-dark border-r dark:border-gray-600">Uploaded at (UTC)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -115,14 +115,14 @@ date_default_timezone_set($timezone);
                             </tbody>
                         </table>
                     </div>
-                    <div class="mt-2 grid grid-cols-2">
+                    <div class="mt-4 grid grid-cols-2">
                         <div class="text-left">
-                            <span wire:click="previousPage()" class="cursor-pointer w-auto p-2 border border-blue-400 dark:border-red-500">
+                            <span wire:click="previousPage()" class="cursor-pointer w-auto p-2 text-white bg-skin-base dark:bg-skin-fill-dark rounded-lg">
                                 Previous
                             </span>
                         </div>
                         <div class="text-right">
-                            <span wire:click="nextPage()" class="cursor-pointer w-auto p-2 border border-blue-400 dark:border-red-500">
+                            <span wire:click="nextPage()" class="cursor-pointer w-auto p-2 text-white bg-skin-base dark:bg-skin-fill-dark rounded-lg">
                                 Next
                             </span>
                         </div>
