@@ -37,26 +37,31 @@ class LeaderboardResource extends Resource
                 Select::make('type')
                 ->options([
                     'weekly' => 'Weekly',
-                    'monthly' => 'Monthly',
                 ])
                 ->default('weekly')
-                ->selectablePlaceholder(false),
-                FileUpload::make('image'),
-                TextInput::make('label'),
-                TextInput::make('page_title'),
-                Toggle::make('multi')
-                ->live(),
+                ->selectablePlaceholder(false)
+                ->required(),
+                FileUpload::make('image')
+                ->disk('public')
+                ->directory('assets/images/objects')
+                ->visibility('public')
+                ->preserveFilenames()
+                ->required(),
+                TextInput::make('label')
+                ->required(),
+                TextInput::make('page_title')
+                ->required(),
                 Select::make('object_id')
                 ->options(GameObject::all()->pluck('name', 'id'))
-                ->hidden(fn (Get $get): bool => $get('multi'))
-                ->required(fn (Get $get): bool => ! $get('multi'))
-                ->searchable(),
+                ->searchable()
+                ->required(),
                 Select::make('multi_objects')
                 ->multiple()
                 ->options(GameObject::all()->pluck('name', 'id'))
-                ->hidden(fn (Get $get): bool => ! $get('multi'))
                 ->required(fn (Get $get): bool => $get('multi'))
                 ->searchable(),
+                Toggle::make('multi')
+                ->live(),
                 Toggle::make('enabled'),
             ]);
     }

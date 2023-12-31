@@ -12,7 +12,7 @@ class GameLeaderboard extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'multi_objects' => 'string',
+        'multi_objects' => 'array',
     ];
 
     public function record()
