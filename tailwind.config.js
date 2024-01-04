@@ -11,6 +11,7 @@ export default {
         './resources/views/**/*.blade.php',
         './app/Filament/**/*.php',
         './resources/views/filament/**/*.blade.php',
+        './resources/views/livewire/**/*.blade.php',
         './vendor/filament/**/*.blade.php',
         './vendor/masmerise/livewire-toaster/resources/views/*.blade.php',
     ],
