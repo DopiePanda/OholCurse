@@ -15,7 +15,7 @@
             @if($object->multi)
                 <div class="text-center text-sm italic dark:text-gray-400">
                     Object ID(s): 
-                    @foreach(json_decode($object->multi_objects) as $single)
+                    @foreach($object['multi_objects'] as $single)
                         <span>@if(!$loop->last) {{ $single.',' }}  @else {{ $single }}  @endif</span>
                     @endforeach
                 </div>
