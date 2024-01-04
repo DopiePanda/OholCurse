@@ -93,7 +93,6 @@ class LeaderboardController extends Controller
     public function getMultiObjectsLeaderboard($id)
     {
         $object = GameLeaderboard::find($id);
-        $objects = json_decode($object->multi_objects);
 
         $start = Carbon::now('UTC')->subDays(7);
         $start = $start->setTimeFromTimeString('00:00:00');
@@ -103,7 +102,7 @@ class LeaderboardController extends Controller
 
         $this->results = MapLog::with(['lives', 'name:character_id,name', 'life.leaderboard:player_hash,leaderboard_name'])
                         ->select(DB::raw("(COUNT(object_id)) as count"), 'character_id')
-                        ->whereIn('object_id', $objects)
+                        ->whereIn('object_id', $object->multi_objects)
                         ->where('timestamp', '<=', $end->timestamp)
                         ->where('timestamp', '>=', $start->timestamp)
                         ->where('character_id', '!=', '-1')
