@@ -3,7 +3,7 @@
         <div wire:ignore class="mx-auto p-4 rounded-lg dark:bg-slate-700">
             <div class="p-2">
                 <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="character_start">Character ID Start Point:</label></div>
-                <div><input wire:model="character_start" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="text" placeholder="6739939" /></div>
+                <div><input wire:model="character_start" class="w-full rounded-lg rounded-md border border-blue-400 dark:bg-slate-700 dark:text-gray-200 dark:placeholder:text-gray-500 dark:border-gray-600 dark:focus:bg-slate-600" type="text" placeholder="6739939" /></div>
                 <div>@error('character_start') <div class="mt-1 text-red-400 font-semibold text-sm italic">{{ $message }}</div> @enderror</div>
             </div>
             <div class="p-2">

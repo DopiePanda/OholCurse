@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:update-curse-scores')->dailyAt('09:10');
         $schedule->command('app:scrape-leaderboard-gene-scores')->hourly();
 
-        $schedule->command('app:update-family-lineage')->dailyAt('09:20');
+        //$schedule->command('app:update-family-lineage')->dailyAt('09:20');
         
     }
 
