@@ -30,6 +30,8 @@ use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Oper
 use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 
+use Filament\Tables\Actions\Action;
+
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -99,7 +101,11 @@ class MaplogResource extends Resource
                 ->preload(),
             ])
             ->actions([
-
+                
+            ])
+            ->headerActions([
+                Action::make('Area Search')
+                ->url(fn (): string => ('./maplogs/area')),
             ])
             ->bulkActions([
                 

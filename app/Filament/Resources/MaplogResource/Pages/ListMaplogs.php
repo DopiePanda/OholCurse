@@ -4,6 +4,7 @@ namespace App\Filament\Resources\MaplogResource\Pages;
 
 use App\Filament\Resources\MaplogResource;
 use Filament\Actions;
+use Filament\Pages\Actions\Action;
 use Filament\Resources\Pages\ListRecords;
 
 use Illuminate\Contracts\Pagination\CursorPaginator;
@@ -13,13 +14,6 @@ use Illuminate\Database\Eloquent\Builder;
 class ListMaplogs extends ListRecords
 {
     protected static string $resource = MaplogResource::class;
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            
-        ];
-    }
 
     protected function paginateTableQuery(Builder $query): Paginator
     {

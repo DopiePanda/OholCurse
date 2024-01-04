@@ -34,6 +34,8 @@ class AreaSearch extends ListRecords
 
     protected static ?string $navigationLabel = 'Map Area Search';
 
+    protected static ?string $navigationGroup = 'Logs';
+
     public function mount(): void
     {
         static::authorizeResourceAccess();
