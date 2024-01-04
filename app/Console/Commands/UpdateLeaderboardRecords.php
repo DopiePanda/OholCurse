@@ -87,7 +87,7 @@ class UpdateLeaderboardRecords extends Command
         {
             $results = MapLog::with(['lives:character_id,timestamp', 'name:character_id,name', 'life.leaderboard:player_hash,leaderboard_name,leaderboard_id'])
                         ->select(DB::raw("(COUNT(object_id)) as count"), 'character_id')
-                        ->whereIn('object_id', json_decode($object->multi_objects))
+                        ->whereIn('object_id', $object->multi_objects)
                         ->where('timestamp', '<=', $time_to)
                         ->where('timestamp', '>=', $time_from)
                         ->where('character_id', '!=', '-1')
