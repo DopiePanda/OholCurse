@@ -51,7 +51,7 @@ class Area extends Component
                             ->where('type', 'birth')
                             ->select('character_id')
                             ->orderBy('character_id', 'desc')
-                            ->limit(1000)->get();
+                            ->limit(10000)->get();
     }
 
     public function render()
