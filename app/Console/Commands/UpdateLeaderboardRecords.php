@@ -125,13 +125,15 @@ class UpdateLeaderboardRecords extends Command
 
                 if($record == null || $result->count > $record->amount && $record->ghost == $ghost)
                 {
+
+                    //dd($object);
                     
                     LeaderboardRecord::create([
                         'game_leaderboard_id' => $object->id,
                         'ghost' => $ghost,
                         'object_id' => $object->object_id,
                         'multi' => $object->multi,
-                        'multi_objects' => $object->multi_objects,
+                        'multi_objects' => json_encode($object->multi_objects) ?? null,
                         'leaderboard_id' => $result->life->leaderboard->leaderboard_id,
                         'character_id' => $result->name->character_id,
                         'amount' => $result->count,

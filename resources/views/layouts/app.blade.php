@@ -50,6 +50,29 @@
                 {{ $slot }}
                 
             </main>
+
+            <div class="pb-4 px-4 flex flex-row items-end">
+                <div class="lg:basis-1/4 text-left">
+                    @can('access admin panel')
+                    <div class="fixed bottom-0 left-0 pb-4 pl-4">
+                        <a class="" href="/admin" title="Admin panel">
+                            <i class="fa-solid fa-toolbox fa-2x text-skin-base dark:text-skin-base-dark"></i>
+                        </a>
+                    </div>
+                    @endif
+                </div> 
+                <div class="py-4 lg:basis-2/4 text-center">
+                    @if(env('DONATION_BANNER') == 'true')
+                        <span class="text-skin-muted dark:text-skin-muted-dark cursor-default">Want to help support the website?</span> <a href="{{ env('DONATION_URL') }}" target="_blank" class="text-skin-base dark:text-skin-base-dark">Donate a coffee</a>
+                    @endif
+                </div>
+                <div class="z-20 lg:basis-1/4 text-right">
+                    @if(env('CHAT_ENABLED') == 'true')
+                        <livewire:conversations.inbox />
+                    @endif
+                </div>
+            </div>
+
             <x-effects.snow/>
         </div>
 
@@ -72,6 +95,12 @@
                                 "progressBar": true,
                             }
                         });
+            });
+        </script>
+
+        <script type="text/javascript">
+            $("#conversationToggle").on("click", function(){
+                $("#conversationsWrapper").toggle();
             });
         </script>
 

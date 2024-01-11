@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Events\Admin\Leaderboard\CreateLeaderboard;
+use App\Events\Admin\Leaderboard\UpdateLeaderboard;
+
 class GameLeaderboard extends Model
 {
     use HasFactory;
@@ -13,6 +16,10 @@ class GameLeaderboard extends Model
 
     protected $casts = [
         'multi_objects' => 'array',
+    ];
+
+    protected $dispatchesEvents = [
+        'saved' => CreateLeaderboard::class,
     ];
 
     public function record()

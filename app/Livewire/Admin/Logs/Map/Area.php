@@ -3,12 +3,16 @@
 namespace App\Livewire\Admin\Logs\Map;
 
 use Livewire\Component;
+use Livewire\Attributes\On;
+use Illuminate\Database\Eloquent\Builder;
 use Carbon\Carbon;
 use \DB;
 use \Log;
 
 use App\Models\LifeLog;
 use App\Models\MapLog;
+use App\Models\GameObject
+;
 class Area extends Component
 {
 
@@ -19,6 +23,8 @@ class Area extends Component
     public $radius_size;
 
     public $group;
+    public $objects;
+    public $characters;
 
     public $birth_x,$birth_y;
     public $x_min,$x_max;
@@ -26,9 +32,26 @@ class Area extends Component
 
     public $results;
 
+    protected $listeners = [
+        'object-changed' => '$refresh',
+    ];
+
     public function mount()
-    {
+    {   
+        $this->character_start = 6977247;
+        $this->object_id = 62;
+        $this->offset_x = 0;
+        $this->offset_y = 0;
+        $this->radius_size = 200;
         $this->group = null;
+        $this->objects = GameObject::select('id', 'name')->orderBy('id', 'asc')->get();
+        $this->characters = LifeLog::whereHas('name', function (Builder $query){
+                                $query->where('name', '!=', null);
+                            })
+                            ->where('type', 'birth')
+                            ->select('character_id')
+                            ->orderBy('character_id', 'desc')
+                            ->limit(1000)->get();
     }
 
     public function render()
@@ -136,6 +159,16 @@ class Area extends Component
     public function getYOffsetCoords($coord)
     {
         return $coord+$this->offset_y;
+    }
+
+    public function setGameObject($object)
+    {
+        $this->object_id = $object;
+    }
+
+    public function setCharacterId($id)
+    {
+        $this->character_start = $id;
     }
 
 }

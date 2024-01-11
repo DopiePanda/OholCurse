@@ -1,82 +1,151 @@
-<div class="w-full lg:w-2/3">
-    <div class="w-full lg:w-1/3 mx-auto">
-        <div wire:ignore class="mx-auto p-4 rounded-lg dark:bg-slate-700">
+
+<div class="w-full mx-auto">
+    <div class="flex flex-row w-full mx-auto">
+        <div wire:ignore class="basis-2/3 mx-auto p-4 rounded-lg dark:bg-slate-700">
             <div class="p-2">
-                <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="character_start">Character ID Start Point:</label></div>
-                <div><input wire:model="character_start" style="color:#333;" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="text" placeholder="6739939" /></div>
+                <div wire:ignore class="w-full text-gray-200">
+                    <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="characters">Character start point:</label></div>
+                    <select id="characters" class="block dark:text-gray-200 dark:bg-gray-700" style="width: 100%; max-width: 100% !important;">
+                        @foreach($characters as $character)
+                            <option class="dark:text-gray-200" value="{{ $character->character_id }}">{{ $character->name->name ?? 'Missing' }} (ID: {{ $character->character_id }})</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mt-1">
+                    <small>
+                        Here you select a character ONLY for their birth coordinates. These are the coordinates we will 
+                        use as a base, before adding the offsets.
+                    </small>
+                </div>
                 <div>@error('character_start') <div class="mt-1 text-red-400 font-semibold text-sm italic">{{ $message }}</div> @enderror</div>
             </div>
             <div class="p-2">
-                <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="object_id">Game Object ID:</label></div>
-                <div><input wire:model="object_id" style="color:#333;" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="text" placeholder="1268" /></div>
+                <div wire:ignore class="w-full text-gray-200">
+                    <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="gameObjects">Item to search for:</label></div>
+                    <select id="gameObjects" class="block dark:text-gray-200 dark:bg-gray-700" style="width: 100%; max-width: 100% !important;">
+                        @foreach($objects as $object)
+                            <option class="dark:text-gray-200" @if($object_id == $object->id) selected @endif value="{{ $object->id }}">{{ $object->name }} (ID: {{ $object->id }})</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mt-1">
+                    <small>Select the game object you know or believe someone has been interacted with</small>
+                </div>
                 <div>@error('object_id') <div class="mt-1 text-red-400 font-semibold text-sm italic">{{ $message }}</div> @enderror</div>
             </div>
             <div class="p-2">
                 <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="offset_x">Offset X:</label></div>
-                <div><input wire:model="offset_x" style="color:#333;" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="text" placeholder="400" /></div>
+                <div><input wire:model="offset_x" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="text" placeholder="400" /></div>
+                <div class="mt-1">
+                    <small>Here you set the X axis offset (1k tiles west is 1000, 1k tiles east is -1000)</small>
+                </div>
                 <div>@error('offset_x') <div class="mt-1 text-red-400 font-semibold text-sm italic">{{ $message }}</div> @enderror</div>
             </div>
             <div class="p-2">
                 <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="offset_y">Offset Y:</label></div>
-                <div><input wire:model="offset_y" style="color:#333;" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="text" placeholder="-200" /></div>
+                <div><input wire:model="offset_y" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="text" placeholder="-200" /></div>
+                <div class="mt-1">
+                    <small>Here you set the Y axis offset (200 tiles north is 200, 200 tiles south is -200)</small>
+                </div>
                 <div>@error('offset_y') <div class="mt-1 text-red-400 font-semibold text-sm italic">{{ $message }}</div> @enderror</div>
             </div>
 
             <div class="p-2">
                 <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="radius_size">Radius Size:</label></div>
-                <div><input wire:model="radius_size" style="color:#333;" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="number" placeholder="400" /></div>
+                <div><input wire:model="radius_size" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="number" placeholder="400" /></div>
+                <div class="mt-1">
+                    <small>
+                        Here you choose the radius of the search area, so puttig f.ex 100 in here will make the search area 
+                        will be a 100 x  100 square in the coordinate area selected above.
+                    </small>
+                </div>
                 <div>@error('radius_size') <div class="mt-1 text-red-400 font-semibold text-sm italic">{{ $message }}</div> @enderror</div>
             </div>
 
             <div class="p-2">
                 <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="radius_size">Group By Character:</label></div>
-                <div><input wire:model="group" style="color:#333;" class="rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="checkbox"/></div>
+                <div><input wire:model="group" class="rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="checkbox"/></div>
+                <div class="mt-1">
+                    <small>
+                        Enabling this setting will summeraize all actions done with your selected object, in your selected 
+                        search area. A seperate column will display the amount of times they interacted with your chosen item.
+                    </small>
+                </div>
                 <div>@error('group') <div class="mt-1 text-red-400 font-semibold text-sm italic">{{ $message }}</div> @enderror</div>
             </div>
 
             <div class="p-2">
-                <div><button wire:click="getResults" class="p-3 text-white text-center w-full bg-blue-400 rounded-lg dark:bg-red-500" type="button">Fetch results</button></div>
+                <div><button wire:click="getResults" class="p-3 text-white text-center w-full bg-primary-500 dark:bg-primary-500" type="button">Fetch results</button></div>
             </div>
         </div>
-
-        @if($results)
-            <div class="mt-4 min-w-1/3 p-4 border border-gray-400 rounded-md text-gray-800 dark:text-gray-400">
-                <div class="grid grid-cols-2">
-                    <div class="p-2 border-b border-r border-gray-400">Birth X: {{ $birth_x }}</div>
-                    <div class="p-2 border-b border-gray-400">Birth Y: {{ $birth_y }}</div>
-                    <div class="p-2 border-b border-r border-gray-400">Min X: {{ $x_min }}</div>
-                    <div class="p-2 border-b border-gray-400">Min Y: {{ $y_min }}</div>
-                    <div class="p-2 border-b border-r border-gray-400">Max X: {{ $x_max }}</div>
-                    <div class="p-2 border-b border-gray-400">Max Y: {{ $y_max }}</div>
+        <div class="ml-4 px-6 py-6 basis-1/3 bg-white dark:bg-slate-700 justify-between rounded-md text-gray-800 dark:text-gray-400">
+            <div class="text-2xl pt-4">Distance calculations</div>
+            @if($results)
+            <div class="h-full flex flex-col justify-start w-full ">
+                <div class="py-2 flex flex-col">
+                    <div class="p-1 border-b border-gray-400">
+                        <div>Birth X: {{ $birth_x }}</div>
+                    </div>
+                    <div class="p-1 border-b border-gray-400">
+                        <div>Birth Y: {{ $birth_y }}</div>
+                    </div>
+                </div>
+                <div class="py-2 flex flex-col">
+                    <div class="p-1 border-b border-gray-400">
+                        <div>Min X: {{ $x_min }}</div>
+                    </div>
+                    <div class="p-1 border-b border-gray-400">
+                        <div>Max X: {{ $x_max }}</div>
+                    </div>
+                </div>
+                <div class="py-2 flex flex-col">    
+                    
+                    <div class="p-1 border-b border-gray-400">
+                        <div>Min Y: {{ $y_min }}</div>
+                    </div>
+                    <div class="p-1 border-b border-gray-400">
+                        <div>Max Y: {{ $y_max }}</div>
+                    </div>
+                </div>
+                <div class="py-2 flex flex-col">    
+                    <div class="p-1">
+                        <div>Total results: {{ count($results) }}</div>
+                    </div>
                 </div>
             </div>
         @endif
+        </div>
     </div>
 
-    <div class="overflow-x-scroll py-6 max-w-screen mx-auto sm:px-6 lg:px-8">
+    <div wire:loading class="w-full mx-auto text-center mt-12 text-primary-500">
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+        <div>Searching for map logs for object interactions</div>
+        <div class="text-gray-400 text-sm">You cna also group by character to get summarized object interactions</div>
+    </div>
+
+    <div class="py-6 w-full mx-auto">
         @if( $results )
-        <div class="text-right text-lg text-gray-800 dark:text-gray-400">Amount of results: {{ count($results) }}</div>
         <table wire:loading.remove class="overflow-x-scroll mt-3 w-full text-center border border-gray-400 shadow-lg overflow-x-scroll">
             <thead>
                 <tr class="border-b border-gray-400">
-                    <td class="p-4 bg-blue-400 text-white border-r border-blue-500 dark:bg-red-500 dark:border-red-600">#</td>
-                    <td class="p-4 bg-blue-400 text-white border-r border-blue-500 dark:bg-red-500 dark:border-red-600">Leaderboard</td>
-                    <td class="p-4 bg-blue-400 text-white border-r border-blue-500 dark:bg-red-500 dark:border-red-600">Character</td>
-                    <td class="p-4 bg-blue-400 text-white border-r border-blue-500 dark:bg-red-500 dark:border-red-600">Position</td>
-                    <td class="p-4 bg-blue-400 text-white border-r border-blue-500 dark:bg-red-500 dark:border-red-600">Object</td>
+                    <td class="p-4 bg-primary-500 text-white border-r border-primary-700 dark:bg-primary-5000 dark:border-primary-700">#</td>
+                    <td class="p-4 bg-primary-500 text-white border-r border-primary-700 dark:bg-primary-500 dark:border-primary-700">Leaderboard</td>
+                    <td class="p-4 bg-primary-500 text-white border-r border-primary-700 dark:bg-primary-500 dark:border-primary-700">Character</td>
+                    <td class="p-4 bg-primary-500 text-white border-r border-primary-700 dark:bg-primary-500 dark:border-primary-700">Position</td>
+                    <td class="p-4 bg-primary-500 text-white border-r border-primary-700 dark:bg-primary-500 dark:border-primary-700">Object</td>
                     @if($this->group)
-                        <td class="p-4 bg-blue-400 text-white border-r border-blue-500 dark:bg-red-500 dark:border-red-600">Count</td>
+                        <td class="p-4 bg-primary-500 text-white border-r border-primary-700 dark:bg-primary-500 dark:border-primary-700">Count</td>
                     @endif
-                    <td class="p-4 bg-blue-400 text-white dark:bg-red-500 dark:border-red-600">Date</td>
+                    <td class="p-4 bg-primary-500 text-white dark:bg-primary-500 dark:border-primary-700">Date</td>
                 </tr>
             </thead>
             <tbody>
                 @forelse($results as $log)
-                    <tr class="even:bg-gray-300 odd:bg-white dark:even:bg-slate-600 dark:odd:bg-slate-500 dark:text-gray-300">
+                    <tr class="even:bg-gray-300 odd:bg-white dark:even:bg-slate-700 dark:odd:bg-slate-800 dark:text-gray-300">
                         <td class="p-1 border border-gray-400">{{ $loop->index }}</td>
                         <td class="p-1 border border-gray-400">
                             @if(isset($log->life->leaderboard->leaderboard_name)) 
-                                <a class="text-blue-400 font-semibold dark:text-red-400" href="{{ route('player.curses', ['hash' => $log->life->leaderboard->player_hash]) }}">
+                                <a class="text-white font-bold dark:text-white" href="{{ route('player.curses', ['hash' => $log->life->leaderboard->player_hash]) }}">
                                     {{ $log->life->leaderboard->leaderboard_name }}
                                 </a>
                             @else
@@ -120,7 +189,7 @@
                         @endif
                         <td class="p-1 border border-gray-400">
                             @if(isset($log->timestamp))
-                                {{ date('Y-m-d H:i:s', $log->timestamp) }}
+                                {{ date('Y-m-d H:i', $log->timestamp) }}
                             @else
                                 <span title="Check again after 9AM tomorrow for updated data">
                                     (- DATE MISSING -)
@@ -135,4 +204,46 @@
         </table>
         @endif
     </div>
+    @push('scripts')
+
+    <script style="text/javascript">
+        $(document).ready(function () {
+
+            $('#characters').select2({
+            });
+
+            styleSelectInput("#characters")
+
+            $('#characters').on('change', function (e) {
+                var data = $('#characters').select2("val");
+                @this.setCharacterId(data);
+                console.log('Character ID set:');
+                console.log(data);
+            });
+
+            $('#gameObjects').select2({
+            });
+
+            styleSelectInput("#gameObjects")
+
+            $('#gameObjects').on('change', function (e) {
+                var data = $('#gameObjects').select2("val");
+                @this.setGameObject(data);
+                console.log('Game object ID set:');
+                console.log(data);
+            });
+
+            function styleSelectInput(element)
+            {
+                $(element).siblings('.select2').children('.selection').children('.select2-selection').css('background-color', '#1E293B')
+                $(element).siblings('.select2').children('.selection').children('.select2-selection').css('height', '40px')
+                $(element).siblings('.select2').children('.selection').children('.select2-selection').children('.select2-selection__rendered').css('padding-top', '4px')
+                $(element).siblings('.select2').children('.selection').children('.select2-selection').children('.select2-selection__rendered').css('color', '#fff')
+                $(element).siblings('.select2').children('.selection').children('.select2-selection').css('border', 0)
+            }
+            
+        });
+    </script>
+
+    @endpush
 </div>

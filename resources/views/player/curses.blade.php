@@ -63,7 +63,7 @@
                                     <div>
                                         <div class="mb-2 text-md font-bold text-skin-muted dark:text-skin-muted-dark">Sent to:</div> 
 
-                                        <a href="{{ route('player.curses', ['hash' => $line['reciever_hash'] ?? 'error']) }}" title="{{ $line['reciever_hash'] }}"> 
+                                        <a href="{{ route('player.curses', ['hash' => $line['reciever_hash'] ?? 'error']) }}" title="Sender was {{ $line['character_name'] }}"> 
                                             @if(isset($line['reciever_hash']))
                                                 <div class="break-all text-skin-base font-bold dark:text-skin-base-dark">
 
@@ -129,7 +129,7 @@
                             <div class="bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark mt-1 p-2 rounded-lg">
                                 <div>
                                     <div class="mb-2 text-md font-bold text-skin-muted dark:text-skin-muted-dark">Recieved from:</div>
-                                        <a href="{{ route('player.curses', ['hash' => $line['player_hash'] ?? 'error']) }}" title="{{ $line['player_hash'] }}"> 
+                                        <a href="{{ route('player.curses', ['hash' => $line['player_hash'] ?? 'error']) }}" title="Sender was {{ $line['character_name'] }}"> 
                                             @if(isset($line['player_hash']))
                                                 <div class="break-all text-skin-base font-bold dark:text-skin-base-dark">
 
@@ -195,7 +195,7 @@
                             <div class="bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark mt-1 p-2 rounded-lg">
                                 <div>
                                     <div class="mb-2 text-md font-bold text-skin-muted dark:text-skin-muted-dark">Sent to:</div> 
-                                        <a href="{{ route('player.curses', ['hash' => $line['reciever_hash'] ?? 'error']) }}" title="{{ $line['reciever_hash'] }}"> 
+                                        <a href="{{ route('player.curses', ['hash' => $line['reciever_hash'] ?? 'error']) }}" title="Sender was {{ $line['character_name'] }}"> 
                                             @if(isset($line['reciever_hash']))
                                                 <div class="break-all text-skin-base font-bold dark:text-skin-base-dark">
                                                     
@@ -261,7 +261,7 @@
                             <div class="bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark mt-1 p-2 rounded-lg">
                                 <div>
                                     <div class="mb-2 text-md font-bold text-skin-muted dark:text-skin-muted-dark">Recieved from:</div>
-                                        <a href="{{ route('player.curses', ['hash' => $line['player_hash'] ?? 'error']) }}" title="{{ $line['player_hash'] }}"> 
+                                        <a href="{{ route('player.curses', ['hash' => $line['player_hash'] ?? 'error']) }}" title="Sender was {{ $line['character_name'] }}"> 
                                             @if(isset($line['player_hash']))
                                                 <div class="break-all text-skin-base font-bold dark:text-skin-base-dark">
                                                     
@@ -351,7 +351,7 @@
                             <div class="bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark mt-1 p-2 rounded-lg">
                                 <div>
                                     <div class="mb-2 text-md font-bold text-skin-muted dark:text-skin-muted-dark">Sent to:</div> 
-                                        <a href="{{ route('player.curses', ['hash' => $line['reciever_hash'] ?? 'error']) }}" title="{{ $line['reciever_hash'] }}"> 
+                                        <a href="{{ route('player.curses', ['hash' => $line['reciever_hash'] ?? 'error']) }}" title="Sender was {{ $line['character_name'] }}"> 
                                             @if(isset($line['reciever_hash']))
                                                 <div class="break-all text-skin-base font-bold dark:text-skin-base-dark">
                                                     
@@ -417,7 +417,7 @@
                             <div class="bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark mt-1 p-2 rounded-lg">
                                 <div>
                                     <div class="mb-2 text-md font-bold text-skin-muted dark:text-skin-muted-dark">Recieved from:</div>
-                                        <a href="{{ route('player.curses', ['hash' => $line['player_hash'] ?? 'error']) }}" title="{{ $line['player_hash'] }}"> 
+                                        <a href="{{ route('player.curses', ['hash' => $line['player_hash'] ?? 'error']) }}" title="Sender was {{ $line['character_name'] }}"> 
                                             @if(isset($line['player_hash']))
                                                 <div class="break-all text-skin-base font-bold dark:text-skin-base-dark">
                                                     
