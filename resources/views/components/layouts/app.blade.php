@@ -34,7 +34,9 @@
     </head>
     <body class="font-sans antialiased {{ env('DEFAULT_THEME') }}">
         <div class="z-10 flex flex-col min-h-screen bg-gray-100 dark:bg-slate-800">
-            @include('layouts.navigation')
+            <div class="z-20">
+                @include('layouts.navigation')
+            </div>
 
             <!-- Page Heading -->
             @if (isset($header))
@@ -48,7 +50,29 @@
             <!-- Page Content -->
             <main class="z-10 flex flex-grow justify-center pt-6 px-2 lg:px-4 break-normal">
                 {{ $slot }}
+
+                
             </main>
+                <div class="flex flex-row items-end">
+                    <div class="z-20 pb-4 px-4 lg:basis-1/4 grow text-left">
+                        @can('access admin panel')
+                            <a class="pb-4 px-4 fixed bottom-0 left-0" href="/admin" title="Admin panel">
+                                <i class="fa-solid fa-toolbox fa-2x text-skin-base dark:text-skin-base-dark"></i>
+                            </a>
+                        @endif
+                    </div> 
+                    <div class="z-20 py-4 lg:basis-2/4 grow text-center">
+                        @if(env('DONATION_BANNER') == 'true')
+                            <span class="text-skin-muted dark:text-skin-muted-dark cursor-default">Want to help support the website?</span> <a href="{{ env('DONATION_URL') }}" target="_blank" class="text-skin-base dark:text-skin-base-dark">Donate a coffee</a>
+                        @endif
+                    </div>
+                    <div class="z-20 lg:basis-1/4 grow text-right">
+                        @if(env('CHAT_ENABLED') == 'true')
+                            <livewire:conversations.inbox />
+                        @endif
+                    </div>
+                </div>
+
             <x-effects.snow/>
         </div>
 
@@ -74,6 +98,14 @@
                         });
             });
         </script>
+
+        <script type="text/javascript">
+            $("#conversationToggle").on("click", function(){
+                $("#conversationsWrapper").toggle();
+            });
+        </script>
+
+
 
         <script src="{{ asset('assets/js/theme-selector.js') }}"></script>
 

@@ -32,6 +32,11 @@ class LifeLog extends Model
         return $this->hasOne(LifeNameLog::class, 'character_id', 'character_id');
     }
 
+    public function life_name(): HasOne
+    {
+        return $this->hasOne(LifeNameLog::class, 'character_id', 'character_id');
+    }
+
     public function curses(): HasMany
     {
         return $this->hasMany(CurseLog::class, 'character_id', 'character_id');

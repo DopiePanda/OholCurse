@@ -32,9 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login(Login::class)
-            ->colors([
-                'primary' => Color::Amber,
-            ])
+            ->brandLogo(asset('assets/uploads/images/new-logo-transparent.php'))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -49,6 +47,16 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
                 LatestUsersWidget::make(['limit' => 5, 'paginate' => true]),
+            ])
+            ->viteTheme('resources/css/filament/admin/theme.css')
+            ->font('Lato')
+            ->colors([
+                'danger' => Color::Rose,
+                'gray' => Color::Gray,
+                'info' => Color::Blue,
+                'primary' => Color::Indigo,
+                'success' => Color::Emerald,
+                'warning' => Color::Orange,
             ])
             ->middleware([
                 EncryptCookies::class,

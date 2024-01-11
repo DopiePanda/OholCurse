@@ -66,13 +66,12 @@ class LifeLogResource extends Resource
                 TextColumn::make('family_type')
                 ->hidden(fn ($livewire) => $livewire->getTableFilterState('type')['value'] === 'death')
                 ->sortable(),
+
                 TextColumn::make('name.name')
-                ->searchable(isIndividual: true, query: function (Builder $query, string $search): Builder {
-                    return $query
-                        ->where('name', 'like', $search.'%');
-                })
+                ->searchable(['name'], isIndividual: true)
                 ->placeholder('Unnamed')
                 ->label('Character name'),
+
                 TextColumn::make('character_id')
                 ->searchable(isIndividual: true, query: function (Builder $query, string $search): Builder {
                     return $query

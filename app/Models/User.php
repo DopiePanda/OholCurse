@@ -49,6 +49,12 @@ class User extends Authenticatable implements FilamentUser
         'password' => 'hashed',
     ];
 
+    
+    public function friends(): HasMany
+    {
+        return $this->hasMany(UserContact::class, 'character_id', 'character_id')->where();
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         if($this->can('access admin panel'))

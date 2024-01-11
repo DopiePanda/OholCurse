@@ -24,7 +24,7 @@
                 <div class="p-4 border border-blue-400 rounded-lg">
                     <div>
                         <select wire:model="object_id" class="w-full">
-                            @foreach ($all_objects as $object)
+                            @foreach ($objects as $object)
                                 <option value="{{ $object->id }}">{{ $object->id.' - '.$object->name }}</option>
                             @endforeach
                             

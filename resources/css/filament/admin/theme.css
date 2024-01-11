@@ -1,0 +1,167 @@
+@import '/vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+@layer base {
+
+    html {
+      font-family: 'Lato', sans-serif;
+    }
+  
+    :root {
+      --color-text-base: #2563eb;
+      --color-text-base-dark: #dc2626;
+      --color-text-muted: #6b7280;
+      --color-text-muted-dark: #6b7280;
+      --color-text-inverted: #ffffff;
+      --color-text-inverted-dark: #ffffff;
+      --color-fill: #2563eb;
+      --color-fill-dark: #dc2626;
+      --color-fill-wrapper: #e5e7eb;
+      --color-fill-wrapper-dark: #111827;
+      --color-fill-muted: #e5e7eb;
+      --color-fill-muted-dark: #0c1120;
+      --color-button-accent: #201d1d;
+      --color-button-accent-dark: #201d1d;
+      --color-button-accent-hover: #ffffff;
+      --color-button-accent-hover-dark: #ffffff;
+      --color-button-muted: #ffffff;
+      --color-button-muted-dark: #ffffff;
+      --color-border-base: #2563eb;
+      --color-border-base-dark: #dc2626;
+
+    --danger-50: 255, 241, 242;
+    --danger-100: 255, 228, 230;
+    --danger-200: 254, 205, 211;
+    --danger-300: 253, 164, 175;
+    --danger-400: 251, 113, 133;
+    --danger-500: 244, 63, 94;
+    --danger-600: 225, 29, 72;
+    --danger-700: 190, 18, 60;
+    --danger-800: 159, 18, 57;
+    --danger-900: 136, 19, 55;
+    --danger-950: 76, 5, 25;
+    --gray-50: 249, 250, 251;
+    --gray-100: 243, 244, 246;
+    --gray-200: 229, 231, 235;
+    --gray-300: 209, 213, 219;
+    --gray-400: 156, 163, 175;
+    --gray-500: 107, 114, 128;
+    --gray-600: 75, 85, 99;
+    --gray-700: 55, 65, 81;
+    --gray-800: 31, 41, 55;
+    --gray-900: 17, 24, 39;
+    --gray-950: 3, 7, 18;
+    --info-50: 239, 246, 255;
+    --info-100: 219, 234, 254;
+    --info-200: 191, 219, 254;
+    --info-300: 147, 197, 253;
+    --info-400: 96, 165, 250;
+    --info-500: 59, 130, 246;
+    --info-600: 37, 99, 235;
+    --info-700: 29, 78, 216;
+    --info-800: 30, 64, 175;
+    --info-900: 30, 58, 138;
+    --info-950: 23, 37, 84;
+    --primary-50: 238, 242, 255;
+    --primary-100: 224, 231, 255;
+    --primary-200: 199, 210, 254;
+    --primary-300: 165, 180, 252;
+    --primary-400: 129, 140, 248;
+    --primary-500: 99, 102, 241;
+    --primary-600: 79, 70, 229;
+    --primary-700: 67, 56, 202;
+    --primary-800: 55, 48, 163;
+    --primary-900: 49, 46, 129;
+    --primary-950: 30, 27, 75;
+    --success-50: 236, 253, 245;
+    --success-100: 209, 250, 229;
+    --success-200: 167, 243, 208;
+    --success-300: 110, 231, 183;
+    --success-400: 52, 211, 153;
+    --success-500: 16, 185, 129;
+    --success-600: 5, 150, 105;
+    --success-700: 4, 120, 87;
+    --success-800: 6, 95, 70;
+    --success-900: 6, 78, 59;
+    --success-950: 2, 44, 34;
+    --warning-50: 255, 247, 237;
+    --warning-100: 255, 237, 213;
+    --warning-200: 254, 215, 170;
+    --warning-300: 253, 186, 116;
+    --warning-400: 251, 146, 60;
+    --warning-500: 249, 115, 22;
+    --warning-600: 234, 88, 12;
+    --warning-700: 194, 65, 12;
+    --warning-800: 154, 52, 18;
+    --warning-900: 124, 45, 18;
+    --warning-950: 67, 20, 7;
+    }
+}
+
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid #fff;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: rgb(99, 102, 241) transparent transparent transparent;
+  }
+  .lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  .lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+  @keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .select2-container {
+    background-color: #666;
+    color: #000;
+    --wp--preset--color--contrast: #000;
+    }
+
+  .select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: #999;
+  }
+  
+  #gameObject .select2 .selection .select2-selection {
+      color: red !important;
+  }
+
+  .select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: white;
+  }
+
+  .select2-selection .select2-selection--single {
+    background-color: black !important;
+    height: 50px;
+  }
+
+  #select2-gameObjects-container{
+    padding-top: 4px;
+  }
+
+  #gameObjects option{
+    color: #999;
+  }
