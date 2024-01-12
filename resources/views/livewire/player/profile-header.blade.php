@@ -6,7 +6,7 @@
         <div>   
             <h2 class="text-xl text-gray-800 dark:text-gray-200 leading-tight break-words text-center">
                 <div>
-                    @if(!empty($profile->leaderboard_id) && !empty($profile->leaderboard_name))
+                    @if(isset($profile->leaderboard_id) && !empty($profile->leaderboard_id) && !empty($profile->leaderboard_name))
                         @if($contact)
                             <div class="flex lg:flex-row justify-center items-center font-semibold">
                                 <span class="text-4xl">{{ $contact->nickname }}</span>
@@ -40,13 +40,13 @@
                             </div>
                         @endif
                     @else
-                        (Missing Player Name)
+                        (Missing Leaderboard Name)
                     @endif
                 </div>
             </h2>
         </div>
         <div class="lg:pl-8">
-            <button title="Find previous relationships to this player" class="mx-2" wire:click="$dispatch('openModal', {component: 'modals.relation-search', arguments: {hash: '{{$profile->player_hash}}'}})">
+            <button title="Find previous relationships to this player" class="mx-2" wire:click="$dispatch('openModal', {component: 'modals.relation-search', arguments: {hash: '{{ $hash }}'}})">
                 <i class="text-skin-base dark:text-skin-base-dark fa-solid fa-dna fa-2x"></i>
             </button>
         </div>

@@ -54,7 +54,11 @@ class PlayerReportController extends Controller
         $recieved = $this->categorizeRecieved($recieved, $hash);
 
         $profile = $this->getPlayerProfile($hash);
-        $scores = $this->getPlayerScores($profile, $hash);
+
+        if($profile)
+        {
+            $scores = $this->getPlayerScores($profile, $hash);
+        }
 
         if(Auth::user())
         {
@@ -111,17 +115,27 @@ class PlayerReportController extends Controller
 
     public function getPlayerProfile($hash)
     {
-        try{
+        try
+        {
             // Total curse score
-            return Leaderboard::where('player_hash', $hash)
+            $profile = Leaderboard::where('player_hash', $hash)
                                 ->select('leaderboard_name', 'leaderboard_id', 'player_hash')
                                 ->orderBy('id', 'desc')
                                 ->first();
-                                
-            } catch(\Exception $e) {
-                Log::error("Error while fetching profile for: $hash");
-                Log::error($e);
+
+            if($profile)
+            {
+                return $profile;
             }
+
+            $profile = collect(['player_hash' => $hash]);
+
+            return $profile;
+                                
+        } catch(\Exception $e) {
+            Log::error("Error while fetching profile for: $hash");
+            Log::error($e);
+        }
     }
 
     public function getPlayerScores($profile, $hash)
