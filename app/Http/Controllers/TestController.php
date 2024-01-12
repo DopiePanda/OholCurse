@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 use Auth;
 use Log;
 use DB;
+use Carbon\Carbon;
 
 use App\Models\Yumlog;
 use App\Models\CurseLog;
 use App\Models\FoodLog;
 use App\Models\LifeLog;
 use App\Models\LifeNameLog;
+use App\Models\MapLog;
 use App\Models\Leaderboard;
 use App\Models\PlayerScore;
 
@@ -171,5 +174,43 @@ class TestController extends Controller
         {
             print 'Life not found';
         }
+    }
+
+    public function getObjectInteractions(Request $request, $object_id, $ghost = false)
+    {
+        $start = Carbon::now('UTC')->subDays(14);
+        $start = $start->setTimeFromTimeString('00:00:00');
+
+        $end = Carbon::now('UTC')->subDays(1);
+        $end = $end->setTimeFromTimeString('00:00:00');
+
+        $results = MapLog::with(['lives:character_id,age,timestamp', 'name:character_id,name', 'life.leaderboard:player_hash,leaderboard_name,leaderboard_id'])
+                        ->select(DB::raw("(COUNT(object_id)) as count"), 'character_id')
+                        ->where('object_id', $object_id)
+                        ->where('timestamp', '<=', $end->timestamp)
+                        ->where('timestamp', '>=', $start->timestamp)
+                        ->where('character_id', '!=', '-1')
+                        ->groupBy('character_id')
+                        ->orderBy('count', 'desc')
+                        ->take(10)
+                        ->get();
+        
+        $data = [];
+        
+        foreach ($results as $result) 
+        {
+            $time_alive = ($result->lives[1]->timestamp - $result->lives[0]->timestamp);
+
+                if($time_alive <= 3600 )
+                {
+
+                }
+                else
+                {
+                    $data[] = $result;
+                }
+        }
+
+        dd($data);
     }
 }

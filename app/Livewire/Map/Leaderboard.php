@@ -77,14 +77,14 @@ class Leaderboard extends Component
     {
 
         $this->end = Carbon::now()->subDay();
-        $this->end->setHour(20);
-        $this->end->setMinute(03);
+        $this->end->setHour(00);
+        $this->end->setMinute(00);
         $this->end->setSecond(00);
         $this->end->tz($this->tz);
 
         $this->start = Carbon::now()->subDays(2);
-        $this->start->setHour(20);
-        $this->start->setMinute(03);
+        $this->start->setHour(00);
+        $this->start->setMinute(00);
         $this->start->setSecond(00);
         $this->start->tz($this->tz);
     }
@@ -132,21 +132,21 @@ class Leaderboard extends Component
         if ($now->gte($today) && $now->lte($tomorrow))
         {
             $this->end = Carbon::now()->subDays(2);
-            $this->end = $this->end->setTimeFromTimeString('20:03:00');
+            $this->end = $this->end->setTimeFromTimeString('00:00:00');
             $this->end->tz($this->tz);
 
             $this->start = Carbon::now()->subDays(3);
-            $this->start = $this->start->setTimeFromTimeString('20:03:00');
+            $this->start = $this->start->setTimeFromTimeString('00:00:00');
             $this->start->tz($this->tz);
             
         }else
         {
             $this->end = Carbon::now()->subDays(1);
-            $this->end = $this->end->setTimeFromTimeString('20:03:00');
+            $this->end = $this->end->setTimeFromTimeString('00:00:00');
             $this->end->tz($this->tz);
 
             $this->start = Carbon::now()->subDays(2);
-            $this->start = $this->start->setTimeFromTimeString('20:03:00');
+            $this->start = $this->start->setTimeFromTimeString('00:00:00');
             $this->start->tz($this->tz);
         }
     }
