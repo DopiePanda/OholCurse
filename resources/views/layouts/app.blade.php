@@ -61,7 +61,7 @@
                     </div>
                     @endif
                 </div> 
-                <div class="py-4 lg:basis-2/4 text-center">
+                <div class="lg:basis-2/4 text-center">
                     @if(env('DONATION_BANNER') == 'true')
                         <span class="text-skin-muted dark:text-skin-muted-dark cursor-default">Want to help support the website?</span> <a href="{{ env('DONATION_URL') }}" target="_blank" class="text-skin-base dark:text-skin-base-dark">Donate a coffee</a>
                     @endif
@@ -100,6 +100,10 @@
 
         <script type="text/javascript">
             $("#conversationToggle").on("click", function(){
+                $("#conversationsWrapper").toggle();
+            });
+
+            $("#conversationHeader").on("click", function(){
                 $("#conversationsWrapper").toggle();
             });
         </script>
