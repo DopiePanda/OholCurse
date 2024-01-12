@@ -52,6 +52,11 @@ class LifeLog extends Model
         return $this->hasOne(Leaderboard::class, 'player_hash', 'player_hash');
     }
 
+    public function death()
+    {
+        return $this->hasOne(self::class, 'character_id', 'character_id')->where('type', 'death');
+    }
+
     public function parent()
     {
         return $this->belongsTo(self::class, 'parent_id', 'character_id');

@@ -43,11 +43,11 @@ use App\Livewire\Roadmap\Ideas\Create as IdeaCreate;
 
 Route::middleware('web')->group(function() {
 
-    Route::get('/sitemap', function(){
+    Route::get('/sitemap/generate', function(){
         SitemapGenerator::create('https://oholcurse.com')->getSitemap()->writeToDisk('public', 'sitemap.xml');
     });
     
-    Route::get('/', Home::class)->middleware(['web'])->name('search');
+    Route::get('/', Home::class)->name('search');
     Route::get('/player/hash/{hash}', [PlayerReportController::class, 'fetch'])->name('player.curses');
     Route::get('/player/lives/{hash}', [PlayerReportController::class, 'lives'])->name('player.lives');
     Route::get('/player/reports/{hash}', [PlayerReportController::class, 'reports'])->name('player.reports');
@@ -96,7 +96,7 @@ Route::middleware('web')->group(function() {
         });
 
         Route::get('/select2/ajax', [Select2Controller::class, 'handle'])->name('select2.ajax');
-        Route::get('/interactions/{object_id}/{ghost?}', [TestController::class, 'getObjectInteractions'])->name('interactions');
+        //Route::get('/interactions/{object_id}/{ghost?}', [TestController::class, 'getObjectInteractions'])->name('interactions');
     });
 
     

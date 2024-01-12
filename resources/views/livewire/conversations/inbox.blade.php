@@ -5,15 +5,15 @@
         <div class="fixed flex flex-col text-left bottom-0 pb-16 right-0 w-96 h-5/6 border border-skin-base dark:border-skin-base-dark bg-skin-fill-muted dark:bg-skin-fill-muted-dark">
             
             <!-- Chat navigation / settings -->
-            <div class="flex flex-row p-4 border border-skin-base dark:border-skin-base-dark bg-skin-fill dark:bg-skin-fill-dark">
-                <div class="shrink self-center h-10 w-10 text-center rounded-full bg-skin-fill-muted dark:bg-skin-fill-muted-dark">
-                    <div class="mt-1 text-2xl font-black text-white">D</div>
+            <div id="conversationHeader" class="z-0 flex flex-row p-4 border border-skin-base dark:border-skin-base-dark bg-skin-fill dark:bg-skin-fill-dark">
+                <div id="inboxHeaderAvatar" class="z-30 shrink self-center h-10 w-10 text-center rounded-full bg-skin-fill-muted dark:bg-skin-fill-muted-dark">
+                    <div class="z-30 mt-1 text-2xl font-black text-white">D</div>
                 </div>
-                <div class="grow self-center pl-4 text-md text-white">
-                    <div class="">DopiePanda</div>
+                <div id="inboxHeaderUsername" class="z-30 grow self-center pl-4 text-md text-white">
+                    <div class="z-30">{{ Auth::user()->username }}</div>
                 </div>
-                <div class="shrink self-center text-right pl-4 text-lg">
-                    <div class="text-white">
+                <div id="inboxHeaderNav" class="z-30 shrink self-center text-right pl-4 text-lg">
+                    <div class="z-30 text-white">
                         <i class="fa-solid fa-users"></i>
                         <i class="ml-2 fa-solid fa-gear"></i>
                     </div>
