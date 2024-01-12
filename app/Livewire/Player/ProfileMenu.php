@@ -49,7 +49,7 @@ class ProfileMenu extends Component
                             ->whereHas('leaderboard', function($query) { return $query->where('enabled', '=', 1); })
                             ->count();
         }else{
-            $records = [];
+            $records = 0;
         }
         
 
