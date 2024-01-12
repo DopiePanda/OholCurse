@@ -33,7 +33,7 @@ class RelationSearch extends ModalComponent
     {
         $this->validate([
             'origin' => 'required',
-            'input' => 'required|exists:App\Models\Leaderboard,leaderboard_name',
+            'input' => 'required|exists:App\Models\Leaderboard,leaderboard_name|different:origin.leaderboard_name',
         ]);
 
         $this->origin_was_parent = null;
@@ -102,6 +102,7 @@ class RelationSearch extends ModalComponent
             'origin.required' => 'Origin required',
             'input.required' => 'Target leaderboard name required',
             'input.exists' => 'Leaderboard name not found',
+            'input.different' => 'Enter a leaderboard name that is not same as the origin name',
         ];
     }
 }
