@@ -51,7 +51,7 @@
                 
             </main>
 
-            <div class="pb-4 px-4 flex flex-row items-end">
+            <div class="z-30 pb-4 px-4 flex flex-row items-end">
                 <div class="lg:basis-1/4 text-left">
                     @can('access admin panel')
                     <div class="fixed bottom-0 left-0 pb-4 pl-4">
