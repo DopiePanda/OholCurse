@@ -32,6 +32,8 @@
     --color-button-muted-dark: #ffffff;
     --color-border-base: #2563eb;
     --color-border-base-dark: #dc2626;
+    --color-border-muted: #6b7280;
+    --color-border-muted-dark: #6b7280;
   }
 
   .theme-dark-blue {

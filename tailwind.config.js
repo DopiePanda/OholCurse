@@ -71,6 +71,8 @@ export default {
                 skin: {
                     base: 'var(--color-border-base)',
                     'base-dark': 'var(--color-border-base-dark)',
+                    muted: 'var(--color-border-muted-dark)',
+                    'muted-dark': 'var(--color-border-muted-dark)',
                 },
             },
         },
