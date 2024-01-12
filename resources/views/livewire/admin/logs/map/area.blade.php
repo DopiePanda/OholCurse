@@ -1,15 +1,84 @@
 
 <div class="w-full mx-auto">
+    @push('styles')
+        <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+        <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" />
+        <script src="{{ asset('assets/js/select2.min.js') }}"></script>
+    @endpush
+
+    @push('scripts')
+
+        <script style="text/javascript">
+
+            $(document).ready(function () {
+
+                var path = "{{ route('select2.ajax') }}";
+
+                $('#characters').select2({
+                    placeholder: 'Search by character name',
+                    minimumInputLength: 1,
+                    ajax: {
+                        url: path,
+                        dataType: 'json',
+                        delay: 500,
+                        processResults: function (data) {
+                            return {
+                                results:  $.map(data, function (item) {
+                                    var datetime = new Date(item.timestamp*1000);
+                                    var label = `${item.name.name} - ${item.character_id} (${datetime.toISOString()})`;
+                                    return {
+                                        text: label,
+                                        id: item.character_id
+                                    }
+                                })
+                            };
+                        },
+
+                    }
+                });
+
+                styleSelectInput("#characters")
+
+                $('#characters').on('change', function (e) {
+                    var data = $('#characters').select2("val");
+                    @this.setCharacterId(data);
+                    console.log('Character ID set:');
+                    console.log(data);
+                });
+
+                $('#gameObjects').select2({
+                });
+
+                styleSelectInput("#gameObjects")
+
+                $('#gameObjects').on('change', function (e) {
+                    var data = $('#gameObjects').select2("val");
+                    @this.setGameObject(data);
+                    console.log('Game object ID set:');
+                    console.log(data);
+                });
+
+                function styleSelectInput(element)
+                {
+                    $(element).siblings('.select2').children('.selection').children('.select2-selection').css('background-color', '#1E293B')
+                    $(element).siblings('.select2').children('.selection').children('.select2-selection').css('height', '40px')
+                    $(element).siblings('.select2').children('.selection').children('.select2-selection').children('.select2-selection__rendered').css('padding-top', '4px')
+                    $(element).siblings('.select2').children('.selection').children('.select2-selection').children('.select2-selection__rendered').css('color', '#fff')
+                    $(element).siblings('.select2').children('.selection').children('.select2-selection').css('border', 0)
+                }
+                
+            });
+        </script>
+
+    @endpush
     <div class="flex flex-row w-full mx-auto">
         <div wire:ignore class="basis-2/3 mx-auto p-4 rounded-lg dark:bg-slate-700">
             <div class="p-2">
                 <div wire:ignore class="w-full text-gray-200">
                     <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="characters">Character start point:</label></div>
-                    <select id="characters" class="block dark:text-gray-200 dark:bg-gray-700" style="width: 100%; max-width: 100% !important;">
-                        @foreach($characters as $character)
-                            <option class="dark:text-gray-200" value="{{ $character->character_id }}">{{ $character->name->name ?? 'Missing' }} (ID: {{ $character->character_id }})</option>
-                        @endforeach
-                    </select>
+                    <div id="characterInput"><select id="characters" class="block dark:text-gray-200 dark:bg-gray-700" style="width: 100%; max-width: 100% !important;">
+                        
+                    </select></div>
                 </div>
                 <div class="mt-1">
                     <small>
@@ -35,7 +104,7 @@
             </div>
             <div class="p-2">
                 <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="offset_x">Offset X:</label></div>
-                <div><input wire:model="offset_x" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="text" placeholder="400" /></div>
+                <div><input id="offset_x" wire:model="offset_x" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="text" placeholder="400" /></div>
                 <div class="mt-1">
                     <small>Here you set the X axis offset (1k tiles west is 1000, 1k tiles east is -1000)</small>
                 </div>
@@ -43,7 +112,7 @@
             </div>
             <div class="p-2">
                 <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="offset_y">Offset Y:</label></div>
-                <div><input wire:model="offset_y" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="text" placeholder="-200" /></div>
+                <div><input id="offset_y" wire:model="offset_y" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="text" placeholder="-200" /></div>
                 <div class="mt-1">
                     <small>Here you set the Y axis offset (200 tiles north is 200, 200 tiles south is -200)</small>
                 </div>
@@ -52,7 +121,7 @@
 
             <div class="p-2">
                 <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="radius_size">Radius Size:</label></div>
-                <div><input wire:model="radius_size" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="number" placeholder="400" /></div>
+                <div><input id="radius_size" wire:model="radius_size" class="w-full rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="number" placeholder="400" /></div>
                 <div class="mt-1">
                     <small>
                         Here you choose the radius of the search area, so puttig f.ex 100 in here will make the search area 
@@ -63,8 +132,8 @@
             </div>
 
             <div class="p-2">
-                <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="radius_size">Group By Character:</label></div>
-                <div><input wire:model="group" class="rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="checkbox"/></div>
+                <div><label class="text-sm font-semibold text-gray-800 dark:text-gray-400" for="group">Group By Character:</label></div>
+                <div><input id="group" wire:model="group" class="rounded-lg dark:bg-slate-800 dark:text-gray-200 dark:placeholder:text-gray-700 dark:border-gray-600" type="checkbox"/></div>
                 <div class="mt-1">
                     <small>
                         Enabling this setting will summeraize all actions done with your selected object, in your selected 
@@ -204,46 +273,4 @@
         </table>
         @endif
     </div>
-    @push('scripts')
-
-    <script style="text/javascript">
-        $(document).ready(function () {
-
-            $('#characters').select2({
-            });
-
-            styleSelectInput("#characters")
-
-            $('#characters').on('change', function (e) {
-                var data = $('#characters').select2("val");
-                @this.setCharacterId(data);
-                console.log('Character ID set:');
-                console.log(data);
-            });
-
-            $('#gameObjects').select2({
-            });
-
-            styleSelectInput("#gameObjects")
-
-            $('#gameObjects').on('change', function (e) {
-                var data = $('#gameObjects').select2("val");
-                @this.setGameObject(data);
-                console.log('Game object ID set:');
-                console.log(data);
-            });
-
-            function styleSelectInput(element)
-            {
-                $(element).siblings('.select2').children('.selection').children('.select2-selection').css('background-color', '#1E293B')
-                $(element).siblings('.select2').children('.selection').children('.select2-selection').css('height', '40px')
-                $(element).siblings('.select2').children('.selection').children('.select2-selection').children('.select2-selection__rendered').css('padding-top', '4px')
-                $(element).siblings('.select2').children('.selection').children('.select2-selection').children('.select2-selection__rendered').css('color', '#fff')
-                $(element).siblings('.select2').children('.selection').children('.select2-selection').css('border', 0)
-            }
-            
-        });
-    </script>
-
-    @endpush
 </div>

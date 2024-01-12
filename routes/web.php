@@ -16,6 +16,9 @@ use App\Http\Controllers\GuideController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PlayerReportController;
 use App\Http\Controllers\ReportVerificationController;
+use App\Http\Controllers\TestController;
+
+use App\Http\Controllers\Tools\Select2Controller;
 
 use App\Livewire\Dashboard;
 use App\Livewire\Home;
@@ -91,6 +94,9 @@ Route::middleware('web')->group(function() {
             return false;
             //return phpinfo();
         });
+
+        Route::get('/select2/ajax', [Select2Controller::class, 'handle'])->name('select2.ajax');
+        Route::get('/interactions/{object_id}/{ghost?}', [TestController::class, 'getObjectInteractions'])->name('interactions');
     });
 
     

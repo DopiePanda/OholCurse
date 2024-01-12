@@ -22,13 +22,13 @@
         @filamentStyles
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
         <script src="https://kit.fontawesome.com/737926afbe.js" crossorigin="anonymous"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <link href="{{ asset('assets/css/toastr.min.css') }}" rel="stylesheet">
+        <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
 
         <!-- Stylesheets -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css">
+        <link rel="stylesheet" href="{{ asset('assets/css/trix.css') }}">
 
         @yield('before-head-end')
     </head>

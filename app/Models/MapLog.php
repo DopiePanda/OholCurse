@@ -33,6 +33,11 @@ class MapLog extends Model
         return $this->belongsTo(LifeLog::class, 'character_id', 'character_id');
     }
 
+    public function death(): HasOne
+    {
+        return $this->hasOne(LifeLog::class, 'character_id', 'character_id')->where('type', 'death');
+    }
+
     public function lives(): HasMany
     {
         return $this->hasMany(LifeLog::class, 'character_id', 'character_id')->orderBy('type', 'asc');

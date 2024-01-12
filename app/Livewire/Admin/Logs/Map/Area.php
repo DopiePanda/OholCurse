@@ -32,26 +32,15 @@ class Area extends Component
 
     public $results;
 
-    protected $listeners = [
-        'object-changed' => '$refresh',
-    ];
-
     public function mount()
     {   
-        $this->character_start = 6977247;
-        $this->object_id = 62;
+        $this->character_start = null;
+        $this->object_id = 4658;
         $this->offset_x = 0;
         $this->offset_y = 0;
         $this->radius_size = 200;
         $this->group = null;
         $this->objects = GameObject::select('id', 'name')->orderBy('id', 'asc')->get();
-        $this->characters = LifeLog::whereHas('name', function (Builder $query){
-                                $query->where('name', '!=', null);
-                            })
-                            ->where('type', 'birth')
-                            ->select('character_id')
-                            ->orderBy('character_id', 'desc')
-                            ->limit(10000)->get();
     }
 
     public function render()

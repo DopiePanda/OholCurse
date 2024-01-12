@@ -50,7 +50,7 @@ class HandleFoodLogs extends Command
     public function setDatePeriod()
     {
         $start = Carbon::now()->subDays(0);
-        $end = Carbon::now()->subDays(2);
+        $end = Carbon::now()->subDays(1);
 
         $this->date_period = new \DatePeriod(
             new \DateTime($end->format('Y-m-d')),
@@ -100,7 +100,7 @@ class HandleFoodLogs extends Command
         }
 
         $time = round((microtime(true) - $this->start_time), 3);
-        Log::channel('sync')->info("Log download finished after $time seconds");
+        Log::channel('sync')->info("Food log download finished after $time seconds");
     }
 
     public function processLog($file_name)
@@ -132,7 +132,7 @@ class HandleFoodLogs extends Command
             });
 
             $time = round((microtime(true) - $this->start_time), 3);
-            Log::channel('sync')->info("Log processing finished after $time seconds");
+            Log::channel('sync')->info("Food log processing finished after $time seconds");
         }
     }
 
@@ -145,7 +145,7 @@ class HandleFoodLogs extends Command
         }
 
         $time = round((microtime(true) - $this->start_time), 3);
-        Log::channel('sync')->info("Log deleted after $time seconds");
+        Log::channel('sync')->info("Food log deleted after $time seconds");
     }
 
     private function getLogFileName($date)
