@@ -13,6 +13,7 @@ use Filament\Forms\Form;
 use Filament\Forms\Components\DatePicker;
 
 use Filament\Resources\Resource;
+use Filament\Resources\Pages\Page;
 
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -42,7 +43,7 @@ class MaplogResource extends Resource
     protected static ?string $model = MapLog::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
-
+    protected static ?string $navigationLabel = 'Map Logs';
     protected static ?string $navigationGroup = 'Logs';
 
     public static function form(Form $form): Form
@@ -126,6 +127,7 @@ class MaplogResource extends Resource
         return [
             'index' => Pages\ListMaplogs::route('/'),
             'area' => Pages\AreaSearch::route('/area'),
+            'overview' => Pages\MapLogOverview::route('/overview'),
         ];
     }
 
@@ -135,5 +137,13 @@ class MaplogResource extends Resource
                     ->where('character_id', '!=', -1)
                     ->where('object_id', '!=', 0)
                     ->whereHas('name');
+    }
+
+    public static function getRecordSubNavigation(Page $page): array
+    {
+        return $page->generateNavigationItems([
+            Pages\AreaSearch::class,
+            Pages\MapLogOverview::class,
+        ]);
     }
 }

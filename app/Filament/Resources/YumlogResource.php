@@ -7,11 +7,15 @@ use App\Filament\Resources\YumlogResource\RelationManagers;
 use App\Models\Yumlog;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Livewire;
+
 use App\Livewire\Modals\UploadLogfile;
+
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Columns\TextColumn;
@@ -21,6 +25,13 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Grouping\Group;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Log;
+
 
 class YumlogResource extends Resource
 {
@@ -34,7 +45,7 @@ class YumlogResource extends Resource
     {
         return $form
             ->schema([
-                Livewire::make(UploadLogfile::class)
+                
             ]);
     }
 
@@ -77,15 +88,7 @@ class YumlogResource extends Resource
                 ->label('Character ID')
                 ->toggleable(isToggledHiddenByDefault: true),
                 ToggleColumn::make('verified'),
-                SelectColumn::make('status')
-                ->options([
-                    '0' => 'Unverified',
-                    '1' => 'Verified',
-                    '2' => 'Archived',
-                    '3' => 'Curse-check',
-                    '4' => 'Forgiven',
-                    '5' => 'Imported',
-                ])
+                TextColumn::make('status')
             ])
             ->defaultSort('timestamp', 'desc')
             ->defaultPaginationPageOption(50)
@@ -99,15 +102,24 @@ class YumlogResource extends Resource
             ->actions([
                 
             ])
+            ->headerActions([
+                Action::make('import')
+                ->form([
+                    FileUpload::make('yumlog')
+                    ->required()
+                    ->acceptedFileTypes(['text/plain'])
+                    ->preserveFilenames()
+                    ->storeFiles(false)
+                ])
+                ->label('Import Custom YumLog')
+                ->action(function (array $data, array $arguments): void {
+                    $path = $data['yumlog']->getRealPath();
+                    self::processFile($path);
+                })
+                
+            ])
             ->bulkActions([
-                BulkActionGroup::make([
-                    BulkAction::make('edit')
-                        ->requiresConfirmation()
-                        ->action(fn (Collection $records) => $records->each->edit()),
-                    BulkAction::make('forceDelete')
-                        ->requiresConfirmation()
-                        ->action(fn (Collection $records) => $records->each->forceDelete()),
-                ]),
+
             ]);
     }
 
@@ -130,5 +142,49 @@ class YumlogResource extends Resource
         return parent::getEloquentQuery()
                     ->select('*')
                     ->groupBy('curse_name');
+    }
+
+    public static function processFile($path)
+    {
+        $start_time = microtime(true);
+
+        try{
+                ini_set('max_execution_time', 300);
+                //DB::beginTransaction();
+
+                File::lines($path)->each(function ($line) {
+                    if(Str::contains($line, '| forgive |'))
+                    {
+                        try {
+                            self::processLine($line);
+                        } catch (\Throwable $th) {
+                            Log::error($th);
+                        }
+                        
+                    }
+                });
+
+                // Commit the DB transaction
+                //DB::commit();
+
+                $end_time = microtime(true);
+                $time = round(($end_time - $start_time), 3);
+
+                Log::info("Yumlog processed in $time seconds");
+
+            }catch(\Exception $e) {
+            
+                // Rollback DB transaction
+                //DB::rollback();
+
+                // Log exception message
+                Log::error('Exception returned when importing the yumlog');
+                Log::error($e->getMessage());
+            }
+    }
+
+    public static function processLine($line)
+    {
+        Log::debug($line);
     }
 }
