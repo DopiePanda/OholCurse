@@ -91,8 +91,7 @@ Route::middleware('web')->group(function() {
         Route::get('/roadmap/ideas/create', IdeaCreate::class)->name('roadmap.idea.create');
 
         Route::get('/phpinfo', function () {
-            return false;
-            //return phpinfo();
+            return redirect()->route('search');
         });
 
         Route::get('/select2/ajax', [Select2Controller::class, 'handle'])->name('select2.ajax');

@@ -107,10 +107,8 @@ class AreaSearch extends ListRecords
         return parent::getTableQuery()->with('name');
     }
 
-    public static function shouldRegisterNavigation($parameters = []): bool
+    public function getSubNavigation(): array
     {
-        return auth()->user()->canManageSettings();
+        return static::getResource()::getRecordSubNavigation($this);
     }
-
-
 }

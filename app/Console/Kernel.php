@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:handle-leaderboard-logs')->dailyAt('08:50');
 
         // Fetch public logs for map interactions
-        $schedule->command('app:process-map-log')->dailyAt('09:00');
+        $schedule->command('app:process-map-log')->hourly();
 
         // Update all time map interaction leaderboard
         $schedule->command('app:update-leaderboard-records')->dailyAt('09:10');

@@ -54,7 +54,7 @@ class Home extends Component
         return view('livewire.home');
     }
 
-    public function search()
+    public function updatedQuery()
     {
 
         if(strlen($this->query) >= $this->minQueryLength)
@@ -78,7 +78,7 @@ class Home extends Component
                                         ->orderBy('character_id', 'desc')
                                         ->skip($this->fetchCursor)
                                         ->take($this->fetchLimit)
-                                        ->get();
+                                        ->get() ?? [];
 
                     $this->count = LifeNameLog::where('name', 'like', rtrim($this->query).'%')->count();
 
@@ -101,7 +101,7 @@ class Home extends Component
                                         ->orderBy('leaderboard_name', 'asc')
                                         ->skip($this->fetchCursor)
                                         ->take($this->fetchLimit)
-                                        ->get();
+                                        ->get() ?? [];
 
                     $this->count = Leaderboard::where('leaderboard_name', 'like', rtrim($this->query).'%')->count();
                     break;
@@ -109,6 +109,7 @@ class Home extends Component
         }else{
             $this->fetchCursor = 0;
             $this->results = [];
+            $this->count = 0;
         }
     }
 

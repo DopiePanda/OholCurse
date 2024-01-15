@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="w-full text-center">
-                <input type="text" wire:model.live="query" wire:keyup='search' class="mx-auto mt-2 w-11/12 lg:w-full h-14 rounded-lg dark:bg-slate-500 dark:text-gray-800 dark:placeholder:text-gray-700"
+                <input type="text" wire:model.live="query" class="mx-auto mt-2 w-11/12 lg:w-full h-14 rounded-lg dark:bg-slate-500 dark:text-gray-800 dark:placeholder:text-gray-700"
 
                 @if($filter == 'character_name') placeholder="Search by typing a character name here..." @endif
                 @if($filter == 'curse_name') placeholder="Search by typing a curse name here..." @endif
