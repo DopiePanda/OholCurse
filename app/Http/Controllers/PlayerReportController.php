@@ -133,8 +133,7 @@ class PlayerReportController extends Controller
             return $profile;
                                 
         } catch(\Exception $e) {
-            Log::error("Error while fetching profile for: $hash");
-            Log::error($e);
+            Log::error("Error while fetching profile for: $hash in PlayerReportController");
         }
     }
 
@@ -148,8 +147,7 @@ class PlayerReportController extends Controller
                                 ->first();
     
             } catch(\Exception $e) {
-                Log::error("Error while fetching scores for: $hash");
-                Log::error($e);
+                Log::error("Error while fetching scores for: $hash in PlayerReportController");
             }
     }
 
