@@ -110,6 +110,7 @@ class MapLogOverview extends Page
 
         $files = array_column($logs, 'file_name');
         //dd($files);
+
         foreach ($file_names as $file) 
         {
             
@@ -125,7 +126,10 @@ class MapLogOverview extends Page
                     'time_elapsed' => null,
                     'found' => false,
                 ]; 
-            }       
+            }else
+            {
+                //dd($file);
+            }     
         }
 
         $file_name  = array_column($logs, 'file_name');
@@ -135,6 +139,8 @@ class MapLogOverview extends Page
         // Add $data as the last parameter, to sort by the common key
         array_multisort($file_name, SORT_DESC, $logs);
         array_shift($logs);
+
+        //dd($logs);
 
         $this->logs = $logs;
     }

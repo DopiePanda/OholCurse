@@ -41,7 +41,7 @@ class UpdateLeaderboardRecords extends Command
         $start = Carbon::now('UTC')->subDays(14);
         $start = $start->setTimeFromTimeString('00:00:00');
 
-        $end = Carbon::now('UTC')->subDays(1);
+        $end = Carbon::now('UTC')->subDays(0);
         $end = $end->setTimeFromTimeString('00:00:00');
 
         if($id)
