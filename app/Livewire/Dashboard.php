@@ -64,13 +64,13 @@ class Dashboard extends Component
 
     public function getStatus()
     {
-            if(Auth::user()->can('view all reports'))
-            {
-                $status = [0, 1, 2, 3, 4, 5];
-            }else
-            {
-                $status = [0, 1];
-            }
+        if(Auth::user()->can('view all reports'))
+        {
+            $status = [0, 1, 2, 3, 4, 5];
+        }else
+        {
+            $status = [0, 1, 3, 4];
+        }
 
         return $status;
     }
@@ -185,8 +185,17 @@ class Dashboard extends Component
         $report->pos_x = $life->pos_x ?? null;
         $report->pos_y = $life->pos_y ?? null;
         $report->verified = 1;
-        $report->status = $forgive ? 5 : 1;
         $report->visible = 1;
+
+        if($forgive == true)
+        {
+            $report->status = 5;
+        }
+        else
+        {
+            $report->status = 1;
+        }
+
         $report->save();
 
     }
