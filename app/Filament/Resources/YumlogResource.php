@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\YumlogResource\Pages;
 use App\Filament\Resources\YumlogResource\RelationManagers;
-use App\Models\Yumlog;
+
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Components\FileUpload;
@@ -30,7 +30,13 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Auth;
 use Log;
+
+use App\Models\Yumlog;
+use App\Models\LifeLog;
+use App\Models\CurseLog;
+use App\Models\CurseLogTemp;
 
 
 class YumlogResource extends Resource
@@ -150,34 +156,31 @@ class YumlogResource extends Resource
 
         try{
                 ini_set('max_execution_time', 300);
-                //DB::beginTransaction();
 
                 File::lines($path)->each(function ($line) {
                     if(Str::contains($line, '| forgive |'))
                     {
-                        try {
+                        try 
+                        {
                             self::processLine($line);
-                        } catch (\Throwable $th) {
+                        } 
+                        catch (\Throwable $th) 
+                        {
                             Log::error($th);
                         }
                         
                     }
                 });
 
-                // Commit the DB transaction
-                //DB::commit();
 
                 $end_time = microtime(true);
                 $time = round(($end_time - $start_time), 3);
 
                 Log::info("Yumlog processed in $time seconds");
 
-            }catch(\Exception $e) {
-            
-                // Rollback DB transaction
-                //DB::rollback();
-
-                // Log exception message
+            }
+            catch(\Exception $e) 
+            {
                 Log::error('Exception returned when importing the yumlog');
                 Log::error($e->getMessage());
             }
@@ -185,6 +188,118 @@ class YumlogResource extends Resource
 
     public static function processLine($line)
     {
-        Log::debug($line);
+        /*
+            $parts[0] = timestamp | 1379020415 
+            $parts[1] = type | forgive
+            $parts[2] = character_id and name | 6641482 MELISA PLIMMER
+            $parts[3] = curse_name | HIDE FORM
+        */
+
+        $parts = explode(' | ', $line);
+
+        if(count($parts) == 4)
+        {
+            // Seperate character_id and character_name
+            $character = explode(' ', $parts[2]);
+
+            // Set character ID
+            $character_id = $character[0];
+
+            // Set default character name
+            $character_name = null;
+
+            // Check if character only has a first name
+            if(count($character) == 2)
+            {
+                $character_name = $character[1];
+            }
+
+            // Check if character only has both first and last name
+            if(count($character) == 3)
+            {
+                $character_name = $character[1].' '.$character[2];
+            }
+
+            // Create or update Yumlog report entry
+            $report = Yumlog::updateOrCreate(
+                [
+                    'user_id' => Auth::user()->id,
+                    'character_id' => $character_id,
+                ], 
+                [
+                    'timestamp' => $parts[0],
+                    'character_name' => $character_name,
+                    'curse_name' => $parts[3],
+                    'type' => 'curse',
+                    'status' => 5
+                ]
+            );
+
+            // Check if life exists with submitted character ID
+            $life = LifeLog::where('character_id', $character_id)
+                    ->where('type', 'death')
+                    ->first();
+
+            if($life)
+            {
+                $offset = 3;
+
+                // Check if curse log entry exists with submitted timestamp and life log player hash
+                $curse = CurseLog::where('timestamp', '>=', ($parts[0] - $offset))
+                        ->where('timestamp', '<=', ($parts[0] + $offset))
+                        ->where('reciever_hash', $life->player_hash)
+                        ->where('type', 'forgive')
+                        ->first();
+
+                if($curse)
+                {
+                    // If forgive entry is found in curse logs, set entry to hidden
+                    $curse->hidden = 1;
+                    $curse->save();
+                }
+                else
+                {
+                    // If forgive entry is not found, log a notice on it
+                    Log::notice("Curse log entry not found for character: $character_id, ts: $parts[0], hash: $life->player_hash");
+                }
+
+                // Since life log entry is found, update Yumlog report with life information and set as verified
+                try 
+                {
+                    self::setVerified($report, $life);
+                } 
+                catch (\Throwable $th) 
+                {
+                    Log::error($th);
+                } 
+            }
+            else
+            {
+                // If life log entry is not found, create a temporary entry on it for re-verification at next log import
+                CurseLogTemp::updateOrCreate(
+                    [
+                        'user_id' => Auth::user()->id,
+                        'character_id' => $character_id,
+                    ],
+                    [
+                        'timestamp' => $parts[0],
+                    ]
+                );
+            }
+
+        }
+    }
+
+    public static function setVerified($report, $life)
+    {
+        $report->player_hash = $life->player_hash;
+        $report->gender = $life->gender;
+        $report->age = $life->age;
+        $report->died_to = $life->died_to;
+        $report->pos_x = $life->pos_x ?? null;
+        $report->pos_y = $life->pos_y ?? null;
+        $report->verified = 1;
+        $report->visible = 1;
+        $report->save();
     }
 }

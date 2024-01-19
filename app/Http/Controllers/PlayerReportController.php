@@ -38,6 +38,7 @@ class PlayerReportController extends Controller
                         ->select('type', 'timestamp', 'character_id', 'reciever_hash')
                         ->where('player_hash', $hash)
                         ->where('type', '!=' ,'score')
+                        ->where('hidden', 0)
                         ->orderBy('timestamp', 'desc')
                         ->get();
 
@@ -48,6 +49,7 @@ class PlayerReportController extends Controller
                             ->select('type', 'timestamp', 'character_id', 'player_hash')
                             ->where('reciever_hash', $hash)
                             ->where('type', '!=' ,'score')
+                            ->where('hidden', 0)
                             ->orderBy('timestamp', 'desc')
                             ->get();
 

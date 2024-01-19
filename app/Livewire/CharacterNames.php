@@ -15,8 +15,15 @@ use App\Models\LifeNameLog;
 class CharacterNames extends Component
 {
     public $gender;
+
     public $first_name;
     public $last_name;
+
+    public $previous_first_name;
+    public $previous_last_name;
+
+    public $first_name_auto_completed;
+    public $last_name_auto_completed;
 
     public $first_names;
     public $last_names;
@@ -29,6 +36,9 @@ class CharacterNames extends Component
         $this->gender = 'female';
         $this->randomFirstName();
         $this->randomLastName();
+
+        $this->first_name_auto_completed = false;
+        $this->last_name_auto_completed = false;
 
         //$this->mostPopularFirstNames();
     }
@@ -74,20 +84,47 @@ class CharacterNames extends Component
     {
         $this->first_names = null;
 
-        $name = FirstName::inRandomOrder()
-                            ->where('gender', $this->gender)
-                            ->where('name', 'like', $this->first_name.'%')
-                            ->first();
+        $match = FirstName::where('gender', $this->gender)
+                        ->where('name', $this->first_name)
+                        ->first();
 
-        if($name)
+        if($match && $this->first_name_auto_completed == true)
         {
-            $this->first_name = $name->name;
-        }else
+            $name = FirstName::inRandomOrder()
+                                ->where('gender', $this->gender)
+                                ->first();
+
+            if($name)
+            {
+                $this->first_name = $name->name;
+                $this->first_name_auto_completed = false;
+            }
+        }
+        else
         {
-            $this->first_name = FirstName::inRandomOrder()
-                            ->where('gender', $this->gender)
-                            ->first()
-                            ->name;
+            $name = FirstName::inRandomOrder()
+                                ->where('gender', $this->gender)
+                                ->where('name', 'like', $this->first_name.'%')
+                                ->where('name', '!=', $this->previous_first_name)
+                                ->where('name', '!=', $this->first_name)
+                                ->first();
+
+            if($name)
+            {
+                $this->first_name = $name->name;
+                $this->previous_first_name = $name->name;
+                $this->first_name_auto_completed = true;
+            }
+            else
+            {
+                $this->first_name = FirstName::inRandomOrder()
+                                ->where('gender', $this->gender)
+                                ->first()
+                                ->name;
+                
+                $this->first_name_auto_completed = false;
+            }
+            
         }
     }
 
@@ -95,10 +132,40 @@ class CharacterNames extends Component
     {
         $this->last_names = null;
 
-        $this->last_name = LastName::inRandomOrder()
-                            ->where('name', 'like', $this->last_name.'%')
-                            ->first()
-                            ->name;
+        $match = LastName::where('name', $this->last_name)
+                        ->first();
+
+        if($match && $this->last_name_auto_completed == true)
+        {
+            $this->last_name = LastName::inRandomOrder()
+                                ->first()
+                                ->name;
+
+            $this->last_name_auto_completed = false;
+        }
+        else
+        {
+            $name = LastName::inRandomOrder()
+                    ->where('name', 'like', $this->last_name.'%')
+                    ->where('name', '!=', $this->previous_last_name)
+                    ->where('name', '!=', $this->last_name)
+                    ->first();
+       
+            if($name)
+            {
+                $this->last_name = $name->name;
+                $this->previous_last_name = $name->name;
+                $this->last_name_auto_completed = true;
+            }
+            else
+            {
+                $this->last_name = LastName::inRandomOrder()
+                                    ->first()
+                                    ->name;
+                
+                $this->last_name_auto_completed = false;
+            }
+        } 
     }
 
     public function mostPopularFirstNames()
@@ -149,5 +216,21 @@ class CharacterNames extends Component
 
 
         dd($names);
+    }
+
+    public function updating($property, $value)
+    {
+        // $property: The name of the current property being updated
+        // $value: The value about to be set to the property
+ 
+        if ($property === 'first_name') 
+        {
+            $this->first_name_auto_completed = false;
+        }
+
+        if ($property === 'last_name') 
+        {
+            $this->last_name_auto_completed = false;
+        }
     }
 }
