@@ -74,38 +74,20 @@ class CharacterNames extends Component
     {
         $this->first_names = null;
 
-        $match = FirstName::where('gender', $this->gender)
-                        ->where('name', $this->first_name)
-                        ->first();
+        $name = FirstName::inRandomOrder()
+                            ->where('gender', $this->gender)
+                            ->where('name', 'like', $this->first_name.'%')
+                            ->first();
 
-        if($match)
+        if($name)
         {
-            $name = FirstName::inRandomOrder()
-                                ->where('gender', $this->gender)
-                                ->first();
-
-            if($name)
-            {
-                $this->first_name = $name->name;
-            }
+            $this->first_name = $name->name;
         }else
         {
-            $name = FirstName::inRandomOrder()
-                                ->where('gender', $this->gender)
-                                ->where('name', 'like', $this->first_name.'%')
-                                ->first();
-
-            if($name)
-            {
-                $this->first_name = $name->name;
-            }else
-            {
-                $this->first_name = FirstName::inRandomOrder()
-                                ->where('gender', $this->gender)
-                                ->first()
-                                ->name;
-            }
-            
+            $this->first_name = FirstName::inRandomOrder()
+                            ->where('gender', $this->gender)
+                            ->first()
+                            ->name;
         }
     }
 
@@ -113,23 +95,10 @@ class CharacterNames extends Component
     {
         $this->last_names = null;
 
-        $match = LastName::where('name', $this->last_name)
-                        ->first();
-
-        if($match)
-        {
-            $this->last_name = LastName::inRandomOrder()
-                                ->first()
-                                ->name;
-        }else
-        {
-            $this->last_name = LastName::inRandomOrder()
-                                ->where('name', 'like', $this->last_name.'%')
-                                ->first()
-                                ->name;
-        }
-        
-        
+        $this->last_name = LastName::inRandomOrder()
+                            ->where('name', 'like', $this->last_name.'%')
+                            ->first()
+                            ->name;
     }
 
     public function mostPopularFirstNames()
