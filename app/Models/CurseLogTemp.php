@@ -13,4 +13,6 @@ class CurseLogTemp extends Model
      * @var string
      */
     protected $table = 'curse_logs_temp';
+
+    protected $guarded = ['id'];
 }

@@ -35,17 +35,17 @@ class HandleLeaderboardLogs extends Command
         $url = config('services.yumdb.leaderboard_url');
 
         $start = microtime(true);
-        Log::channel('sync')->info('LEADERBOARD scraper started');
+        Log::channel('sync')->info('LEADERBOARD API scraper started');
 
         // Open HTTP connection and fetch data as JSON
         $connection = Http::get($url);
         $records = $connection->json();
 
-        Log::channel('sync')->info("Fetched ".count($records)." records from Selb's API");
+        Log::channel('sync')->info("LEADERBOARD API scraper returned ".count($records)." records from Selb's YumDB");
 
         // Get total count of entries in database
         $count = Leaderboard::count();
-        Log::channel('sync')->info("Current records in database: ".$count);
+        //Log::channel('sync')->info("Current records in database: ".$count);
 
         // If the amount of fetched records are greater than or equal to the amount of stored records, run query.
         if(count($records) > $count)
@@ -108,6 +108,6 @@ class HandleLeaderboardLogs extends Command
         $time = round(($end-$start), 3);
         $new_count = count($records);
 
-        Log::channel('sync')->info("Updated leaderboard. $count to $new_count entries in: $time");
+        Log::channel('sync')->info("LEADERBOARD API scraper finished. From $count to $new_count entries in: $time");
     }
 }
