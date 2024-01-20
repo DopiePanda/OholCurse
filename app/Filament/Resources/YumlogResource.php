@@ -18,14 +18,16 @@ use Filament\Tables\Table;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Grouping\Group;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -59,51 +61,108 @@ class YumlogResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('timestamp')
+                TextColumn::make('created_at')
                 ->sortable()
                 ->dateTime('Y-m-d H:i'),
+                TextColumn::make('timestamp')
+                ->sortable()
+                ->dateTime('Y-m-d H:i')
+                ->label('Sent at'),
                 TextColumn::make('user.username')
                 ->searchable(['username'], isIndividual: true)
                 ->url(fn (Yumlog $record): string => route('player.curses', ['hash' => $record->user->player_hash ?? 'missing']))
                 ->openUrlInNewTab()
                 ->placeholder('N/A')
-                ->label('Submitted by'),
+                ->label('Submitted by')
+                ->sortable()
+                ->visible(fn (): bool => auth()->user()->can('view yumlog uploader')),
                 TextColumn::make('leaderboard.leaderboard_name')
                 ->searchable(['leaderboard_name'], isIndividual: true)
                 ->url(fn (Yumlog $record): string => route('player.curses', ['hash' => $record->leaderboard->player_hash ?? 'missing']))
                 ->openUrlInNewTab()
                 ->placeholder('N/A')
-                ->label('Leaderboard name'),
+                ->label('Leaderboard name')
+                ->sortable(),
                 TextColumn::make('curse_name')
                 ->searchable(['curse_name'], isIndividual: true)
                 ->url(fn (Yumlog $record): string => route('player.reports', ['hash' => $record->player_hash ?? 'missing']))
                 ->openUrlInNewTab()
                 ->placeholder('N/A')
-                ->label('Curse name'),
+                ->label('Curse name')
+                ->sortable(),
                 TextColumn::make('character_name')
                 ->searchable(['character_name'], isIndividual: true)
                 ->url(fn (Yumlog $record): string => route('player.lives', ['hash' => $record->player_hash ?? 'missing']))
                 ->openUrlInNewTab()
                 ->placeholder('N/A')
-                ->label('Character name'),
+                ->label('Character name')
+                ->sortable(),
                 TextColumn::make('character_id')
                 ->searchable(['character_id'], isIndividual: true)
-                ->url(fn (Yumlog $record): string => route('player.lives', ['hash' => $record->player_hash ?? 'missing']))
+                ->url(fn (Yumlog $record): string => $record->player_hash ? route('player.lives', ['hash' => $record->player_hash ?? 'missing']) : '')
                 ->openUrlInNewTab()
                 ->placeholder('N/A')
                 ->label('Character ID')
                 ->toggleable(isToggledHiddenByDefault: true),
-                ToggleColumn::make('verified'),
-                TextColumn::make('status')
+                IconColumn::make('verified')
+                ->icon(fn (string $state): string => match ($state) {
+                    '0' => 'heroicon-o-clock',
+                    '1' => 'heroicon-o-check-circle',
+                })
+                ->color(fn (string $state): string => match ($state) {
+                    '0' => 'warning',
+                    '1' => 'success',
+                    default => 'gray',
+                }),
+                BadgeColumn::make('status')
+                ->formatStateUsing(fn (string $state): string => match ($state) {
+                    '0' => 'Unverified',
+                    '1' => 'Verified',
+                    '2' => 'Archived',
+                    '3' => 'Curse-check',
+                    '4' => 'Forgiven later',
+                    '5' => 'Custom',
+                })
+                ->tooltip(fn (string $state): string => match ($state) {
+                    '0' => 'Not verified yet. Submitted before public log import or incorrect data.',
+                    '1' => 'Successfully verified against the public logs',
+                    '2' => 'Archived after max attempts to verify',
+                    '3' => 'Player was forgiven within set time limit',
+                    '4' => 'Player has been forgiven at a later point by sender',
+                    '5' => 'Non-public entry from custom Yumlog upload',
+                })
+                ->color(fn (string $state): string => match ($state) {
+                    '0' => 'gray',
+                    '3' => 'warning',
+                    '1' => 'success',
+                    '2' => 'danger',
+                    '4' => 'info',
+                    '5' => 'primary',
+                }),
+                ToggleColumn::make('visible')
+                ->visible(fn (): bool => auth()->user()->can('edit yumlog')),
             ])
-            ->defaultSort('timestamp', 'desc')
+            ->defaultSort('created_at', 'desc')
             ->defaultPaginationPageOption(50)
             ->groups([
                 Group::make('curse_name')
                     ->groupQueryUsing(fn (Builder $query) => $query->groupBy('curse_name')),
+                Group::make('leaderboard.leaderboard_name')
+                ->groupQueryUsing(fn (Builder $query) => $query->groupBy('leaderboard_name')),
             ])
             ->filters([
-                //
+                SelectFilter::make('leaderboard_name')
+                ->relationship('leaderboard', 'leaderboard_name')
+                ->searchable(),
+                SelectFilter::make('status')
+                ->options([
+                    '0' => 'Unverified',
+                    '1' => 'Verified',
+                    '2' => 'Archived',
+                    '3' => 'Curse-check',
+                    '4' => 'Forgiven later',
+                    '5' => 'Custom',
+                ])
             ])
             ->actions([
                 
@@ -125,7 +184,10 @@ class YumlogResource extends Resource
                 
             ])
             ->bulkActions([
-
+                BulkAction::make('delete')
+                ->requiresConfirmation()
+                ->action(fn (Collection $records) => $records->each->delete())
+                ->visible(fn (): bool => auth()->user()->can('delete bulk yumlog')),
             ]);
     }
 
@@ -146,8 +208,7 @@ class YumlogResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-                    ->select('*')
-                    ->groupBy('curse_name');
+                    ->with('leaderboard');
     }
 
     public static function processFile($path)
