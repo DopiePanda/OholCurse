@@ -205,6 +205,7 @@ class PlayerReportController extends Controller
         $reports = Yumlog::select(DB::raw("(COUNT(character_id)) as count"), 'character_name', 'character_id', 'curse_name', 'gender', 'age', 'died_to', 'timestamp', 'status')
                     ->where('player_hash', $hash)
                     ->where('verified', 1)
+                    ->where('visible', 1)
                     ->whereIn('status', $status)
                     ->groupBy('character_id')
                     ->orderBy('character_id', 'desc')
