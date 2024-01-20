@@ -9,6 +9,8 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Livewire;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Checkbox;
 
 use App\Livewire\Modals\UploadLogfile;
 
@@ -48,6 +50,9 @@ class YumlogResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-document-arrow-up';
 
     protected static ?string $navigationGroup = 'Accounts';
+
+
+    protected static ?bool $hideForgives = true;
 
     public static function form(Form $form): Form
     {
@@ -174,12 +179,18 @@ class YumlogResource extends Resource
                     ->required()
                     ->acceptedFileTypes(['text/plain'])
                     ->preserveFilenames()
-                    ->storeFiles(false)
+                    ->storeFiles(false),
+                    Checkbox::make('hide_forgives')
+                    ->label('Hide the forgives sent from public view')
+                    ->default(true)
+                    ->inline(false),
+
                 ])
                 ->label('Import Custom YumLog')
                 ->action(function (array $data, array $arguments): void {
                     $path = $data['yumlog']->getRealPath();
-                    self::processFile($path);
+                    $hide = $data['hide_forgives'];
+                    self::processFile($path, $hide);
                 })
                 
             ])
@@ -211,23 +222,23 @@ class YumlogResource extends Resource
                     ->with('leaderboard');
     }
 
-    public static function processFile($path)
+    public static function processFile($path, $hide)
     {
         $start_time = microtime(true);
 
         try{
                 ini_set('max_execution_time', 300);
 
-                File::lines($path)->each(function ($line) {
+                File::lines($path)->each(function ($line) use ($hide) {
                     if(Str::contains($line, '| forgive |'))
                     {
                         try 
                         {
-                            self::processLine($line);
+                            self::processLine($line, $hide);
                         } 
                         catch (\Throwable $th) 
                         {
-                            Log::error($th);
+                            Log::channel('yumlog')->error($th);
                         }
                         
                     }
@@ -237,17 +248,17 @@ class YumlogResource extends Resource
                 $end_time = microtime(true);
                 $time = round(($end_time - $start_time), 3);
 
-                Log::info("Yumlog processed in $time seconds");
+                Log::channel('yumlog')->info("Yumlog processed in $time seconds");
 
             }
             catch(\Exception $e) 
             {
-                Log::error('Exception returned when importing the yumlog');
-                Log::error($e->getMessage());
+                Log::channel('yumlog')->error('Exception returned when importing the yumlog');
+                Log::channel('yumlog')->error($e->getMessage());
             }
     }
 
-    public static function processLine($line)
+    public static function processLine($line, $hide)
     {
         /*
             $parts[0] = timestamp | 1379020415 
@@ -314,14 +325,23 @@ class YumlogResource extends Resource
 
                 if($curse)
                 {
-                    // If forgive entry is found in curse logs, set entry to hidden
-                    $curse->hidden = 1;
-                    $curse->save();
+                    if($hide == true)
+                    {
+                        // If forgive entry is found in curse logs, set entry to hidden
+                        $curse->hidden = 1;
+                        $curse->save();
+                    }
+                    else
+                    {
+                        // If forgive entry is found in curse logs, set entry to hidden
+                        $curse->hidden = 0;
+                        $curse->save();
+                    }
                 }
                 else
                 {
                     // If forgive entry is not found, log a notice on it
-                    Log::notice("Curse log entry not found for character: $character_id, ts: $parts[0], hash: $life->player_hash");
+                    Log::channel('yumlog')->notice("Curse log entry not found for character: $character_id, ts: $parts[0], hash: $life->player_hash");
                 }
 
                 // Since life log entry is found, update Yumlog report with life information and set as verified
@@ -331,7 +351,7 @@ class YumlogResource extends Resource
                 } 
                 catch (\Throwable $th) 
                 {
-                    Log::error($th);
+                    Log::channel('yumlog')->error($th);
                 } 
             }
             else
@@ -344,6 +364,7 @@ class YumlogResource extends Resource
                     ],
                     [
                         'timestamp' => $parts[0],
+                        'hide' => $hide,
                     ]
                 );
             }

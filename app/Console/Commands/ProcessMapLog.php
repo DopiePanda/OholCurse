@@ -55,7 +55,7 @@ class ProcessMapLog extends Command
         
         if($cron)
         {
-            $this->log("Map log already stored to DB.");
+            //$this->log("Map log already stored to DB.");
             return false;
         }else
         {

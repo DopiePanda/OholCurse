@@ -18,6 +18,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:handle-life-logs')->dailyAt('08:40');
         $schedule->command('app:handle-life-name-logs')->dailyAt('08:40');
         $schedule->command('app:handle-curse-logs')->dailyAt('08:40');
+
+        $schedule->command('app:process-temp-logs')->dailyAt('08:40');
         
         $schedule->command('app:handle-food-logs')->dailyAt('08:50');
         

@@ -100,7 +100,7 @@ class HandleFoodLogs extends Command
         }
 
         $time = round((microtime(true) - $this->start_time), 3);
-        Log::channel('sync')->info("Food log download finished after $time seconds");
+        Log::channel('sync')->info("FOOD DETAIL LOG download finished after $time seconds");
     }
 
     public function processLog($file_name)
@@ -132,7 +132,7 @@ class HandleFoodLogs extends Command
             });
 
             $time = round((microtime(true) - $this->start_time), 3);
-            Log::channel('sync')->info("Food log processing finished after $time seconds");
+            Log::channel('sync')->info("FOOD DETAIL LOG processing finished after $time seconds");
         }
     }
 
@@ -145,7 +145,7 @@ class HandleFoodLogs extends Command
         }
 
         $time = round((microtime(true) - $this->start_time), 3);
-        Log::channel('sync')->info("Food log deleted after $time seconds");
+        Log::channel('sync')->info("FOOD DETAIL LOG deleted after $time seconds");
     }
 
     private function getLogFileName($date)
