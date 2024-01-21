@@ -25,6 +25,7 @@ use App\Livewire\Home;
 use App\Livewire\CharacterNames;
 use App\Livewire\Statistics;
 use App\Livewire\Map\Leaderboard;
+use App\Livewire\Modals\Charts\LeaderboardRecords;
 
 use App\Livewire\Roadmap\Ideas;
 use App\Livewire\Roadmap\Ideas\Create as IdeaCreate;
@@ -55,6 +56,7 @@ Route::middleware('web')->group(function() {
     
     Route::get('/names', CharacterNames::class)->name('names');
     Route::get('/statistics', Statistics::class)->name('statistics');
+    Route::get('/chart', LeaderboardRecords::class)->name('statistics');
 
     Route::prefix('/roadmap')->name('roadmap.')->group(function () {
         Route::get('/', Ideas::class)->name('index');

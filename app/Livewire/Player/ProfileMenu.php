@@ -35,6 +35,7 @@ class ProfileMenu extends Component
                             ->first();
 
         $curses = CurseLog::where('type', '!=', 'score')
+                            ->where('hidden', 0)
                             ->where('player_hash', $this->hash)
                             ->orWhere('reciever_hash', $this->hash)
                             ->count();
