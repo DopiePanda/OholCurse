@@ -50,8 +50,6 @@
             <!-- Page Content -->
             <main class="z-10 flex flex-grow justify-center pt-6 px-2 lg:px-4 break-normal">
                 {{ $slot }}
-
-                
             </main>
                 <div class="z-30 pb-4 px-4 flex flex-row items-end">
                     <div class="lg:basis-1/4 text-left">
