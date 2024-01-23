@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 use Auth;
 use Carbon\Carbon;
 
@@ -26,6 +30,11 @@ class Yumlog extends Model
     public function leaderboard()
     {
         return $this->hasOne(Leaderboard::class, 'player_hash', 'player_hash');
+    }
+
+    public function curses(): HasMany
+    {
+        return $this->hasMany(CurseLog::class, 'reciever_hash', 'player_hash')->where('type', 'curse');
     }
 
     public function getCreatedAtAttribute($date)

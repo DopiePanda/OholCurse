@@ -28,7 +28,7 @@
                                 <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Curse name</td>
                                 <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Age</td>
                                 <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Died to</td>
-                                <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Reported at</td>
+                                
                             </tr>
                         </thead>
                         <tbody class="p-2">
@@ -62,7 +62,7 @@
                                     <td class="p-2 border border-gray-400">{{ $report->curse_name }}</td>
                                     <td class="p-2 border border-gray-400">{{ $report->age }}</td>
                                     <td class="p-2 border border-gray-400">{{ $report->died_to }}</td>
-                                    <td class="p-2 border border-gray-400">{{ date('Y-m-d H:i:s', $report->timestamp) }}</td>
+                                    
                                 </tr>
                             @empty
                                 

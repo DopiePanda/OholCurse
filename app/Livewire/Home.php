@@ -56,9 +56,10 @@ class Home extends Component
 
     public function updatedQuery()
     {
-
         if(strlen($this->query) >= $this->minQueryLength)
         {
+            $this->results = [];
+            
             switch($this->filter)
             {
                 case 'player_hash':
@@ -88,6 +89,7 @@ class Home extends Component
                                         ->where('curse_name', 'like', strtoupper($this->query).'%')
                                         ->where('verified', 1)
                                         ->whereIn('status', $this->status)
+                                        ->has('curses', '>', '0')
                                         ->groupBy('player_hash')
                                         ->orderBy('character_id', 'desc')
                                         ->skip($this->fetchCursor)
