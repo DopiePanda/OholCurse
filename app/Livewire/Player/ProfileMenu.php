@@ -70,12 +70,22 @@ class ProfileMenu extends Component
         {
             $status = [1];
         }
+
+        $curse_count = CurseLog::where('reciever_hash', $this->hash)
+                    ->where('type', 'curse')
+                    ->count();
         
         $reports = Yumlog::where('player_hash', $this->hash)
                             ->where('verified', 1)
                             ->whereIn('status', $status)
+                            ->has('curses', '>', '0')
                             ->count();
-        
+
+        if($curse_count < $reports)
+        {
+            $reports = $curse_count;
+        }
+
         $counts = ['curses' => $curses, 'lives' => $lives, 'reports' => $reports, 'recordsCount' => $records];
 
         $this->counts = $counts;

@@ -198,17 +198,23 @@ class PlayerReportController extends Controller
         $time_start = microtime(true);
 
         $name = Leaderboard::where('player_hash', $hash)
-                            ->select('leaderboard_name', 'leaderboard_id')
-                            ->orderBy('id', 'desc')
-                            ->first();
+                    ->select('leaderboard_name', 'leaderboard_id')
+                    ->orderBy('id', 'desc')
+                    ->first();
+
+        $curse_count = CurseLog::where('reciever_hash', $hash)
+                    ->where('type', 'curse')
+                    ->count();
 
         $reports = Yumlog::select(DB::raw("(COUNT(character_id)) as count"), 'character_name', 'character_id', 'curse_name', 'gender', 'age', 'died_to', 'timestamp', 'status')
                     ->where('player_hash', $hash)
                     ->where('verified', 1)
                     ->where('visible', 1)
                     ->whereIn('status', $status)
+                    ->has('curses', '>', '0')
                     ->groupBy('character_id')
                     ->orderBy('character_id', 'desc')
+                    ->limit($curse_count)
                     ->get();
 
         return view('player.reports', ['hash' => $hash, 'name' => $name, 'reports' => $reports, 'time' => $time_start]);
