@@ -43,10 +43,7 @@ class FoodLogResource extends Resource
                 ->sortable()
                 ->dateTime(),
                 TextColumn::make('birth.leaderboard.leaderboard_name')
-                ->searchable(isIndividual: true, query: function (Builder $query, string $search): Builder {
-                    return $query
-                        ->where('leaderboard_name', 'like', $search.'%');
-                })
+                ->searchable(isIndividual: true)
                 ->url(fn (FoodLog $record): string => route('player.curses', ['hash' => $record->birth->player_hash ?? 'none']))
                 ->openUrlInNewTab()
                 ->placeholder('N/A'),
@@ -58,10 +55,7 @@ class FoodLogResource extends Resource
                 ->url(fn (FoodLog $record): string => route('player.curses', ['hash' => $record->birth->player_hash ?? 'none']))
                 ->openUrlInNewTab(),
                 TextColumn::make('birth.name.name')
-                ->searchable(isIndividual: true, query: function (Builder $query, string $search): Builder {
-                    return $query
-                        ->where('name', 'like', $search.'%');
-                })
+                ->searchable(isIndividual: true)
                 ->url(fn (FoodLog $record): string => route('player.lives', ['hash' => $record->birth->player_hash ?? 'none']))
                 ->openUrlInNewTab()
                 ->placeholder('Unnamed')
