@@ -166,6 +166,19 @@ class PlayerReportController extends Controller
                     ->orderBy('character_id', 'desc')
                     ->get();
 
+        $lives_normal = LifeLog::where('player_hash', $hash)
+                    ->where('age', '>', 3)
+                    ->where('type', 'death')
+                    ->where('pos_x', '<', '-1')
+                    ->where('pos_x', '>', '-100000000')
+                    ->count();
+
+        $lives_dt = LifeLog::where('player_hash', $hash)
+                    ->where('age', '>', 3)
+                    ->where('type', 'death')
+                    ->where('pos_x', '<', '-100000000')
+                    ->count();
+
         $name = Leaderboard::where('player_hash', $hash)
                             ->select('leaderboard_name', 'leaderboard_id')
                             ->orderBy('id', 'desc')
@@ -174,6 +187,8 @@ class PlayerReportController extends Controller
         return view('player.lives', [
             'hash' => $hash, 
             'lives' => $lives,
+            'lives_normal' => $lives_normal,
+            'lives_dt' => $lives_dt,
             'name' => $name,
             'time' => $time_start,
         ]);

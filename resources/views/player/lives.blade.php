@@ -13,10 +13,23 @@
         
         <div class="bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark mt-6 p-2 lg:p-6">
 
-            <div class="text-4xl mt-2 text-center text-skin-base dark:text-skin-base-dark">Number of lives lived</div>
+            <div class="text-4xl text-center text-skin-base dark:text-skin-base-dark">Number of lives lived</div>
+
+            <div class="mt-6 grid grid-cols-2 gap-4">      
+                <div class="p-4 text-center bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-green-600 rounded-xl">
+                    <div class="font-bold text-6xl text-green-600">{{ $lives_normal }}</div>
+                    <div class="mt-2 text-xl dark:text-gray-400">Normal lives</div>
+                </div>
+                <div class="p-4 text-center bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-red-600 rounded-xl">
+                    <div class="font-bold text-6xl text-red-600">{{ $lives_dt }}</div>
+                    <div class="mt-2 text-xl dark:text-gray-400">DT lives</div>
+                </div>
+            </div>
+
+            <div class="mt-8 text-4xl text-center text-skin-base dark:text-skin-base-dark">Detailed life overview</div>
             <div class="text-lg mt-2 mb-6 text-center text-skin-muted dark:text-skin-muted-dark">Lives shorter than 3 years excluded</div>
 
-            <div class="relative my-6 p-4 border border-skin-base rounded-xl overflow-x-scroll dark:border-skin-base-dark">
+            <div class="relative my-6 p-4 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark rounded-xl overflow-x-scroll ">
                 @if(count($lives) > 0)     
                     <table class="w-full mx-auto mt-4">
                         <thead class="p-2">
