@@ -162,14 +162,20 @@ class ProcessMapLog extends Command
                     {
                         $object = explode('u', $array[3]);
 
-                        $payload[] = [
-                            'timestamp' => ($this->timestamp_start + $array[0]),
-                            'pos_x'=> $array[1],
-                            'pos_y'=> $array[2],
-                            'object_id'=> $object[0],
-                            'use'=> $object[1] ?? null,
-                            'character_id'=> $array[4],
-                        ];
+                        if($object[0] != 558 && $object[0] != 2758 && $object[0] != 2760)
+                        {
+                            if($array[1] < -1 && $array[1] > -10000000)
+                            {
+                                $payload[] = [
+                                    'timestamp' => ($this->timestamp_start + $array[0]),
+                                    'pos_x'=> $array[1],
+                                    'pos_y'=> $array[2],
+                                    'object_id'=> $object[0],
+                                    'use'=> $object[1] ?? null,
+                                    'character_id'=> $array[4],
+                                ];
+                            }
+                        }
                     }
                 }
                 
