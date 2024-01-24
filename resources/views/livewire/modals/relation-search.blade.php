@@ -16,8 +16,25 @@
             @enderror
         </div>
         <div class="w-1/3 mx-auto mt-4 mb-4 text-center">
-            <div><button class="w-full p-2 text-white bg-skin-fill dark:bg-skin-fill-dark" type="button" wire:click="search">Search</button></div>
+            <div>
+                <button class="w-full p-2 text-white bg-skin-fill dark:bg-skin-fill-dark" type="button" wire:click="search">Search</button>
+            </div>
         </div>
+
+        @auth
+            @if(Auth::user()->player_hash)
+            <div class="mt-6 w-1/3 mx-auto mt-4 mb-4 text-center">
+                <div class="flex flex-row">
+                    <div class="pt-2 grow border-t"></div>
+                    <div class="-mt-3 shrink px-2 text-skin-base dark:text-skin-base-dark"> OR </div>
+                    <div class="pt-2 grow border-t"></div>
+                </div>
+                <div class="mt-4">
+                    <button class="w-full p-2 text-white border border-skin-base dark:border-skin-base-dark rounded-lg" type="button" wire:click="compareToLoggedInUser">Compare to me</button>
+                </div>
+            </div>
+            @endif
+        @endauth
     </form>
 
     <div wire:loading class="w-full mx-auto text-center mt-12 text-primary-500">

@@ -4,6 +4,7 @@ namespace App\Livewire\Modals;
 
 use LivewireUI\Modal\ModalComponent;
 use Illuminate\Database\Eloquent\Builder;
+use Auth;
 
 use App\Models\LifeLog;
 use App\Models\Leaderboard;
@@ -94,6 +95,12 @@ class RelationSearch extends ModalComponent
         ->select('character_id', 'parent_id', 'timestamp', 'player_hash')
         ->orderBy('timestamp', 'desc')
         ->get();
+    }
+
+    public function compareToLoggedInUser()
+    {   
+        $this->input = Auth::user()->leaderboard->leaderboard_name;
+        $this->search();
     }
 
     public function messages(): array

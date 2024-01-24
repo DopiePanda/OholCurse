@@ -12,6 +12,10 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 use Lab404\Impersonate\Models\Impersonate;
 
 class User extends Authenticatable implements FilamentUser
@@ -52,7 +56,12 @@ class User extends Authenticatable implements FilamentUser
     
     public function friends(): HasMany
     {
-        return $this->hasMany(UserContact::class, 'character_id', 'character_id')->where();
+        return $this->hasMany(UserContact::class, 'character_id', 'character_id');
+    }
+
+    public function leaderboard(): HasOne
+    {
+        return $this->hasOne(Leaderboard::class, 'player_hash', 'player_hash');
     }
 
     public function canAccessPanel(Panel $panel): bool
