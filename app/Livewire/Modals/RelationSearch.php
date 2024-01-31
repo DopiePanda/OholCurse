@@ -5,6 +5,7 @@ namespace App\Livewire\Modals;
 use LivewireUI\Modal\ModalComponent;
 use Illuminate\Database\Eloquent\Builder;
 use Auth;
+use Log;
 
 use App\Models\LifeLog;
 use App\Models\Leaderboard;
@@ -13,7 +14,7 @@ class RelationSearch extends ModalComponent
 {
     public $input;
 
-    public $origin;
+    public $origin, $origin_hash;
     public $target;
 
     public $origin_was_parent;
@@ -22,7 +23,17 @@ class RelationSearch extends ModalComponent
 
     public function mount($hash)
     {
-        $this->origin = Leaderboard::where('player_hash', $hash)->first();
+        $this->origin_hash = $hash;
+
+        try 
+        {
+            $this->origin = Leaderboard::where('player_hash', $hash)->firstOrFail();
+        } 
+        catch(\Exception $e)
+        {
+            Log::error("Relation search - Could not find leaderboard for hash: $hash");
+            Log::error($e->getMessage());
+        }
     }
 
     public function render()
@@ -33,7 +44,7 @@ class RelationSearch extends ModalComponent
     public function search()
     {
         $this->validate([
-            'origin' => 'required',
+            'origin_hash' => 'required',
             'input' => 'required|exists:App\Models\Leaderboard,leaderboard_name|different:origin.leaderboard_name',
         ]);
 
@@ -45,7 +56,7 @@ class RelationSearch extends ModalComponent
 
         $lives_origin = LifeLog::with('name')
                 ->where('type', 'birth')
-                ->where('player_hash', $this->origin->player_hash)
+                ->where('player_hash', $this->origin_hash)
                 ->where('parent_id', '!=', 0)
                 ->select('character_id', 'parent_id')
                 ->get();
@@ -76,7 +87,7 @@ class RelationSearch extends ModalComponent
 
         $this->origin_was_child = LifeLog::with('name', 'parent', 'leaderboard')
         ->where('type', 'birth')
-        ->where('player_hash', $this->origin->player_hash)
+        ->where('player_hash', $this->origin_hash)
         ->whereIn('parent_id', $target_lives)
         ->whereHas('death', function(Builder $query){
             $query->where('age', '>', 1);

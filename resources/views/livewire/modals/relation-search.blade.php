@@ -1,5 +1,5 @@
 <div class="dark:bg-slate-800 py-8">
-    <div class="mt-4 text-skin-base dark:text-skin-base-dark text-center text-2xl">Find earlier relationships with {{ $origin->leaderboard_name }}</div>
+    <div class="mt-4 text-skin-base dark:text-skin-base-dark text-center text-2xl">Find earlier relationships with {{ $origin->leaderboard_name ?? 'UNKNOWN' }}</div>
     <div class="text-skin-muted text-center text-md">Enter a leaderboard name below to find and compare previous relationships.</div>
     <form wire:submit="search">
         <div class="w-1/3 mt-4 mx-auto my-2 text-center">
@@ -44,7 +44,7 @@
 
     @if($origin_was_parent && count($origin_was_parent) > 0)
         <div class="w-5/6 mx-auto mt-4 p-4 text-white bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
-            <div class="text-gray-600 dark:text-gray-200 text-center text-xl">Lives where {{ $origin->leaderboard_name }} was {{ $target->leaderboard_name }}'s parent</div>
+            <div class="text-gray-600 dark:text-gray-200 text-center text-xl">Lives where {{ $origin->leaderboard_name ?? $origin_hash }} was {{ $target->leaderboard_name }}'s parent</div>
             <div class="h-1 w-1/3 my-2 mx-auto border-b border-skin-muted dark:border-skin-muted-dark"></div>
             <table class="w-full mt-4 mx-auto">
                 <thead class="p-2">
@@ -81,7 +81,7 @@
 
     @if($origin_was_child && count($origin_was_child) > 0)
         <div class="w-5/6 mx-auto mt-4 p-4 text-white bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
-            <div class="text-gray-600 dark:text-gray-200 text-center text-xl">Lives where {{ $origin->leaderboard_name }} was {{ $target->leaderboard_name }}'s child</div>
+            <div class="text-gray-600 dark:text-gray-200 text-center text-xl">Lives where {{ $origin->leaderboard_name ?? $origin_hash }} was {{ $target->leaderboard_name }}'s child</div>
             <div class="h-1 w-1/3 my-2 mx-auto border-b border-skin-muted dark:border-skin-muted-dark"></div>
             <table class="w-full mt-4 mx-auto">
                 <thead class="p-2">
@@ -118,7 +118,7 @@
 
     @if($origin_was_sibling && count($origin_was_sibling) > 0)
         <div class="w-5/6 mx-auto mt-4 p-4 text-white bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
-            <div class="text-gray-600 dark:text-gray-200 text-center text-xl">Lives where {{ $origin->leaderboard_name }} was {{ $target->leaderboard_name }}'s sibling</div>
+            <div class="text-gray-600 dark:text-gray-200 text-center text-xl">Lives where {{ $origin->leaderboard_name ?? $origin_hash }} was {{ $target->leaderboard_name }}'s sibling</div>
             <div class="h-1 w-1/3 my-2 mx-auto border-b border-skin-muted dark:border-skin-muted-dark"></div>
             <table class="w-full mt-4 mx-auto">
                 <thead class="p-2">
