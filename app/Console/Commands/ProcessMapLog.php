@@ -35,6 +35,8 @@ class ProcessMapLog extends Command
     public $time_start;
     public $timestamp_start;
 
+    public $payload;
+
     /**
      * Execute the console command.
      */
@@ -142,7 +144,7 @@ class ProcessMapLog extends Command
         if(Storage::exists($this->getFilePath()))
         {
             
-            $payload = [];
+            $this->payload = [];
             $path = $this->getFilePath();
 
             LazyCollection::make(function () use ($path) {
@@ -166,7 +168,7 @@ class ProcessMapLog extends Command
                         {
                             if($array[1] < -1 && $array[1] > -10000000)
                             {
-                                $payload[] = [
+                                $this->payload[] = [
                                     'timestamp' => ($this->timestamp_start + $array[0]),
                                     'pos_x'=> $array[1],
                                     'pos_y'=> $array[2],
@@ -178,29 +180,29 @@ class ProcessMapLog extends Command
                         }
                     }
                 }
-                
-                try{
-                    DB::disableQueryLog();
-                    DB::beginTransaction();
-    
-                    DB::table('map_logs')
-                            ->insert(
-                                $payload
-                            );
-    
-                    // Commit the DB transaction
-                    DB::commit();
-    
-                }catch(\Exception $e) {
-                
-                    // Rollback DB transaction
-                    DB::rollback();
-    
-                    // Log exception message
-                    $this->log("Error ocurred.");
-                    Log::channel('sync')->error($e->getMessage());
-                }
             });
+
+            try{
+                DB::disableQueryLog();
+                DB::beginTransaction();
+
+                DB::table('map_logs')
+                        ->insert(
+                            $payload
+                        );
+
+                // Commit the DB transaction
+                DB::commit();
+
+            }catch(\Exception $e) {
+            
+                // Rollback DB transaction
+                DB::rollback();
+
+                // Log exception message
+                $this->log("Error ocurred.");
+                Log::channel('sync')->error($e->getMessage());
+            }
 
             $this->log("Processing complete.");
         }
