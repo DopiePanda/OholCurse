@@ -1,7 +1,7 @@
 <div class="dark:bg-slate-800 py-8">
     <div class="mt-4 text-skin-base dark:text-skin-base-dark text-center text-2xl">Find earlier relationships with {{ $origin->leaderboard_name }}</div>
     <div class="text-skin-muted text-center text-md">Enter a leaderboard name below to find and compare previous relationships.</div>
-    <form prevent.default="search">
+    <form wire:submit="search">
         <div class="w-1/3 mt-4 mx-auto my-2 text-center">
             <div class="text-left font-bold text-skin-base dark:text-skin-base-dark">
                 <label for="input">Enter target leaderboard name:</label>
