@@ -17,21 +17,33 @@ use App\Models\Yumlog;
 class Home extends Component
 {
 
+    protected $listeners = [
+        'pageChanged' => '$refresh',
+    ];
+
     public $query;
 
     public $filter;
-    public $results = [];
+    public $results;
     public $count;
 
-    public $minQueryLength = 2;
+    public $minQueryLength;
 
-    public $fetchLimit = 10;
-    public $fetchCursor = 0;
+    public $fetchLimit;
+    public $fetchCursor;
 
-    public $status = [];
+    public $status;
 
     public function mount(Request $request)
     {
+        $this->results = [];
+        $this->count = 0;
+    
+        $this->minQueryLength = 2;
+    
+        $this->fetchLimit = 10;
+        $this->fetchCursor = 0;
+
         $this->getSearchFilter($request);
         
         if(Auth::user())
@@ -54,65 +66,93 @@ class Home extends Component
         return view('livewire.home');
     }
 
-    public function updatedQuery()
+    public function search()
     {
         if(strlen($this->query) >= $this->minQueryLength)
         {
             $this->results = [];
+            //$this->count = 0;
             
-            switch($this->filter)
+            if($this->filter == 'character_name')
             {
-                case 'player_hash':
-                    $this->results = CurseLog::select('id', 'player_hash')
-                                        ->where('player_hash', 'like', rtrim($this->query).'%')
-                                        ->groupBy('player_hash')
-                                        ->orderBy('timestamp', 'desc')
-                                        ->skip($this->fetchCursor)
-                                        ->take($this->fetchLimit)
-                                        ->get();
-
-                    $this->count = Curselog::where('player_hash', 'like', rtrim($this->query).'%')->groupBy('player_hash')->count();
-                    break;
-                case 'character_name':
-                    $this->results = LifeNameLog::with('character')
-                                        ->where('name', 'like', rtrim($this->query).'%')
-                                        ->orderBy('character_id', 'desc')
-                                        ->skip($this->fetchCursor)
-                                        ->take($this->fetchLimit)
-                                        ->get() ?? [];
-
-                    $this->count = LifeNameLog::where('name', 'like', rtrim($this->query).'%')->count();
-
-                    break;
-                case 'curse_name':
-                    $this->results = Yumlog::select('id', 'curse_name', 'player_hash', 'timestamp', 'character_id')
-                                        ->where('curse_name', 'like', strtoupper($this->query).'%')
-                                        ->where('verified', 1)
-                                        ->whereIn('status', $this->status)
-                                        ->has('curses', '>', '0')
-                                        ->groupBy('player_hash')
-                                        ->orderBy('character_id', 'desc')
-                                        ->skip($this->fetchCursor)
-                                        ->take($this->fetchLimit)
-                                        ->get();
-
-                    $this->count = Yumlog::where('curse_name', 'like', $this->query.'%')->where('verified', 1)->whereIn('status', $this->status)->count();
-                    break;
-                case 'leaderboard':
-                    $this->results = Leaderboard::where('leaderboard_name', 'like', rtrim($this->query).'%')
-                                        ->orderBy('leaderboard_name', 'asc')
-                                        ->skip($this->fetchCursor)
-                                        ->take($this->fetchLimit)
-                                        ->get() ?? [];
-
-                    $this->count = Leaderboard::where('leaderboard_name', 'like', rtrim($this->query).'%')->count();
-                    break;
+                $this->getCharacters();
             }
+            elseif($this->filter == 'curse_name')
+            {
+                $this->getCurseNames();
+            }
+            elseif($this->filter == 'leaderboard')
+            {
+                $this->getLeaderboards();
+            }
+            else
+            {
+                $this->getPlayerHashes();
+            }
+
         }else{
             $this->fetchCursor = 0;
             $this->results = [];
             $this->count = 0;
         }
+
+        //$this->dispatch('pageChanged');
+    }
+
+    public function getCharacters()
+    {
+        $this->results = LifeNameLog::with('character')
+                                    ->where('name', 'like', rtrim($this->query).'%')
+                                    ->orderBy('character_id', 'desc')
+                                    ->skip($this->fetchCursor)
+                                    ->take($this->fetchLimit)
+                                    ->get()
+                                    ->toArray();
+
+        $this->count = LifeNameLog::where('name', 'like', rtrim($this->query).'%')->count();
+    }
+
+    public function getCurseNames()
+    {
+        $this->results = Yumlog::select('id', 'curse_name', 'player_hash', 'timestamp', 'character_id')
+                                ->where('curse_name', 'like', strtoupper($this->query).'%')
+                                ->where('verified', 1)
+                                ->whereIn('status', $this->status)
+                                ->has('curses', '>', '0')
+                                ->groupBy('player_hash')
+                                ->orderBy('character_id', 'desc')
+                                ->skip($this->fetchCursor)
+                                ->take($this->fetchLimit)
+                                ->get()
+                                ->toArray();
+
+        $this->count = Yumlog::where('curse_name', 'like', strtoupper($this->query).'%')->where('verified', 1)->whereIn('status', $this->status)->has('curses', '>', '0')->distinct('player_hash')->count();
+    }
+
+    public function getLeaderboards()
+    {
+        $this->results = Leaderboard::where('leaderboard_name', 'like', rtrim($this->query).'%')
+                                    ->orderBy('leaderboard_name', 'asc')
+                                    ->skip($this->fetchCursor)
+                                    ->take($this->fetchLimit)
+                                    ->get()
+                                    ->toArray();
+
+        $this->count = Leaderboard::where('leaderboard_name', 'like', rtrim($this->query).'%')->count();
+    }
+
+    public function getPlayerHashes()
+    {
+        $this->results = CurseLog::select('id', 'player_hash', 'timestamp')
+                                ->where('player_hash', 'like', rtrim($this->query).'%')
+                                ->groupBy('player_hash')
+                                ->orderBy('timestamp', 'desc')
+                                ->skip($this->fetchCursor)
+                                ->take($this->fetchLimit)
+                                ->get()
+                                ->toArray();
+
+        $this->count = CurseLog::where('player_hash', 'like', rtrim($this->query).'%')->distinct('player_hash')->count();
     }
 
     public function setSearchFilter(Request $request, $filter)
@@ -129,14 +169,31 @@ class Home extends Component
 
     public function increaseCursor()
     {
-        $this->fetchCursor += 10;
+        if($this->fetchCursor < $this->count - $this->fetchLimit)
+        {
+            $this->fetchCursor += 10;
+        }
+        else
+        {
+            $this->fetchCursor = $this->count - $this->fetchLimit;
+        }
+
         $this->search();
     }
 
     public function decreaseCursor()
     {
-        $this->fetchCursor -= 10;
+        if($this->fetchCursor >= $this->fetchLimit)
+        {
+            $this->fetchCursor -= 10;
+        }
+        else
+        {
+            $this->fetchCursor = 0;
+        }
+        
         $this->search();
+        //dd($this->fetchLimit);
     }
 
     public function resetResults()

@@ -55,6 +55,8 @@ export default {
                 skin: {
                     fill: 'var(--color-fill)',
                     'fill-dark': 'var(--color-fill-dark)',
+                    'fill-hover': 'var(--color-fill-hover)',
+                    'fill-hover-dark': 'var(--color-fill-hover-dark)',
                     'fill-wrapper': 'var(--color-fill-wrapper)',
                     'fill-wrapper-dark': 'var(--color-fill-wrapper-dark)',
                     'fill-muted': 'var(--color-fill-muted)',

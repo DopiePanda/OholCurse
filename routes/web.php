@@ -31,6 +31,8 @@ use App\Livewire\Modals\Charts\LeaderboardRecords;
 use App\Livewire\Roadmap\Ideas;
 use App\Livewire\Roadmap\Ideas\Create as IdeaCreate;
 
+use App\Models\LifeLog;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
