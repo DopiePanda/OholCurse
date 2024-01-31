@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="w-full text-center">
-                <input type="text" wire:model.live="query" class="mx-auto mt-2 w-11/12 lg:w-full h-14 rounded-lg dark:bg-slate-500 dark:text-gray-800 dark:placeholder:text-gray-700"
+                <input type="text" wire:model.live="query" wire:keyup.debounce.150ms="search" class="mx-auto mt-2 w-11/12 lg:w-full h-14 dark:bg-slate-500 dark:text-gray-800 dark:placeholder:text-gray-700 @if(strlen($query) >= $minQueryLength) rounded-t-lg @else rounded-lg @endif"
 
                 @if($filter == 'character_name') placeholder="Search by typing a character name here..." @endif
                 @if($filter == 'curse_name') placeholder="Search by typing a curse name here..." @endif
@@ -34,154 +34,80 @@
 
             @if(strlen($query) >= $minQueryLength)
             <div class="w-11/12 lg:w-full mx-auto">
-                <!-- Player Hash filter -->
-                @if($filter == 'player_hash')
-                    @forelse($results as $result)
-                        @if($result)
-                            <a wire:key="id-{{ $result->id }}" href="{{ route('player.curses', [ 'hash' => $result->player_hash ?? 'missing' ]) }}" class="text-white">
-                                <div class="w-full bg-skin-fill dark:bg-skin-fill-dark text-white p-3 text-md hover:bg-blue-500">
-                                    {{ strtolower($result->player_hash ?? 'missing') }}
-                                </div>
-                            </a>
+                @forelse($results as $result)
+                    <div wire:key="id-{{ $result['id'] }}">
+                        @if ($filter == 'character_name')
+                            <a href="{{ route('player.curses', [ 'hash' => $result['character']['player_hash'] ?? 'missing' ]) }}" class="text-white">
+                        @else
+                            <a href="{{ route('player.curses', [ 'hash' => $result['player_hash'] ?? 'missing' ]) }}" class="text-white">
                         @endif
-                    @empty
-                        @if($query && $query != '')
-                            <span class="text-sm">No results found..</span>
-                        @endif
-                    @endforelse
+                        
+                            <div class="w-full bg-skin-fill dark:bg-skin-fill-dark text-white p-3 text-md hover:bg-skin-fill-hover hover:dark:bg-skin-fill-hover-dark">
+                                @if ($filter == 'character_name')
+                                    <!-- CHARACTER NAME -->
+                                    @if(isset($result['name']))
+                                        {{ $result['name'] }}
+                                    @endif 
 
-                    @if($count > count($results))
-                        <div class="flex flex-row justify-between">
-                            <div class="w-16 min-w-16 py-2 px-6 bg-skin-fill dark:bg-skin-fill-dark text-white">
-                                @if($fetchCursor >= $fetchLimit)
-                                    <button class="text-white font-bold text-xl" type="button" wire:click="decreaseCursor()"><</button>
+                                    @if(isset($result['character']['timestamp'])) 
+                                        ({{ gmdate('Y-m-d H:i:s', $result['character']['timestamp']) }}) 
+                                    @endif
+
+                                @elseif ($filter == 'curse_name')
+                                    <!-- CURSE NAME -->
+                                    @if(isset($result['curse_name']))
+                                        {{ $result['curse_name'] }}
+                                    @endif 
+
+                                    @if(isset($result['timestamp'])) 
+                                        ({{ gmdate('Y-m-d H:i:s', $result['timestamp']) }}) 
+                                    @endif
+
+                                @elseif ($filter == 'leaderboard')
+                                    <!-- LEADERBOARD NAME -->
+                                    @if(isset($result['leaderboard_name']))
+                                        {{ $result['leaderboard_name'] }}
+                                    @endif 
+
+                                    @if(isset($result['leaderboard_id'])) 
+                                        (ID: {{ $result['leaderboard_id'] }}) 
+                                    @endif
+
+                                @else
+                                    <!-- PLAYER HASH -->
+                                    {{ strtolower($result['player_hash'] ?? 'missing') }}
+
                                 @endif
+                                
                             </div>
-                            <div class="pt-2 bg-transparent text-skin-base dark:text-skin-base-dark">
-                                <div>Page: {{ ($fetchCursor / 10) + ($fetchLimit / 10) }} / {{ ceil($count/10) }}</div>
-                            </div>
-                            <div class="w-16 min-w-16 py-2 px-6 bg-blue-500 dark:bg-red-600 text-white">
-                                @if(($fetchCursor + $fetchLimit) < $count)
-                                    <button class="font-bold text-xl" type="button" wire:click="increaseCursor()">></button>
-                                @endif
-                            </div>
+                        </a>
+                    </div>
+                @empty
+                    @if($query && $query != '')
+                        <div class="w-full bg-skin-fill-hover dark:bg-skin-fill-hover-dark text-white p-3 text-md hover:bg-skin-fill-hover hover:dark:bg-skin-fill-hover-dark">
+                            <span class="text-sm italic">No results found..</span>
                         </div>
                     @endif
+                @endforelse
 
-                <!-- Character name filter -->
-                @elseif($filter == 'character_name')
-                    @forelse($results as $result)
-                        @if($result)
-                            @if(isset($result->character->player_hash))
-                                <a href="{{ route('player.lives', [ 'hash' => $result->character->player_hash ]) }}" class="text-white">
-                            @else
-                                <a href="#" class="text-white">
+                @if($count > count($results))
+                    <div class="flex flex-row justify-between">
+                        <div class="w-16 min-w-16 cursor-pointer bg-skin-fill dark:bg-skin-fill-dark hover:bg-skin-fill-hover hover:dark:bg-skin-fill-hover-dark">
+                            @if($fetchCursor >= $fetchLimit)
+                                <button class="block py-2 px-6 w-full h-full text-white font-bold text-xl" type="button" wire:click="decreaseCursor()"><</button>
                             @endif
-                                <div class="w-full bg-skin-fill dark:bg-skin-fill-dark text-white p-3 text-md hover:bg-blue-500">
-                                    @if(isset($result->name)){{ $result->name }}@endif @if(isset($result->character->timestamp)) ({{ gmdate('Y-m-d H:i:s', $result->character->timestamp) }}) @endif
-                                </div>
-                            </a>
-                        @endif
-                    @empty
-                        @if($query && $query != '')
-                            <span class="text-sm">No results found..</span>
-                        @endif
-                    @endforelse
-
-                    @if($count > count($results))
-                        <div class="flex flex-row justify-between">
-                            <div class="w-16 min-w-16 py-2 px-6 bg-skin-fill dark:bg-skin-fill-dark text-white">
-                                @if($fetchCursor >= $fetchLimit)
-                                    <button class="text-white font-bold text-xl" type="button" wire:click="decreaseCursor()"><</button>
-                                @endif
-                            </div>
-                            <div class="pt-2 bg-transparent text-skin-base dark:text-skin-base-dark">
-                                <div>Page: {{ ($fetchCursor / 10) + ($fetchLimit / 10) }} / {{ ceil($count/10) }}</div>
-                            </div>
-                            <div class="w-16 min-w-16 py-2 px-6 bg-skin-fill dark:bg-skin-fill-dark text-white">
-                                @if(($fetchCursor + $fetchLimit) < $count)
-                                    <button class="font-bold text-xl" type="button" wire:click="increaseCursor()">></button>
-                                @endif
-                            </div>
                         </div>
-                    @endif
-
-                <!-- Curse name filter -->
-                @elseif($filter == 'curse_name')
-                    @forelse($results as $result)
-                        @if($result)
-                            @if(isset($result->player_hash))
-                                <a wire:key="id-{{ $result->id }}" href="{{ route('player.reports', [ 'hash' => $result->player_hash ]) }}" class="text-white">
-                            @else
-                                <a wire:key="id-{{ $result->id }}" href="#" class="text-white">
+                        <div class="pt-2 bg-transparent text-skin-base dark:text-skin-base-dark">
+                            <div>Page: {{ ($fetchCursor / 10) + ($fetchLimit / 10) }} / {{ ceil($count/10) }}</div>
+                        </div>
+                        <div class="w-16 min-w-16 cursor-pointer bg-skin-fill dark:bg-skin-fill-dark hover:bg-skin-fill-hover hover:dark:bg-skin-fill-hover-dark">
+                            @if(($fetchCursor + $fetchLimit) < $count)
+                                <button class="block py-2 px-6 w-full h-full text-white font-bold text-xl" type="button" wire:click="increaseCursor()">></button>
                             @endif
-                                <div class="w-full bg-skin-fill dark:bg-skin-fill-dark text-white p-3 text-md hover:bg-blue-500">
-                                    @if(isset($result->curse_name)){{ $result->curse_name }}@endif @if(isset($result->timestamp)) ({{ gmdate('Y-m-d H:i:s', $result->timestamp) }}) @endif
-                                </div>
-                            </a>
-                        @endif
-                    @empty
-                        @if($query && $query != '')
-                            <span class="text-sm">No results found..</span>
-                        @endif
-                    @endforelse
-
-                    @if($count > count($results))
-                        <div class="flex flex-row justify-between">
-                            <div class="w-16 min-w-16 py-2 px-6 bg-skin-fill dark:bg-skin-fill-dark text-white">
-                                @if($fetchCursor >= $fetchLimit)
-                                    <button class="text-white font-bold text-xl" type="button" wire:click="decreaseCursor()"><</button>
-                                @endif
-                            </div>
-                            <div class="pt-2 bg-transparent text-skin-base dark:text-skin-base-dark">
-                                <div>Page: {{ ($fetchCursor / 10) + ($fetchLimit / 10) }} / {{ ceil($count/10) }}</div>
-                            </div>
-                            <div class="w-16 min-w-16 py-2 px-6 bg-skin-fill dark:bg-skin-fill-dark text-white">
-                                @if(($fetchCursor + $fetchLimit) < $count)
-                                    <button class="font-bold text-xl" type="button" wire:click="increaseCursor()">></button>
-                                @endif
-                            </div>
                         </div>
-                    @endif
-
-                <!-- Leaderboard filter -->
-                @elseif($filter == 'leaderboard')
-                    @forelse($results as $result)
-                        @if($result)
-                            @if(isset($result->player_hash))
-                                <a href="{{ route('player.curses', [ 'hash' => $result->player_hash ]) }}" class="text-white">
-                            @else
-                                <a href="#" class="text-white">
-                            @endif
-                                <div class="w-full bg-skin-fill dark:bg-skin-fill-dark text-white p-3 text-md hover:bg-blue-500">
-                                    @if(isset($result->leaderboard_name)){{ $result->leaderboard_name }}@endif @if(isset($result->leaderboard_id)) (ID: {{ $result->leaderboard_id }}) @endif
-                                </div>
-                            </a>
-                        @endif
-                    @empty
-                        @if($query && $query != '')
-                            <span class="text-sm">No results found..</span>
-                        @endif
-                    @endforelse
-
-                    @if($count > count($results))
-                        <div class="flex flex-row justify-between">
-                            <div class="w-16 min-w-16 py-2 px-6 bg-skin-fill dark:bg-skin-fill-dark text-white">
-                                @if($fetchCursor >= $fetchLimit)
-                                    <button class="text-white font-bold text-xl" type="button" wire:click="decreaseCursor()"><</button>
-                                @endif
-                            </div>
-                            <div class="pt-2 bg-transparent text-skin-base dark:text-skin-base-dark">
-                                <div>Page: {{ ($fetchCursor / 10) + ($fetchLimit / 10) }} / {{ ceil($count/10) }}</div>
-                            </div>
-                            <div class="w-16 min-w-16 py-2 px-6 bg-skin-fill dark:bg-skin-fill-dark text-white">
-                                @if(($fetchCursor + $fetchLimit) < $count)
-                                    <button class="font-bold text-xl" type="button" wire:click="increaseCursor()">></button>
-                                @endif
-                            </div>
-                        </div>
-                    @endif
+                    </div>
                 @endif
+                
             </div>
             @endif
         </div>

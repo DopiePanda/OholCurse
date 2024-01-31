@@ -20,6 +20,8 @@
     --color-text-inverted-dark: #ffffff;
     --color-fill: #2563eb;
     --color-fill-dark: #dc2626;
+    --color-fill-hover: #194ab4;
+    --color-fill-hover-dark: #941717;
     --color-fill-wrapper: #e5e7eb;
     --color-fill-wrapper-dark: #111827;
     --color-fill-muted: #e5e7eb;
@@ -45,6 +47,8 @@
     --color-text-inverted-dark: #ffffff;
     --color-fill: #dc2626;
     --color-fill-dark: #2563eb;
+    --color-fill-hover: #941717;
+    --color-fill-hover-dark: #194ab4;
     --color-fill-wrapper: #e5e7eb;
     --color-fill-wrapper-dark: #111827;
     --color-fill-muted: #e5e7eb;
