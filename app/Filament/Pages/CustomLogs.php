@@ -44,11 +44,6 @@ class CustomLogs extends ViewLog
         return __('log::filament-laravel-log.page.title');
     }
 
-    public static function canAccess(): bool
-    {
-        return auth()->user()->canManageSettings();
-    }
-
     public static function shouldRegisterNavigation(array $parameters = []): bool
     {
         return auth()->user()->hasRole('system');
