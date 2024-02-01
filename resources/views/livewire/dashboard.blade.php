@@ -18,7 +18,7 @@ date_default_timezone_set($timezone);
             <div class="flex-1 text-right">
                 @if(Auth::user()->player_hash != null)
                     <div>
-                        <a class="w-full px-4 py-2 text-white bg-skin-fill dark:bg-skin-fill-dark rounded-md" href="{{ route('player.curses', Auth::user()->player_hash) }}">
+                        <a class="w-full px-4 py-2 text-white bg-skin-fill dark:bg-skin-fill-dark rounded-md" href="{{ route('player.interactions', Auth::user()->player_hash) }}">
                             Go to my profile
                         </a>
                     </div>

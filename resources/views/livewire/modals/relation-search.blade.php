@@ -68,7 +68,7 @@
                                 {{ $result->parent->name->name ?? "UNNAMED (".$result->parent->character_id.")" }}
                             </td>
                             <td class="p-2 border border-gray-400">
-                                <a class="hover:text-skin-base dark:hover:text-skin-base-dark" href="{{ route('player.curses', ['hash' => $result->player_hash]) }}">
+                                <a class="hover:text-skin-base dark:hover:text-skin-base-dark" href="{{ route('player.interactions', ['hash' => $result->player_hash]) }}">
                                     {{ $result->name->name ?? "UNNAMED (".$result->character_id.")" }}
                                 </a>
                             </td>                           
@@ -99,7 +99,7 @@
                             {{ date('Y-m-d H:i', $result->timestamp) }}
                         </td>
                         <td class="p-2 border border-gray-400">
-                            <a class="hover:text-skin-base dark:hover:text-skin-base-dark" href="{{ route('player.curses', ['hash' => $result->parent->leaderboard->player_hash]) }}">
+                            <a class="hover:text-skin-base dark:hover:text-skin-base-dark" href="{{ route('player.interactions', ['hash' => $result->parent->leaderboard->player_hash]) }}">
                                 {{ $result->parent->leaderboard->leaderboard_name ?? 'MISSING' }}
                             </a>
                         </td>
@@ -136,7 +136,7 @@
                             {{ date('Y-m-d H:i', $result->timestamp) }}
                         </td>
                         <td class="p-2 border border-gray-400">
-                            <a class="hover:text-skin-base dark:hover:text-skin-base-dark" href="{{ route('player.curses', ['hash' => $result->parent->leaderboard->player_hash]) }}">
+                            <a class="hover:text-skin-base dark:hover:text-skin-base-dark" href="{{ route('player.interactions', ['hash' => $result->parent->leaderboard->player_hash]) }}">
                                 {{ $result->parent->leaderboard->leaderboard_name ?? 'MISSING' }}
                             </a>
                         </td>
@@ -144,7 +144,7 @@
                             {{ $result->parent->name->name ?? "UNNAMED (".$result->parent->character_id.")" }}
                         </td>
                         <td class="p-2 border border-gray-400">
-                            <a class="hover:text-skin-base dark:hover:text-skin-base-dark" href="{{ route('player.curses', ['hash' => $result->player_hash]) }}">
+                            <a class="hover:text-skin-base dark:hover:text-skin-base-dark" href="{{ route('player.interactions', ['hash' => $result->player_hash]) }}">
                                 {{ $result->name->name ?? "UNNAMED (".$result->character_id.")" }}
                             </a>
                         </td>                          

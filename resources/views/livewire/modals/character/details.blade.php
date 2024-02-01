@@ -25,7 +25,7 @@
                     {{ $name['first'] }} was a member of the {{ $name['last'] }} family,
                     born in the <span class="font-semibold">{{ ucfirst($life->family_type) }} biome</span> 
                     by {{ $pronoun[1] }} mother <span class="font-semibold">
-                        <a href="{{ route('player.curses', $life->parent->player_hash) }}" class="text-skin-base dark:text-skin-base-dark" tabindex="-1">
+                        <a href="{{ route('player.interactions', $life->parent->player_hash) }}" class="text-skin-base dark:text-skin-base-dark" tabindex="-1">
                             @if($life->parent->name)
                                 {{ ucwords(strtolower($life->parent->name->name), ' ') }}
                             @else

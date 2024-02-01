@@ -62,7 +62,7 @@
                             <td class="p-2">{{ $result->count }}</td>
                             <td class="p-2">
                                 @if(isset($result->life->leaderboard->player_hash) && isset($result->life->leaderboard->leaderboard_name)) 
-                                <a href="{{ route('player.curses', ['hash' => $result->life->leaderboard->player_hash]) }}">
+                                <a href="{{ route('player.interactions', ['hash' => $result->life->leaderboard->player_hash]) }}">
                                     {{ $result->life->leaderboard->contact->nickname ?? $result->life->leaderboard->leaderboard_name }}
                                 </a>
                                 @else

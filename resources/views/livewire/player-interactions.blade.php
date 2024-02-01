@@ -1,4 +1,4 @@
-<div>
+<div class="w-full md:w-3/4 lg:w-3/5">
     @section("page-title")
         @if( $profile && isset($profile->leaderboard_name) )- Interactions for {{ $profile->leaderboard_name }}@else- Interactions @endif
     @endsection
@@ -36,12 +36,12 @@
                 </div>
             </div>
 
-            <livewire:player.component.interaction-sent :interactions="$curses_sent" title="Curses sent" handle="1">
-            <livewire:player.component.interaction-recieved :interactions="$curses_recieved" title="Curses recieved" handle="2">
-            <livewire:player.component.interaction-sent :interactions="$forgives_sent" title="Forgives sent" handle="3">
-            <livewire:player.component.interaction-recieved :interactions="$forgives_recieved" title="Forgives recieved" handle="4">
-            <livewire:player.component.interaction-sent :interactions="$trusts_sent" title="Trusts sent" handle="5">
-            <livewire:player.component.interaction-recieved :interactions="$trusts_recieved" title="Trusts recieved" handle="6">
+            <livewire:player.component.interaction-sent type="curse" :hash="$hash">
+            <livewire:player.component.interaction-recieved type="curse" :hash="$hash">
+            <livewire:player.component.interaction-sent type="forgive" :hash="$hash">
+            <livewire:player.component.interaction-recieved type="forgive" :hash="$hash">
+            <livewire:player.component.interaction-sent type="trust" :hash="$hash">
+            <livewire:player.component.interaction-recieved type="trust" :hash="$hash">
 
             @php
             $time_end = microtime(true);
