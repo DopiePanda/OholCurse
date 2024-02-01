@@ -3,9 +3,9 @@
         <section class="accordion border border-skin-base dark:border-skin-base-dark rounded-lg">
             <input type="checkbox" name="collapse{{ $handle }}" id="handle{{ $handle }}">
             <h2 class="handle text-white bg-skin-fill dark:bg-skin-fill-dark">
-                <label for="handle{{ $handle }}">{{ $title }} ({{ $count }})</label>
+                <label for="handle{{ $handle }}">{{ $title }} ({{ $interactions->total() }})</label>
             </h2>
-            <div class="content">
+            <div class="content">   
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
                     @forelse($interactions as $line)
 
@@ -13,7 +13,7 @@
                             <div>
                                 <div class="mb-2 text-md font-bold text-skin-muted dark:text-skin-muted-dark">Sent to:</div> 
 
-                                <a href="{{ route('player.curses', ['hash' => $line->reciever_hash ?? 'error']) }}" title="Sender was {{ $line->name->character_name ?? $line->character_id }}"> 
+                                <a href="{{ route('player.interactions', ['hash' => $line->reciever_hash ?? 'error']) }}" title="Sender was {{ $line->name->name ?? $line->character_id }}"> 
                                     @if(isset($line->reciever_hash))
                                         <div class="break-all text-skin-base font-bold dark:text-skin-base-dark">
 
@@ -40,7 +40,7 @@
                                                 {{  $line->leaderboard->leaderboard_name }}
                                             @else
                                                 <span title="Leaderboard name missing" class="text-gray-800 dark:text-gray-200">
-                                                    <i>{{  $line->character_name ?? 'Leaderboard missing' }}</i>
+                                                    <i>{{  $line->name->name ?? 'Leaderboard missing' }}</i>
                                                 </span>
                                             @endif
 
@@ -62,6 +62,11 @@
                         <span>No {{ strtolower($title) }}</span>
                     @endforelse
                 </div>
+
+                <div class="mt-4">
+                    {{ $interactions->links(data: ['scrollTo' => false]) }}
+                </div>
+
             </div>
         </section>
     </div>

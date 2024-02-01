@@ -37,9 +37,9 @@
                 @forelse($results as $result)
                     <div wire:key="id-{{ $result['id'] }}">
                         @if ($filter == 'character_name')
-                            <a href="{{ route('player.curses', [ 'hash' => $result['character']['player_hash'] ?? 'missing' ]) }}" class="text-white">
+                            <a href="{{ route('player.interactions', [ 'hash' => $result['character']['player_hash'] ?? 'missing' ]) }}" class="text-white">
                         @else
-                            <a href="{{ route('player.curses', [ 'hash' => $result['player_hash'] ?? 'missing' ]) }}" class="text-white">
+                            <a href="{{ route('player.interactions', [ 'hash' => $result['player_hash'] ?? 'missing' ]) }}" class="text-white">
                         @endif
                         
                             <div class="w-full bg-skin-fill dark:bg-skin-fill-dark text-white p-3 text-md hover:bg-skin-fill-hover hover:dark:bg-skin-fill-hover-dark">

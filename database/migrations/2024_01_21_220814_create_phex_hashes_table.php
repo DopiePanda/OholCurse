@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('phex_hashes', function (Blueprint $table) {
             $table->id();
-            $table->string('new');
             $table->string('player_hash')->nullable();
-            $table->string('old')->nullable();
-            $table->integer('character_id')->unsigned();
+            $table->integer('character_id')->unsigned()->nullable();
+            $table->string('phex_hash');
+            $table->string('legacy_phex_hash')->nullable();
             $table->timestamps();
+
+            $table->index('player_hash');
+            $table->index('phex_hash');
         });
     }
 

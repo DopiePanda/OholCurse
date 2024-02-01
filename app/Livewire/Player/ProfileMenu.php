@@ -4,6 +4,7 @@ namespace App\Livewire\Player;
 
 use Livewire\Component;
 use Auth;
+use DB;
 
 use App\Models\Leaderboard;
 use App\Models\CurseLog;
@@ -34,11 +35,14 @@ class ProfileMenu extends Component
                             ->select('leaderboard_name', 'leaderboard_id')
                             ->first();
 
-        $curses = CurseLog::where('type', '!=', 'score')
-                            ->where('hidden', 0)
-                            ->where('player_hash', $this->hash)
-                            ->orWhere('reciever_hash', $this->hash)
-                            ->count();
+        $curses = CurseLog::where('hidden', 0)
+                        ->whereIn('type', ['curse', 'forgive', 'trust'])
+                        ->where(function($query) {
+                            $query->where('player_hash', $this->hash)
+                                ->orWhere('reciever_hash', $this->hash);
+                        })
+                        ->distinct(['reciever_hash', 'player_hash'])
+                        ->count();
 
         $lives = LifeLog::where('player_hash', $this->hash)
                         ->where('age', '>', 3)

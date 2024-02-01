@@ -25,6 +25,7 @@ use App\Livewire\Home;
 use App\Livewire\CharacterNames;
 use App\Livewire\Statistics;
 use App\Livewire\PlayerInteractions;
+use App\Livewire\Player\Statistics as PlayerStatistics;
 use App\Livewire\Map\Leaderboard;
 use App\Livewire\Modals\Charts\LeaderboardRecords;
 
@@ -52,11 +53,13 @@ Route::middleware('web')->group(function() {
     });
     
     Route::get('/', Home::class)->name('search');
-    Route::get('/player/hash/{hash}', [PlayerReportController::class, 'fetch'])->name('player.curses');
-    Route::get('/player2', PlayerInteractions::class)->name('player.interactions');
+
+    Route::get('/player/hash/{hash}', PlayerInteractions::class)->name('player.curses');
+    Route::get('/player/interactions/{hash}', PlayerInteractions::class)->name('player.interactions');
     Route::get('/player/lives/{hash}', [PlayerReportController::class, 'lives'])->name('player.lives');
     Route::get('/player/reports/{hash}', [PlayerReportController::class, 'reports'])->name('player.reports');
     Route::get('/player/records/{hash}', [PlayerReportController::class, 'records'])->name('player.records');
+    Route::get('/player/statistics/{hash}', PlayerStatistics::class)->name('player.statistics');
     
     Route::get('/names', CharacterNames::class)->name('names');
     Route::get('/statistics', Statistics::class)->name('statistics');

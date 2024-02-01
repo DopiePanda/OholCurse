@@ -8,7 +8,7 @@
         <livewire:player.profile-header :hash="$hash">
     </x-slot>
 
-    <div class="w-full lg:grow lg:max-w-5xl flex flex-col">
+    <div class="w-full lg:grow lg:max-w-6xl flex flex-col">
 
         <livewire:player.profile-menu :hash="$hash">
 
@@ -64,7 +64,7 @@
                 @endforelse
             </div>
 
-            <div class="text-4xl mt-2 text-center text-skin-base dark:text-skin-base-dark">Ghost leaderboard records</div>
+            <div class="text-4xl mt-8 text-center text-skin-base dark:text-skin-base-dark">Ghost leaderboard records</div>
 
             <div class="mt-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
                 @forelse ($ghostRecords as $record)
