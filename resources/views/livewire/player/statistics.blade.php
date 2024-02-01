@@ -53,7 +53,7 @@
                     <div class="p-4 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark rounded-xl">
                         <div class="text-2xl text-skin-base dark:text-skin-base-dark">Top female names recieved</div>
                         @forelse ($female_names_recieved as $name)
-                            <div class="mt-2 p-2 flex flex-row text-white">
+                            <div class="mt-2 p-2 flex flex-row text-gray-800 dark:text-white">
                                 <div class="basis-1/4">#{{ $loop->index+1 }}</div>
                                 <div class="basis-1/2">{{ $name['name'] }}</div>
                                 <div class="basis-1/4">{{ $name['count'] }} {{ $name['count'] > 1 ? 'lives' : 'life' }}</div>
@@ -68,7 +68,7 @@
                     <div class="p-4 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark rounded-xl">
                         <div class="text-2xl text-skin-base dark:text-skin-base-dark">Top male names recieved</div>
                         @forelse ($male_names_recieved as $name)
-                            <div class="mt-2 p-2 flex flex-row text-white">
+                            <div class="mt-2 p-2 flex flex-row text-gray-800 dark:text-white">
                                 <div class="basis-1/4">#{{ $loop->index+1 }}</div>
                                 <div class="basis-1/2">{{ $name['name'] }}</div>
                                 <div class="basis-1/4">{{ $name['count'] }} {{ $name['count'] > 1 ? 'lives' : 'life' }}</div>
@@ -89,7 +89,7 @@
                     <div class="p-4 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark rounded-xl">
                         <div class="text-2xl text-skin-base dark:text-skin-base-dark">Top female names given</div>
                         @forelse ($female_names_given as $name)
-                            <div class="mt-2 p-2 flex flex-row text-white">
+                            <div class="mt-2 p-2 flex flex-row text-gray-800 dark:text-white">
                                 <div class="basis-1/4">#{{ $loop->index+1 }}</div>
                                 <div class="basis-1/2">{{ $name['name'] }}</div>
                                 <div class="basis-1/4">{{ $name['count'] }} {{ $name['count'] > 1 ? 'lives' : 'life' }}</div>
@@ -104,7 +104,7 @@
                     <div class="p-4 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark rounded-xl">
                         <div class="text-2xl text-skin-base dark:text-skin-base-dark">Top male names given</div>
                         @forelse ($male_names_given as $name)
-                            <div class="mt-2 p-2 flex flex-row text-white">
+                            <div class="mt-2 p-2 flex flex-row text-gray-800 dark:text-white">
                                 <div class="basis-1/4">#{{ $loop->index+1 }}</div>
                                 <div class="basis-1/2">{{ $name['name'] }}</div>
                                 <div class="basis-1/4">{{ $name['count'] }} {{ $name['count'] > 1 ? 'lives' : 'life' }}</div>
@@ -179,7 +179,7 @@
     
             $end = $time_end - $start_time;
             @endphp
-            <div class="text-center text-sm mt-2 text-gray-400">Page load time: {{ round($end, 3) }}s</div>
+            <div class="text-center text-sm mt-2 text-gray-800 dark:text-gray-400">Page load time: {{ round($end, 3) }}s</div>
 
         </div>
 </div>
