@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use Auth;
+
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -31,11 +33,13 @@ use Illuminate\Contracts\View\View;
 
 use Phpsa\FilamentAuthentication\FilamentAuthentication;
 use Phpsa\FilamentAuthentication\Widgets\LatestUsersWidget;
+use Saade\FilamentLaravelLog\FilamentLaravelLogPlugin;
 
 use App\Filament\Pages\Auth\Login;
 
 class AdminPanelProvider extends PanelProvider
 {
+
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -88,6 +92,12 @@ class AdminPanelProvider extends PanelProvider
             ->renderHook(
                 'panels::user-menu.before',
                 fn (): View => view('filament.custom.user-role'),
+            )
+            ->plugin(
+                FilamentLaravelLogPlugin::make()
+                    ->authorize(
+                        fn () => false
+                    )
             );
     }
 }
