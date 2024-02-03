@@ -141,6 +141,8 @@ class ProcessMapLog extends Command
     public function process()
     {
 
+        //dd("Starting processing");
+
         if(Storage::exists($this->getFilePath()))
         {
             
@@ -180,29 +182,33 @@ class ProcessMapLog extends Command
                         }
                     }
                 }
+
+                try{
+                    DB::disableQueryLog();
+                    DB::beginTransaction();
+
+                    DB::table('map_logs')
+                            ->insert(
+                                $this->payload
+                            );
+
+                    // Commit the DB transaction
+                    DB::commit();
+
+                    $this->payload = [];
+
+                }catch(\Exception $e) {
+                
+                    // Rollback DB transaction
+                    DB::rollback();
+
+                    // Log exception message
+                    $this->log("Error ocurred.");
+                    Log::channel('sync')->error($e->getMessage());
+                }
             });
 
-            try{
-                DB::disableQueryLog();
-                DB::beginTransaction();
-
-                DB::table('map_logs')
-                        ->insert(
-                            $this->payload
-                        );
-
-                // Commit the DB transaction
-                DB::commit();
-
-            }catch(\Exception $e) {
             
-                // Rollback DB transaction
-                DB::rollback();
-
-                // Log exception message
-                $this->log("Error ocurred.");
-                Log::channel('sync')->error($e->getMessage());
-            }
 
             $this->log("Processing complete.");
         }
