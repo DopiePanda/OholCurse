@@ -188,7 +188,7 @@ class ProcessMapLog extends Command
 
                 DB::table('map_logs')
                         ->insert(
-                            $payload
+                            $this->payload
                         );
 
                 // Commit the DB transaction
