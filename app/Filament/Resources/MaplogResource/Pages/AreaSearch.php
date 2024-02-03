@@ -33,7 +33,7 @@ class AreaSearch extends ListRecords
     protected static string $view = 'filament.pages.map-area-search';
 
     protected static ?string $navigationLabel = 'Map Area Search';
-
+    protected static ?string $navigationIcon = 'heroicon-s-book-open';
     protected static ?string $navigationGroup = 'Logs';
 
     public function mount(): void

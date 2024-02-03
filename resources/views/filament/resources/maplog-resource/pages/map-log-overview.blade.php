@@ -15,7 +15,7 @@
         <tbody>
             @foreach ($logs as $log)
                 <tr class="p-2">
-                    <td class="p-2 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-white dark:border-gray-400">{{ date('Y-m-d H:i:s', explode('time_mapLog.txt', $log['file_name'])[0]) }}</td>
+                    <td class="p-2 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-white dark:border-gray-400">{{ date('Y-m-d H:i:s', intval(explode('time_mapLog.txt', $log['file_name'])[0])) }}</td>
                     <td class="p-2 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-white dark:border-gray-400">{{ $log['file_name'] }}</td>
                     <td class="p-2 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-white dark:border-gray-400">
                         @if($log['found'])
