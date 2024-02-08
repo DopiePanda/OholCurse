@@ -64,42 +64,17 @@ class MaplogResource extends Resource
                 ->sortable()
                 ->dateTime(),
                 TextColumn::make('character_id')
-                ->searchable(isIndividual: true, query: function (Builder $query, string $search): Builder {
-                    return $query
-                        ->where('character_id', 'like', $search.'%');
-                }),
+                ->searchable(isIndividual: true),
                 TextColumn::make('name.name')
                 ->searchable(['name'], isIndividual: true),
                 TextColumn::make('object.name')
-                ->searchable(isIndividual: true, query: function (Builder $query, string $search): Builder {
-                    return $query
-                        ->where('name', $search);
-                }),
+                ->searchable(isIndividual: true),
                 TextColumn::make('object_id')
-                ->searchable(isIndividual: true, query: function (Builder $query, string $search): Builder {
-                    return $query
-                        ->where('object_id', $search);
-                }),
+                ->searchable(isIndividual: true),
                 TextColumn::make('pos_x')
-                ->searchable(isIndividual: true, query: function (Builder $query, string $search): Builder {
-                    return $query
-                        ->where('pos_x', 'like', $search.'%');
-                }),
+                ->searchable(isIndividual: true),
                 TextColumn::make('pos_y')
-                ->searchable(isIndividual: true, query: function (Builder $query, string $search): Builder {
-                    return $query
-                        ->where('pos_y', 'like', $search.'%');
-                }),
-            ])
-            ->groups([
-                'character_id',
-                'object_id',
-            ])
-            ->filters([
-                SelectFilter::make('objectName')
-                ->relationship('object', 'name')
-                ->searchable()
-                ->preload(),
+                ->searchable(isIndividual: true),
             ])
             ->actions([
                 
