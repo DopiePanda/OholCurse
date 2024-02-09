@@ -168,7 +168,7 @@ class ProcessMapLog extends Command
 
                         if($object[0] != 558 && $object[0] != 2758 && $object[0] != 2760)
                         {
-                            if($array[1] < -1 && $array[1] > -10000000)
+                            if($array[1] < 50000 && $array[1] > -10000000)
                             {
                                 $this->payload[] = [
                                     'timestamp' => ($this->timestamp_start + $array[0]),
