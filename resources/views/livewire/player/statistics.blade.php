@@ -121,7 +121,7 @@
 
             <div class="p-4 mb-4">
                 <div class="text-4xl text-center text-skin-base dark:text-skin-base-dark">Top 25 favorite food items</div>
-                <div class="relative my-6 pb-4 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark rounded-xl overflow-x-scroll">
+                <div class="relative my-6 pb-4 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark rounded-xl overflow-x-auto">
                     <table class="w-full table-fixed text-left">
                         <thead>
                             <tr class="text-left">
@@ -147,7 +147,7 @@
 
             <div class="p-4 mb-4">
                 <div class="text-4xl text-center text-skin-base dark:text-skin-base-dark">Causes of death</div>
-                <div class="relative my-6 pb-4 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark rounded-xl overflow-x-scroll">
+                <div class="relative my-6 pb-4 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark rounded-xl overflow-x-auto">
                     <table class="w-full table-fixed text-left">
                         <thead>
                             <tr class="text-left">
@@ -159,9 +159,21 @@
                         </thead>
                         <tbody>
                             @forelse ($death_causes as $key => $value)
-                                <tr class="bg-skin-fill-muted dark:bg-skin-fill-muted-dark dark:text-gray-300">
+                                <tr 
+                                    @if($key == 'killed') 
+                                        wire:click="$dispatch('openModal', {component: 'player.component.modal-killers', arguments: {killers: {{ collect($value) }}, hash: '{{ $hash }}' }})"
+                                        class="bg-skin-fill-muted dark:bg-skin-fill-muted-dark dark:text-gray-300 hover:bg-skin-fill-wrapper hover:dark:bg-skin-fill-wrapper-dark cursor-pointer"
+                                    @else
+                                        class="bg-skin-fill-muted dark:bg-skin-fill-muted-dark dark:text-gray-300"
+                                    @endif
+                                >
                                     <td class="p-2 text-center border-b border-gray-400 dark:border-gray-800">#{{ $loop->index+1 }}</td>
-                                    <td class="p-2 border-b border-gray-400 dark:border-gray-800">{{ ucfirst(str_replace('_', ' ', $key)) }}</td>
+                                    <td class="p-2 border-b border-gray-400 dark:border-gray-800">
+                                        {{ ucfirst(str_replace('_', ' ', $key)) }}
+                                        @if($key == 'killed')
+                                            <i class="ml-1 text-skin-muted dark:text-skin-muted-dark fa-solid fa-angles-right fa-2xs"></i>
+                                        @endif
+                                    </td>
                                     <td class="p-2 border-b border-gray-400 dark:border-gray-800">{{ count($value) }}/{{ $total_lives }}</td>
                                     <td class="p-2 border-b border-gray-400 dark:border-gray-800">{{ round(count($value) / $total_lives * 100, 1) }}%</td>
                                 </tr>

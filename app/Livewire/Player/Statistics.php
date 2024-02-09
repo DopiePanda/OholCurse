@@ -88,12 +88,33 @@ class Statistics extends Component
         $minutes_played = $life_collect->pluck('death.age')->sum();
         $this->hours_played = $minutes_played / 60;
 
-        $this->death_causes = $life_collect->groupBy('death.died_to')->sortByDesc(function($item, $key) {
-            return count($item);
-        });
-        /*->filter(function ($item) {
-            return str_contains($item, 'killer_') === false;
-        });*/
+        $deaths = [];
+
+        foreach ($lives as $life) 
+        {
+            if($life['death'] && $life['death']['died_to'] && str_contains($life['death']['died_to'], 'killer_') === false)
+            {
+                $deaths[$life['death']['died_to']][] = $life;
+            }
+            else
+            {
+                if($life['death'] && $life['death']['died_to'])
+                {
+                    $killer = explode('_', $life['death']['died_to']);
+                    $deaths['killed'][$killer[1]] = $life;
+                }
+            }
+        }
+
+        array_multisort(array_map('count', $deaths), SORT_DESC, $deaths);
+        $this->death_causes = $deaths;
+
+        if(isset($deaths['killed']))
+        {
+            $this->times_killed = count($deaths['killed']) ?? 0;
+        } 
+
+        //dd($this->death_causes);
 
         $ghost_lives = $life_collect->filter(function ($item) {
             if($item['death'] != null)
@@ -110,15 +131,6 @@ class Statistics extends Component
             if($item['death'] != null)
             {
                 return $item['death']['timestamp'] > 1698713999;
-            }
-
-            return false;
-        })->count();
-
-        $this->times_killed = $life_collect->filter(function ($item) {
-            if($item['death'] != null)
-            {
-                return str_contains($item['death']['died_to'], 'killer_') !== false;
             }
 
             return false;
