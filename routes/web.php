@@ -19,6 +19,7 @@ use App\Http\Controllers\ReportVerificationController;
 use App\Http\Controllers\TestController;
 
 use App\Http\Controllers\Tools\Select2Controller;
+use App\Http\Controllers\Objects\PhexDataImporter;
 
 use App\Livewire\Dashboard;
 use App\Livewire\Home;
@@ -31,6 +32,8 @@ use App\Livewire\Modals\Charts\LeaderboardRecords;
 
 use App\Livewire\Roadmap\Ideas;
 use App\Livewire\Roadmap\Ideas\Create as IdeaCreate;
+
+use App\Livewire\Tools\MapDistanceCalculator;
 
 use App\Models\LifeLog;
 
@@ -83,11 +86,17 @@ Route::middleware('web')->group(function() {
     Route::get('/families/index', [FamilyController::class, 'index'])->name('families.index');
     Route::get('/families/view/{character_id}', [FamilyController::class, 'view'])->name('families.view');
 
+    Route::prefix('/tools')->name('tools.')->group(function () {
+        Route::get('/names', CharacterNames::class)->name('names');
+        Route::get('/calculator/map', MapDistanceCalculator::class)->middleware('auth')->name('calculator.map');
+    });
+
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::patch('/profile/timezone', [ProfileController::class, 'updateTimezone'])->name('timezone.update');
         Route::patch('/profile/theme', [ProfileController::class, 'updateTheme'])->name('theme.update');
+        Route::patch('/profile/darkmode', [ProfileController::class, 'updateDarkmode'])->name('darkmode.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
         Route::get('/dashboard', Dashboard::class)->name('dashboard');
@@ -105,6 +114,7 @@ Route::middleware('web')->group(function() {
 
         Route::get('/select2/ajax', [Select2Controller::class, 'handle'])->name('select2.ajax');
         //Route::get('/interactions/{object_id}/{ghost?}', [TestController::class, 'getObjectInteractions'])->name('interactions');
+
     });
 
     

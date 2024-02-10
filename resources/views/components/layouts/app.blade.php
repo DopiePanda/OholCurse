@@ -22,6 +22,13 @@
         @filamentStyles
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
+        <script type="text/javascript">
+            let defaultDarkmode = "{{ env('DEFAULT_DARKMODE') }}";
+            let userDarkmode = "{{ auth()->user()->darkmode ?? null }}";
+            let defaultTheme = "{{ env('DEFAULT_THEME') }}";
+            let userTheme = "{{ auth()->user()->theme ?? null }}";
+        </script>
+        <script src="{{ asset('assets/js/theme-selector.js') }}"></script>
         <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
         <script src="https://kit.fontawesome.com/737926afbe.js" crossorigin="anonymous"></script>
         <link href="{{ asset('assets/css/toastr.min.css') }}" rel="stylesheet">
@@ -51,22 +58,22 @@
             <main class="z-10 flex flex-grow justify-center pt-6 px-2 lg:px-4 break-normal">
                 {{ $slot }}
             </main>
-                <div class="z-30 pb-4 px-4 flex flex-row items-end">
-                    <div class="lg:basis-1/4 text-left">
+                <div class="z-30 py-4 px-4 flex flex-row items-end">
+                    <div class="basis-1/4 text-left">
                         @can('access admin panel')
-                        <div class="fixed bottom-0 left-0 pb-4 pl-4">
-                            <a class="" href="/admin" title="Admin panel">
-                                <i class="fa-solid fa-toolbox fa-2x text-skin-base dark:text-skin-base-dark"></i>
-                            </a>
-                        </div>
-                        @endif
+                            <div class="fixed bottom-0 left-0 pb-4 pl-4">
+                                <a class="" href="/admin" title="Admin panel">
+                                    <i class="fa-solid fa-toolbox fa-2x text-skin-base dark:text-skin-base-dark"></i>
+                                </a>
+                            </div>
+                        @endcan
                     </div> 
-                    <div class="lg:basis-2/4 text-center">
+                    <div class="basis-2/4 text-center">
                         @if(env('DONATION_BANNER') == 'true')
                             <span class="text-skin-muted dark:text-skin-muted-dark cursor-default">Want to help support the website?</span> <a href="{{ env('DONATION_URL') }}" target="_blank" class="text-skin-base dark:text-skin-base-dark">Donate a coffee</a>
                         @endif
                     </div>
-                    <div class="z-20 lg:basis-1/4 text-right">
+                    <div class="z-20 basis-1/4 text-right">
                         @if(env('CHAT_ENABLED') == 'true')
                             <livewire:conversations.inbox />
                         @endif
@@ -83,10 +90,6 @@
         @stack('scripts')
     
         <script type="text/javascript">
-
-            let defaultDarkmode = "{{ env('DEFAULT_DARKMODE') }}";
-            let defaultTheme = "{{ env('DEFAULT_THEME') }}";
-            let userTheme = "{{ auth()->user()->theme ?? null }}";
 
             $( document ).ready(function() {
                 window.addEventListener('alert', event => { 
@@ -123,7 +126,7 @@
 
 
 
-        <script src="{{ asset('assets/js/theme-selector.js') }}"></script>
+        
 
         <!-- 
         Hot and amazing people:

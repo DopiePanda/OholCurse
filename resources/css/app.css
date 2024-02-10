@@ -14,7 +14,7 @@
   :root {
     --color-text-base: #2563eb;
     --color-text-base-dark: #dc2626;
-    --color-text-muted: #6b7280;
+    --color-text-muted: #4a4e56;
     --color-text-muted-dark: #6b7280;
     --color-text-inverted: #ffffff;
     --color-text-inverted-dark: #ffffff;
@@ -24,7 +24,7 @@
     --color-fill-hover-dark: #941717;
     --color-fill-wrapper: #e5e7eb;
     --color-fill-wrapper-dark: #111827;
-    --color-fill-muted: #e5e7eb;
+    --color-fill-muted: #bdbdbd;
     --color-fill-muted-dark: #0c1120;
     --color-button-accent: #201d1d;
     --color-button-accent-dark: #201d1d;
@@ -41,7 +41,7 @@
   .theme-dark-blue {
     --color-text-base: #dc2626;
     --color-text-base-dark: #2563eb;
-    --color-text-muted: #6b7280;
+    --color-text-muted: #4a4e56;
     --color-text-muted-dark: #6b7280;
     --color-text-inverted: #ffffff;
     --color-text-inverted-dark: #ffffff;
@@ -51,7 +51,7 @@
     --color-fill-hover-dark: #194ab4;
     --color-fill-wrapper: #e5e7eb;
     --color-fill-wrapper-dark: #111827;
-    --color-fill-muted: #e5e7eb;
+    --color-fill-muted: #bdbdbd;
     --color-fill-muted-dark: #0c1120;
     --color-button-accent: #201d1d;
     --color-button-accent-dark: #201d1d;
@@ -61,6 +61,8 @@
     --color-button-muted-dark: #ffffff;
     --color-border-base: #dc2626;
     --color-border-base-dark: #2563eb;
+    --color-border-muted: #6b7280;
+    --color-border-muted-dark: #6b7280;
   }
 
 }

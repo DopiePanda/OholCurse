@@ -21,6 +21,11 @@
                     @include('profile.partials.update-theme-form')
                 </div>
             </div>
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg dark:bg-slate-700">
+                <div class="max-w-xl">
+                    @include('profile.partials.update-darkmode-form')
+                </div>
+            </div>
             <!-- Change username partial
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="max-w-xl">

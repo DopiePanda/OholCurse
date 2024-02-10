@@ -16,19 +16,25 @@
         <div>
             <div class="mt-2 text-center grid grid-cols-1 lg:grid-cols-3">
                 <div>
-                    <div><img class="mx-auto mb-2 border rounded-lg border-gray-800 dark:border-gray-400" src="{{ asset('assets/uploads/images/theme-light.png') }}" alt=""></div>
-                    <div><label class="dark:text-gray-400" for="theme-light">Light</label></div>
-                    <div><input type="radio" name="theme" value="light" @if(Auth::user()->theme == 'light') checked @endif /></div>
+                    <div class="w-24 h-24 mx-auto mb-2 rounded-lg bg-gradient-to-tr from-red-800 to-red-600 shadow-xl shadow-red-900/75">
+                        <i class="mt-4 fa-solid fa-fire fa-4x text-red-950"></i>
+                    </div>
+                    <div><label class="dark:text-gray-400" for="theme-light">Fire Red</label></div>
+                    <div><input type="radio" name="theme" value="fire-red" @if(Auth::user()->theme == 'disabled') checked @endif /></div>
                 </div>
                 <div>
-                    <div><img class="mx-auto mb-2 border rounded-lg border-gray-800 dark:border-gray-400" src="{{ asset('assets/uploads/images/theme-dark.png') }}" alt=""></div>
-                    <div><label class="dark:text-gray-400" for="theme-dark">Dark</label></div>
-                    <div><input type="radio" name="theme" value="dark" @if(Auth::user()->theme == 'dark') checked @endif /></div>
+                    <div class="w-24 h-24 mx-auto mb-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 shadow-xl shadow-blue-800/75">
+                        <i class="mt-4 fa-solid fa-droplet fa-4x text-blue-950"></i>
+                    </div>
+                    <div><label class="dark:text-gray-400" for="theme-dark">Cool Blue</label></div>
+                    <div><input type="radio" name="theme" value="cool-blue" @if(Auth::user()->theme == 'enabled') checked @endif /></div>
                 </div>
                 <div>
-                    <div><img class="mx-auto mb-2 border rounded-lg border-gray-800 dark:border-gray-400" src="{{ asset('assets/uploads/images/theme-default.png') }}" alt=""></div>
-                    <div><label class="dark:text-gray-400" for="theme-auto">Auto</label></div>
-                    <div><input type="radio" name="theme" value="auto" @if(Auth::user()->theme == null) checked @endif /></div>
+                    <div class="w-24 h-24 mx-auto mb-2 border rounded-lg border-gray-800 dark:border-gray-400">
+                        <i class="mt-4 fa-regular fa-clock fa-4x text-gray-500"></i>
+                    </div>
+                    <div><label class="dark:text-gray-400" for="theme-auto">Coming soon</label></div>
+                    <div><input type="radio" name="theme" value="NA" @if(Auth::user()->theme == 'NA') checked @endif disabled /></div>
                 </div>
             </div>
             <x-input-error class="mt-2" :messages="$errors->get('theme')" />

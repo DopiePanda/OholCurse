@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\TimezoneUpdateRequest;
 use App\Http\Requests\ThemeUpdateRequest;
+use App\Http\Requests\DarkmodeUpdateRequest;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -65,15 +66,29 @@ class ProfileController extends Controller
 
         if($validated['theme'] == 'auto')
         {
-            $request->user()->theme = null;
+            $request->user()->darkmode = 'auto';
         }else
         {
-            $request->user()->theme = $validated['theme'];
+            $request->user()->darkmode = $validated['theme'];
         }
         
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'theme-updated');
+    }
+
+    /**
+     * Update the user's theme.
+     */
+    public function updateDarkmode(DarkmodeUpdateRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        $request->user()->darkmode = $validated['darkmode'];
+        
+        $request->user()->save();
+
+        return Redirect::route('profile.edit')->with('status', 'darkmode-updated');
     }
 
     /**

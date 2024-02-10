@@ -1,13 +1,12 @@
 let defaultDarkmode = "{{ env('DEFAULT_DARKMODE') }}";
+let userDarkmode = "{{ auth()->user()->darkmode ?? null }}";
 let defaultTheme = "{{ env('DEFAULT_THEME') }}";
 let userTheme = "{{ auth()->user()->theme ?? null }}";
 
-console.log("Defult theme: "+defaultTheme);
-console.log("User theme: "+userTheme);
 
-if (userTheme != null && userTheme != '') 
+if (userDarkmode != null && userDarkmode != 'auto') 
 {
-    if (userTheme === 'dark')
+    if (userDarkmode == 'enabled')
     {
         document.documentElement.classList.add('dark')
         console.log('User selected dark');
