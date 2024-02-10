@@ -19,7 +19,7 @@
                         <div><img class="mx-auto h-32" src="{{ asset('assets/leaderboard/score-good.png') }}" /></div>
                         <div class="text-xl dark:text-gray-400">Gene score</div>
                         @if(isset($profile->score->gene_score))
-                            <div class="font-bold text-4xl text-green-600">{{ round($profile->score->gene_score, 2) }}</div>
+                            <div class="font-bold text-4xl text-green-600" title="{{ $profile->score->gene_score }}">{{ round($profile->score->gene_score, 2) }}</div>
                         @else
                             <div class="font-bold text-4xl text-green-600">0</div>
                         @endif

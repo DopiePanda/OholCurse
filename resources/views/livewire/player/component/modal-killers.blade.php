@@ -28,7 +28,7 @@
                                     {{ $killer->leaderboard->leaderboard_name ?? 'MISSING' }}
                                 </span>
                                 <div class="text-gray-700 text-sm inline-block">
-                                    (<span class="text-green-600">{{ $killer->leaderboard->score->gene_score ?? 0 }}</span> / 
+                                    (<span class="text-green-600">{{ round($killer->leaderboard->score->gene_score, 0) ?? 0 }}</span> / 
                                     <span class="text-red-600">{{ $killer->leaderboard->score->curse_score ?? 0 }}</span>)
                                 </div>
                             </a>
