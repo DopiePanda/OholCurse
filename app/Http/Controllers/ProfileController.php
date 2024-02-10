@@ -64,13 +64,7 @@ class ProfileController extends Controller
     {
         $validated = $request->validated();
 
-        if($validated['theme'] == 'auto')
-        {
-            $request->user()->darkmode = 'auto';
-        }else
-        {
-            $request->user()->darkmode = $validated['theme'];
-        }
+        $request->user()->theme = $validated['theme'];
         
         $request->user()->save();
 

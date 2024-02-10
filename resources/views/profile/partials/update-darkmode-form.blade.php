@@ -1,8 +1,12 @@
 <section>
     <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-200">
+        <h2 class="text-lg font-medium text-skin-base dark:text-skin-base-dark">
             {{ __('Toggle darkmode') }}
         </h2>
+
+        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+            {{ __("Here you can enable or disable darkmode for the website. If set to 'auto', it will use the default settings for your browser/operating system.") }}
+        </p>
     </header>
 
     <form method="post" action="{{ route('darkmode.update') }}" class="mt-6 space-y-6">
