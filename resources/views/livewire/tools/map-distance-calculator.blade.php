@@ -1,6 +1,6 @@
-<div class="w-auto p-6">
-    <div class="h-full p-2 flex flex-row">
-        <div class="me-4 p-6 rounded-xl bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
+<div class="w-full lg:w-2/3">
+    <div class="h-full p-2 flex flex-col md:flex-row">
+        <div class="grow me-4 p-6 rounded-xl bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
             <form wire:submit.prevent="calculate">
                 <div>
                     <div class="text-4xl text-center font-bold dark:text-gray-200">Map Travel Calculator</div>
@@ -96,7 +96,7 @@
                 @endif
             </div>
         @if(is_array($calculations))
-        <div class="relative w-1/3 max-h-screen rounded-xl overflow-y-auto pt-6 bg-skin-fill-muted dark:bg-skin-fill-muted-dark">
+        <div class="shrink relative sm:w-full lg:w-1/3 max-h-screen rounded-xl overflow-y-auto pt-6 bg-skin-fill-muted dark:bg-skin-fill-muted-dark">
             <div class="mt-2 px-6 text-lg font-bold dark:text-gray-200">Session history:</div>
             @forelse ($calculations as $key => $data)
                 <div class="px-6">

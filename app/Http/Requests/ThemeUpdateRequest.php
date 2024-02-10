@@ -16,7 +16,7 @@ class ThemeUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'theme' => ['string', 'max:255', 'in:disabled,enabled,auto'],
+            'theme' => ['string', 'max:255', 'in:fire-red,cool-blue,royal-purple,popping-pink'],
         ];
     }
 }
