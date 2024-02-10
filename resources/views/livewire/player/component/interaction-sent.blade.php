@@ -45,7 +45,7 @@
                                             @endif
 
                                             <div class="text-gray-700 text-sm inline-block">
-                                                (<span class="text-green-600">{{ $line->scores ? $line->scores->gene_score : 0; }}</span>
+                                                (<span class="text-green-600">{{ $line->scores ? round($line->scores->gene_score, 0) : 0; }}</span>
                                                     /
                                                 <span class="text-red-600">{{ $line->scores ? $line->scores->curse_score : 0; }}</span>)
                                             </div>
