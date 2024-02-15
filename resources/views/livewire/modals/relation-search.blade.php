@@ -46,23 +46,104 @@
         <div class="w-5/6 mx-auto mt-4 p-4 text-white bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
             <div class="text-gray-600 dark:text-gray-200 text-center text-xl">Lives where {{ $origin->leaderboard_name ?? $origin_hash }} was {{ $target->leaderboard_name }}'s parent</div>
             <div class="h-1 w-1/3 my-2 mx-auto border-b border-skin-muted dark:border-skin-muted-dark"></div>
-            <table class="w-full mt-4 mx-auto">
-                <thead class="p-2">
-                    <tr class="p-2">
-                        <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Date</td>
-                        <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Parent leaderboard</td>
-                        <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Parent character</td>
-                        <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Child character</td>           
-                    </tr>
-                </thead>
-                <tbody class="p-2">
-                    @foreach ($origin_was_parent as $result)
+            <div class="relative overflow-x-auto">
+                <table class="w-full mt-4 mx-auto">
+                    <thead class="p-2">
+                        <tr class="p-2">
+                            <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Date</td>
+                            <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Parent leaderboard</td>
+                            <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Parent character</td>
+                            <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Child character</td>           
+                        </tr>
+                    </thead>
+                    <tbody class="p-2">
+                        @foreach ($origin_was_parent as $result)
+                            <tr class="even:bg-gray-300 odd:bg-white text-gray-600 dark:even:bg-slate-700 dark:odd:bg-slate-800 dark:text-gray-300">
+                                <td class="p-2 border border-gray-400">
+                                    {{ date('Y-m-d H:i', $result->timestamp) }}
+                                </td>
+                                <td class="p-2 border border-gray-400">
+                                    {{ $result->parent->leaderboard->leaderboard_name ?? 'MISSING' }}
+                                </td>
+                                <td class="p-2 border border-gray-400">
+                                    {{ $result->parent->name->name ?? "UNNAMED (".$result->parent->character_id.")" }}
+                                </td>
+                                <td class="p-2 border border-gray-400">
+                                    <a class="hover:text-skin-base dark:hover:text-skin-base-dark" href="{{ route('player.interactions', ['hash' => $result->player_hash]) }}">
+                                        {{ $result->name->name ?? "UNNAMED (".$result->character_id.")" }}
+                                    </a>
+                                </td>                           
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endif
+
+    @if($origin_was_child && count($origin_was_child) > 0)
+        <div class="w-5/6 mx-auto mt-4 p-4 text-white bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
+            <div class="text-gray-600 dark:text-gray-200 text-center text-xl">Lives where {{ $origin->leaderboard_name ?? $origin_hash }} was {{ $target->leaderboard_name }}'s child</div>
+            <div class="h-1 w-1/3 my-2 mx-auto border-b border-skin-muted dark:border-skin-muted-dark"></div>
+            <div class="relative overflow-x-auto">
+                <table class="w-full mt-4 mx-auto">
+                    <thead class="p-2">
+                        <tr class="p-2">
+                            <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Date</td>
+                            <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Parent leaderboard</td>
+                            <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Parent character</td>
+                            <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Child character</td>           
+                        </tr>
+                    </thead>
+                    <tbody class="p-2">
+                        @foreach ($origin_was_child as $result)
                         <tr class="even:bg-gray-300 odd:bg-white text-gray-600 dark:even:bg-slate-700 dark:odd:bg-slate-800 dark:text-gray-300">
                             <td class="p-2 border border-gray-400">
                                 {{ date('Y-m-d H:i', $result->timestamp) }}
                             </td>
                             <td class="p-2 border border-gray-400">
-                                {{ $result->parent->leaderboard->leaderboard_name ?? 'MISSING' }}
+                                <a class="hover:text-skin-base dark:hover:text-skin-base-dark" href="{{ route('player.interactions', ['hash' => $result->parent->leaderboard->player_hash]) }}">
+                                    {{ $result->parent->leaderboard->leaderboard_name ?? 'MISSING' }}
+                                </a>
+                            </td>
+                            <td class="p-2 border border-gray-400">
+                                {{ $result->parent->name->name ?? "UNNAMED (".$result->parent->character_id.")" }}
+                            </td>
+                            <td class="p-2 border border-gray-400">
+                                {{ $result->name->name ?? "UNNAMED (".$result->character_id.")" }}
+                            </td>                            
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endif
+
+    @if($origin_was_sibling && count($origin_was_sibling) > 0)
+        <div class="w-5/6 mx-auto mt-4 p-4 text-white bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
+            <div class="text-gray-600 dark:text-gray-200 text-center text-xl">Lives where {{ $origin->leaderboard_name ?? $origin_hash }} was {{ $target->leaderboard_name }}'s sibling</div>
+            <div class="h-1 w-1/3 my-2 mx-auto border-b border-skin-muted dark:border-skin-muted-dark"></div>
+            <div class="relative overflow-x-auto">
+                <table class="w-full mt-4 mx-auto">
+                    <thead class="p-2">
+                        <tr class="p-2">
+                            <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Date</td>
+                            <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Parent leaderboard</td>
+                            <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Parent character</td>
+                            <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Sibling character</td>           
+                        </tr>
+                    </thead>
+                    <tbody class="p-2">
+                        @foreach ($origin_was_sibling as $result)
+                        <tr class="even:bg-gray-300 odd:bg-white text-gray-600 dark:even:bg-slate-700 dark:odd:bg-slate-800 dark:text-gray-300">
+                            <td class="p-2 border border-gray-400">
+                                {{ date('Y-m-d H:i', $result->timestamp) }}
+                            </td>
+                            <td class="p-2 border border-gray-400">
+                                <a class="hover:text-skin-base dark:hover:text-skin-base-dark" href="{{ route('player.interactions', ['hash' => $result->parent->leaderboard->player_hash]) }}">
+                                    {{ $result->parent->leaderboard->leaderboard_name ?? 'MISSING' }}
+                                </a>
                             </td>
                             <td class="p-2 border border-gray-400">
                                 {{ $result->parent->name->name ?? "UNNAMED (".$result->parent->character_id.")" }}
@@ -71,87 +152,12 @@
                                 <a class="hover:text-skin-base dark:hover:text-skin-base-dark" href="{{ route('player.interactions', ['hash' => $result->player_hash]) }}">
                                     {{ $result->name->name ?? "UNNAMED (".$result->character_id.")" }}
                                 </a>
-                            </td>                           
+                            </td>                          
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    @endif
-
-    @if($origin_was_child && count($origin_was_child) > 0)
-        <div class="w-5/6 mx-auto mt-4 p-4 text-white bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
-            <div class="text-gray-600 dark:text-gray-200 text-center text-xl">Lives where {{ $origin->leaderboard_name ?? $origin_hash }} was {{ $target->leaderboard_name }}'s child</div>
-            <div class="h-1 w-1/3 my-2 mx-auto border-b border-skin-muted dark:border-skin-muted-dark"></div>
-            <table class="w-full mt-4 mx-auto">
-                <thead class="p-2">
-                    <tr class="p-2">
-                        <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Date</td>
-                        <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Parent leaderboard</td>
-                        <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Parent character</td>
-                        <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Child character</td>           
-                    </tr>
-                </thead>
-                <tbody class="p-2">
-                    @foreach ($origin_was_child as $result)
-                    <tr class="even:bg-gray-300 odd:bg-white text-gray-600 dark:even:bg-slate-700 dark:odd:bg-slate-800 dark:text-gray-300">
-                        <td class="p-2 border border-gray-400">
-                            {{ date('Y-m-d H:i', $result->timestamp) }}
-                        </td>
-                        <td class="p-2 border border-gray-400">
-                            <a class="hover:text-skin-base dark:hover:text-skin-base-dark" href="{{ route('player.interactions', ['hash' => $result->parent->leaderboard->player_hash]) }}">
-                                {{ $result->parent->leaderboard->leaderboard_name ?? 'MISSING' }}
-                            </a>
-                        </td>
-                        <td class="p-2 border border-gray-400">
-                            {{ $result->parent->name->name ?? "UNNAMED (".$result->parent->character_id.")" }}
-                        </td>
-                        <td class="p-2 border border-gray-400">
-                            {{ $result->name->name ?? "UNNAMED (".$result->character_id.")" }}
-                        </td>                            
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    @endif
-
-    @if($origin_was_sibling && count($origin_was_sibling) > 0)
-        <div class="w-5/6 mx-auto mt-4 p-4 text-white bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
-            <div class="text-gray-600 dark:text-gray-200 text-center text-xl">Lives where {{ $origin->leaderboard_name ?? $origin_hash }} was {{ $target->leaderboard_name }}'s sibling</div>
-            <div class="h-1 w-1/3 my-2 mx-auto border-b border-skin-muted dark:border-skin-muted-dark"></div>
-            <table class="w-full mt-4 mx-auto">
-                <thead class="p-2">
-                    <tr class="p-2">
-                        <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Date</td>
-                        <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Parent leaderboard</td>
-                        <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Parent character</td>
-                        <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border border-gray-600">Sibling character</td>           
-                    </tr>
-                </thead>
-                <tbody class="p-2">
-                    @foreach ($origin_was_sibling as $result)
-                    <tr class="even:bg-gray-300 odd:bg-white text-gray-600 dark:even:bg-slate-700 dark:odd:bg-slate-800 dark:text-gray-300">
-                        <td class="p-2 border border-gray-400">
-                            {{ date('Y-m-d H:i', $result->timestamp) }}
-                        </td>
-                        <td class="p-2 border border-gray-400">
-                            <a class="hover:text-skin-base dark:hover:text-skin-base-dark" href="{{ route('player.interactions', ['hash' => $result->parent->leaderboard->player_hash]) }}">
-                                {{ $result->parent->leaderboard->leaderboard_name ?? 'MISSING' }}
-                            </a>
-                        </td>
-                        <td class="p-2 border border-gray-400">
-                            {{ $result->parent->name->name ?? "UNNAMED (".$result->parent->character_id.")" }}
-                        </td>
-                        <td class="p-2 border border-gray-400">
-                            <a class="hover:text-skin-base dark:hover:text-skin-base-dark" href="{{ route('player.interactions', ['hash' => $result->player_hash]) }}">
-                                {{ $result->name->name ?? "UNNAMED (".$result->character_id.")" }}
-                            </a>
-                        </td>                          
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     @endif
 </div>
