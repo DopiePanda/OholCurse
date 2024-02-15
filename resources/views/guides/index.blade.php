@@ -31,7 +31,7 @@
                             @foreach($guides as $guide)
                                 <tr class="bg-white">
                                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                        <a href="{{ route('guides.show', $guide) }}" class="hover:underline">
+                                        <a href="{{ route('guides.show', $guide->slug) }}" class="hover:underline">
                                             {{ $guide->title }}
                                         </a>
                                     </td>

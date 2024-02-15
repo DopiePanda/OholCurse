@@ -243,10 +243,9 @@ input[type="time"]#time_end::-webkit-calendar-picker-indicator {
 }
 
 .trix-editor h1 {
-  font-size: 2em !important;
-  line-height: 2em !important;
-  margin-bottom: 1rem;
-  font-weight: 600;
+  font-size: 4em !important;
+  line-height: 1em !important;
+  font-weight: 400;
 }
 
 .trix-editor a:not(.no-underline) {
@@ -262,6 +261,11 @@ input[type="time"]#time_end::-webkit-calendar-picker-indicator {
   padding-left: 1rem;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.trix-editor ul li {
+  font-size: 16px;
+  letter-spacing: 1px;
 }
 
 .trix-editor ol {
@@ -289,6 +293,16 @@ input[type="time"]#time_end::-webkit-calendar-picker-indicator {
   border-left-width: 0.3em;
   margin-left: 0.3em;
   padding-left: 0.6em;
+}
+
+.trix-editor div figure {
+  padding: 10px 0px 10px 0px;
+  display: inline-block;
+}
+
+.attachment__caption{
+  font-size: 14px;
+  margin-top: 6px;
 }
 
 .lds-ring {

@@ -29,6 +29,10 @@ use App\Livewire\PlayerInteractions;
 use App\Livewire\Player\Statistics as PlayerStatistics;
 use App\Livewire\Map\Leaderboard;
 use App\Livewire\Modals\Charts\LeaderboardRecords;
+use App\Livewire\Admin\Search\CharacterMovement;
+
+use App\Livewire\Content\Upload;
+use App\Livewire\Content\Browse;
 
 use App\Livewire\Roadmap\Ideas;
 use App\Livewire\Roadmap\Ideas\Create as IdeaCreate;
@@ -111,6 +115,13 @@ Route::middleware('web')->group(function() {
         Route::get('/phpinfo', function () {
             return redirect()->route('search');
         });
+
+        Route::prefix('/content')->name('content.')->group(function () {
+            Route::get('/browse', Browse::class)->name('browse');
+            Route::get('/upload', Upload::class)->name('upload');
+        });
+
+        Route::get('/search/movement', CharacterMovement::class)->name('search.movement');
 
         Route::get('/select2/ajax', [Select2Controller::class, 'handle'])->name('select2.ajax');
         //Route::get('/interactions/{object_id}/{ghost?}', [TestController::class, 'getObjectInteractions'])->name('interactions');

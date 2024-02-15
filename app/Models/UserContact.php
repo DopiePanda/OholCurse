@@ -20,4 +20,14 @@ class UserContact extends Model
     {
         return $this->hasOne(Leaderboard::class, 'player_hash', 'hash');
     }
+
+    public function phex()
+    {
+        return $this->belongsTo(PhexHash::class, 'phex_hash', 'px_hash');
+    }
+
+    public function olgc()
+    {
+        return $this->belongsTo(PhexHash::class, 'phex_hash', 'olgc_hash');
+    }
 }
