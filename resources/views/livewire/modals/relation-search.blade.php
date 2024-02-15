@@ -2,7 +2,7 @@
     <div class="mt-4 text-skin-base dark:text-skin-base-dark text-center text-2xl">Find earlier relationships with {{ $origin->leaderboard_name ?? 'UNKNOWN' }}</div>
     <div class="text-skin-muted text-center text-md">Enter a leaderboard name below to find and compare previous relationships.</div>
     <form wire:submit="search">
-        <div class="w-1/3 mt-4 mx-auto my-2 text-center">
+        <div class="w-full lg:w-1/3 px-2 mt-4 mx-auto my-2 text-center">
             <div class="text-left font-bold text-skin-base dark:text-skin-base-dark">
                 <label for="input">Enter target leaderboard name:</label>
             </div>
@@ -15,7 +15,7 @@
                 </div> 
             @enderror
         </div>
-        <div class="w-1/3 mx-auto mt-4 mb-4 text-center">
+        <div class="w-full lg:w-1/3 px-2 mx-auto mt-4 mb-4 text-center">
             <div>
                 <button class="w-full p-2 text-white bg-skin-fill dark:bg-skin-fill-dark" type="button" wire:click="search">Search</button>
             </div>
@@ -23,7 +23,7 @@
 
         @auth
             @if(Auth::user()->player_hash)
-            <div class="mt-6 w-1/3 mx-auto mt-4 mb-4 text-center">
+            <div class="mt-6 w-full lg:w-1/3 px-2 mx-auto mt-4 mb-4 text-center">
                 <div class="flex flex-row">
                     <div class="pt-2 grow border-t"></div>
                     <div class="-mt-3 shrink px-2 text-skin-base dark:text-skin-base-dark"> OR </div>

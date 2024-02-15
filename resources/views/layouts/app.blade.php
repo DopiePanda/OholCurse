@@ -75,7 +75,9 @@
                 </div>
                 <div class="z-20 basis-1/4 text-right">
                     @if(env('CHAT_ENABLED') == 'true')
-                        <livewire:conversations.inbox />
+                        @auth
+                            <livewire:conversations.inbox />
+                        @endauth
                     @endif
                 </div>
             </div>

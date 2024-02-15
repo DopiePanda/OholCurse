@@ -1,6 +1,6 @@
-<div class="w-full lg:w-2/3">
+<div class="w-full xl:w-2/3">
     <div class="h-full p-2 flex flex-col md:flex-row">
-        <div class="grow me-4 p-6 rounded-xl bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
+        <div class="grow w-full md:w-1/2 xl:w-2/3 mt-4 md:mt-0 me-4 p-6 rounded-xl bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
             <form wire:submit.prevent="calculate">
                 <div>
                     <div class="text-4xl text-center font-bold dark:text-gray-200">Map Travel Calculator</div>
@@ -93,49 +93,97 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="mt-6 text-2xl text-center text-skin-base dark:text-skin-base-dark">
+                    Estimated travel time
+                </div>
+
+                <div class="mt-4 relative overflow-x-auto rounded-lg border border-skin-base dark:border-skin-base-dark">
+                    <table class="w-full table-auto">
+                        <thead class="text-left">
+                            <tr class="bg-skin-fill dark:bg-skin-fill-dark text-white">
+                                <th class="p-2 pl-4">Method</th>
+                                <th class="p-2">Time (Normal)</th>
+                                <th class="p-2">Time (Road)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-skin-fill-muted dark:bg-skin-fill-muted-dark text-gray-700 dark:text-gray-300">
+                            <tr class="border-b border-gray-400 dark:border-gray-800">
+                                <td  class="p-2 pl-4">Walking</td>
+                                <td  class="p-2">{{ $estimated_times["ground"]["walking"] }}</td>
+                                <td  class="p-2">{{ $estimated_times["road"]["walking"] }}</td>
+                            </tr>
+                            <tr class="border-b border-gray-400 dark:border-gray-800">
+                                <td  class="p-2 pl-4">Horse</td>
+                                <td  class="p-2">{{ $estimated_times["ground"]["horse"] }}</td>
+                                <td  class="p-2">{{ $estimated_times["road"]["horse"] }}</td>
+                            </tr>
+                            <tr class="border-b border-gray-400 dark:border-gray-800">
+                                <td  class="p-2 pl-4">Truck</td>
+                                <td  class="p-2">{{ $estimated_times["ground"]["truck"] }}</td>
+                                <td  class="p-2">{{ $estimated_times["road"]["truck"] }}</td>
+                            </tr>
+                            <tr class="border-b border-gray-400 dark:border-gray-800">
+                                <td  class="p-2 pl-4">Car</td>
+                                <td  class="p-2">{{ $estimated_times["ground"]["car"] }}</td>
+                                <td  class="p-2">{{ $estimated_times["road"]["car"] }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 @endif
             </div>
-        @if(is_array($calculations))
-        <div class="shrink relative sm:w-full lg:w-1/3 max-h-screen rounded-xl overflow-y-auto pt-6 bg-skin-fill-muted dark:bg-skin-fill-muted-dark">
+        
+        <div class="shrink relative sm:w-full md:w-1/2 xl:w-1/3 max-h-screen mt-4 md:mt-0 rounded-xl overflow-y-auto pt-6 bg-skin-fill-muted dark:bg-skin-fill-muted-dark">
             <div class="mt-2 px-6 text-lg font-bold dark:text-gray-200">Session history:</div>
-            @forelse ($calculations as $key => $data)
-                <div class="px-6">
+            
+                @forelse ($calculations as $key => $data)
+                    <div class="px-6">
 
-                    
-                    <div class="mt-6 text-md font-bold text-skin-base dark:text-skin-base-dark">
-                        {{ $data["label"][0] ?? 'No label' }}
-                    </div>
-                    <div class="mt-1 flex flex-row gap-4 items-center place-items-center">
-                        <div class="grow text-skin-muted dark:text-skin-muted-dark">
-                            <div>
-                                X: {{ $data["x"][0] }}
-                                @if ($data["x"][0] < 0)
-                                    [West]
-                                @else
-                                    [East]
-                                @endif
+                        
+                        <div class="mt-6 text-md font-bold text-skin-base dark:text-skin-base-dark">
+                            {{ $data["label"] ?? 'No label' }}
+                        </div>
+                        <div class="mt-1 flex flex-row gap-4 items-center place-items-center">
+                            <div class="grow text-skin-muted dark:text-skin-muted-dark">
+                                <div>
+                                    X: {{ $data["x"] }}
+                                    @if ($data["x"] < 0)
+                                        [West]
+                                    @else
+                                        [East]
+                                    @endif
+                                </div>
+                                <div>
+                                    Y: {{ $data["y"] }}
+                                    @if ($data["y"] < 0)
+                                        [South]
+                                    @else
+                                        [North]
+                                    @endif
+                                </div>
                             </div>
-                            <div>
-                                Y: {{ $data["y"][0] }}
-                                @if ($data["y"][0] < 0)
-                                    [South]
-                                @else
-                                    [North]
-                                @endif
+                            <div class="shrink flex flex-row">
+                                <div wire:click="edit('{{ $key }}')" class="mr-2 cursor-pointer">
+                                    <i class="fa-solid fa-pencil fa-xl text-skin-muted dark:text-skin-muted-dark hover:text-skin-base dark:hover:text-skin-base-dark"></i>
+                                </div>
+                                <div wire:click="remove('{{ $key }}')" class="ml-2 cursor-pointer">
+                                    <i class="fa-solid fa-trash-can fa-xl text-skin-muted dark:text-skin-muted-dark hover:text-skin-base dark:hover:text-skin-base-dark"></i>
+                                </div>
                             </div>
                         </div>
-                        <div wire:click="remove('{{ $key }}')" class="shrink">
-                            <i class="fa-solid fa-trash-can fa-xl text-skin-base dark:text-skin-base-dark"></i>
-                        </div>
                     </div>
+                @empty
+                    <div class="mt-2 px-6 italic text-skin-muted dark:text-skin-muted-dark">
+                        Session history is empty
+                    </div>
+                @endforelse
+
+                @if(is_array($calculations) && count($calculations) > 0)
+                <div wire:click="flush()" class="w-full h-12 pr-2 mt-4 pt-3 border-t border-skin-base dark:border-skin-base-dark text-center sticky bottom-0 left-0 text-skin-base dark:text-skin-base-dark cursor-pointer bg-gray-300 dark:bg-slate-900">
+                    Delete all
                 </div>
-            @empty
-
-            @endforelse
-            <div wire:click="flush()" class="w-full h-12 pr-2 mt-4 pt-3 border-t border-skin-base dark:border-skin-base-dark text-center sticky bottom-0 left-0 text-skin-base dark:text-skin-base-dark cursor-pointer bg-gray-300 dark:bg-slate-900">
-                Delete all
-            </div>
+            @endif
         </div>
-        @endif
     </div>
 </div>

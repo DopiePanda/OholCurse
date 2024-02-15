@@ -15,6 +15,11 @@ class Guide extends Model implements HasMedia
 
     protected $fillable = ['user_id', 'published', 'title', 'slug', 'content'];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
     public function registerMediaConversions(Media $media = null): void
     {
         $this

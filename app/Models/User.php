@@ -54,9 +54,19 @@ class User extends Authenticatable implements FilamentUser
     ];
 
     
-    public function friends(): HasMany
+    public function contacts(): HasMany
     {
         return $this->hasMany(UserContact::class, 'character_id', 'character_id');
+    }
+
+    public function friends(): HasMany
+    {
+        return $this->hasMany(UserFriend::class, 'id', 'sender_id');
+    }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(PrivateMessage::class, 'id', 'sender_id');
     }
 
     public function leaderboard(): HasOne
