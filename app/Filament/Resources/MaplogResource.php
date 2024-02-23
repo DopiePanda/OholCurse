@@ -111,7 +111,9 @@ class MaplogResource extends Resource
         return parent::getEloquentQuery()
                     ->where('character_id', '!=', -1)
                     ->where('object_id', '!=', 0)
-                    ->whereHas('name');
+                    ->whereHas('name')
+                    ->skip(0)
+                    ->take(1000);
     }
 
     public static function getRecordSubNavigation(Page $page): array

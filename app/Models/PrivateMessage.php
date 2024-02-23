@@ -11,6 +11,8 @@ class PrivateMessage extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     public function sender(): BelongsTo
     {
         return $this->belongsTo(User::class, 'sender_id', 'id');

@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class UserConversation extends Model
 {
-    use HasFactory;
+    protected $guarded = ['id'];
 
     public function sender()
     {
