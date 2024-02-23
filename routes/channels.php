@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Log;
+
+use App\Models\UserConversation;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +20,27 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+/*
+Broadcast::channel('conversations.{conversationId}', function (User $user, int $conversationId) 
+{
+    $conversation = UserConversation::findOrNew($conversationId);
+    Log::debug('Event broadcasted');
+
+    if($user->id  == $conversation->sender_id)
+    {
+        Log::debug('Return sender id');
+        return ['ably-capability' => ["subscribe", "history"]];
+    }
+
+    if($user->id  == $conversation->reciever_id)
+    {
+        Log::debug('Return reciever id');
+        return ['ably-capability' => ["subscribe", "history"]];
+    }
+    
+    return false;
+});
+
+Broadcast::channel('message.{conversation}', 'App\Broadcasting\Message');
+*/

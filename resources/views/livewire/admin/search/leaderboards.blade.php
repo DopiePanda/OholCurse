@@ -1,6 +1,6 @@
 <div class="w-full rounded-xl py-12 mx-auto bg-gray-50 dark:bg-gray-900">
     <form wire:submit.prevent="process">
-        <div class="w-2/5 mx-auto flex flex-col text-center">
+        <div class="w-full px-6 md:px-0 md:w-2/5 mx-auto flex flex-col text-center">
             <div class="w-full grow">
                 <input style="color: #333;" class="w-full rounded-lg" wire:model="search" type="text" placeholder="Enter character life name" />
             </div>

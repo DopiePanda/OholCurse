@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:handle-life-name-logs')->dailyAt('08:40');
         $schedule->command('app:handle-curse-logs')->dailyAt('08:40');
 
+
         $schedule->command('app:process-temp-logs')->dailyAt('08:40');
         
         $schedule->command('app:handle-food-logs')->dailyAt('08:50');
@@ -30,7 +31,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:process-map-log')->hourly();
 
         // Update all time map interaction leaderboard
-        $schedule->command('app:update-leaderboard-records')->dailyAt('09:10');
+        $schedule->command('app:update-leaderboard-records')->dailyAt('09:00');
 
         // Update curse and gene scores
         $schedule->command('app:update-curse-scores')->dailyAt('09:10');

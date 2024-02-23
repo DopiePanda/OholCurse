@@ -34,7 +34,7 @@ class Login extends BaseLogin
     /**
      * @var view-string
      */
-    protected static string $view = 'filament-panels::pages.auth.login';
+    protected static string $view = 'filament.pages.auth.login';
 
     /**
      * @var array<string, mixed> | null
@@ -160,12 +160,12 @@ class Login extends BaseLogin
 
     public function getTitle(): string | Htmlable
     {
-        return __('filament-panels::pages/auth/login.title');
+        return '';
     }
 
     public function getHeading(): string | Htmlable
     {
-        return __('filament-panels::pages/auth/login.heading');
+        return '';
     }
 
     /**

@@ -19,4 +19,14 @@ class ListMaplogs extends ListRecords
     {
         return $query->simplePaginate(($this->getTableRecordsPerPage() === '10') ? $query->count() : $this->getTableRecordsPerPage());
     }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+                    ->where('character_id', '!=', -1)
+                    ->where('object_id', '!=', 0)
+                    ->whereHas('name')
+                    ->skip(0)
+                    ->take(1000);
+    }
 }

@@ -1,28 +1,28 @@
-<div class="lg:w-2/6">
+<div class="w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12">
     @section("page-title")- Search OHOL profiles @endsection
     <div class="flex flex-col items-center">
         <img class="w-96" src="{{ asset('assets/uploads/images/new-logo-transparent.png') }}" alt="oholcurse-logo" />
        
-        <div class="w-screen lg:w-5/6">
+        <div class="w-full">
             <div class="mt-8 w-full text-center uppercase text-sm font-bold dark:text-gray-400">Filter search by:</div>
             <div class="mt-2 w-full text-center">
-                <div class="w-11/12 mx-auto lg:w-full flex flex-row items-center text-xs md:text-sm border border-gray-600 dark:border-slate-600 rounded-lg">
-                    <button type="button" class="grow rounded-l-lg row py-2 px-4 @if($filter == 'character_name') bg-skin-fill dark:bg-skin-fill-dark text-white font-semibold @else bg-gray-200 dark:bg-slate-600 dark:text-gray-300 @endif" wire:click="setSearchFilter('character_name')">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-1 sm:gap-0 items-center text-xs md:text-sm border border-gray-600 dark:border-slate-600 rounded-lg">
+                    <div class="w-full h-full flex items-center justify-center sm:rounded-l-lg py-2 px-4 @if($filter == 'character_name') bg-skin-fill dark:bg-skin-fill-dark text-white font-semibold @else bg-gray-200 dark:bg-slate-600 dark:text-gray-300 @endif" wire:click="setSearchFilter('character_name')">
                         Character name
-                    </button>
-                    <button type="button" class="grow py-2 px-4 border-l border-r border-gray-400 dark:border-gray-500 @if($filter == 'curse_name') bg-skin-fill dark:bg-skin-fill-dark text-white font-semibold @else bg-gray-200 dark:bg-slate-600 dark:text-gray-300 @endif" wire:click="setSearchFilter('curse_name')">
+                    </div>
+                    <div class="w-full h-full flex items-center justify-center py-2 px-4 sm:border-l sm:border-r sm:border-gray-400 dark:border-gray-500 @if($filter == 'curse_name') bg-skin-fill dark:bg-skin-fill-dark text-white font-semibold @else bg-gray-200 dark:bg-slate-600 dark:text-gray-300 @endif" wire:click="setSearchFilter('curse_name')">
                         Curse name
-                    </button>
-                    <button type="button" class="grow py-2 px-4 border-r border-gray-400 dark:border-gray-500 @if($filter == 'leaderboard') bg-skin-fill dark:bg-skin-fill-dark text-white font-semibold @else bg-gray-200 dark:bg-slate-600 dark:text-gray-300 @endif" wire:click="setSearchFilter('leaderboard')">
+                    </div>
+                    <div class="w-full h-full flex items-center justify-center py-2 px-4 sm:border-r sm:border-gray-400 dark:border-gray-500 @if($filter == 'leaderboard') bg-skin-fill dark:bg-skin-fill-dark text-white font-semibold @else bg-gray-200 dark:bg-slate-600 dark:text-gray-300 @endif" wire:click="setSearchFilter('leaderboard')">
                         Leaderboard name
-                    </button>
-                    <button type="button" class="grow rounded-r-lg py-2 px-4 @if($filter == 'player_hash') bg-skin-fill dark:bg-skin-fill-dark text-white font-semibold @else bg-gray-200 dark:bg-slate-600 dark:text-gray-300 @endif" wire:click="setSearchFilter('player_hash')">
+                    </div>
+                    <div class="w-full h-full flex items-center justify-center sm:rounded-r-lg py-2 px-4 @if($filter == 'player_hash') bg-skin-fill dark:bg-skin-fill-dark text-white font-semibold @else bg-gray-200 dark:bg-slate-600 dark:text-gray-300 @endif" wire:click="setSearchFilter('player_hash')">
                         Player hash
-                    </button>
+                    </div>
                 </div>
             </div>
             <div class="w-full text-center">
-                <input type="text" wire:model.live="query" wire:keyup.debounce.150ms="search" class="mx-auto mt-2 w-11/12 lg:w-full h-14 dark:bg-slate-500 dark:text-gray-800 dark:placeholder:text-gray-700 @if(strlen($query) >= $minQueryLength) rounded-t-lg @else rounded-lg @endif"
+                <input type="text" wire:model.live="query" wire:keyup.debounce.150ms="search" class="mx-auto mt-2 w-full h-14 dark:bg-slate-500 dark:text-gray-800 dark:placeholder:text-gray-700 @if(strlen($query) >= $minQueryLength) rounded-t-lg @else rounded-lg @endif"
 
                 @if($filter == 'character_name') placeholder="Search by typing a character name here..." @endif
                 @if($filter == 'curse_name') placeholder="Search by typing a curse name here..." @endif
@@ -33,7 +33,7 @@
            
 
             @if(strlen($query) >= $minQueryLength)
-            <div class="w-11/12 lg:w-full mx-auto">
+            <div class="w-full mx-auto">
                 @forelse($results as $result)
                     <div wire:key="id-{{ $result['id'] }}">
                         @if ($filter == 'character_name')

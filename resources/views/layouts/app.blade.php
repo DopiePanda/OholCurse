@@ -55,10 +55,9 @@
             <!-- Page Content -->
             <main class="z-10 flex flex-grow justify-center pt-6 px-2 lg:px-4 break-normal">
                 {{ $slot }}
-                
             </main>
 
-            <div class="z-30 py-4 px-4 flex flex-row items-end">
+            <div class="z-30 py-4 sm:px-4 flex flex-row items-end">
                 <div class="basis-1/4 text-left">
                     @can('access admin panel')
                         <div class="fixed bottom-0 left-0 pb-4 pl-4">
@@ -73,7 +72,7 @@
                         <span class="text-skin-muted dark:text-skin-muted-dark cursor-default">Want to help support the website?</span> <a href="{{ env('DONATION_URL') }}" target="_blank" class="text-skin-base dark:text-skin-base-dark">Donate a coffee</a>
                     @endif
                 </div>
-                <div class="z-20 basis-1/4 text-right">
+                <div class="z-30 basis-1/4 text-right">
                     @if(env('CHAT_ENABLED') == 'true')
                         @auth
                             <livewire:conversations.inbox />
@@ -103,18 +102,6 @@
                         });
             });
         </script>
-
-        <script type="text/javascript">
-            $("#conversationToggle").on("click", function(){
-                $("#conversationsWrapper").toggle();
-            });
-
-            $("#conversationHeader").on("click", function(){
-                $("#conversationsWrapper").toggle();
-            });
-        </script>
-
-        
 
         <!-- 
         Hot and amazing people:
