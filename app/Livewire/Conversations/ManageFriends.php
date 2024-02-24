@@ -106,12 +106,12 @@ class ManageFriends extends ModalComponent
 
     public function createRequest()
     {
+        $validated = $this->validate([
+            'new_friend' => 'required|string|exists:users,username',
+        ]);
+
         try 
         {
-            $validated = $this->validate([
-                'new_friend' => 'required|string|exists:users,username',
-            ]);
-    
             $target = User::where('username', $this->new_friend)->first();
     
             $state = UserFriend::where('sender_id', $this->user->id)
