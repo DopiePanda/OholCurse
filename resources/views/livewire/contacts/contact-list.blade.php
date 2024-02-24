@@ -46,7 +46,7 @@
                                         </td>
                                         <td class="p-2 border border-gray-400">
                                             <a href="{{ route('player.curses', $contact->hash) }}">
-                                                {{ $contact->player->leaderboard_name }}
+                                                {{ $contact->player->leaderboard_name ?? 'MISSING' }}
                                             </a> 
                                         </td>
                                         <td class="p-2 border border-gray-400">
@@ -96,7 +96,7 @@
                                         </td>
                                         <td class="p-2 border border-gray-400">
                                             <a href="{{ route('player.curses', $contact->hash) }}">
-                                                {{ $contact->player->leaderboard_name }}
+                                                {{ $contact->player->leaderboard_name ?? 'MISSING' }}
                                             </a> 
                                         </td>
                                         <td class="p-2 border border-gray-400">
@@ -146,7 +146,7 @@
                                     </td>
                                     <td class="p-2 border border-gray-400">
                                         <a href="{{ route('player.curses', $contact->hash) }}">
-                                            {{ $contact->player->leaderboard_name }}
+                                            {{ $contact->player->leaderboard_name ?? 'MISSING' }}
                                         </a> 
                                     </td>
                                     <td class="p-2 border border-gray-400">
