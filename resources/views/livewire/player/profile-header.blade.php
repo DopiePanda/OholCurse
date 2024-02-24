@@ -1,8 +1,5 @@
 <div class="bg-white dark:bg-slate-700">
-    <div class="flex flex-row items-center justify-center">
-        <div class="w-24 h-full">
-
-        </div>
+    <div class="flex flex-row items-center justify-center pr-8">
         <div class="flex grow text-center justify-center items-center">
             <div class="inline-block">
                 <h2 class="inline-block mx-auto text-xl text-gray-800 dark:text-gray-200 leading-tight break-words text-center">
@@ -68,10 +65,6 @@
                     </span>
                 </div>
             </div>
-
-        </div>
-        <div class="w-10 h-4">
-
         </div>
     </div>
 </div>
