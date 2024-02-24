@@ -1,4 +1,4 @@
-<div class="w-full md:w-3/4 lg:w-3/5">
+<div class="w-full md:w-3/4 lg:w-3/6">
     @section("page-title")
         @if( $profile && isset($profile->leaderboard_name) )- Interactions for {{ $profile->leaderboard_name }}@else- Interactions @endif
     @endsection
@@ -8,7 +8,7 @@
         <livewire:player.profile-header :hash="$hash">
 
     </x-slot>
-    <div class="grow w-full max-w-7xl flex flex-col">
+    <div class="grow w-full flex flex-col">
 
         <livewire:player.profile-menu :hash="$hash">
 
