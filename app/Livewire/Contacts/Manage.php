@@ -20,6 +20,7 @@ class Manage extends ModalComponent
 
     public $type;
     public $nickname;
+    public $description;
     public $phex_hash;
 
 
@@ -35,6 +36,7 @@ class Manage extends ModalComponent
         {
             $this->type = $this->contact->type;
             $this->nickname = $this->contact->nickname;
+            $this->description = $this->contact->comment;
             $this->phex_hash = $this->contact->phex_hash ?? null;
         }else
         {
@@ -54,6 +56,7 @@ class Manage extends ModalComponent
             'hash' => 'required|exists:App\Models\Leaderboard,player_hash',
             'type' => 'required|in:friend,enemy,dubious',
             'nickname' => 'required|string',
+            'description' => 'nullable|string',
             'phex_hash' => 'nullable|string',
         ]);
 
@@ -70,6 +73,7 @@ class Manage extends ModalComponent
             [
                 'type' => $this->type, 
                 'nickname' => $this->nickname,
+                'comment' => $this->description,
                 'phex_hash' => $this->phex_hash
             ]
         );

@@ -38,6 +38,12 @@
                 <small class="block mt-2 dark:text-gray-300">Enter a nickname for the contact.</small>
             </div>
             <div class="p-2">
+                <label class="block dark:text-gray-300">Description (Optional)</label>
+                <textarea wire:model="description" class="mt-2 w-full rounded-md border border-blue-400 dark:bg-slate-700 dark:text-gray-200 dark:placeholder:text-gray-500 dark:border-gray-600 dark:focus:bg-slate-600" placeholder="Some description text goes in this text field"></textarea>
+                @error('description') <div class="mt-2 text-red-400 font-bold italic">{{ $message }}</div> @enderror
+                <small class="block mt-2 dark:text-gray-300">Enter a description for this contact.</small>
+            </div>
+            <div class="p-2">
                 <label class="block dark:text-gray-300">Phex-hash (Optional)</label>
                 <input wire:model="phex_hash" class="mt-2 w-full rounded-md border border-blue-400 dark:bg-slate-700 dark:text-gray-200 dark:placeholder:text-gray-500 dark:border-gray-600 dark:focus:bg-slate-600" type='text' placeholder="f83kd921" />
                 @error('phex_hash') <div class="mt-2 text-red-400 font-bold italic">{{ $message }}</div> @enderror
