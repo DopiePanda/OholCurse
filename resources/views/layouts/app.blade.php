@@ -82,6 +82,10 @@
             </div>
 
             <x-effects.snow/>
+
+            @auth
+                <x-effects.backgrounds.animated-background />
+            @endauth
         </div>
 
         @filamentScripts
