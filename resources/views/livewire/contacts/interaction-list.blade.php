@@ -1,12 +1,12 @@
 <div class="h-full">
-    <div class="w-full h-full flex flex-col items-stretch pt-4 lg:ml-2 bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark border rounded-xl border-skin-base dark:border-skin-base-dark">
+    <div class="w-full h-full flex flex-col items-stretch pt-4 bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark border rounded-xl border-skin-base dark:border-skin-base-dark">
         
         <div class="mx-auto text-4xl mb-2 text-skin-base dark:text-skin-base-dark">Latest interactions</div>
-        <div class="text-md text-skin-muted dark:text-skin-muted-dark">Incoming interactions from other players to you</div>
+        <div class="text-md text-center text-skin-muted dark:text-skin-muted-dark">Incoming interactions from other players to you</div>
         <div class="w-1/3 my-4 mx-auto border-b border-gray-300 dark:border-gray-600"></div>
 
         @if($hash)
-            <div class="flex flex-row p-2 justify-center">
+            <div class="flex flex-row p-2 justify-center text-center">
                 <div wire:click="getInteractions('curse')" class="h-20 w-24 mx-2 p-4 rounded-lg cursor-pointer @if($selected == 'curse') bg-skin-fill-muted dark:bg-skin-fill-muted-dark border-2 border-skin-base dark:border-skin-base-dark @else bg-gray-200 dark:bg-slate-800 @endif">
                     <i class="fa-solid fa-book-skull fa-2x dark:text-gray-600"></i>
                     <div class="text-xs dark:text-gray-300">Curses</div>
@@ -37,7 +37,7 @@
         
             <div class="w-full mx-auto flex flex-col flex-1 overflow-x-scroll">
                 @if($selected == 'curse')
-                    <div class="w-full mx-2 p-4">
+                    <div class="w-full p-4">
                         @if(count($interactions) > 0)
                         <table class="w-full mt-4 mx-auto">
                             <thead>

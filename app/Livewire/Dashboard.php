@@ -24,6 +24,8 @@ class Dashboard extends Component
         'logEntryDeleted' => '$refresh',
     ];
 
+    public $tab;
+
     public $reports = [];
     public $yumlogs;
 
@@ -37,7 +39,8 @@ class Dashboard extends Component
     private $status = [];
 
     public function mount()
-    {   
+    { 
+        $this->tab = 'reports';
         $this->skip = 0;
         $this->take = 25;
         $this->limit = 25;
@@ -60,6 +63,11 @@ class Dashboard extends Component
         //dd($this->yumlogs);
 
         return view('livewire.dashboard');
+    }
+
+    public function setTab($tab)
+    {
+        $this->tab = $tab;
     }
 
     public function getStatus()
