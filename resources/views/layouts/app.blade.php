@@ -41,7 +41,7 @@
     </head>
     <body class="font-sans antialiased {{ auth()->user() ? auth()->user()->theme : env('DEFAULT_THEME') }}">
         <div class="z-10 flex flex-col min-h-screen bg-gray-100 dark:bg-slate-800">
-            @include('layouts.navigation')
+            <x-includes.navigation/>
 
             <!-- Page Heading -->
             @if (isset($header))

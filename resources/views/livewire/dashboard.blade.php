@@ -29,25 +29,37 @@ date_default_timezone_set($timezone);
         
     </x-slot>
 
-    <div class="w-full lg:w-2/3 lg:max-w-2/3 mt-6 mx-auto text-center p-2">
-        <div class="flex flex-col lg:flex-row justify-between">
-            <div class="flex-1 mt-2 w-full lg:w-1/2"><livewire:contacts.contact-list /></div>
-            <div class="flex-1 items-end mt-2 w-full lg:w-1/2 lg:ml-2"><livewire:contacts.interaction-list /></div>
+    <div class="w-1/2 mx-auto flex flex-row gap-4 items-center justify-center">
+        <div wire:click="setTab('contacts')" class="px-4 py-2 text-white border border-skin-base dark:border-skin-base-dark rounded-lg cursor-pointer @if($tab == 'contacts') bg-skin-fill @endif">
+            Contacts
+        </div>
+        <div wire:click="setTab('interactions')" class="px-4 py-2 text-white border border-skin-base dark:border-skin-base-dark rounded-lg cursor-pointer @if($tab == 'interactions') bg-skin-fill @endif">
+            Interactions
+        </div>
+        <div wire:click="setTab('reports')" class="px-4 py-2 text-white border border-skin-base dark:border-skin-base-dark rounded-lg cursor-pointer @if($tab == 'reports') bg-skin-fill @endif">
+            Reports
         </div>
     </div>
-    <div class="w-full lg:w-2/3 lg:max-w-2/3 mx-auto mt-2 lg:py-12">
-        <div class="w-full mx-auto sm:px-6 lg:px-8 py-4 border border-blue-400 rounded-lg dark:bg-slate-700 dark:border-0">
+
+    <div class="mt-4 w-1/2 mx-auto">
+
+        @if($tab == 'contacts')
+            <livewire:contacts.contact-list />
+        @elseif($tab == 'interactions')
+            <livewire:contacts.interaction-list />
+        @elseif($tab == 'reports')
             @if(count($yumlogs) > 0)
-                <div class="w-full mx-auto px-2 mt-4">
-                    <div class="grid grid-cols-2">
-                        <div class="text-2xl px-2 dark:text-gray-200">Curses from your Yumlog</div>
-                        <div class="text-right">
-                            <button class="mx-2 px-4 py-2 bg-gray-300 rounded-md" onclick="Livewire.dispatch('openModal', { component: 'modals.upload-logfile' })">
-                                Upload Yumlog
-                            </button>
-                            <button class="mx-2 px-4 py-2 bg-green-400 text-white rounded-md" wire:click="verifyCurses()">
-                                Verify curses
-                            </button>
+
+                <div class="w-full mx-auto py-4 px-6 mt-4 bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark border rounded-xl border-skin-base dark:border-skin-base-dark">
+                    <div class="text-center mx-auto text-4xl mb-2 text-skin-base dark:text-skin-base-dark">Yumlogs</div>
+                    <div class="text-md text-center text-skin-muted dark:text-skin-muted-dark">Yours submitted yumlog curse reports</div>
+                    <div class="w-1/3 my-4 mx-auto border-b border-gray-300 dark:border-gray-600"></div>
+                    <div class="flex flex-row justify-center gap-4">
+                        <div class="mx-2 px-4 py-2 bg-gray-300 rounded-md cursor-pointer" onclick="Livewire.dispatch('openModal', { component: 'modals.upload-logfile' })">
+                            Upload Yumlog
+                        </div>
+                        <div class="mx-2 px-4 py-2 bg-green-400 text-white rounded-md cursor-pointer" wire:click="verifyCurses()">
+                            Verify curses
                         </div>
                     </div>
                     <div class="relative overflow-x-scroll">
@@ -110,7 +122,7 @@ date_default_timezone_set($timezone);
                                         <td class="p-2 border border-gray-400">{{ $log->created_at }}</td>
                                     </tr>
                                 @empty
-    
+
                                 @endforelse
                             </tbody>
                         </table>
@@ -136,6 +148,6 @@ date_default_timezone_set($timezone);
                     </button>
                 </div>
             @endif
-        </div>
+        @endif
     </div>
 </div>

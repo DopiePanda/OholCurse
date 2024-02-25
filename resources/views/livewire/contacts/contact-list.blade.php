@@ -1,8 +1,8 @@
 <div class="lg:h-full">
-    <div class="w-full h-full flex flex-col items-stretch pt-4 lg:ml-2 bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark border rounded-xl border-skin-base dark:border-skin-base-dark">
+    <div class="w-full h-full flex flex-col items-stretch pt-4 bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark border rounded-xl border-skin-base dark:border-skin-base-dark">
 
         <div class="mx-auto text-4xl mb-2 text-skin-base dark:text-skin-base-dark">Contact list</div>
-        <div class="text-md text-skin-muted dark:text-skin-muted-dark">Profiles saved to your account are private and non-public</div>
+        <div class="text-center text-md text-skin-muted dark:text-skin-muted-dark">Profiles saved to your account are private and non-public</div>
         <div class="w-1/3 my-4 mx-auto border-b border-gray-300 dark:border-gray-600"></div>
 
         <div class="flex flex-row p-2 justify-center text-center">
@@ -25,13 +25,14 @@
         @if( $contacts)
             <div class="w-full mx-auto flex flex-col flex-1 overflow-x-scroll">
                 @if($selected == 'friend')
-                    <div class="w-full mx-2 p-4">
+                    <div class="w-full p-4">
                         @if(count($contacts) > 0)
                         <table class="w-full mt-4 mx-auto">
                             <thead>
                                 <tr>
-                                    <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Nickname</td>
                                     <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Leaderboard</td>
+                                    <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Nickname</td>
+                                    <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Comment</td>
                                     <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Phex hash</td>
                                     <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Actions</td>
                                 </tr>
@@ -39,15 +40,24 @@
                             <tbody>
                                 @foreach($contacts as $contact)
                                     <tr class="even:bg-gray-300 odd:bg-white dark:even:bg-slate-800 dark:odd:bg-slate-900 dark:text-gray-300">
+                                        <td class="p-2 border border-gray-400">
+                                            <a href="{{ route('player.curses', $contact->hash) }}">
+                                                {{ $contact->player->leaderboard_name ?? 'MISSING' }}
+                                            </a> 
+                                        </td>
                                         <td class="text-center p-2 border border-gray-400">
                                             <button class="mx-2" wire:click="$dispatch('openModal', {component: 'contacts.manage', arguments: {hash: '{{$contact->hash}}'}})">
                                                 {{ $contact->nickname }}
                                             </button> 
                                         </td>
-                                        <td class="p-2 border border-gray-400">
-                                            <a href="{{ route('player.curses', $contact->hash) }}">
-                                                {{ $contact->player->leaderboard_name ?? 'MISSING' }}
-                                            </a> 
+                                        <td class="text-center p-2 border border-gray-400" wire:click="$dispatch('openModal', {component: 'contacts.manage', arguments: {hash: '{{$contact->hash}}'}})">
+                                            @if($contact->comment != null)
+                                                <div class="text-left mx-2" >
+                                                    {{ Str::of($contact->comment)->limit(256, ' ...') }}
+                                                </div> 
+                                            @else
+                                                <span class="italic">No comment added yet. Click here to add</span>
+                                            @endif
                                         </td>
                                         <td class="p-2 border border-gray-400">
                                             <a href="{{ route('player.curses', $contact->hash) }}">
@@ -80,8 +90,9 @@
                         <table class="w-full mt-4 mx-auto">
                             <thead>
                                 <tr>
-                                    <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Nickname</td>
                                     <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Leaderboard</td>
+                                    <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Nickname</td>
+                                    <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Comment</td>
                                     <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Phex hash</td>
                                     <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Actions</td>
                                 </tr>
@@ -89,15 +100,24 @@
                             <tbody>
                                 @foreach($contacts as $contact)
                                     <tr class="even:bg-gray-300 odd:bg-white dark:even:bg-slate-800 dark:odd:bg-slate-900 dark:text-gray-300">
+                                        <td class="p-2 border border-gray-400">
+                                            <a href="{{ route('player.curses', $contact->hash) }}">
+                                                {{ $contact->player->leaderboard_name ?? 'MISSING' }}
+                                            </a> 
+                                        </td>
                                         <td class="text-center p-2 border border-gray-400">
                                             <button class="mx-2" wire:click="$dispatch('openModal', {component: 'contacts.manage', arguments: {hash: '{{$contact->hash}}'}})">
                                                 {{ $contact->nickname }}
                                             </button> 
                                         </td>
-                                        <td class="p-2 border border-gray-400">
-                                            <a href="{{ route('player.curses', $contact->hash) }}">
-                                                {{ $contact->player->leaderboard_name ?? 'MISSING' }}
-                                            </a> 
+                                        <td class="text-center p-2 border border-gray-400" wire:click="$dispatch('openModal', {component: 'contacts.manage', arguments: {hash: '{{$contact->hash}}'}})">
+                                            @if($contact->comment != null)
+                                                <button class="mx-2" >
+                                                    {{ $contact->comment }}
+                                                </button> 
+                                            @else
+                                                <span class="italic">No comment added yet. Click here to add</span>
+                                            @endif
                                         </td>
                                         <td class="p-2 border border-gray-400">
                                             <a href="{{ route('player.curses', $contact->hash) }}">
@@ -130,8 +150,9 @@
                     <table class="w-full mt-4 mx-auto">
                         <thead>
                             <tr>
-                                <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Nickname</td>
                                 <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Leaderboard</td>
+                                <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Nickname</td>
+                                <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Comment</td>
                                 <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Phex hash</td>
                                 <td class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark border border-white dark:border-gray-600">Actions</td>
                             </tr>
@@ -139,15 +160,24 @@
                         <tbody>
                             @foreach($contacts as $contact)
                                 <tr class="even:bg-gray-300 odd:bg-white dark:even:bg-slate-800 dark:odd:bg-slate-900 dark:text-gray-300">
+                                    <td class="p-2 border border-gray-400">
+                                        <a href="{{ route('player.curses', $contact->hash) }}">
+                                            {{ $contact->player->leaderboard_name ?? 'MISSING' }}
+                                        </a> 
+                                    </td>
                                     <td class="text-center p-2 border border-gray-400">
                                         <button class="mx-2" wire:click="$dispatch('openModal', {component: 'contacts.manage', arguments: {hash: '{{$contact->hash}}'}})">
                                             {{ $contact->nickname }}
                                         </button> 
                                     </td>
-                                    <td class="p-2 border border-gray-400">
-                                        <a href="{{ route('player.curses', $contact->hash) }}">
-                                            {{ $contact->player->leaderboard_name ?? 'MISSING' }}
-                                        </a> 
+                                    <td class="text-center p-2 border border-gray-400" wire:click="$dispatch('openModal', {component: 'contacts.manage', arguments: {hash: '{{$contact->hash}}'}})">
+                                        @if($contact->comment != null)
+                                            <button class="mx-2" >
+                                                {{ $contact->comment }}
+                                            </button> 
+                                        @else
+                                            <span class="italic">No comment added yet. Click here to add</span>
+                                        @endif
                                     </td>
                                     <td class="p-2 border border-gray-400">
                                         <a href="{{ route('player.curses', $contact->hash) }}">
