@@ -50,9 +50,18 @@ class ProfileMenu extends Component
                         ->count();
         if($player)
         {
-            $records = LeaderboardRecord::where('leaderboard_id', $player->leaderboard_id)
+            $normal = LeaderboardRecord::where('leaderboard_id', $player->leaderboard_id)
+                            ->where('ghost', 0)
                             ->whereHas('leaderboard', function($query) { return $query->where('enabled', '=', 1); })
-                            ->count();
+                            ->count(DB::raw('DISTINCT game_leaderboard_id'));
+
+            $ghost = LeaderboardRecord::where('leaderboard_id', $player->leaderboard_id)
+                            ->where('ghost', 1)
+                            ->whereHas('leaderboard', function($query) { return $query->where('enabled', '=', 1); })
+                            ->count(DB::raw('DISTINCT game_leaderboard_id'));
+
+            $records = $normal + $ghost;
+
         }else{
             $records = 0;
         }
