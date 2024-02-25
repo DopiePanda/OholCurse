@@ -41,7 +41,7 @@ date_default_timezone_set($timezone);
         </div>
     </div>
 
-    <div class="mt-4 w-1/2 mx-auto">
+    <div class="mt-4 w-full lg:w-1/2 mx-auto">
 
         @if($tab == 'contacts')
             <livewire:contacts.contact-list />

@@ -40,7 +40,7 @@ class Dashboard extends Component
 
     public function mount()
     { 
-        $this->tab = 'reports';
+        $this->tab = 'contacts';
         $this->skip = 0;
         $this->take = 25;
         $this->limit = 25;

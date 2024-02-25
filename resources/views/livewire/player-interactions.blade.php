@@ -8,8 +8,8 @@
         <livewire:player.profile-header :hash="$hash">
 
     </x-slot>
-    <div class="grow w-full flex flex-col">
 
+    <div class="grow w-full flex flex-col">
         <livewire:player.profile-menu :hash="$hash">
 
         <div class="w-full mt-6 bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark p-2 lg:p-6">
