@@ -11,11 +11,13 @@ use DB;
 use App\Models\Leaderboard;
 use App\Models\LifeLog;
 use App\Models\FoodLog;
+use App\Models\User;
 
 class Statistics extends Component
 {
     public $hash;
     public $profile;
+    public $donator;
     public $total_lives;
 
     public $start_time;
@@ -52,6 +54,8 @@ class Statistics extends Component
                     ->select('leaderboard_name', 'leaderboard_id', 'player_hash')
                     ->orderBy('id', 'desc')
                     ->first();
+
+        $this->donator = User::where('donator', 1)->where('player_hash', $this->hash)->first() ?? null;
     }
 
     public function render()

@@ -21,6 +21,7 @@ class ContactList extends Component
     public $confirm;
     public $skip;
     public $take;
+    public $order;
 
     public $contacts;
     public $result_count;
@@ -30,12 +31,25 @@ class ContactList extends Component
         $this->selected = 'friend';
         $this->skip = 0;
         $this->take = 10;
+        $this->order = 'desc';
 
-        $this->getContacts($this->selected);
+        //$this->getContacts($this->selected);
     }
 
     public function render()
     {
+        $this->result_count = UserContact::where('user_id', Auth::user()->id)
+                                ->where('type', $this->selected)
+                                ->count();
+
+        $this->contacts = UserContact::with('player')
+                        ->where('user_id', Auth::user()->id)
+                        ->where('type', $this->selected)
+                        ->skip($this->skip)
+                        ->take($this->take)
+                        ->orderBy('created_at', $this->order)
+                        ->get();
+
         return view('livewire.contacts.contact-list');
     }
 
@@ -55,6 +69,13 @@ class ContactList extends Component
         
     }
 
+    public function getContacts($type)
+    {
+        $this->skip = 0;
+        $this->selected = $type;
+    }
+
+    /*
     public function getContacts($type)
     {
         if($type != $this->selected)
@@ -89,13 +110,24 @@ class ContactList extends Component
                             ->get();
         }
     }
+    */
+
+    public function updateLimit()
+    {
+        //$this->getContacts($this->selected);
+    }
+
+    public function updateOrder()
+    {
+
+    }
 
     public function nextPage()
     {
         if($this->result_count > ($this->skip + $this->take) && $this->result_count > $this->take)
         {
             $this->skip += $this->take;
-            $this->getContacts($this->selected);
+            //$this->getContacts($this->selected);
         }
     }
 
@@ -109,6 +141,6 @@ class ContactList extends Component
             $this->skip = 0;
         }
 
-        $this->getContacts($this->selected);
+        //$this->getContacts($this->selected);
     }
 }

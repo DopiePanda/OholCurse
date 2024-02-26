@@ -7,18 +7,18 @@ use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Auth;
 
+use App\Models\User;
+
 class AnimatedBackground extends Component
 {
-
-    public $user;
 
     /**
      * Create a new component instance.
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(
+        public string $donator,
+    )
+    {}
 
     /**
      * Get the view / contents that represent the component.

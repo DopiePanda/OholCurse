@@ -1,5 +1,7 @@
 <x-app-layout>
 
+    <x-effects.backgrounds.animated-background :donator="$donator" />
+
     @section("page-title")
         @if( $name )- Lives for {{ $name->leaderboard_name }}@else- Lives @endif
     @endsection
@@ -79,5 +81,4 @@
             <div class="text-center text-sm mt-2 text-gray-400">Page load time: {{ round($end, 3) }}s</div>
         </div>
     </div>
-    
 </x-app-layout>

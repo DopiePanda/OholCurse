@@ -37,15 +37,17 @@
         <!-- Stylesheets -->
         <link rel="stylesheet" href="{{ asset('assets/css/trix.css') }}">
 
+        @stack('styles')
+
         @yield('before-head-end')
     </head>
     <body class="font-sans antialiased {{ auth()->user() ? auth()->user()->theme : env('DEFAULT_THEME') }}">
-        <div class="z-10 flex flex-col min-h-screen bg-gray-100 dark:bg-slate-800">
+        <div id="background" class="z-10 flex flex-col min-h-screen bg-gray-100 dark:bg-slate-800">
             <x-includes.navigation/>
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="z-10 bg-white dark:bg-slate-700 shadow">
+                <header class="z-20 bg-white dark:bg-slate-700 shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
@@ -69,7 +71,7 @@
                 </div> 
                 <div class="basis-2/4 text-center">
                     @if(env('DONATION_BANNER') == 'true')
-                        <span class="text-skin-muted dark:text-skin-muted-dark cursor-default">Want to help support the website?</span> <a href="{{ env('DONATION_URL') }}" target="_blank" class="text-skin-base dark:text-skin-base-dark">Donate a coffee</a>
+                        <span id="donationBanner" class="text-skin-muted dark:text-skin-muted-dark cursor-default">Want to help support the website?</span> <a href="{{ env('DONATION_URL') }}" target="_blank" class="text-skin-base dark:text-skin-base-dark">Donate a coffee</a>
                     @endif
                 </div>
                 <div class="z-30 basis-1/4 text-right">
@@ -84,7 +86,7 @@
             <x-effects.snow/>
 
             @auth
-                <x-effects.backgrounds.animated-background />
+                
             @endauth
 
         </div>

@@ -17,6 +17,7 @@ use App\Models\UserContact;
 use App\Models\PlayerScore;
 use App\Models\ProfileRestriction;
 use App\Models\Yumlog;
+use App\Models\User;
 
 class PlayerReportController extends Controller
 {
@@ -184,12 +185,17 @@ class PlayerReportController extends Controller
                             ->orderBy('id', 'desc')
                             ->first();
 
+        $donator = User::where('donator', 1)
+                ->where('player_hash', $hash)
+                ->first() ?? null;
+
         return view('player.lives', [
             'hash' => $hash, 
             'lives' => $lives,
             'lives_normal' => $lives_normal,
             'lives_dt' => $lives_dt,
             'name' => $name,
+            'donator' => $donator,
             'time' => $time_start,
         ]);
     }
@@ -232,7 +238,17 @@ class PlayerReportController extends Controller
                     ->limit($curse_count)
                     ->get();
 
-        return view('player.reports', ['hash' => $hash, 'name' => $name, 'reports' => $reports, 'time' => $time_start]);
+        $donator = User::where('donator', 1)
+                ->where('player_hash', $hash)
+                ->first() ?? null;
+
+        return view('player.reports', [
+            'hash' => $hash, 
+            'name' => $name, 
+            'reports' => $reports,
+            'donator' => $donator,
+            'time' => $time_start
+        ]);
     }
     
     public function report(Request $request, $hash)
@@ -284,11 +300,16 @@ class PlayerReportController extends Controller
 
         }
 
+        $donator = User::where('donator', 1)
+                ->where('player_hash', $hash)
+                ->first() ?? null;
+
         return view('player.records', [
             'hash' => $hash, 
             'records' => $records ?? [],
             'ghostRecords' => $ghostRecords ?? [],
             'player' => $player,
+            'donator' => $donator,
             'time' => $time_start,
         ]);
         

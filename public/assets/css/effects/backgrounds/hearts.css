@@ -1,0 +1,14 @@
+body{overflow:hidden;}
+svg {
+  width: 100vw;
+  height: 100vh;
+}
+
+#donationBanner{
+  color: #111;
+}
+
+#donationBanner + a{
+  color: black !important;
+  font-weight: bold;
+}

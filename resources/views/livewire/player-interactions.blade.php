@@ -1,4 +1,7 @@
-<div class="w-full md:w-3/4 lg:w-3/6">
+<div class="w-full md:w-3/4 lg:max-w-6xl">
+
+    <x-effects.backgrounds.animated-background :donator="$donator" />
+    
     @section("page-title")
         @if( $profile && isset($profile->leaderboard_name) )- Interactions for {{ $profile->leaderboard_name }}@else- Interactions @endif
     @endsection
@@ -51,4 +54,5 @@
             <div class="text-center text-sm mt-2 text-gray-400">Page load time: {{ round($end, 3) }}s</div>
 
         </div>
+    </div>
 </div>

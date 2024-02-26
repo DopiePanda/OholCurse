@@ -17,7 +17,9 @@ class PhexHashResource extends Resource
 {
     protected static ?string $model = PhexHash::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-hashtag';
+
+    protected static ?string $navigationGroup = 'Accounts';
 
     public static function form(Form $form): Form
     {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\TimezoneUpdateRequest;
+use App\Http\Requests\BackgroundUpdateRequest;
 use App\Http\Requests\ThemeUpdateRequest;
 use App\Http\Requests\DarkmodeUpdateRequest;
 
@@ -58,6 +59,19 @@ class ProfileController extends Controller
     }
 
     /**
+     * Update the user's background.
+     */
+    public function updateBackground(BackgroundUpdateRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        $request->user()->background = $validated['background'];
+        $request->user()->save();
+
+        return Redirect::route('profile.edit')->with('status', 'background-updated');
+    }
+
+    /**
      * Update the user's theme.
      */
     public function updateTheme(ThemeUpdateRequest $request): RedirectResponse
@@ -72,7 +86,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's theme.
+     * Update the user's darkmode preference.
      */
     public function updateDarkmode(DarkmodeUpdateRequest $request): RedirectResponse
     {
