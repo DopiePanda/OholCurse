@@ -26,4 +26,9 @@ class PhexHash extends Model
     {
         return $this->hasOne(UserContact::class, 'phex_hash', 'olgc_hash');
     }
+
+    public function player(): HasOne
+    {
+        return $this->hasOne(Leaderboard::class, 'player_hash', 'player_hash');
+    }
 }

@@ -172,7 +172,7 @@
                                 >
                                     <td class="p-2 text-center border-b border-gray-400 dark:border-gray-800">#{{ $loop->index+1 }}</td>
                                     <td class="p-2 border-b border-gray-400 dark:border-gray-800">
-                                        {{ ucfirst(str_replace('_', ' ', $key)) }}
+                                        {{ ucfirst(str_replace('dA', 'd A', str_replace('_', ' ', $key))) }}
                                         @if($key == 'killed')
                                             <i class="ml-1 text-skin-muted dark:text-skin-muted-dark fa-solid fa-angles-right fa-2xs"></i>
                                         @endif
