@@ -219,8 +219,16 @@ class YumlogResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
+        $status = [0,1,2,3,4];
+
+        if(auth()->user()->can('view all yumlogs'))
+        {
+            $status = [0,1,2,3,4,5];
+        }
+        
         return parent::getEloquentQuery()
-                    ->with('leaderboard');
+                ->with('leaderboard')
+                ->whereIn('status', $status);
     }
 
     public static function processFile($path, $hide)

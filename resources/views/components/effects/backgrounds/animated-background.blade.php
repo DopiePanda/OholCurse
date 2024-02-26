@@ -21,5 +21,9 @@
             @include('effects.backgrounds.goobs')
         @endif
 
+        @if($donator->background == 'girly')
+            @include('effects.backgrounds.girly')
+        @endif
+
     @endif
 </div>
