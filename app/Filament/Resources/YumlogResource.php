@@ -41,6 +41,7 @@ use App\Models\Yumlog;
 use App\Models\LifeLog;
 use App\Models\CurseLog;
 use App\Models\CurseLogTemp;
+use App\Models\PhexHash;
 
 
 class YumlogResource extends Resource
@@ -183,7 +184,7 @@ class YumlogResource extends Resource
                     Checkbox::make('hide_forgives')
                     ->label('Hide the forgives sent from public view')
                     ->default(true)
-                    ->inline(false),
+                    ->inline(true),
 
                 ])
                 ->label('Import Custom YumLog')
@@ -240,7 +241,17 @@ class YumlogResource extends Resource
                         {
                             Log::channel('yumlog')->error($th);
                         }
-                        
+                    }
+                    if(Str::contains($line, '| phex_list |'))
+                    {
+                        try 
+                        {
+                            self::processPhexHash($line);
+                        } 
+                        catch (\Throwable $th) 
+                        {
+                            Log::channel('yumlog')->error($th);
+                        }
                     }
                 });
 
@@ -383,5 +394,45 @@ class YumlogResource extends Resource
         $report->verified = 1;
         $report->visible = 1;
         $report->save();
+    }
+
+    public static function processPhexHash($line)
+    {
+        /*
+            $parts[0] = timestamp | 1379020415 
+            $parts[1] = type | phex_list
+            $parts[2] = phex hash | 627474f34827254d1b373b3cb3b63691d8f7e445
+            $parts[3] = phex name | DopiePanda
+            $parts[4] = character ID | 7001138
+            $parts[5] = character name | UGNE WUNDER
+
+            1705115066 | phex_list | 627474f34827254d1b373b3cb3b63691d8f7e445 | DopiePanda | 7001138 | UGNE WUNDER
+        */
+
+        $parts = explode(' | ', $line);
+
+        if (count($parts) == 6) 
+        {
+            $life = LifeLog::select('character_id', 'player_hash')->where('character_id', $parts[4])->where('type', 'death')->first();
+        }
+
+        try 
+        {
+            PhexHash::updateOrCreate(
+                [
+                    'olgc_name' => $parts[3],
+                    'olgc_hash' => Str::take($parts[2], 8),
+                ], 
+                [
+                    'olgc_hash_full' => $parts[2],
+                    'player_hash' => $life ? $life->player_hash : null,
+                    'character_id' => $life ? $life->character_id : null,
+                ]
+            );
+        } 
+        catch (\Throwable $th) 
+        {
+            Log::channel('yumlog')->error($th);
+        }
     }
 }

@@ -48,7 +48,7 @@
                         </td>
                         <td class="px-1 py-2 border-b border-gray-400 dark:border-gray-800">{{ ucfirst($killer->family_type) }}</td>
                         <td class="px-1 py-2 border-b border-gray-400 dark:border-gray-800">{{ $killer->death->age }}</td>
-                        <td class="px-1 py-2 border-b border-gray-400 dark:border-gray-800">{{ $killer->death->died_to }}</td>
+                        <td class="px-1 py-2 border-b border-gray-400 dark:border-gray-800">{{ ucfirst(str_replace('dA', 'd A', str_replace('_', ' ', $killer->death->died_to))) }}</td>
                     </tr>
                 @endforeach
             </tbody>

@@ -52,8 +52,12 @@ class PhexHashResource extends Resource
                 Tables\Columns\TextColumn::make('phex.nickname')
                     ->searchable(['nickname'], isIndividual: true)
                     ->default('No nickname'),
-                Tables\Columns\TextColumn::make('character_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('player.leaderboard_name')
+                    ->searchable(['leaderboard_name'], isIndividual: true)
+                    ->url(fn (PhexHash $record): string => route('player.curses', ['hash' => $record->player_hash ?? 'missing']))
+                    ->openUrlInNewTab()
+                    ->placeholder('N/A')
+                    ->label('Leaderboard name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('olgc_name')
                     ->searchable(),
@@ -76,6 +80,7 @@ class PhexHashResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('player.leaderboard_name', 'desc')
             ->filters([
                 //
             ])
