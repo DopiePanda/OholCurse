@@ -21,6 +21,11 @@ class UserContact extends Model
         return $this->hasOne(Leaderboard::class, 'player_hash', 'hash');
     }
 
+    public function report()
+    {
+        return $this->hasOne(Yumlog::class, 'player_hash', 'hash');
+    }
+
     public function phex()
     {
         return $this->belongsTo(PhexHash::class, 'phex_hash', 'px_hash');

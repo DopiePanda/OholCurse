@@ -118,7 +118,7 @@ Route::middleware('web')->group(function() {
         Route::get('/roadmap/ideas/create', IdeaCreate::class)->name('roadmap.idea.create');
 
         Route::get('/phpinfo', function () {
-            return redirect()->route('search');
+            abort(403);
         });
 
         Route::prefix('/content')->name('content.')->group(function () {

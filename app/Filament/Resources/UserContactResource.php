@@ -48,7 +48,8 @@ class UserContactResource extends Resource
                 ->url(fn (UserContact $record): string => route('player.curses', ['hash' => $record->user->player_hash ?? 'missing']))
                 ->openUrlInNewTab()
                 ->placeholder('N/A')
-                ->label('User'),
+                ->label('User')
+                ->visible(fn (): bool => auth()->user()->can('view report submitter')),
                 TextColumn::make('player.leaderboard_name')
                 ->searchable(['leaderboard_name'], isIndividual: true)
                 ->url(fn (UserContact $record): string => route('player.curses', ['hash' => $record->player->player_hash ?? 'missing']))
@@ -59,10 +60,22 @@ class UserContactResource extends Resource
                 ->searchable(['nickname'], isIndividual: true)
                 ->placeholder('N/A')
                 ->label('Nickname'),
+                TextColumn::make('report.curse_name')
+                ->searchable(['curse_name'], isIndividual: true)
+                ->placeholder('N/A')
+                ->label('Curse name'),
+                TextColumn::make('phex.px_hash')
+                ->searchable(['px_hash'], isIndividual: true)
+                ->placeholder('N/A')
+                ->label('PX hash (Uploaded)'),
+                TextColumn::make('phex.olgc_hash')
+                ->searchable(['olgc_hash'], isIndividual: true)
+                ->placeholder('N/A')
+                ->label('OLGC hash (Uploaded'),
                 TextColumn::make('phex_hash')
                 ->searchable(['phex_hash'], isIndividual: true)
                 ->placeholder('N/A')
-                ->label('Phex Hash'),
+                ->label('PX hash (Submitted)'),
                 TextColumn::make('created_at')
                 ->sortable()
                 ->dateTime(),
@@ -74,6 +87,7 @@ class UserContactResource extends Resource
             ->defaultPaginationPageOption(50)
             ->groups([
                 'type',
+                'player.leaderboard_name',
                 'user.username',
             ])
             ->filters([
