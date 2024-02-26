@@ -32,7 +32,7 @@
             <div class="py-12 max-w-xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-col gap-4 items-center pt-8 sm:justify-start sm:pt-0">
                     <div class="">
-                        <img class="w-60 mx-auto rounded-lg" src="{{ asset('assets/uploads/images/errors/404-poop.webp') }}" alt="oholcurse-logo" />
+                        <img class="max-w-96 mx-auto rounded-lg" src="@yield('image')" alt="oholcurse-logo" />
                     </div>
                     <div class="px-4 text-6xl text-gray-500 font-bold text-skin-base dark:text-skin-base-dark tracking-wider">
                         @yield('code')
@@ -40,6 +40,7 @@
 
                     <div class="text-white ml-4 text-center text-md text-gray-500 uppercase tracking-wider">
                         @yield('message')
+                        <div class="italic">@yield('sub-message')</div>
                     </div>
                 </div>
             </div>
