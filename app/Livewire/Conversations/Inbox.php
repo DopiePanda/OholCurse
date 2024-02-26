@@ -243,6 +243,12 @@ class Inbox extends Component
                             ->count();
     }
 
+    public function openFriendsMenu()
+    {
+        $this->dispatch('openModal', component: 'conversations.manage-friends');
+        $this->show_chat = false;
+    }
+
     #[On('friend-request-answered')] 
     public function updatefriend_requests()
     {

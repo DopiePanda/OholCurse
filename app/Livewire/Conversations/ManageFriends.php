@@ -369,8 +369,7 @@ class ManageFriends extends ModalComponent
 
     public function openChat($id)
     {
-        //$this->setTab("blocked");
         $this->dispatch('open-friend-conversation', id: $id); 
-        //$this->setTab("friends");
+        $this->closeModal();
     }
 }
