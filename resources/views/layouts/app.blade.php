@@ -60,21 +60,21 @@
             </main>
 
             <div class="z-30 py-4 sm:px-4 flex flex-row items-end">
-                <div class="basis-1/4 text-left">
+                <div class="z-20 basis-1/4 text-left">
                     @can('access admin panel')
                         <div class="fixed bottom-0 left-0 pb-4 pl-4">
-                            <a class="" href="/admin" title="Admin panel">
+                            <a class="z-30" href="/admin" title="Admin panel">
                                 <i class="fa-solid fa-toolbox fa-2x text-skin-base dark:text-skin-base-dark"></i>
                             </a>
                         </div>
                     @endcan
                 </div> 
-                <div class="basis-2/4 text-center">
+                <div class="z-20 basis-2/4 text-center">
                     @if(env('DONATION_BANNER') == 'true')
                         <span id="donationBanner" class="text-skin-muted dark:text-skin-muted-dark cursor-default">Want to help support the website?</span> <a href="{{ env('DONATION_URL') }}" target="_blank" class="text-skin-base dark:text-skin-base-dark">Donate a coffee</a>
                     @endif
                 </div>
-                <div class="z-30 basis-1/4 text-right">
+                <div class="z-10 basis-1/4 text-right">
                     @if(env('CHAT_ENABLED') == 'true')
                         @auth
                             <livewire:conversations.inbox />

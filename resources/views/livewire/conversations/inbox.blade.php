@@ -16,7 +16,7 @@
                     <div id="inboxHeaderNav" class="z-30 shrink self-center text-right pl-4 text-lg">
                         <div class="z-30 text-white">
                             <div class="flex flex-row">
-                                <div class="flex flex-row cursor-pointer" wire:click="$dispatch('openModal', {component: 'conversations.manage-friends'})">
+                                <div class="flex flex-row cursor-pointer" wire:click="openFriendsMenu()">
                                     @if($friend_requests > 0)
                                         <div class="h-4 w-4 rounded-full text-xs bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark text-white">
                                             <div class="mr-1">{{ $friend_requests }}</div>
@@ -185,7 +185,7 @@
         </div>
     @endif
     <!-- Chat menu -->
-        <div class="w-screen sm:w-96 z-50 py-4 px-4 flex flex-row gap-4 grow border-gray-200 justify-between align-center items-center @if($selected_conversation !== null) bg-skin-fill-muted dark:bg-skin-fill-muted-dark border-t border-skin-muted dark:border-skin-muted-dark @endif">
+        <div class="w-screen sm:w-96 z-10 py-4 px-4 flex flex-row gap-4 grow border-gray-200 justify-between align-center items-center @if($selected_conversation !== null) bg-skin-fill-muted dark:bg-skin-fill-muted-dark border-t border-skin-muted dark:border-skin-muted-dark @endif">
             <div class="grow -mb-2 h-full">
                 @if($selected_conversation !== null)
                     <textarea id="chatReply" wire:model="message" wire:keydown.enter="$dispatch('process-message')" class="w-full rounded-lg" placeholder="Enter your message here" rows="1"></textarea>
