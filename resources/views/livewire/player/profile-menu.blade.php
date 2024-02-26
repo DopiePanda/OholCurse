@@ -2,7 +2,7 @@
     <div class="text-center">
         <div class="p-2 grid grid-rows-1 lg:grid-cols-4 lg:divide-x divide-gray-700 text-center">
             <div class="mt-2 lg:px-4">
-                <a href="{{ route('player.interactions', ['hash' => $hash]) }}" class="block py-2 rounded-xl border border-skin-base dark:border-skin-base-dark @if(request()->routeIs('player.curses')) bg-skin-fill dark:bg-skin-fill-dark text-white border-0 @else text-skin-base dark:text-skin-base-dark @endif">
+                <a href="{{ route('player.interactions', ['hash' => $hash]) }}" class="block py-2 rounded-xl border border-skin-base dark:border-skin-base-dark @if(request()->routeIs('player.curses') || request()->routeIs('player.interactions')) bg-skin-fill dark:bg-skin-fill-dark text-white border-0 @else text-skin-base dark:text-skin-base-dark @endif">
                     Interactions ({{ $counts['curses'] }})
                 </a>
             </div>

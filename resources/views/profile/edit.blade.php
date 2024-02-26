@@ -17,6 +17,14 @@
                     @include('profile.partials.update-timezone-form')
                 </div>
             </div>
+            @if($user->donator == 1 && $user->player_hash != null)
+                <div class="relative overflow-hidden p-4 sm:p-8 bg-white shadow sm:rounded-lg dark:bg-skin-fill-wrapper-dark">
+                    <i style="font-size: 12em;" class="z-0 absolute -bottom-9 -right-9 -rotate-45 fa-solid fa-yin-yang text-gray-200 dark:text-slate-800/50"></i>
+                    <div class="relative z-10 max-w-xl">
+                        @include('profile.partials.update-background-form')
+                    </div>
+                </div>
+            @endif
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg dark:bg-skin-fill-wrapper-dark">
                 <div class="max-w-xl">
                     @include('profile.partials.update-theme-form')

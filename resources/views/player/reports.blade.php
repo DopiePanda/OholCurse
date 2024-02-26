@@ -1,4 +1,6 @@
 <x-app-layout>
+    
+    <x-effects.backgrounds.animated-background :donator="$donator" />
 
     @section("page-title")
         @if( $name )- Reports for {{ $name->leaderboard_name }}@else- Reports @endif

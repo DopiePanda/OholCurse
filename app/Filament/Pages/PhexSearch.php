@@ -11,4 +11,9 @@ class PhexSearch extends Page
     protected static ?string $navigationGroup = 'Accounts';
 
     protected static string $view = 'filament.pages.phex-search';
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()->can('can view user contacts');
+    }
 }

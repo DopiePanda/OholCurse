@@ -1,4 +1,4 @@
-<div class="bg-white dark:bg-slate-700">
+<div class="z-30 bg-white dark:bg-slate-700">
     <div class="flex flex-row items-center justify-center pr-8">
         <div class="flex grow text-center justify-center items-center">
             <div class="inline-block">

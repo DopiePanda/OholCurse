@@ -26,6 +26,7 @@ use App\Livewire\Home;
 use App\Livewire\CharacterNames;
 use App\Livewire\Statistics;
 use App\Livewire\PlayerInteractions;
+use App\Livewire\Player\Lives as PlayerLives;
 use App\Livewire\Player\Statistics as PlayerStatistics;
 use App\Livewire\Map\Leaderboard;
 use App\Livewire\Modals\Charts\LeaderboardRecords;
@@ -63,7 +64,10 @@ Route::middleware('web')->group(function() {
 
     Route::get('/player/hash/{hash}', PlayerInteractions::class)->name('player.curses');
     Route::get('/player/interactions/{hash}', PlayerInteractions::class)->name('player.interactions');
+    Route::get('/player/lives/{hash}', PlayerLives::class)->name('player.lives');
+    /*
     Route::get('/player/lives/{hash}', [PlayerReportController::class, 'lives'])->name('player.lives');
+    */
     Route::get('/player/reports/{hash}', [PlayerReportController::class, 'reports'])->name('player.reports');
     Route::get('/player/records/{hash}', [PlayerReportController::class, 'records'])->name('player.records');
     Route::get('/player/statistics/{hash}', PlayerStatistics::class)->name('player.statistics');
@@ -99,6 +103,7 @@ Route::middleware('web')->group(function() {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::patch('/profile/timezone', [ProfileController::class, 'updateTimezone'])->name('timezone.update');
+        Route::patch('/profile/background', [ProfileController::class, 'updateBackground'])->name('background.update');
         Route::patch('/profile/theme', [ProfileController::class, 'updateTheme'])->name('theme.update');
         Route::patch('/profile/darkmode', [ProfileController::class, 'updateDarkmode'])->name('darkmode.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

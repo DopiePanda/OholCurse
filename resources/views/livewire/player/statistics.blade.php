@@ -1,4 +1,7 @@
 <div class="w-full md:w-3/4 lg:w-3/5">
+
+    <x-effects.backgrounds.animated-background :donator="$donator" wire:ignore />
+    
     @section("page-title")
     @if( $profile && isset($profile->leaderboard_name) )
     - Statistics for {{ $profile->leaderboard_name }}

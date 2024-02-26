@@ -1,5 +1,7 @@
 <x-app-layout>
 
+    <x-effects.backgrounds.animated-background :donator="$donator" />
+
     @section("page-title")
         @if( $player )- {{ $player->leaderboard_name }}'s Records @else- Records @endif
     @endsection
@@ -22,7 +24,7 @@
                         @if($record->currentRecord->leaderboard_id == $record->leaderboard_id)
                             <div class="p-2 text-skin-muted dark:text-skin-muted-dark bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark text-center">
                                 <div class="h-12 mx-auto text-center">
-                                    <img class="h-12 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="" title="{{ asset($record->leaderboard->image) ?? '' }}">
+                                    <img class="h-12 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="{{ $record->leaderboard->label ?? '' }}" title="{{ $record->leaderboard->label ?? '' }}">
                                 </div>
                                 <div>{{ $record->currentRecord->leaderboard->label }}</div>
                                 <div class="my-2 text-3xl text-skin-base dark:text-skin-base-dark">{{ $record->currentRecord->amount }}</div>
@@ -32,22 +34,36 @@
                                 </div>
                             </div>
                         @else
-                            <div class="p-2 text-white border border-dashed border-gray-400 text-center">
+                            <div class="p-2 text-skin-muted dark:text-skin-muted-dark bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-dashed border-gray-400 text-center">
                                 <div class="h-12 mx-auto text-center">
-                                    <img class="h-12 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="" title="{{ asset($record->leaderboard->image) ?? '' }}">
+                                    <img class="h-12 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="{{ $record->leaderboard->label ?? '' }}" title="{{ $record->leaderboard->label ?? '' }}">
                                 </div>
                                 <div class="line-through">{{ $record->leaderboard->label }}</div>
-                                <div class="my-2 text-3xl text-skin-muted dark:text-skin-muted-dark"><span class="line-through">{{ $record->amount }}</span> > <span class="text-skin-base dark:text-skin-base-dark">{{ $record->currentRecord->amount }}</span></div>
+                                <div class="my-2 text-3xl text-skin-muted dark:text-skin-muted-dark">
+                                    <span class="line-through">
+                                        {{ $record->amount }}
+                                    </span> 
+                                    <span> > </span> 
+                                    <span class="text-skin-base dark:text-skin-base-dark">
+                                        @if($record->currentRecord->player->player_hash)
+                                        <a href="{{ route('player.records', ['hash' => $record->currentRecord->player->player_hash]) }}" title="{{ $record->currentRecord->player->leaderboard_name ?? 'Leaderboard name missing' }}">
+                                            {{ $record->currentRecord->amount }}
+                                        </a>
+                                        @else
+                                            {{ $record->currentRecord->amount }}
+                                        @endif
+                                    </span>
+                                </div>
                                 <div class="p-1 mt-3 rounded-full bg-skin-fill dark:bg-skin-fill-dark text-white text-sm">
                                     {{ ucwords(strtolower($record->lifeName->name)) }}
-                                    <div>{{ date('Y-m-d H:i:s', $record->currentRecord->timestamp) }}</div>
+                                    <div>{{ date('Y-m-d H:i:s', $record->timestamp) }}</div>
                                 </div>
                             </div>
                         @endif
                     @else
                         <div class="p-2 text-skin-muted dark:text-skin-muted-dark bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark text-center">
                             <div class="h-12 mx-auto text-center">
-                                <img class="h-12 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="" title="{{ asset($record->leaderboard->image) ?? '' }}">
+                                <img class="h-12 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="{{ $record->leaderboard->label ?? '' }}" title="{{ $record->leaderboard->label ?? '' }}">
                             </div>
                             <div>{{ $record->leaderboard->label }}</div>
                             <div class="my-2 text-3xl text-skin-base dark:text-skin-base-dark">{{ $record->amount }}</div>
@@ -72,7 +88,7 @@
                             @if($record->currentGhostRecord->leaderboard_id == $record->leaderboard_id)
                                 <div class="p-2 text-skin-muted dark:text-skin-muted-dark bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark text-center">
                                     <div class="h-12 mx-auto text-center">
-                                        <img class="h-12 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="" title="{{ asset($record->leaderboard->image) ?? '' }}">
+                                        <img class="h-12 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="{{ $record->leaderboard->label ?? '' }}" title="{{ $record->leaderboard->label ?? '' }}">
                                     </div>
                                     <div>{{ $record->currentGhostRecord->leaderboard->label }}</div>
                                     <div class="my-2 text-3xl text-skin-base dark:text-skin-base-dark">{{ $record->currentGhostRecord->amount }}</div>
@@ -82,22 +98,36 @@
                                     </div>
                                 </div>
                             @else
-                                <div class="p-2 text-white border border-dashed border-gray-400 text-center">
+                                <div class="p-2 text-skin-muted dark:text-skin-muted-dark bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-dashed border-gray-400 text-center">
                                     <div class="h-12 mx-auto text-center">
-                                        <img class="h-12 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="" title="{{ asset($record->leaderboard->image) ?? '' }}">
+                                        <img class="h-12 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="{{ $record->leaderboard->label ?? '' }}" title="{{ $record->leaderboard->label ?? '' }}">
                                     </div>
                                     <div class="line-through">{{ $record->leaderboard->label }}</div>
-                                    <div class="my-2 text-3xl text-skin-muted dark:text-skin-muted-dark"><span class="line-through">{{ $record->amount }}</span> > <span class="text-skin-base dark:text-skin-base-dark">{{ $record->currentGhostRecord->amount }}</span></div>
+                                    <div class="my-2 text-3xl text-skin-muted dark:text-skin-muted-dark">
+                                        <span class="line-through">
+                                            {{ $record->amount }}
+                                        </span> 
+                                        <span> > </span> 
+                                        <span class="text-skin-base dark:text-skin-base-dark">
+                                            @if($record->currentGhostRecord->player->player_hash)
+                                            <a href="{{ route('player.records', ['hash' => $record->currentGhostRecord->player->player_hash]) }}" title="{{ $record->currentGhostRecord->player->leaderboard_name ?? 'Leaderboard name missing' }}">
+                                                {{ $record->currentGhostRecord->amount }}
+                                            </a>
+                                            @else
+                                                {{ $record->currentGhostRecord->amount }}
+                                            @endif
+                                        </span>
+                                    </div>
                                     <div class="p-1 mt-3 rounded-full bg-skin-fill dark:bg-skin-fill-dark text-white text-sm">
                                         {{ ucwords(strtolower($record->lifeName->name)) }}
-                                        <div>{{ date('Y-m-d H:i:s', $record->currentGhostRecord->timestamp) }}</div>
+                                        <div>{{ date('Y-m-d H:i:s', $record->timestamp) }}</div>
                                     </div>
                                 </div>
                             @endif
                         @else
                             <div class="p-2 text-skin-muted dark:text-skin-muted-dark bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark text-center">
                                 <div class="h-12 mx-auto text-center">
-                                    <img class="h-12 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="" title="{{ asset($record->leaderboard->image) ?? '' }}">
+                                    <img class="h-12 w-auto mx-auto" src="{{ asset($record->leaderboard->image) ?? '' }}" alt="{{ $record->leaderboard->label ?? '' }}" title="{{ $record->leaderboard->label ?? '' }}">
                                 </div>
                                 <div>{{ $record->leaderboard->label }}</div>
                                 <div class="my-2 text-3xl text-skin-base dark:text-skin-base-dark">{{ $record->amount }}</div>
