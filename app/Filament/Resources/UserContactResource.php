@@ -51,16 +51,19 @@ class UserContactResource extends Resource
                 ->label('User')
                 ->visible(fn (): bool => auth()->user()->can('view report submitter')),
                 TextColumn::make('player.leaderboard_name')
+                ->sortable()
                 ->searchable(['leaderboard_name'], isIndividual: true)
                 ->url(fn (UserContact $record): string => route('player.curses', ['hash' => $record->player->player_hash ?? 'missing']))
                 ->openUrlInNewTab()
                 ->placeholder('N/A')
                 ->label('Contact'),
                 TextColumn::make('nickname')
+                ->sortable()
                 ->searchable(['nickname'], isIndividual: true)
                 ->placeholder('N/A')
                 ->label('Nickname'),
                 TextColumn::make('report.curse_name')
+                ->sortable()
                 ->searchable(['curse_name'], isIndividual: true)
                 ->placeholder('N/A')
                 ->label('Curse name'),

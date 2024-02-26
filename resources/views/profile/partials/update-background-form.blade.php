@@ -19,21 +19,13 @@
                 <option value="none" @if($user->background == "none" || $user->background == null) selected @endif>
                     None
                 </option>
-                <option value="squares" @if($user->background == "squares") selected @endif>
-                    Squares
-                </option>
-                <option value="gradient" @if($user->background == "gradient") selected @endif>
-                    Gradient
-                </option>
-                <option value="hearts" @if($user->background == "hearts") selected @endif>
-                    Hearts
-                </option>
-                <option value="dots" @if($user->background == "dots") selected @endif>
-                    Dots
-                </option>
-                <option value="goobs" @if($user->background == "goobs") selected @endif>
-                    Goobs
-                </option>
+                @forelse($backgrounds as $background)
+                    <option value="{{ $background->name }}" @if($user->background == $background->name) selected @endif>
+                        {{ ucfirst($background->name) }}
+                    </option>
+                @empty
+
+                @endforelse
             </select>
             <x-input-error class="mt-2" :messages="$errors->get('background')" />
         </div>

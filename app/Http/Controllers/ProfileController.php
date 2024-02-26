@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 use App\Models\Timezone;
+use App\Models\WebsiteBackground;
 
 class ProfileController extends Controller
 {
@@ -26,6 +27,7 @@ class ProfileController extends Controller
         return view('profile.edit', [
             'user' => $request->user(),
             'timezones' => Timezone::all(),
+            'backgrounds' => WebsiteBackground::where('enabled', 1)->orderBy('name', 'asc')->get(),
         ]);
     }
 
