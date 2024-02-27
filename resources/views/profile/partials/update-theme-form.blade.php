@@ -42,9 +42,17 @@
                 <div>
                     <label class="block w-24 h-24 mx-auto mb-2 rounded-lg bg-gradient-to-r from-fuchsia-500 to-pink-500 shadow-xl shadow-pink-800/75 has-[:checked]:shadow-[0px_0px_15px_5px_#2b2b2b] dark:has-[:checked]:shadow-[0px_0px_15px_5px_#cecece]">
                         <input class="hidden checked:hidden" type="radio" name="theme" id="popping-pink" value="popping-pink" @if(Auth::user()->theme == 'popping-pink') checked @endif />
-                        <i class="mt-4 fa-solid fa-cookie-bite fa-4x text-pink-950/50"></i>
+                        <i class="mt-4 fa-solid fa-heart fa-4x text-pink-950/50"></i>
                     </label>
                     <div class="mt-4"><label class="dark:text-gray-400" for="popping-pink">Popping Pink</label></div>
+                    <div></div>
+                </div>
+                <div>
+                    <label class="block w-24 h-24 mx-auto mb-2 rounded-lg bg-gradient-to-r from-rose-300 to-rose-500 shadow-xl shadow-rose-800/75 has-[:checked]:shadow-[0px_0px_15px_5px_#2b2b2b] dark:has-[:checked]:shadow-[0px_0px_15px_5px_#cecece]">
+                        <input class="hidden checked:hidden" type="radio" name="theme" id="smooth-pink" value="smooth-pink" @if(Auth::user()->theme == 'smooth-pink') checked @endif />
+                        <i class="mt-4 fa-solid fa-cookie-bite fa-4x text-pink-950/50"></i>
+                    </label>
+                    <div class="mt-4"><label class="dark:text-gray-400" for="smooth-pink">Smooth Pink</label></div>
                     <div></div>
                 </div>
             </div>
