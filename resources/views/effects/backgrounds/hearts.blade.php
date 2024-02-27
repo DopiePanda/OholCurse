@@ -20,6 +20,7 @@
         use.setAttributeNS(null, 'y', -69);
         use.setAttributeNS(null, 'width', 138);
         use.setAttributeNS(null, 'height', 138);
+        use.setAttributeNS(null, 'z-index', -1);
         
         heartsRy.push(use)
         hearts.appendChild(use);
@@ -42,13 +43,14 @@
         Frame()
     </script>
 @endpush
-
-<svg id="hearts" viewBox="-600 -400 1200 800" preserveAspectRatio="xMidYMid slice">
-    <defs>
-        <symbol  id="heart" viewBox="-69 -16 138 138">
-        <path d="M0,12
-                C 50,-30 110,50  0,120
-                C-110,50 -50,-30 0,12z"/>
-        </symbol>
-    </defs>
-</svg>
+<div class="absolute overflow-hidden">
+    <svg id="hearts" viewBox="-600 -400 1200 800">
+        <defs>
+            <symbol  id="heart" viewBox="-69 -16 138 138">
+            <path d="M0,12
+                    C 50,-30 110,50  0,120
+                    C-110,50 -50,-30 0,12z"/>
+            </symbol>
+        </defs>
+    </svg>
+</div>
