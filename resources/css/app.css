@@ -94,16 +94,16 @@
   }
 
   .popping-pink {
-    --color-text-base: #cf4ba8;
-    --color-text-base-dark: #cf4ba8;
+    --color-text-base: #f7879a;
+    --color-text-base-dark: #f7879a;
     --color-text-muted: #4a4e56;
     --color-text-muted-dark: #6b7280;
     --color-text-inverted: #313131;
     --color-text-inverted-dark: #d4d4d4;
-    --color-fill: #cf4ba8;
-    --color-fill-dark: #cf4ba8;
-    --color-fill-hover: #8b266d;
-    --color-fill-hover-dark: #8b266d;
+    --color-fill: #f7879a;
+    --color-fill-dark: #f7879a;
+    --color-fill-hover: #c26373;
+    --color-fill-hover-dark: #c26373;
     --color-fill-wrapper: #e5e7eb;
     --color-fill-wrapper-dark: #111827;
     --color-fill-muted: #bdbdbd;
@@ -114,8 +114,8 @@
     --color-button-accent-hover-dark: #ffffff;
     --color-button-muted: #ffffff;
     --color-button-muted-dark: #ffffff;
-    --color-border-base: #cf4ba8;
-    --color-border-base-dark: #cf4ba8;
+    --color-border-base: #f7879a;
+    --color-border-base-dark: #f7879a;
     --color-border-muted: #6b7280;
     --color-border-muted-dark: #6b7280;
   }
