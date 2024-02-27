@@ -77,6 +77,11 @@ class LifeLogResource extends Resource
                     return $query
                         ->where('character_id', 'like', $search.'%');
                 }),
+                TextColumn::make('parent_id')
+                ->searchable(isIndividual: true, query: function (Builder $query, string $search): Builder {
+                    return $query
+                        ->where('parent_id', 'like', $search.'%');
+                }),
                 TextColumn::make('age')
                 ->hidden(fn ($livewire) => $livewire->getTableFilterState('type')['value'] === 'birth'),
                 TextColumn::make('died_to')
