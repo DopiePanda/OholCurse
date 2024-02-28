@@ -19,6 +19,8 @@ class Griefers extends Page
 
     protected static string $view = 'filament.pages.griefers';
 
+    protected static ?string $title = 'Griefer Inspector';
+
     public $groups;
     public $group_name, $group_note, $group_id;
 
@@ -27,12 +29,17 @@ class Griefers extends Page
     public $match_hash;
     public $matches;
 
+    public $sort_by;
+    public $order_by_desc;
+
     public function mount()
     {
         $this->groups = GrieferGroup::with(['profiles:id,group_id,player_hash'])
             ->get();
 
         $this->profile_group = $this->groups[0]->id;
+        $this->sort_by = 'life.timestamp';
+        $this->order_by_desc = 1;
     }
 
     public function saveGroup()
@@ -211,4 +218,7 @@ class Griefers extends Page
                     ->color('success')
                     ->send();
     }
+
+    public function updateSort()
+    {}
 }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class GrieferProfile extends Model
 {
     protected $guarded = ["id"];
-    
+
     public function group()
     {
         return $this->belongsTo(GrieferGroup::class, 'group_id', 'id');
@@ -22,6 +22,11 @@ class GrieferProfile extends Model
     public function lives()
     {
         return $this->hasMany(LifeLog::class, 'player_hash', 'player_hash');
+    }
+
+    public function life()
+    {
+        return $this->hasOne(LifeLog::class, 'player_hash', 'player_hash')->where('type', 'death')->orderBy('timestamp', 'desc');
     }
 
     public function profile()

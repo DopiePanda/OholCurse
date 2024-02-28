@@ -1,6 +1,9 @@
 <x-filament-panels::page>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div id="editGroup" class="p-4 border rounded-lg">
+    @push('scripts')
+        <script src="https://kit.fontawesome.com/737926afbe.js" crossorigin="anonymous"></script>
+    @endpush
+    <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div id="editGroup" class="p-4 border rounded-lg bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
             <div class="text-2xl uppercase text-center">Add or edit group</div>
             <div class="mt-4">
                 <form wire:submit="saveGroup">
@@ -35,7 +38,7 @@
                 </form>
             </div>
         </div>
-        <div id="editProfile" class="p-4 border rounded-lg flex flex-col">
+        <div id="editProfile" class="p-4 border rounded-lg flex flex-col bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
             <div class="text-2xl uppercase text-center">Add or edit profile</div>
             <div class="grow mt-4">
                 <form wire:submit="saveProfile" class="h-full flex flex-col justify-between">
@@ -81,13 +84,13 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div class="p-4 flex flex-col justify-center border rounded-lg">
+        <div class="p-4 flex flex-col justify-center border rounded-lg bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
             <div class="text-2xl text-center uppercase">Sync all to personal contacts</div>
             <button wire:click="addToContacts" type="button" class="mt-6 p-4 w-full lg:w-1/2 mx-auto text-center cursor-pointer bg-skin-fill dark:bg-skin-fill-dark text-white">
                 Sync all profiles
             </button>
         </div>
-        <div class="p-4 border rounded-lg">
+        <div class="p-4 border rounded-lg bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
             <div class="text-2xl text-center uppercase">Check if profiles are cursed by hash</div>
             <form wire:submit="matchCurses">
                 <div class="mt-4">
@@ -112,18 +115,46 @@
 
     @forelse ($groups as $group)  
         <div class="w-full p-4 border rounded-lg">
-            <div class="grid grid-cols-2">
-                <div>
-                    <div class="text-xl font-bold uppercase">{{ $group->name }}</div>
-                    <div class="mt-2 text-sm">
-                        {{ $group->note }}
+            
+            <div class="py-6 flex flex-row justify-between">
+
+                <div class="border-b-4">
+                    <div class="grid grid-cols-2">
+                        <div>
+                            <div class="text-xl font-bold uppercase">{{ $group->name }}</div>
+                            <div class="mt-2 text-sm">
+                                {{ $group->note }}
+                            </div>
+                        </div>
+                        <div wire:click="editGroup({{ $group->id }})" class="text-right cursor-pointer">
+                            <i class="fas fa-pencil"></i>
+                        </div>
                     </div>
                 </div>
-                <div wire:click="editGroup({{ $group->id }})" class="text-right">
-                    Edit
+
+                <div class="flex flex-row gap-4">
+                    <div>
+                        <div class="uppercase text-sm font-bold mb-1 text-skin-inverted dark:text-skin-inverted-dark">
+                            Sort by
+                        </div>
+                        <select class="leading-3 bg-gray-300 dark:bg-slate-800 dark:text-gray-300" id="sort_by" wire:model="sort_by" wire:change="updateSort()">
+                            <option value="life.timestamp">Latest activity</option>
+                            <option value="profile.score.curse_score">Curse score</option>
+                            <option value="profile.leaderboard_name">Leaderboard name</option>
+                        </select>    
+                    </div>
+                    <div>
+                        <div class="uppercase text-sm font-bold mb-1 text-skin-inverted dark:text-skin-inverted-dark">
+                            Order
+                        </div>
+                        <select class="leading-3 bg-gray-300 dark:bg-slate-800 dark:text-gray-300" id="order_by_desc" wire:model="order_by_desc" wire:change="updateSort()">
+                            <option value="1">Descending</option>
+                            <option value="0">Ascending</option>
+                        </select>    
+                    </div>
                 </div>
             </div>
-            <div class="w-40 my-6 border-b-4"></div>
+            
             <div class="relative overflow-x-auto">
                 <table class="border-collapse w-full border border-slate-400 dark:border-slate-500 bg-white dark:bg-slate-800 text-sm shadow-sm">
                     <thead class="bg-slate-50 dark:bg-slate-700">
@@ -152,7 +183,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($group->profiles as $account)
+                        @forelse ($order_by_desc ? $group->profiles->sortByDesc($sort_by) : $group->profiles->sortBy($sort_by) as $account)
                             @if($matches && $matches->contains($account->player_hash))
                                 <tr class="bg-green-800">
                             @elseif($matches && $matches->doesntContain($account->player_hash))
@@ -185,14 +216,16 @@
                                     
                                 @endphp
                                 <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400 @if($life && $diff <= 5) bg-orange-800 @endif">
-                                    <div>{{ $life ? date('Y-m-d H:i', $life->timestamp)." ($diff days ago)" : 'N/A' }}</div>
+                                    <div>{{ $life ? date('Y-m-d H:i', $life->timestamp)." [$diff days ago]" : 'N/A' }}</div>
                                     <div class="text-xs">[{{ $life ? $life->pos_x.', '.$life->pos_y : 'N/A' }}]</div>
                                 </td>
                                 <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
                                     {{ $life ? $life->age : 'N/A' }}
                                 </td>
                                 <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-                                    <span wire:click="editProfile({{ $account->id }})">Edit</span>
+                                    <span class="cursor-pointer" wire:click="editProfile({{ $account->id }})">
+                                        <i class="fas fa-pencil"></i>
+                                    </span>
                                 </td>
                             </tr>
                         @empty
