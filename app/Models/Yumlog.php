@@ -37,8 +37,7 @@ class Yumlog extends Model
         return $this->hasMany(CurseLog::class, 'reciever_hash', 'player_hash')->where('type', 'curse');
     }
 
-    public function getCreatedAtAttribute($date)
-    {
-        return Carbon::parse($date)->setTimezone(Auth::user()->timezone)->format('Y-m-d h:i:s');
+    public function getCreatedAtAttribute(){
+        return Carbon::parse($this->attributes['created_at'])->setTimezone(Auth::user()->timezone);
     }
 }

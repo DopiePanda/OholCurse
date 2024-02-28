@@ -64,4 +64,9 @@ class CurseLog extends Model
     {
         return $this->hasOne(PlayerScore::class, 'player_hash', 'player_hash');
     }
+
+    public function griefer_profile()
+    {
+        return $this->hasOne(GrieferProfile::class, 'player_hash', 'reciever_hash');
+    }
 }

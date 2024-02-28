@@ -77,8 +77,6 @@ date_default_timezone_set($timezone);
                                 <th class="py-2 px-4 text-white bg-skin-fill dark:bg-skin-fill-dark border-r dark:border-gray-600">Curse name</th>
                                 <th class="py-2 px-4 text-white bg-skin-fill dark:bg-skin-fill-dark border-r dark:border-gray-600">Status</th>
                                 <th class="py-2 px-4 text-white bg-skin-fill dark:bg-skin-fill-dark border-r dark:border-gray-600">Verified</th>
-                                <th class="py-2 px-4 text-white bg-skin-fill dark:bg-skin-fill-dark border-r dark:border-gray-600">Uploaded at (UTC)</th>
-                            </tr>
                         </thead>
                         <tbody>
                             @forelse($yumlogs as $log)
@@ -124,7 +122,6 @@ date_default_timezone_set($timezone);
                                             <i title="Unverified" class="text-orange-400 fas fa-question-circle"></i>
                                         @endif
                                     </td>
-                                    <td class="p-2 border border-gray-400">{{ $log->created_at }}</td>
                                 </tr>
                             @empty
                                 <tr>
