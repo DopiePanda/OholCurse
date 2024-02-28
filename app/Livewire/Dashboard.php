@@ -25,6 +25,7 @@ class Dashboard extends Component
     ];
 
     public $tab;
+    public $timezone;
 
     public $reports = [];
     public $yumlogs;
@@ -44,6 +45,8 @@ class Dashboard extends Component
         $this->skip = 0;
         $this->take = 25;
         $this->limit = 25;
+
+        $this->timezone = Auth::user()->timezone;
     }
 
     public function render()

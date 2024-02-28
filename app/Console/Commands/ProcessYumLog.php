@@ -13,6 +13,7 @@ use Log;
 use App\Models\Yumlog;
 use App\Models\LifeLog;
 use App\Models\User;
+use App\Models\PhexHash;
 
 
 class ProcessYumLog extends Command
@@ -88,8 +89,18 @@ class ProcessYumLog extends Command
                         $this->processLine($line);
                     } catch (\Throwable $th) {
                         Log::error($th);
+                    } 
+                }
+                if(Str::contains($line, '| phex_list |'))
+                {
+                    try 
+                    {
+                        $this->processPhexHash($line);
+                    } 
+                    catch (\Throwable $th) 
+                    {
+                        Log::channel('yumlog')->error($th);
                     }
-                    
                 }
             });
 
@@ -168,6 +179,46 @@ class ProcessYumLog extends Command
                     'curse_name' => $parts[3],
                 ]
             );
+        }
+    }
+
+    public function processPhexHash($line)
+    {
+        /*
+            $parts[0] = timestamp | 1379020415 
+            $parts[1] = type | phex_list
+            $parts[2] = phex hash | 627474f34827254d1b373b3cb3b63691d8f7e445
+            $parts[3] = phex name | DopiePanda
+            $parts[4] = character ID | 7001138
+            $parts[5] = character name | UGNE WUNDER
+
+            1705115066 | phex_list | 627474f34827254d1b373b3cb3b63691d8f7e445 | DopiePanda | 7001138 | UGNE WUNDER
+        */
+
+        $parts = explode(' | ', $line);
+
+        if (count($parts) == 6) 
+        {
+            $life = LifeLog::select('character_id', 'player_hash')->where('character_id', $parts[4])->where('type', 'death')->first();
+        }
+
+        try 
+        {
+            PhexHash::updateOrCreate(
+                [
+                    'olgc_name' => $parts[3],
+                    'olgc_hash' => Str::take($parts[2], 8),
+                ], 
+                [
+                    'olgc_hash_full' => $parts[2],
+                    'player_hash' => $life ? $life->player_hash : null,
+                    'character_id' => $life ? $life->character_id : null,
+                ]
+            );
+        } 
+        catch (\Throwable $th) 
+        {
+            Log::channel('yumlog')->error($th);
         }
     }
 

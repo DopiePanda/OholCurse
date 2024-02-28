@@ -65,7 +65,7 @@ class UploadLogfile extends ModalComponent
         sleep(5);
         $this->dispatch('logProcessed');
         
-        return redirect(route('dashboard'));
+        //return redirect(route('dashboard'));
     }
 
     public function processLog()
