@@ -169,7 +169,10 @@
                                 Curse name
                             </th>
                             <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
-                                Curses
+                                Curses In
+                            </th>
+                            <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+                                Curses Out
                             </th>
                             <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
                                 Last death
@@ -195,8 +198,14 @@
                                     {{ $loop->index+1 }}
                                 </td>
                                 <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-                                    <div>{{ $account->profile->leaderboard_name ?? 'N/A' }}</div>
-                                    <div class="text-xs">{{ $account->player_hash }}</div>
+                                    <div>
+                                        <a target="_blank" href="https://onehouronelife.com/fitnessServer/server.php?action=leaderboard_detail&id={{ $account->profile->leaderboard_id ?? '' }}">
+                                            {{ $account->profile->leaderboard_name ?? 'N/A' }}
+                                        </a>
+                                    </div>
+                                    <div class="mt-2 text-xs">
+                                        <a target="_blank" href="{{ route('player.interactions', ['hash' => $account->player_hash]) }}">{{ $account->player_hash }}</a>
+                                    </div>
                                 </td>
                                 <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
                                     {!! $account->report->curse_name ?? '<i>N/A</i>' !!}
@@ -204,8 +213,11 @@
                                 <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
                                     {{ $account->profile->score->curse_score ?? 'N/A' }}
                                 </td>
+                                <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                                    {{ $account->curses_sent->count() ?? 'N/A' }}
+                                </td>
                                 @php
-                                    $life = $account->lives->where('type', 'death')->sortByDesc('id')->first();
+                                    $life = $account->life;
                                     if($life)
                                     {
                                         $death = \Carbon\Carbon::parse(date('Y-m-d', $life->timestamp));

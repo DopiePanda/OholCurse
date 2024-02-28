@@ -36,11 +36,19 @@ class Griefers extends Page
 
     public function mount()
     {
-        $this->groups = GrieferGroup::with(['profiles:id,group_id,player_hash'])
+        $this->groups = GrieferGroup::with([
+            'profiles:id,group_id,player_hash', 
+            'profiles.profile:player_hash,leaderboard_name,leaderboard_id',
+            'profiles.profile.score:leaderboard_id,curse_score',
+            'profiles.report:player_hash,curse_name',
+            'profiles.life:id,player_hash,type,timestamp,pos_x,pos_y,age',
+            'profiles.curses_sent:player_hash'
+            ])
             ->get();
 
+
         $this->profile_group = $this->groups[0]->id;
-        $this->sort_by = 'life.timestamp';
+        $this->sort_by = 'life.id';
         $this->order_by_desc = 1;
     }
 
@@ -84,7 +92,13 @@ class Griefers extends Page
             }
 
             $this->reset('group_name', 'group_note', 'group_id');
-            $this->groups = GrieferGroup::with(['profiles:id,group_id,player_hash'])
+            $this->groups = GrieferGroup::with([
+                'profiles:id,group_id,player_hash', 
+                'profiles.profile:player_hash,leaderboard_name,leaderboard_id',
+                'profiles.profile.score:leaderboard_id,curse_score',
+                'profiles.report:player_hash,curse_name',
+                'profiles.lives:player_hash,type,timestamp,pos_x,pos_y,age',
+                ])
             ->get();
 
         } catch (\Throwable $th) 
@@ -143,7 +157,13 @@ class Griefers extends Page
             }
 
             $this->reset('profile_hash', 'profile_id');
-            $this->groups = GrieferGroup::with(['profiles:id,group_id,player_hash'])
+            $this->groups = GrieferGroup::with([
+                'profiles:id,group_id,player_hash', 
+                'profiles.profile:player_hash,leaderboard_name,leaderboard_id',
+                'profiles.profile.score:player_hash,curse_score',
+                'profiles.report:player_hash,curse_name',
+                'profiles.lives:player_hash,type,timestamp,pos_x,pos_y,age',
+                ])
             ->get();
 
         } catch (\Throwable $th) 

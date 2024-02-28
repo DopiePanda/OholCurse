@@ -53,7 +53,6 @@ use App\Models\LifeLog;
 |
 */
 
-
 Route::middleware('web')->group(function() {
 
     Route::get('/sitemap/generate', function(){

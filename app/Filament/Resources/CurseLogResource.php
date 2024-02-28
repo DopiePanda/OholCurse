@@ -70,8 +70,8 @@ class CurseLogResource extends Resource
                 ->openUrlInNewTab()
                 ->label('Reciever'),
             ])
-            ->defaultSort('timestamp', 'desc')
-            ->defaultPaginationPageOption(50)
+            ->defaultSort('id', 'desc')
+            ->defaultPaginationPageOption(25)
             ->groups([
 
             ])

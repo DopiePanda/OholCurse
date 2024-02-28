@@ -48,10 +48,7 @@ class FoodLogResource extends Resource
                 ->openUrlInNewTab()
                 ->placeholder('N/A'),
                 TextColumn::make('character_id')
-                ->searchable(isIndividual: true, query: function (Builder $query, string $search): Builder {
-                    return $query
-                        ->where('character_id', 'like', $search.'%');
-                })
+                ->searchable(['character_id'], isIndividual: true)
                 ->url(fn (FoodLog $record): string => route('player.curses', ['hash' => $record->birth->player_hash ?? 'none']))
                 ->openUrlInNewTab(),
                 TextColumn::make('birth.name.name')
@@ -63,12 +60,12 @@ class FoodLogResource extends Resource
                 TextColumn::make('object.name')
                 ->searchable(['name'], isIndividual: true)
                 ->label('Object'),
-                TextColumn::make('object_id')
-                ->summarize(Count::make()),
+                TextColumn::make('object_id'),
             ])
-
-            ->defaultSort('timestamp', 'desc')
-            ->defaultPaginationPageOption(50)
+            ->modifyQueryUsing(fn (Builder $query) => $query->withoutGlobalScopes())
+            ->defaultSort('id', 'desc')
+            ->paginated([10, 25, 50, 100, 'all'])
+            ->defaultPaginationPageOption(10)
             ->filters([
                 SelectFilter::make('objectId')
                 ->relationship('object', 'id')
@@ -80,8 +77,7 @@ class FoodLogResource extends Resource
                 ->preload()
             ])
             ->groups([
-                'character_id',
-                'object_id',
+
             ])
             ->actions([
              
@@ -108,6 +104,7 @@ class FoodLogResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-                    ->whereHas('character');
+                ->skip(0)
+                ->take(1000);
     }
 }
