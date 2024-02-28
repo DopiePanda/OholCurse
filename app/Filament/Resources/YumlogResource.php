@@ -116,7 +116,7 @@ class YumlogResource extends Resource
                 ToggleColumn::make('visible')
                 ->visible(fn (): bool => auth()->user()->can('edit yumlog')),
             ])
-            ->defaultSort('created_at', 'desc')
+            ->defaultSort('id', 'desc')
             ->defaultPaginationPageOption(50)
             ->groups([
                 Group::make('curse_name')

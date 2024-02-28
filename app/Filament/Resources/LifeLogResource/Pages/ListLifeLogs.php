@@ -14,15 +14,8 @@ class ListLifeLogs extends ListRecords
 {
     protected static string $resource = LifeLogResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            
-        ];
-    }
-
     protected function paginateTableQuery(Builder $query): Paginator
     {
-        return $query->simplePaginate(($this->getTableRecordsPerPage() === '10') ? $query->count() : $this->getTableRecordsPerPage());
+        return $query->simplePaginate(($this->getTableRecordsPerPage() === '25') ? $query->count() : $this->getTableRecordsPerPage());
     }
 }

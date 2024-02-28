@@ -19,6 +19,11 @@ class GrieferProfile extends Model
         return $this->hasMany(CurseLog::class, 'reciever_hash', 'player_hash');
     }
 
+    public function curses_sent()
+    {
+        return $this->hasMany(CurseLog::class, 'player_hash', 'player_hash')->where('type', 'curse');
+    }
+
     public function lives()
     {
         return $this->hasMany(LifeLog::class, 'player_hash', 'player_hash');
@@ -26,7 +31,7 @@ class GrieferProfile extends Model
 
     public function life()
     {
-        return $this->hasOne(LifeLog::class, 'player_hash', 'player_hash')->where('type', 'death')->orderBy('timestamp', 'desc');
+        return $this->hasOne(LifeLog::class, 'player_hash', 'player_hash')->where('type', 'death')->orderBy('id', 'desc');
     }
 
     public function profile()

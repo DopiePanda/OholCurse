@@ -94,8 +94,8 @@ class LifeLogResource extends Resource
                 
                 
             ])
-            ->defaultSort('timestamp', 'desc')
-            ->defaultPaginationPageOption(50)
+            ->defaultSort('id', 'desc')
+            ->defaultPaginationPageOption(25)
             ->filters([
                 SelectFilter::make('type')
                 ->options([
