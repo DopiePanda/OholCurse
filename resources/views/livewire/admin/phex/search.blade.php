@@ -25,9 +25,6 @@
                     <thead class="bg-gray-50 dark:bg-white/5">
                         <tr class="text-xs bg-white dark:bg-gray-900">
                             <th class="px-3 py-3.5 sm:first-of-type:ps-6 sm:last-of-type:pe-6">
-                                <input class="w-32 text-black" wire:model="owner" wire:change="update" type="text" placeholder="Filter owner" />
-                            </th>
-                            <th class="px-3 py-3.5 sm:first-of-type:ps-6 sm:last-of-type:pe-6">
                                 <select class="text-black" wire:model="type" wire:change="update" id="">
                                     <option value="all" @if($type == 'all') selected @endif>All</option>
                                     <option value="enemy" @if($type == 'enemy') selected @endif>Enemy</option>
@@ -51,7 +48,6 @@
                             </th>
                         </tr>
                         <tr class="text-sm">
-                            <th class="px-3 py-3.5 sm:first-of-type:ps-6 sm:last-of-type:pe-6">Owner</th>
                             <th class="px-3 py-3.5 sm:first-of-type:ps-6 sm:last-of-type:pe-6">Type</th>
                             <th class="px-3 py-3.5 sm:first-of-type:ps-6 sm:last-of-type:pe-6">Contact name</th>
                             <th class="px-3 py-3.5 sm:first-of-type:ps-6 sm:last-of-type:pe-6">Leaderboard</th>
@@ -62,17 +58,6 @@
                     <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 whitespace-nowrap dark:divide-white/5">
                     @forelse ($contacts as $contact)
                         <tr>
-                            <td class="p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
-                                <div class="text-sm leading-6 text-gray-950 dark:text-white gap-y-1 px-3 py-4">
-                                    @if($contact->player)
-                                        <a href="https://onehouronelife.com/fitnessServer/server.php?action=leaderboard_detail&id={{ $contact->player->leaderboard_id ?? 0 }}" target="_blank">
-                                            {{ $contact->user->username }}
-                                        </a>
-                                    @else
-                                        Leaderboard missing
-                                    @endif
-                                </div>
-                            </td>
                             <td class="p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
                                 <div class="text-sm leading-6 text-gray-950 dark:text-white gap-y-1 px-3 py-4">
                                     {{ $contact->type }}

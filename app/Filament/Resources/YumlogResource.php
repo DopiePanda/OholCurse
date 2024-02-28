@@ -67,13 +67,6 @@ class YumlogResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('created_at')
-                ->sortable()
-                ->dateTime('Y-m-d H:i'),
-                TextColumn::make('timestamp')
-                ->sortable()
-                ->dateTime('Y-m-d H:i')
-                ->label('Sent at'),
                 TextColumn::make('user.username')
                 ->searchable(['username'], isIndividual: true)
                 ->url(fn (Yumlog $record): string => route('player.curses', ['hash' => $record->user->player_hash ?? 'missing']))
@@ -119,31 +112,6 @@ class YumlogResource extends Resource
                     '0' => 'warning',
                     '1' => 'success',
                     default => 'gray',
-                }),
-                BadgeColumn::make('status')
-                ->formatStateUsing(fn (string $state): string => match ($state) {
-                    '0' => 'Unverified',
-                    '1' => 'Verified',
-                    '2' => 'Archived',
-                    '3' => 'Curse-check',
-                    '4' => 'Forgiven later',
-                    '5' => 'Custom',
-                })
-                ->tooltip(fn (string $state): string => match ($state) {
-                    '0' => 'Not verified yet. Submitted before public log import or incorrect data.',
-                    '1' => 'Successfully verified against the public logs',
-                    '2' => 'Archived after max attempts to verify',
-                    '3' => 'Player was forgiven within set time limit',
-                    '4' => 'Player has been forgiven at a later point by sender',
-                    '5' => 'Non-public entry from custom Yumlog upload',
-                })
-                ->color(fn (string $state): string => match ($state) {
-                    '0' => 'gray',
-                    '3' => 'warning',
-                    '1' => 'success',
-                    '2' => 'danger',
-                    '4' => 'info',
-                    '5' => 'primary',
                 }),
                 ToggleColumn::make('visible')
                 ->visible(fn (): bool => auth()->user()->can('edit yumlog')),
