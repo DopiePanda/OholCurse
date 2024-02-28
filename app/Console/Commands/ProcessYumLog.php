@@ -125,6 +125,12 @@ class ProcessYumLog extends Command
         $character = explode(' ', $parts[2]);
         $character_id = $character[0];
 
+        /*
+            $player[0] = timestamp | 1708891075
+            $player[0] = type | player
+            $player[0] = character id | 7126301
+            $player[0] = age | age:3
+        */
         foreach ($this->last_players as $player) 
         {
             if (($player[0] - $parts[0]) <= 3) {
@@ -137,9 +143,16 @@ class ProcessYumLog extends Command
 
         //dd($this->last_player);
 
+        // If curse timestamp is greater than or equal the timestamp of the last birth -3 seconds
+        // AND curse timestamp is less than or equal to the timestamp of last birth + 3 seconds
+        // If this is true, it suggests the curse was sent in a previous life
         if($parts[0] >= ($this->last_birth[0]-3) && $parts[0] <= ($this->last_birth[0]+3))
         {
             return false;
+
+        // If curse timestamp is greater than or equal the timestamp of the last player line -3 seconds
+        // AND curse timestamp is less than or equal to the timestamp of the last player line + 3 seconds
+        // If this is true, it suggests the curse was sent in a previous life
         }elseif($parts[0] >= ($this->last_player[0]-3) && $parts[0] <= ($this->last_player[0]+3) && $this->last_player[2] == $character_id)
         {
             return false;

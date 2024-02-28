@@ -5,6 +5,8 @@ namespace App\Filament\Pages;
 use Filament\Pages\Page;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
+use Symfony\Component\HttpClient\HttpClient;
+use Goutte\Client;
 use Log;
 use Carbon\Carbon;
 
@@ -221,4 +223,61 @@ class Griefers extends Page
 
     public function updateSort()
     {}
+
+    public function scrapeLeaderboardPage($id)
+    {
+        $client = new Client(HttpClient::create(['verify_peer' => false, 'verify_host' => false]));
+        $base_url = 'https://onehouronelife.com/fitnessServer/server.php?action=leaderboard_detail&id=';
+
+        $url = $base_url.$id;
+
+        $website = $client->request('GET', $url);
+
+        $score = $website->filter('table')->eq(1);
+
+        $cells = $score->filter('tr > td')->each(function($td, $i) {
+            return $td;
+        });
+
+        // Time: $cells[10]->text()
+        // Relation: $cells[6]->text()
+
+        $i_name = 4;
+        $i_relation = 6;
+        $i_time = 10;
+
+        $rows = 6;
+        $index = 1;
+
+        $payload = [];
+
+        while ($index <= $rows) 
+        {
+            array_push($payload, [
+                'name' => $cells[$i_name]->text(),
+                'relation' => $cells[$i_relation]->text(),
+                'time' => $cells[$i_time]->text(),
+            ]);
+
+            $i_name += 7;
+            $i_relation += 7;
+            $i_time += 7;
+
+            $index++;
+        }
+
+        /*
+        Row 1: name - [4], relation - [6], time - [10]
+        Row 2: name - [11], relation - [13], time - [17]
+        Row 3: name - [18], relation - [20], time - [24]
+        Row 4: name - [25], relation - [27], time - [31]
+        Row 5: name - [32], relation - [34], time - [38]
+        Row 6: name - [39], relation - [41], time - [45]
+
+
+        */
+
+
+        dd($payload);
+    }
 }
