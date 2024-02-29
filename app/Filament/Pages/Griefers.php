@@ -41,7 +41,7 @@ class Griefers extends Page
             'profiles.profile:player_hash,leaderboard_name,leaderboard_id',
             'profiles.profile.score:leaderboard_id,curse_score',
             'profiles.report:player_hash,curse_name',
-            'profiles.life:id,player_hash,type,timestamp,pos_x,pos_y,age',
+            'profiles.life:id,player_hash,character_id,type,timestamp,pos_x,pos_y,age',
             'profiles.curses_sent:player_hash'
             ])
             ->get();
@@ -222,7 +222,7 @@ class Griefers extends Page
                         ], 
                         [
                             'type' => 'enemy',
-                            'nickname' => "$group->name ($i)",
+                            'nickname' => "$group->name ($i) [Import]",
                         ]
                     );
 
