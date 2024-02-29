@@ -1,6 +1,7 @@
 <x-filament-panels::page>
     @push('scripts')
         <script src="https://kit.fontawesome.com/737926afbe.js" crossorigin="anonymous"></script>
+        @livewire('wire-elements-modal')
     @endpush
     <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div id="editGroup" class="p-4 border rounded-lg bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
@@ -89,6 +90,10 @@
             <button wire:click="addToContacts" type="button" class="mt-6 p-4 w-full lg:w-1/2 mx-auto text-center cursor-pointer bg-skin-fill dark:bg-skin-fill-dark text-white">
                 Sync all profiles
             </button>
+            <div class="mt-2 p-2 text-center">
+                <div class="text-xl font-bold text-red-500">WARNING:</div> 
+                <div>This will overwrite the <b>contact names</b> if this profile already exists in your contacts.</div>    
+            </div>
         </div>
         <div class="p-4 border rounded-lg bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
             <div class="text-2xl text-center uppercase">Check if profiles are cursed by hash</div>
@@ -228,7 +233,7 @@
                                     
                                 @endphp
                                 <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400 @if($life && $diff <= 5) bg-orange-800 @endif">
-                                    <div>{{ $life ? date('Y-m-d H:i', $life->timestamp)." [$diff days ago]" : 'N/A' }}</div>
+                                    <div wire:click="$dispatch('openModal', {component: 'admin.search.life-actions-modal', arguments: {character_id: {{$life ? $life->character_id : '' }}}})">{{ $life ? date('Y-m-d H:i', $life->timestamp)." [$diff days ago]" : 'N/A' }}</div>
                                     <div class="text-xs">[{{ $life ? $life->pos_x.', '.$life->pos_y : 'N/A' }}]</div>
                                 </td>
                                 <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">

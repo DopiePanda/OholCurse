@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 use App\Http\Controllers\CurseLogController;
@@ -41,6 +42,7 @@ use App\Livewire\Roadmap\Ideas\Create as IdeaCreate;
 use App\Livewire\Tools\MapDistanceCalculator;
 
 use App\Models\LifeLog;
+use App\Models\GrieferProfile;
 
 /*
 |--------------------------------------------------------------------------
@@ -125,11 +127,29 @@ Route::middleware('web')->group(function() {
             Route::get('/upload', Upload::class)->name('upload');
         });
 
+        Route::get('/tokens/create/{token_name}', function (Request $request) {
+            $token = $request->user()->createToken($request->token_name);
+         
+            return ['token' => $token->plainTextToken];
+        });
+
         Route::get('/search/movement', CharacterMovement::class)->name('search.movement');
 
         Route::get('/select2/ajax', [Select2Controller::class, 'handle'])->name('select2.ajax');
         //Route::get('/interactions/{object_id}/{ghost?}', [TestController::class, 'getObjectInteractions'])->name('interactions');
 
+        Route::get('/griefers', function () {
+            $griefers = GrieferProfile::with('profile')->get();
+
+            foreach($griefers as $griefer)
+            {
+                if($griefer->profile && $griefer->profile->leaderboard_id)
+                {
+                    $griefer->leaderboard_id = $griefer->profile->leaderboard_id;
+                    $griefer->save();
+                }
+            }
+        });
     });
 
     
