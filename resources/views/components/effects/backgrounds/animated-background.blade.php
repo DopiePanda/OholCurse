@@ -1,6 +1,10 @@
 <div class="w-full h-full -z-10 fixed overflow-visible top-0 left-0">
     @if($donator != null && request()->routeIs('player.*'))
 
+        <script type="text/javascript">
+            document.body.classList.add("{{ $donator->theme }}");
+        </script>
+
         @if($donator->background == 'squares')
             @include('effects.backgrounds.squares')
         @endif
