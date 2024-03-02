@@ -170,6 +170,7 @@ return [
         App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
         Weidner\Goutte\GoutteServiceProvider::class,
+        Lab404\Impersonate\ImpersonateServiceProvider::class,
     ])->toArray(),
 
     /*

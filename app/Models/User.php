@@ -20,7 +20,7 @@ use Lab404\Impersonate\Models\Impersonate;
 
 class User extends Authenticatable implements FilamentUser
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, Impersonate;
 
     /**
      * The attributes that are mass assignable.
@@ -97,5 +97,17 @@ class User extends Authenticatable implements FilamentUser
     public function getNameAttribute()
     {
         return $this->username;
+    }
+
+    public function canImpersonate()
+    {
+        // For example
+        return $this->hasRole('system');
+    }
+
+    public function canBeImpersonated()
+    {
+        // For example
+        return $this->id != 1;
     }
 }

@@ -17,7 +17,7 @@ use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Forms\Components\Section as Card;
-use Phpsa\FilamentAuthentication\Actions\ImpersonateLink;
+use App\Filament\Actions\ImpersonateLink;
 use Phpsa\FilamentAuthentication\Resources\UserResource\Pages\EditUser;
 use Phpsa\FilamentAuthentication\Resources\UserResource\Pages\ViewUser;
 use Phpsa\FilamentAuthentication\Resources\UserResource\Pages\ListUsers;

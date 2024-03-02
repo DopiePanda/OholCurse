@@ -136,6 +136,8 @@ Route::middleware('web')->group(function() {
             
         });
         */
+        
+        Route::impersonate();
     });
 
     

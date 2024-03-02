@@ -2,7 +2,13 @@
     $roles = auth()->user()->getRoleNames();
 @endphp
 
-<div>
+<div class="flex flex-row">
+    @impersonating($guard = null)
+        <div class="inline-block text-gray-600 mr-2">
+            <a href="{{ route('impersonate.leave') }}">Leave impersonation</a>
+        </div>
+    @endImpersonating
+
     @if (count($roles) > 1)
         <div class="inline-block text-gray-600 mr-2">Roles:</div>
         @foreach ($roles as $role)
