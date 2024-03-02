@@ -296,12 +296,12 @@ class YumlogResource extends Resource
 
             // Check if life exists with submitted character ID
             $life = LifeLog::where('character_id', $character_id)
-                    ->where('type', 'death')
+                    ->where('type', 'birth')
                     ->first();
 
             if($life)
             {
-                $offset = 3;
+                $offset = 30;
 
                 // Check if curse log entry exists with submitted timestamp and life log player hash
                 $curse = CurseLog::where('timestamp', '>=', ($parts[0] - $offset))
@@ -354,6 +354,8 @@ class YumlogResource extends Resource
                         'hide' => $hide,
                     ]
                 );
+
+                Log::channel('yumlog')->error("Life log entry could not be found for $character_id");
             }
 
         }

@@ -47,6 +47,8 @@ export default {
                 skin: {
                     base: 'var(--color-text-base)',
                     'base-dark': 'var(--color-text-base-dark)',
+                    accent: 'var(--color-text-accent)',
+                    'accent-dark': 'var(--color-text-accent-dark)',
                     muted: 'var(--color-text-muted)',
                     'muted-dark': 'var(--color-text-muted-dark)',
                     inverted: 'var(--color-text-inverted)',

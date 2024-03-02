@@ -63,16 +63,15 @@ Route::middleware('web')->group(function() {
     
     Route::get('/', Home::class)->name('search');
 
-    Route::get('/player/hash/{hash}', PlayerInteractions::class)->name('player.curses');
-    Route::get('/player/interactions/{hash}', PlayerInteractions::class)->name('player.interactions');
-    Route::get('/player/lives/{hash}', PlayerLives::class)->name('player.lives');
-    /*
-    Route::get('/player/lives/{hash}', [PlayerReportController::class, 'lives'])->name('player.lives');
-    */
-    Route::get('/player/reports/{hash}', [PlayerReportController::class, 'reports'])->name('player.reports');
-    Route::get('/player/records/{hash}', [PlayerReportController::class, 'records'])->name('player.records');
-    Route::get('/player/statistics/{hash}', PlayerStatistics::class)->name('player.statistics');
-    
+    Route::prefix('/player')->name('player.')->group(function () {
+        Route::get('/hash/{hash}', PlayerInteractions::class)->name('curses');
+        Route::get('/interactions/{hash}', PlayerInteractions::class)->name('interactions');
+        Route::get('/lives/{hash}', PlayerLives::class)->name('lives');
+        Route::get('/reports/{hash}', [PlayerReportController::class, 'reports'])->name('reports');
+        Route::get('/records/{hash}', [PlayerReportController::class, 'records'])->name('records');
+        Route::get('/statistics/{hash}', PlayerStatistics::class)->name('statistics');
+    });
+
     Route::get('/names', CharacterNames::class)->name('names');
     Route::get('/statistics', Statistics::class)->name('statistics');
     Route::get('/chart', LeaderboardRecords::class)->name('statistics');
@@ -127,29 +126,16 @@ Route::middleware('web')->group(function() {
             Route::get('/upload', Upload::class)->name('upload');
         });
 
-        Route::get('/tokens/create/{token_name}', function (Request $request) {
-            $token = $request->user()->createToken($request->token_name);
-         
-            return ['token' => $token->plainTextToken];
-        });
-
         Route::get('/search/movement', CharacterMovement::class)->name('search.movement');
 
         Route::get('/select2/ajax', [Select2Controller::class, 'handle'])->name('select2.ajax');
         //Route::get('/interactions/{object_id}/{ghost?}', [TestController::class, 'getObjectInteractions'])->name('interactions');
 
-        Route::get('/griefers', function () {
-            $griefers = GrieferProfile::with('profile')->get();
-
-            foreach($griefers as $griefer)
-            {
-                if($griefer->profile && $griefer->profile->leaderboard_id)
-                {
-                    $griefer->leaderboard_id = $griefer->profile->leaderboard_id;
-                    $griefer->save();
-                }
-            }
+        /*
+        Route::get('/test-lives', function () {
+            
         });
+        */
     });
 
     

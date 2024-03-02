@@ -41,7 +41,7 @@ $scrollIntoViewJsSnippet = ($scrollTo !== false)
 
             <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                 <div>
-                    <p class="text-sm text-gray-400 leading-5">
+                    <p class="text-sm text-skin-accent dark:text-skin-accent-dark leading-5">
                         <span>{!! __('Showing') !!}</span>
                         <span class="font-medium">{{ $paginator->firstItem() }}</span>
                         <span>{!! __('to') !!}</span>
@@ -78,7 +78,7 @@ $scrollIntoViewJsSnippet = ($scrollTo !== false)
                             {{-- "Three Dots" Separator --}}
                             @if (is_string($element))
                                 <span aria-disabled="true">
-                                    <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-400 bg-skin-fill dark:bg-skin-fill-dark border border-gray-300 cursor-default leading-5 select-none">{{ $element }}</span>
+                                    <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-skin-accent dark:text-skin-accent-dark bg-skin-fill dark:bg-skin-fill-dark border border-gray-300 cursor-default leading-5 select-none">{{ $element }}</span>
                                 </span>
                             @endif
 
@@ -91,7 +91,7 @@ $scrollIntoViewJsSnippet = ($scrollTo !== false)
                                                 <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-white bg-skin-fill dark:bg-skin-fill-dark border border-gray-300 cursor-default leading-5 select-none">{{ $page }}</span>
                                             </span>
                                         @else
-                                            <button type="button" wire:click="gotoPage({{ $page }}, '{{ $paginator->getPageName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-400 bg-skin-fill dark:bg-skin-fill-dark border border-gray-300 leading-5 hover:text-white focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-400 transition ease-in-out duration-150" aria-label="{{ __('Go to page :page', ['page' => $page]) }}">
+                                            <button type="button" wire:click="gotoPage({{ $page }}, '{{ $paginator->getPageName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-skin-accent dark:text-skin-accent-dark bg-skin-fill dark:bg-skin-fill-dark border border-gray-300 leading-5 hover:text-white focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-400 transition ease-in-out duration-150" aria-label="{{ __('Go to page :page', ['page' => $page]) }}">
                                                 {{ $page }}
                                             </button>
                                         @endif

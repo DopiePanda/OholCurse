@@ -30,7 +30,7 @@
                     <div class="pt-2 grow border-t"></div>
                 </div>
                 <div class="mt-4">
-                    <button class="w-full p-2 text-white border border-skin-base dark:border-skin-base-dark rounded-lg" type="button" wire:click="compareToLoggedInUser">Compare to me</button>
+                    <button class="w-full p-2 text-skin-base dark:text-skin-base border border-skin-base dark:border-skin-base-dark rounded-lg" type="button" wire:click="compareToLoggedInUser">Compare to me</button>
                 </div>
             </div>
             @endif

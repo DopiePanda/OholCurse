@@ -23,8 +23,8 @@ class CurseLogScraper extends Controller
 
     public function __construct()
     {
-        $start = Carbon::now();
-        $end = Carbon::now()->subDays(4);
+        $start = Carbon::now()->addDay();
+        $end = Carbon::now()->subDays(1);
 
         $this->date_period = new \DatePeriod(
             new \DateTime($end->format('Y-m-d')),
@@ -60,8 +60,16 @@ class CurseLogScraper extends Controller
             Log::channel('sync')->info("CURSE LOG already exist: ".$file_name);
         }else
         {
-            $file = file_get_contents($this->getLogFileUrl($file_name));
-            Storage::disk('local')->put($this->storage_url.$file_name, $file);
+            try 
+            {
+                $file = file_get_contents($this->getLogFileUrl($file_name));
+                Storage::disk('local')->put($this->storage_url.$file_name, $file);
+            } 
+            catch (\Throwable $th) 
+            {
+                Log::channel('sync')->info("Could not download CURSE LOG: ".$file_name);
+                Log::channel('sync')->error($th);
+            }
         }
     }
 
