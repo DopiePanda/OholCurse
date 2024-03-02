@@ -23,8 +23,8 @@ class LifeNameLogScraper extends Controller
 
     public function __construct()
     {
-        $start = Carbon::now();
-        $end = Carbon::now()->subDays(4);
+        $start = Carbon::now()->addDay();
+        $end = Carbon::now()->subDays(1);
 
         $this->date_period = new \DatePeriod(
             new \DateTime($end->format('Y-m-d')),
@@ -49,6 +49,7 @@ class LifeNameLogScraper extends Controller
 
         $time_end = microtime(true);
         $time = round(($time_end - $time_start), 3);
+
         Log::channel('sync')->info('LIFE NAME LOG scraper finished in: '.$time.' seconds');
     }
 
@@ -59,8 +60,16 @@ class LifeNameLogScraper extends Controller
             Log::channel('sync')->info("LIFE NAME LOG already exist: ".$file_name);
         }else
         {
-            $file = file_get_contents($this->getLogFileUrl($file_name));
-            Storage::disk('local')->put($this->storage_url.$file_name, $file);
+            try 
+            {
+                $file = file_get_contents($this->getLogFileUrl($file_name));
+                Storage::disk('local')->put($this->storage_url.$file_name, $file);
+            } 
+            catch (\Throwable $th) 
+            {
+                Log::channel('sync')->info("Could not download LIFE NAME LOG: ".$file_name);
+                Log::channel('sync')->error($th);
+            }
         }
     }
 

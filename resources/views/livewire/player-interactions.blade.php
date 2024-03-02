@@ -2,9 +2,11 @@
 
     <x-effects.backgrounds.animated-background :donator="$donator" />
     
-    @section("page-title")
-        @if( $profile && isset($profile->leaderboard_name) )- Interactions for {{ $profile->leaderboard_name }}@else- Interactions @endif
-    @endsection
+    @if( $profile && isset($profile->leaderboard_name) )
+        @section("page-title", "- Interactions for $profile->leaderboard_name")
+    @else
+        @section("page-title", "- Interactions")
+    @endif
 
     <x-slot name="header">
 

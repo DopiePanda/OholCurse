@@ -16,7 +16,7 @@ class BackgroundUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'background' => ['string', 'max:255', 'in:none,squares,gradient,hearts,dots,goobs,girly'],
+            'background' => ['string', 'max:255', 'in:none,squares,gradient,hearts,dots,goobs,girly,diagonals,gradient-2'],
         ];
     }
 }

@@ -1,0 +1,17 @@
+.context {
+    background: linear-gradient(90deg, #fc44ed 0%,#f6ffb7 30%,#96efff 67%, #7cff75 100%);
+    background-size: 1000%;
+    animation: background 20s linear alternate infinite;
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+}
+
+@keyframes background {
+    from {
+    background-position: 0 0;
+    }
+    to {
+    background-position: 100% 0;
+    }
+}
