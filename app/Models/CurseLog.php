@@ -8,6 +8,7 @@ use Auth;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CurseLog extends Model
 {
@@ -18,6 +19,16 @@ class CurseLog extends Model
     public function life(): BelongsTo
     {
         return $this->belongsTo(LifeLog::class, 'character_id', 'character_id')->orderBy('timestamp', 'desc');
+    }
+
+    public function newest_death(): HasOne
+    {
+        return $this->hasOne(LifeLog::class, 'player_hash', 'player_hash')->where('type', 'death')->orderBy('timestamp', 'desc');
+    }
+
+    public function forgives(): HasMany
+    {
+        return $this->hasMany(CurseLog::class, 'player_hash', 'player_hash')->where('type', 'forgive')->orderBy('timestamp', 'desc');
     }
 
     public function reciever()
@@ -68,5 +79,10 @@ class CurseLog extends Model
     public function griefer_profile()
     {
         return $this->hasOne(GrieferProfile::class, 'player_hash', 'reciever_hash');
+    }
+
+    public function griefer_profile_recieved()
+    {
+        return $this->hasOne(GrieferProfile::class, 'player_hash', 'player_hash');
     }
 }

@@ -228,13 +228,17 @@
                                         $death = \Carbon\Carbon::parse(date('Y-m-d', $life->timestamp));
                                         $now = \Carbon\Carbon::now();
 
-                                        $diff = $death->diffInDays($now);
+                                        $diff = $death->diffForHumans($now, ['parts' => 2, 'short' => true]);
                                     }
                                     
                                 @endphp
                                 <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400 @if($life && $diff <= 5) bg-orange-800 @endif">
-                                    <div wire:click="$dispatch('openModal', {component: 'admin.search.life-actions-modal', arguments: {character_id: {{$life ? $life->character_id : '' }}}})">{{ $life ? date('Y-m-d H:i', $life->timestamp)." [$diff days ago]" : 'N/A' }}</div>
-                                    <div class="text-xs">[{{ $life ? $life->pos_x.', '.$life->pos_y : 'N/A' }}]</div>
+                                    <div wire:click="$dispatch('openModal', {component: 'admin.search.life-actions-modal', arguments: {character_id: {{$life ? $life->character_id : '' }}}})">
+                                        {{ $life ? date('Y-m-d H:i', $life->timestamp)." ($diff)" : 'N/A' }}
+                                    </div>
+                                    <div class="text-xs">
+                                        [{{ $life ? $life->pos_x.', '.$life->pos_y : 'N/A' }}]
+                                    </div>
                                 </td>
                                 <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
                                     {{ $life ? $life->age : 'N/A' }}

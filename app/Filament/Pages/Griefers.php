@@ -46,7 +46,6 @@ class Griefers extends Page
             ])
             ->get();
 
-
         $this->profile_group = $this->groups[0]->id;
         $this->sort_by = 'life.id';
         $this->order_by_desc = 1;
