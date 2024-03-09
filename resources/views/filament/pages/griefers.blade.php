@@ -3,6 +3,7 @@
         <script src="https://kit.fontawesome.com/737926afbe.js" crossorigin="anonymous"></script>
         @livewire('wire-elements-modal')
     @endpush
+    @can('create griefer groups')
     <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div id="editGroup" class="p-4 border rounded-lg bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
             <div class="text-2xl uppercase text-center">Add or edit group</div>
@@ -83,7 +84,7 @@
             </div>
         </div>
     </div>
-
+    @endcan
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div class="p-4 flex flex-col justify-center border rounded-lg bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark">
             <div class="text-2xl text-center uppercase">Sync all to personal contacts</div>
