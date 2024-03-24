@@ -32,6 +32,7 @@ class Kernel extends ConsoleKernel
 
         // Update all time map interaction leaderboard
         $schedule->command('app:update-leaderboard-records')->dailyAt('10:00');
+        $schedule->command('app:process-new-badges')->dailyAt('10:10');
 
         // Update curse and gene scores
         $schedule->command('app:update-curse-scores')->dailyAt('10:10');
