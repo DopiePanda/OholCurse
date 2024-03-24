@@ -28,5 +28,9 @@ class Leaderboard extends Model
         return $this->hasOne(UserContact::class, 'hash', 'player_hash')->where('user_id', Auth::user()->id ?? null);
     }
 
+    public function badges()
+    {
+        return $this->hasMany(ProfileBadge::class, 'player_hash', 'player_hash');
+    }
     
 }

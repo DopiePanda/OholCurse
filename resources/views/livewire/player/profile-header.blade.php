@@ -1,5 +1,5 @@
 <div class="z-30 bg-white dark:bg-slate-700">
-    <div class="flex flex-row items-center justify-center pr-8">
+    <div class="flex flex-col items-center justify-center pr-8">
         <div class="flex grow text-center justify-center items-center">
             <div class="inline-block">
                 <h2 class="inline-block mx-auto text-xl text-gray-800 dark:text-gray-200 leading-tight break-words text-center">
@@ -40,9 +40,18 @@
                         (Missing Leaderboard Name)
                     @endif
                 </h2>
+                <div class="mt-2 flex flex-row justify-start space-x-2">
+                    @if(count($badges) > 0)
+                        @foreach ($badges as $badge)
+                            <div wire:click="$dispatch('openModal', {component: 'modals.profile-badge', arguments: {hash: '{{ $hash }}', badge_id: {{$badge->id}}}})">
+                                <img class="h-8" src="{{ asset($badge->badge->image_small) }}" alt="{{ $badge->badge->name }}" title="{{ $badge->badge->name }}" />
+                            </div>
+                        @endforeach
+                    @endif
+               </div>
             </div>
             <div class="pt-1 ml-4 self-center inline-block">
-                <div class="group relative ml-2 inline-block" wire:click="$dispatch('openModal', {component: 'modals.relation-search', arguments: {hash: '{{ $hash }}'}})">
+                <div class="relative ml-2 inline-block" wire:click="$dispatch('openModal', {component: 'modals.relation-search', arguments: {hash: '{{ $hash }}'}})">
                     
                     <svg class="w-10 h-10 text-skin-base dark:text-skin-base-dark hover:brightness-110" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12v4m0 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM8 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 0v2a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V8m0 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
@@ -52,7 +61,7 @@
                         Find previous relationships to this player
                     </span>
                 </div>
-                <div class="group relative ml-2 inline-block">
+                <div class="relative ml-2 inline-block">
                     
                       <a href="{{ route('player.statistics', ['hash' => $hash]) }}">
                         <svg class="cursor-pointer w-10 h-10 text-skin-base dark:text-skin-base-dark hover:brightness-110" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
