@@ -138,6 +138,20 @@ Route::middleware('web')->group(function() {
         */
         
         Route::impersonate();
+
+        Route::get('/error/403', function () {
+            return abort(403);
+        });
+        Route::get('/error/404', function () {
+            return abort(404);
+        });
+        Route::get('/error/419', function () {
+            return abort(419);
+        });
+        Route::get('/error/500', function () {
+            return abort(500);
+        });
+
     });
 
     
