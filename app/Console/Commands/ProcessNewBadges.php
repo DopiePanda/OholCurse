@@ -45,7 +45,7 @@ class ProcessNewBadges extends Command
         $x_to = 100;
 
         $map_entries = MapLog::with('life:character_id,player_hash', 'name:character_id,name')
-                        ->select('character_id', 'pos_x', 'pos_y', 'timestamp')
+                        ->select('character_id', 'pos_x', 'pos_y', 'timestamp', 'object_id')
                         ->where('timestamp', '>=', $two_days_ago)
                         ->where('pos_x', '>=', $x_from)
                         ->where('pos_x', '<=', $x_to)
@@ -58,15 +58,18 @@ class ProcessNewBadges extends Command
         {
             foreach($map_entries as $entry)
             {
-                ProfileBadge::updateOrCreate(
-                    [
-                        'player_hash' => $entry->life->player_hash,
-                        'badge_id' => 1,
-                    ], 
-                    [
-                        'achieved_at' => $entry->timestamp
-                    ]
-                );
+                if($entry->object_id != 3053)
+                {
+                    ProfileBadge::updateOrCreate(
+                        [
+                            'player_hash' => $entry->life->player_hash,
+                            'badge_id' => 1,
+                        ], 
+                        [
+                            'achieved_at' => $entry->timestamp
+                        ]
+                    );
+                }
             }
         }
         else
