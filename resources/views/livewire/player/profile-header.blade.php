@@ -2,7 +2,7 @@
     <div class="flex flex-col items-center justify-center pr-8">
         <div class="flex grow text-center justify-center items-center">
             <div class="inline-block">
-                <h2 class="inline-block mx-auto text-xl text-gray-800 dark:text-gray-200 leading-tight break-words text-center">
+                <h2 class="inline-block mx-auto text-xl text-gray-800 dark:text-gray-200 leading-tight break-words">
                     @if(isset($profile->leaderboard_id) && !empty($profile->leaderboard_id) && !empty($profile->leaderboard_name))
                         @if($contact)
                             <div class="flex lg:flex-row justify-center items-center font-semibold">
@@ -19,7 +19,7 @@
                                     </button>
                                 @endauth
                             </div>
-                            <a href="https://onehouronelife.com/fitnessServer/server.php?action=leaderboard_detail&id={{ $profile->leaderboard_id}}"
+                            <a class="text-left" href="https://onehouronelife.com/fitnessServer/server.php?action=leaderboard_detail&id={{ $profile->leaderboard_id}}"
                                 target="_blank">
                                 <div title="{{ $profile->player_hash }}">{{ $profile->leaderboard_name }}</div>
                             </a>
