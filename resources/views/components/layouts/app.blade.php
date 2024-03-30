@@ -41,7 +41,7 @@
 
         @yield('before-head-end')
     </head>
-    <body class="font-sans antialiased {{ auth()->user() ? auth()->user()->theme : env('DEFAULT_THEME') }}">
+    <body class="font-sans antialiased {{ auth()->user() ? auth()->user()->theme : env('DEFAULT_THEME') }}" @if(env('APRILS_FOOL')) style="transform:rotate(180deg);" @endif>
         <div id="background" class="z-10 flex flex-col min-h-screen bg-gray-100 dark:bg-slate-800">
             <x-includes.navigation/>
 
