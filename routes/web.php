@@ -152,6 +152,27 @@ Route::middleware('web')->group(function() {
             return abort(500);
         });
 
+
+        Route::get('/reports/{user_id}', function ($user_id) {
+            $reports = \App\Models\Yumlog::where('user_id', $user_id)->get();
+            $ids = $reports->pluck('character_id');
+
+            $curses = \App\Models\CurseLog::with('leaderboard')->select('player_hash')->where('type', 'curse')->whereIn('character_id', $ids)->groupBy('player_hash')->get();
+            //dd($curses);
+
+            foreach ($curses as $curse) 
+            {
+                if ($curse->leaderboard) 
+                {
+                    print $curse->leaderboard->leaderboard_name."</br>";
+                }
+                else
+                {
+                    print $curse->player_hash."</br>";
+                }
+                
+            }
+        });
     });
 
     
