@@ -7,6 +7,18 @@
     </audio>
 
     <style type="text/css">
+        button:hover{
+            display: none !important;
+        }
+        a:hover{
+            display: none !important;
+        }
+        input[type=submit]:hover{
+            display: none !important;
+        }
+        div[wire:click]:hover{
+            display: none !important;
+        }
         .spin-infinite{
             animation: rotation 2s infinite linear;
         }
