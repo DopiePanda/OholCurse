@@ -11,6 +11,7 @@ use DB;
 
 use App\Models\Leaderboard;
 use App\Models\User;
+use App\Models\ProfileBadge;
 
 class PlayerInteractions extends Component
 {
@@ -40,10 +41,40 @@ class PlayerInteractions extends Component
                     ->first();
 
         $this->donator = User::where('donator', 1)->where('player_hash', $this->hash)->first() ?? null;
+
+        $this->aprilFoolsBadge();
     }
 
     public function render()
     {
         return view('livewire.player-interactions');
+    }
+
+    private function aprilFoolsBadge()
+    {
+        if(date('d.m') != '01.04')
+        {
+            return;
+        }
+
+        if(!Auth::user())
+        {
+            return;
+        }
+
+        if(Auth::user()->player_hash == null)
+        {
+            return;
+        }
+
+        ProfileBadge::updateOrCreate(
+            [
+                'player_hash' => Auth::user()->player_hash,
+                'badge_id' => 2,
+            ], 
+            [
+                'achieved_at' => time()
+            ]
+        );
     }
 }
