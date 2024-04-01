@@ -17,6 +17,7 @@ use App\Http\Controllers\GuideController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PlayerReportController;
 use App\Http\Controllers\ReportVerificationController;
+use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TestController;
 
 use App\Http\Controllers\Tools\Select2Controller;
@@ -62,6 +63,9 @@ Route::middleware('web')->group(function() {
     });
     
     Route::get('/', Home::class)->name('search');
+
+    Route::get('/internal/session/get', [SessionController::class, 'getSession'])->name('session.get');
+    Route::post('/internal/session/set', [SessionController::class, 'setSession'])->name('session.set');
 
     Route::prefix('/player')->name('player.')->group(function () {
         Route::get('/hash/{hash}', PlayerInteractions::class)->name('curses');

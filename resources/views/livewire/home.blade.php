@@ -1,7 +1,7 @@
 <div class="w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12">
     @section("page-title")- Search OHOL profiles @endsection
     <div class="flex flex-col items-center">
-        <img class="w-96" src="{{ asset('assets/uploads/images/new-logo-transparent.png') }}" alt="oholcurse-logo" />
+        <img id="oholcurse-logo-full" class="w-96" src="{{ asset('assets/uploads/images/new-logo-transparent.png') }}" alt="oholcurse-logo" />
        
         <div class="w-full">
             <div class="mt-8 w-full text-center uppercase text-sm font-bold dark:text-gray-400">Filter search by:</div>
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="w-full text-center">
-                <input type="text" wire:model.live="query" wire:keyup.debounce.150ms="search" class="mx-auto mt-2 w-full h-14 dark:bg-slate-500 dark:text-gray-800 dark:placeholder:text-gray-700 @if(strlen($query) >= $minQueryLength) rounded-t-lg @else rounded-lg @endif"
+                <input type="text" wire:model.live="query" wire:keyup.debounce.150ms="search" id="profileSearch" class="mx-auto mt-2 w-full h-14 dark:bg-slate-500 dark:text-gray-800 dark:placeholder:text-gray-700 @if(strlen($query) >= $minQueryLength) rounded-t-lg @else rounded-lg @endif"
 
                 @if($filter == 'character_name') placeholder="Search by typing a character name here..." @endif
                 @if($filter == 'curse_name') placeholder="Search by typing a curse name here..." @endif
