@@ -1,9 +1,14 @@
 <div>
 
     <img id="rickRollGif" class="hidden fixed top-0 left-0 z-10 dvd-screen-animation" src="{{ asset('assets/uploads/april/rickroll.gif') }}" alt="">
+    <img id="allStarGif" class="hidden fixed top-0 left-0 z-10 dvd-screen-animation spin-infinite" src="{{ asset('assets/uploads/april/all-star.gif') }}" alt="">
 
     <audio id="rickRollSong">
         <source src="{{ asset('assets/uploads/april/rr.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    <audio id="allStarSong">
+        <source src="{{ asset('assets/uploads/april/all-star.mp3') }}" type="audio/mpeg">
     </audio>
 
     <style type="text/css">
@@ -46,17 +51,17 @@
 
         @keyframes shake-x {
             0% {transform: rotateX(0deg);}
-            25% {transform: rotateX(25deg);}
-            50% {transform: rotateX(0deg);}
-            75% {transform: rotateX(20deg);}
-            100% {transform: rotateX(5deg);}
+            25% {transform: rotateX(60deg);}
+            50% {transform: rotateX(15deg);}
+            75% {transform: rotateX(90deg);}
+            100% {transform: rotateX(15deg);}
         }
 
         @keyframes shake-y {
             0% {transform: rotateY(0deg);}
-            25% {transform: rotateY(25deg);}
+            25% {transform: rotateY(66deg);}
             50% {transform: rotateY(0deg);}
-            75% {transform: rotateY(20deg);}
+            75% {transform: rotateY(45deg);}
             100% {transform: rotateY(5deg);}
         }
 
@@ -103,9 +108,10 @@
             // Session key name for trigger amount
             var sessionKey = 'times-triggered';
             // Percentage chance of triggering
-            var triggerValue = 25;
+            var triggerValueMin = 15;
+            var triggerValueMax = 45;
             // Max amount of times it can trigger
-            var maxTriggers = 10;
+            var maxTriggers = 15;
             // Amount of seconds it will stay active
             var triggerDuration = 15;
             
@@ -115,9 +121,14 @@
                 // Get random int between 1 and 100
                 var diceRoll = getRandomInt(1, 100);
 
-                if(diceRoll <= triggerValue && timesTriggered <= maxTriggers)
+                if(diceRoll <= triggerValueMin && timesTriggered <= maxTriggers)
                 {
                     rickRoll();
+                    swapLogo();
+                    addTrigger();
+                }else if(diceRoll > triggerValueMin && diceRoll <= triggerValueMax && timesTriggered <= maxTriggers)
+                {
+                    allStar();
                     swapLogo();
                     addTrigger();
                 }else
@@ -187,6 +198,21 @@
                 gif.removeClass('hidden');
 
                 var audioSource = document.getElementById("rickRollSong");
+                audioSource.volume = 0.2;
+                audioSource.play();
+
+                setTimeout(function(){
+                    gif.addClass('hidden');
+                    audioSource.pause();
+                }, triggerDuration * 1000);
+            }
+
+            function allStar()
+            {
+                var gif = $('#allStarGif');
+                gif.removeClass('hidden');
+
+                var audioSource = document.getElementById("allStarSong");
                 audioSource.volume = 0.2;
                 audioSource.play();
 
