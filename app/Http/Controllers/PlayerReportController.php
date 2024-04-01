@@ -465,4 +465,32 @@ class PlayerReportController extends Controller
         return $data;
     }
 
+    private function aprilFoolsBadge()
+    {
+        if(date('d.m') != '01.04')
+        {
+            return;
+        }
+
+        if(!Auth::user())
+        {
+            return;
+        }
+
+        if(Auth::user()->player_hash == null)
+        {
+            return;
+        }
+
+        ProfileBadge::updateOrCreate(
+            [
+                'player_hash' => Auth::user()->player_hash,
+                'badge_id' => 2,
+            ], 
+            [
+                'achieved_at' => time()
+            ]
+        );
+    }
+
 }
