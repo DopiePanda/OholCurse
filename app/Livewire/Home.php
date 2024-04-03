@@ -102,14 +102,14 @@ class Home extends Component
     public function getCharacters()
     {
         $this->results = LifeNameLog::with('character')
-                                    ->where('name', 'like', rtrim($this->query).'%')
+                                    ->where('name', 'like', trim($this->query).'%')
                                     ->orderBy('character_id', 'desc')
                                     ->skip($this->fetchCursor)
                                     ->take($this->fetchLimit)
                                     ->get()
                                     ->toArray();
 
-        $this->count = LifeNameLog::where('name', 'like', rtrim($this->query).'%')->count();
+        $this->count = LifeNameLog::where('name', 'like', trim($this->query).'%')->count();
     }
 
     public function getCurseNames()
@@ -131,20 +131,20 @@ class Home extends Component
 
     public function getLeaderboards()
     {
-        $this->results = Leaderboard::where('leaderboard_name', 'like', rtrim($this->query).'%')
+        $this->results = Leaderboard::where('leaderboard_name', 'like', trim($this->query).'%')
                                     ->orderBy('leaderboard_name', 'asc')
                                     ->skip($this->fetchCursor)
                                     ->take($this->fetchLimit)
                                     ->get()
                                     ->toArray();
 
-        $this->count = Leaderboard::where('leaderboard_name', 'like', rtrim($this->query).'%')->count();
+        $this->count = Leaderboard::where('leaderboard_name', 'like', trim($this->query).'%')->count();
     }
 
     public function getPlayerHashes()
     {
         $this->results = CurseLog::select('id', 'player_hash', 'timestamp')
-                                ->where('player_hash', 'like', rtrim($this->query).'%')
+                                ->where('player_hash', 'like', trim($this->query).'%')
                                 ->groupBy('player_hash')
                                 ->orderBy('timestamp', 'desc')
                                 ->skip($this->fetchCursor)
@@ -152,7 +152,7 @@ class Home extends Component
                                 ->get()
                                 ->toArray();
 
-        $this->count = CurseLog::where('player_hash', 'like', rtrim($this->query).'%')->distinct('player_hash')->count();
+        $this->count = CurseLog::where('player_hash', 'like', trim($this->query).'%')->distinct('player_hash')->count();
     }
 
     public function setSearchFilter(Request $request, $filter)
