@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="w-full text-center">
-                <input type="text" wire:model.live="query" wire:keyup.debounce.150ms="search" id="profileSearch" class="mx-auto mt-2 w-full h-14 dark:bg-slate-500 dark:text-gray-800 dark:placeholder:text-gray-700 @if(strlen($query) >= $minQueryLength) rounded-t-lg @else rounded-lg @endif"
+                <input type="text" wire:model.live="query" wire:change.debounce.150ms="search" id="profileSearch" class="mx-auto mt-2 w-full h-14 dark:bg-slate-500 dark:text-gray-800 dark:placeholder:text-gray-700 @if(strlen($query) >= $minQueryLength) rounded-t-lg @else rounded-lg @endif"
 
                 @if($filter == 'character_name') placeholder="Search by typing a character name here..." @endif
                 @if($filter == 'curse_name') placeholder="Search by typing a curse name here..." @endif
