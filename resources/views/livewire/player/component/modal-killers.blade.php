@@ -40,7 +40,7 @@
                                 @else
                                     <i title="Female" class="text-pink-500 mr-1 fa-solid fa-venus"></i>
                                 @endif
-                                <span class="capitalize">{{ strtolower($killer->name->name) }}</span>
+                                <span class="capitalize">{{ strtolower($killer->name->name ?? 'MISSING') }}</span>
                                 <span class="text-xs">
                                     ({{ $killer->character_id }})
                                 </span>
