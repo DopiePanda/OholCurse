@@ -37,6 +37,9 @@ use App\Livewire\Admin\Search\CharacterMovement;
 use App\Livewire\Content\Upload;
 use App\Livewire\Content\Browse;
 
+use App\Livewire\News\Index as NewsIndex;
+use App\Livewire\News\Article as NewsArticle;
+
 use App\Livewire\Roadmap\Ideas;
 use App\Livewire\Roadmap\Ideas\Create as IdeaCreate;
 
@@ -128,6 +131,11 @@ Route::middleware('web')->group(function() {
         Route::prefix('/content')->name('content.')->group(function () {
             Route::get('/browse', Browse::class)->name('browse');
             Route::get('/upload', Upload::class)->name('upload');
+        });
+
+        Route::prefix('/news')->name('news.')->group(function () {
+            Route::get('/', NewsIndex::class)->name('index');
+            Route::get('/article/{id}/{slug}', NewsArticle::class)->name('article');
         });
 
         Route::get('/search/movement', CharacterMovement::class)->name('search.movement');
