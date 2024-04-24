@@ -3,7 +3,13 @@
         <section class="accordion border border-skin-base dark:border-skin-base-dark rounded-lg">
             <input type="checkbox" name="collapse{{ $handle }}" id="handle{{ $handle }}">
             <h2 class="handle text-white bg-skin-fill dark:bg-skin-fill-dark">
-                <label for="handle{{ $handle }}">{{ $title }} ({{ $interactions->total() }})</label>
+                <label for="handle{{ $handle }}">{{ $title }} ({{ $interactions->total() }})
+                    @can('can view extra')
+                        <span class="inline-block text-right">
+                            <i wire:click="$dispatch('openModal', {component: 'admin.player.profile', arguments: {hash: '{{$hash}}', type: '{{$type}}', channel: 'recieved'}})" class="fa-solid fa-eye opacity-10"></i>
+                        </span>
+                    @endcan
+                </label> 
             </h2>
             <div class="content">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">

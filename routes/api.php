@@ -7,6 +7,8 @@ use App\Http\Resources\GrieferProfileResource;
 use App\Models\GrieferProfile;
 use App\Http\Middleware\AuthenticateOnceWithBasicAuth;
 
+use Illuminate\Support\Facades\Log;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +28,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware(AuthenticateOnceWithBasicAuth::class)->get('/griefers/all', function () {
     return GrieferProfileResource::collection(GrieferProfile::select('player_hash', 'leaderboard_id')->get());
+});
+
+Route::get('/yumlife', function(Request $request) {
+    $data = $request->input();
+    Log::debug("Recieved request:");
+    Log::debug($data);
+    print_r($data);
 });
