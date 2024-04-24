@@ -11,7 +11,7 @@
             @foreach($articles as $article)
                 <div class="max-w-96 p-2 border border-gray-400 flex flex-col">
                     <a class="block w-full h-full" href="{{ route('news.article', ['id' => $article->id, 'slug' => $article->slug]) }}">
-                        <div class="relative mt-2 h-60 border-2 border-black grow">
+                        <div class="relative mt-2 border-2 border-black grow">
                             <img class="object-cover w-full h-full" src="{{ asset($article->images->first()->image_url ?? 'MISSING') }}" />
                             <div class="absolute left-0 bottom-0 ml-1 mb-1 px-2 text-sm rounded-full bg-red-500 uppercase text-white">
                                 {{ $article->type }}
@@ -30,7 +30,7 @@
                                 <a href="{{ $ad->url }}">
                             @endif
                                 
-                            <div class="relative mt-2 h-60 border-8 border-black grow">
+                            <div class="relative mt-2 border-2 border-black grow">
                                 <img class="object-cover w-full h-full" src="{{ asset($ad->image_url) }}" />
                                 <div class="absolute left-0 bottom-0 ml-1 mb-1 px-2 text-sm rounded-full bg-red-500 uppercase text-white">
                                     AD
