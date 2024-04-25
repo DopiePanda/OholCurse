@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\NewsArticleResource\Pages;
 use App\Filament\Resources\NewsArticleResource\RelationManagers;
+use Filament\Forms\Set;
+use Filament\Forms\Get;
 use App\Models\NewsArticle;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -14,6 +16,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 use Filament\Forms\Components\Select;
+
+use Str;
 
 class NewsArticleResource extends Resource
 {
@@ -32,7 +36,13 @@ class NewsArticleResource extends Resource
                     ->options(['report', 'life', 'guide', 'music']),
                 Forms\Components\TextInput::make('title')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function (Get $get, Set $set, ?string $state) {
+                        if (! $get('is_slug_changed_manually') && filled($state)) {
+                            $set('slug', Str::slug($state));
+                        }
+                    }),
                 Forms\Components\Textarea::make('content')
                     ->required()
                     ->maxLength(65535)
@@ -47,6 +57,9 @@ class NewsArticleResource extends Resource
                     ->hidden(),
                 Forms\Components\Toggle::make('enabled')
                     ->required(),
+                Forms\Components\Hidden::make('is_slug_changed_manually')
+                    ->default(false)
+                    ->dehydrated(false),
             ]);
     }
 
