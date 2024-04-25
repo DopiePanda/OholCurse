@@ -13,6 +13,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use Filament\Forms\Components\Select;
+
 class NewsArticleResource extends Resource
 {
     protected static ?string $model = NewsArticle::class;
@@ -25,9 +27,9 @@ class NewsArticleResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('type')
+                Select::make('type')
                     ->required()
-                    ->maxLength(255),
+                    ->options(['report', 'story', 'ad', 'guide', 'music']),
                 Forms\Components\Toggle::make('enabled')
                     ->required(),
                 Forms\Components\TextInput::make('title')
