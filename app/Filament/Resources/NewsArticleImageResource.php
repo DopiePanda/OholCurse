@@ -13,6 +13,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use Auth;
+
 use Filament\Forms\Components\Select;
 
 class NewsArticleImageResource extends Resource
@@ -32,7 +34,9 @@ class NewsArticleImageResource extends Resource
                     ->relationship('article', 'title'),
                 Forms\Components\TextInput::make('user_id')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->default(Auth::user()->id)
+                    ->hidden(),
                 Forms\Components\TextInput::make('position')
                     ->required()
                     ->maxLength(255)

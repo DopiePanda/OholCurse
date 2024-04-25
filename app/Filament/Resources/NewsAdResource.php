@@ -13,6 +13,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use Auth;
+
 class NewsAdResource extends Resource
 {
     protected static ?string $model = NewsAd::class;
@@ -27,9 +29,9 @@ class NewsAdResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('user_id')
                     ->required()
-                    ->numeric(),
-                Forms\Components\Toggle::make('enabled')
-                    ->required(),
+                    ->numeric()
+                    ->default(Auth::user()->id)
+                    ->hidden(),
                 Forms\Components\TextInput::make('index')
                     ->required()
                     ->numeric(),
@@ -44,6 +46,8 @@ class NewsAdResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('url')
                     ->maxLength(255),
+                Forms\Components\Toggle::make('enabled')
+                    ->required(),
             ]);
     }
 
@@ -51,8 +55,7 @@ class NewsAdResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('user.username')
                     ->sortable(),
                 Tables\Columns\IconColumn::make('enabled')
                     ->boolean(),

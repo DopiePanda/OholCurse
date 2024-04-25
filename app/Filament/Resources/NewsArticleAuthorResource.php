@@ -13,6 +13,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use Filament\Forms\Components\Select;
+
 class NewsArticleAuthorResource extends Resource
 {
     protected static ?string $model = NewsArticleAuthor::class;
@@ -25,12 +27,12 @@ class NewsArticleAuthorResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('article_id')
+                Select::make('article_id')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('user_id')
+                    ->relationship('article', 'title'),
+                Select::make('user_id')
                     ->required()
-                    ->numeric(),
+                    ->relationship('user', 'username'),
             ]);
     }
 
@@ -38,20 +40,19 @@ class NewsArticleAuthorResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('article_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('article.title')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('user.username')
+                    ->sortable()
+                    ->label('Author'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
             ])
             ->filters([
                 //
