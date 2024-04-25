@@ -29,9 +29,7 @@ class NewsArticleResource extends Resource
             ->schema([
                 Select::make('type')
                     ->required()
-                    ->options(['report', 'story', 'ad', 'guide', 'music']),
-                Forms\Components\Toggle::make('enabled')
-                    ->required(),
+                    ->options(['report', 'life', 'guide', 'music']),
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
@@ -45,7 +43,10 @@ class NewsArticleResource extends Resource
                 Forms\Components\TextInput::make('views')
                     ->required()
                     ->numeric()
-                    ->default(0),
+                    ->default(0)
+                    ->hidden(),
+                Forms\Components\Toggle::make('enabled')
+                    ->required(),
             ]);
     }
 
