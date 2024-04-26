@@ -135,7 +135,7 @@ Route::middleware('web')->group(function() {
 
         Route::prefix('/news')->name('news.')->group(function () {
             Route::get('/', NewsIndex::class)->name('index');
-            Route::get('/article/{id}/{slug}', NewsArticle::class)->name('article');
+            Route::get('/article/{id}-{slug}', NewsArticle::class)->name('article');
         });
 
         Route::get('/search/movement', CharacterMovement::class)->name('search.movement');
