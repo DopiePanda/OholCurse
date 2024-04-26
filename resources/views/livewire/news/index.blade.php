@@ -1,5 +1,5 @@
 <div class="w-full">
-    <div class="p-4 mx-auto bg-white w-3/5">
+    <div class="p-4 mx-auto bg-white w-full lg:w-3/5">
 
         <!-- Newspaper name -->
         <div class="py-4 text-center font-bold font-serif text-6xl">
@@ -7,7 +7,7 @@
         </div>
 
         <!-- Articles - Reports -->
-        <div class="grow my-4 grid grid-cols-3 gap-4">
+        <div class="grow my-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
             @foreach($articles as $article)
                 <div class="mx-auto max-w-96 border border-gray-400 flex flex-col">
                     <a class="block w-full h-full" href="{{ route('news.article', ['id' => $article->id, 'slug' => $article->slug]) }}">

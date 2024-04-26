@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class NewsArticleAuthor extends Model
 {
@@ -18,6 +19,6 @@ class NewsArticleAuthor extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class, 'id', 'user_id')->with('roles');
+        return $this->belongsTo(User::class, 'id', 'user_id');
     }
 }
