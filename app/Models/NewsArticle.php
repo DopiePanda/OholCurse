@@ -27,4 +27,9 @@ class NewsArticle extends Model
     {
         return $this->hasMany(NewsArticleImage::class, 'article_id', 'id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(NewsArticleComment::class, 'article_id', 'id');
+    }
 }

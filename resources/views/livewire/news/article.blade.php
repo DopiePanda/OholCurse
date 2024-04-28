@@ -15,7 +15,13 @@
         -->
     </div>
     <div class="mt-4 text-6xl font-bold">{{ $article->title }}</div>
-    <div class="pt-2">
+    <div class="mt-4 pt-2 text-lg">
         {!! nl2br($article->content) !!}
     </div>
+
+    <!-- Comment section -->
+    <div class="mt-6">
+        <livewire:news.comments :article="$article->id">
+    </div>
+    
 </div>

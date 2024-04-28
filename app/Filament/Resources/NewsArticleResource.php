@@ -33,7 +33,7 @@ class NewsArticleResource extends Resource
             ->schema([
                 Select::make('type')
                     ->required()
-                    ->options(['report', 'life', 'guide', 'music']),
+                    ->options(['report' => 'Report', 'life' => 'Life Story', 'guide' => 'Guide', 'music' => 'Music']),
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255)
