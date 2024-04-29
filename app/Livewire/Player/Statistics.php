@@ -123,7 +123,7 @@ class Statistics extends Component
         $ghost_lives = $life_collect->filter(function ($item) {
             if($item['death'] != null)
             {
-                return ($item['death']['timestamp'] - $item['timestamp']) > 3660;
+                return ($item['death']['timestamp'] - $item['timestamp']) > 3696;
             }
 
             return false;
