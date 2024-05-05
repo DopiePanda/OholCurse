@@ -4,12 +4,40 @@
     <!-- Leave a new comment -->
     <div>
         <div class="text-2xl">Leave a comment!</div>
+
+        @if($replies_to != null)
+            <div class="mt-2 italic">
+                Replying to comment ID: #{{ $replies_to }}
+            </div>
+        @endif
         <div class="mt-2">
-            <textarea class="w-full rounded-lg" wire:model="user_comment" id="" cols="30" rows="6" placeholder="Write your comment here"></textarea>
+            <textarea class="w-full rounded-lg" wire:model.live="user_comment" id="" cols="30" rows="6" placeholder="Write your comment here"></textarea>
+            <div>
+                @if(strlen($user_comment) <= 250)
+                    <div class="text-black">
+                @else
+                    <div class="text-red-600">
+                @endif
+
+                {{ strlen($user_comment) ?? 0 }} / 250
+                </div>
+            </div>
         </div>
+        @error('user_comment')
+        <div class="text-red-600 font-bold">
+            {{ $message }}
+        </div>
+        @enderror
+
         <div class="">
-            <button type="button" class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark">Submit comment</button>
+            <button wire:click="postComment()" type="button" class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark">Submit comment</button>
         </div>
+
+        @if($user_comment != null || $replies_to != null)
+            <div class="my-3">
+                <button wire:click="clearForm()" type="button" class="text-red-600">Clear form</button>
+            </div>
+        @endif
     </div>
 
     @endauth
@@ -25,8 +53,17 @@
     @forelse ($comments as $comment)
     <div class="p-2 pl-4 bg-gray-200 rounded-lg border border-gray-600">
         <div class="flex flex-col"> 
-            <div class="w-1/5 font-bold">
-                {{ $comment->user->username }}
+            <div class="w-full font-bold">
+                <span>{{ $comment->user->username }}</span> -
+                <span>(Comment ID: {{ $comment->id }})</span>
+                @if(Auth::user())
+                    - <span wire:click="setReply({{ $comment->id }})" class="italic cursor-pointer hover:color-skin-base dark:hover:color-skin-base-dark">Reply</span>
+                    @if($comment->user_id == Auth::user()->id)
+                        - <span wire:click="deleteComment({{ $comment->id }})" class="italic cursor-pointer text-red-600">Delete</span>
+                    @endif
+                @endif
+
+                
             </div>
             <div>
                 {{ $comment->comment }}
@@ -38,7 +75,12 @@
         @forelse ($comment->replies as $reply)
             <div class="mt-2 p-2 pl-4 bg-white ml-2 flex flex-col rounded-lg border border-gray-600"> 
                 <div class="shrink font-bold">
-                    {{ $reply->user->username }}
+                    <span>{{ $reply->user->username }}</span>
+                    @if(Auth::user())
+                        @if($reply->user_id == Auth::user()->id)
+                            - <span wire:click="deleteComment({{ $reply->id }})" class="italic cursor-pointer text-red-600">Delete</span>
+                        @endif
+                    @endif
                 </div>
                 <div class="grow">
                     {{ $reply->comment }}
