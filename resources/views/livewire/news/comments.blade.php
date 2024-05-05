@@ -51,7 +51,7 @@
 
     <!-- User submitted article comments -->
     @forelse ($comments as $comment)
-    <div class="p-2 pl-4 bg-gray-200 rounded-lg border border-gray-600">
+    <div class="my-2 p-2 pl-4 bg-gray-200 rounded-lg border border-gray-600">
         <div class="flex flex-col"> 
             <div class="w-full font-bold">
                 <span>{{ $comment->user->username }}</span> -

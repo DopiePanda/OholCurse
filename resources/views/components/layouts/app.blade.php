@@ -10,7 +10,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Page title and icon -->
-        <title>{{ config('app.name', 'OHOL Curse') }} @yield('page-title')</title>
+        <title>{{ config('app.name', 'OHOLCurse') }} @yield('page-title')</title>
         <link rel="icon" href="{{ asset('assets/favicon.png') }}">
 
         <!-- Fonts -->

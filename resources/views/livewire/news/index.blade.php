@@ -1,4 +1,7 @@
 <div class="w-full">
+
+    @section("page-title", "- The hottest OHOL news")
+
     <div class="p-4 mx-auto bg-white w-full lg:w-3/5">
 
         <!-- Newspaper name -->
