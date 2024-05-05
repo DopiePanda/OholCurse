@@ -52,7 +52,7 @@ class Comments extends Component
 
     public function setReply($id)
     {
-        $this->replying_to = $id;
+        $this->replies_to = $id;
     }
 
     public function deleteComment($id)

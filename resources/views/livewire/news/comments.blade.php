@@ -75,7 +75,12 @@
         @forelse ($comment->replies as $reply)
             <div class="mt-2 p-2 pl-4 bg-white ml-2 flex flex-col rounded-lg border border-gray-600"> 
                 <div class="shrink font-bold">
-                    {{ $reply->user->username }}
+                    <span>{{ $reply->user->username }}</span>
+                    @if(Auth::user())
+                        @if($reply->user_id == Auth::user()->id)
+                            - <span wire:click="deleteComment({{ $reply->id }})" class="italic cursor-pointer text-red-600">Delete</span>
+                        @endif
+                    @endif
                 </div>
                 <div class="grow">
                     {{ $reply->comment }}
