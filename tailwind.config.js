@@ -81,6 +81,18 @@ export default {
                     'muted-dark': 'var(--color-border-muted-dark)',
                 },
             },
+            hueRotate: {
+                skin: 'var(--color-hue-rotate)',
+            },
+            saturate: {
+                skin: 'var(--color-saturate)',
+            },
+            contrast: {
+                skin: 'var(--color-contrast)',
+            },
+            brightness: {
+                skin: 'var(--color-brightness)',
+            }
         },
     },
 
