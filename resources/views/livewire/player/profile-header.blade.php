@@ -44,7 +44,7 @@
                     @if(count($badges) > 0)
                         @foreach ($badges as $badge)
                             <div wire:click="$dispatch('openModal', {component: 'modals.profile-badge', arguments: {hash: '{{ $hash }}', badge_id: {{$badge->id}}}})">
-                                <img class="h-8" src="{{ asset($badge->badge->image_small) }}" alt="{{ $badge->badge->name }}" title="{{ $badge->badge->name }}" />
+                                <img class="h-8 hue-rotate-skin saturate-skin contrast-skin brightness-skin" src="{{ asset($badge->badge->image_small) }}" alt="{{ $badge->badge->name }}" title="{{ $badge->badge->name }}" />
                             </div>
                         @endforeach
                     @endif
@@ -55,11 +55,7 @@
                     
                     <svg class="w-10 h-10 text-skin-base dark:text-skin-base-dark hover:brightness-110" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12v4m0 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM8 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 0v2a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V8m0 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
-                        </svg>
-                    <!-- <span class="hidden md:block lg:block w-8 lg:w-96 py-0 lg:py-2 mt-8 z-50 group-hover:opacity-100 transition-opacity bg-gray-800 px-1 text-sm text-gray-100 rounded-md absolute left-1/2 
-                    -translate-x-1/2 translate-y-full opacity-0 m-1 lg:m-4 mx-auto lg:-bottom-4">
-                        Find previous relationships to this player
-                    </span> -->
+                    </svg>
                 </div>
                 <div class="group relative ml-2 inline-block">
                     
@@ -68,10 +64,6 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 3v4c0 .6-.4 1-1 1H5m4 10v-2m3 2v-6m3 6v-3m4-11v16c0 .6-.4 1-1 1H6a1 1 0 0 1-1-1V8c0-.4.1-.6.3-.8l4-4 .6-.2H18c.6 0 1 .4 1 1Z"/>
                           </svg>
                       </a>
-                      <!-- <span class="hidden md:block lg:block w-8 lg:w-96 py-0 lg:py-2 mt-8 z-50 group-hover:opacity-100 transition-opacity bg-gray-800 px-1 text-sm text-gray-100 rounded-md absolute left-1/2 
-                    -translate-x-1/2 translate-y-full opacity-0 m-1 lg:m-4 mx-auto lg:-bottom-4">
-                        View player statistics
-                    </span> -->
                 </div>
             </div>
         </div>

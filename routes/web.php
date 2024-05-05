@@ -106,6 +106,11 @@ Route::middleware('web')->group(function() {
         Route::get('/calculator/map', MapDistanceCalculator::class)->middleware('auth')->name('calculator.map');
     });
 
+    Route::prefix('/news')->name('news.')->group(function () {
+        Route::get('/', NewsIndex::class)->name('index');
+        Route::get('/article/{id}-{slug}', NewsArticle::class)->name('article');
+    });
+
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -131,11 +136,6 @@ Route::middleware('web')->group(function() {
         Route::prefix('/content')->name('content.')->group(function () {
             Route::get('/browse', Browse::class)->name('browse');
             Route::get('/upload', Upload::class)->name('upload');
-        });
-
-        Route::prefix('/news')->name('news.')->group(function () {
-            Route::get('/', NewsIndex::class)->name('index');
-            Route::get('/article/{id}-{slug}', NewsArticle::class)->name('article');
         });
 
         Route::get('/search/movement', CharacterMovement::class)->name('search.movement');

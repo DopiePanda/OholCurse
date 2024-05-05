@@ -155,12 +155,23 @@
     --color-border-base-dark: #f7879a;
     --color-border-muted: #6b7280;
     --color-border-muted-dark: #6b7280;
+
+    --color-hue-rotate: 299deg;
+    --color-saturate: 0.7;
+    --color-contrast: 100%;
+    --color-brightness: 120%;
   }
 
 }
+/* Profile badge color overlays
+.badge-image{
+  filter: hue-rotate(var(--tw-hue-rotate));
+}
+*/
+
 
 /*
- CSS for the main interaction
+ CSS for the main interaction page
 */
 .accordion > input[type="checkbox"] {
     position: absolute;
