@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="z-20 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-600">
+<nav x-data="{ open: false }" class="z-40 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-600">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -20,6 +20,10 @@
 
                     <x-nav-link :href="route('search')" :active="request()->routeIs('search')">
                         {{ __('Search') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('news.index')" :active="request()->routeIs('news.index')">
+                        {{ __('News') }}
                     </x-nav-link>
                     
                     <!-- <x-nav-link :href="route('leaderboards.index')" :active="request()->routeIs('leaderboards.*')">
@@ -117,7 +121,7 @@
                 </div>
             </div>
             <!-- Settings Dropdown -->
-            <div class="hidden md:flex sm:items-center sm:ml-6">
+            <div class="z-50 hidden md:flex sm:items-center sm:ml-6">
                 @auth
 
                 @if (auth()->user()->player_hash)
@@ -201,6 +205,9 @@
             @endauth
             <x-responsive-nav-link :href="route('search')" :active="request()->routeIs('search')">
                 {{ __('Search') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('news.index')" :active="request()->routeIs('news.index')">
+                {{ __('News') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('leaderboards.index')" :active="request()->routeIs('leaderboards.*')">
                 {{ __('Leaderboards') }}
