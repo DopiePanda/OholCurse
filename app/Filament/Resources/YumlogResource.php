@@ -203,20 +203,45 @@ class YumlogResource extends Resource
     {
         $start_time = microtime(true);
 
+        $last_birth = [];
+        $last_players = [];
+
         try{
                 ini_set('max_execution_time', 300);
 
                 File::lines($path)->each(function ($line) use ($hide) {
                     if(Str::contains($line, '| forgive |'))
                     {
+                        if(Str::contains($line, '| my_birth |'))
+                        {
+                            $last_birth = explode(' | ', $line);
+                        }
+
+                        if(Str::contains($line, '| player |'))
+                        {
+                            //$this->last_player = explode(' | ', $line);
+                            array_push($last_players, explode(' | ', $line));
+                        }
+
                         try 
                         {
-                            self::processLine($line, $hide);
+                            self::processForgive($line, $hide);
                         } 
                         catch (\Throwable $th) 
                         {
                             Log::channel('yumlog')->error($th);
                         }
+                    }
+                    if(Str::contains($line, '| curse |'))
+                    {
+                        try 
+                        {
+                            self::processCurse($line, $last_birth, $last_players);
+                        } 
+                        catch (\Throwable $th) 
+                        {
+                            Log::channel('yumlog')->error($th);
+                        } 
                     }
                     if(Str::contains($line, '| phex_list |'))
                     {
@@ -245,7 +270,79 @@ class YumlogResource extends Resource
             }
     }
 
-    public static function processLine($line, $hide)
+    public static function processCurse($line, $last_birth, $last_players)
+    {
+        /*
+            $parts[0] = timestamp | 1379020415 
+            $parts[1] = type | curse 
+            $parts[2] = character_id and name | 6641482 MELISA PLIMMER
+            $parts[3] = curse_name | HIDE FORM
+        */
+
+        $parts = explode(' | ', $line);
+
+        // Seperate character_id and character_name
+        $character = explode(' ', $parts[2]);
+        $character_id = $character[0];
+
+        $last_player = [];
+
+        foreach ($last_players as $player) 
+        {
+            if (($player[0] - $parts[0]) <= 3) {
+                if($character_id == $player[2])
+                {
+                    $last_player = $player;
+                }
+            }
+        }
+
+        //dd($this->last_player);
+
+        // If curse timestamp is greater than or equal the timestamp of the last birth -3 seconds
+        // AND curse timestamp is less than or equal to the timestamp of last birth + 3 seconds
+        // If this is true, it suggests the curse was sent in a previous life
+        if($parts[0] >= ($last_birth[0]-3) && $parts[0] <= ($last_birth[0]+3))
+        {
+            return false;
+
+        // If curse timestamp is greater than or equal the timestamp of the last player line -3 seconds
+        // AND curse timestamp is less than or equal to the timestamp of the last player line + 3 seconds
+        // If this is true, it suggests the curse was sent in a previous life
+        }
+        elseif($parts[0] >= ($last_player[0]-3) && $parts[0] <= ($last_player[0]+3) && $last_player[2] == $character_id)
+        {
+            return false;
+        }
+        else
+        {
+            // Check if character has only firstname or both first and last
+            if(count($character) == 2)
+            {
+                $name = $character[1];
+            }elseif(count($character) == 3)
+            {
+                $name = $character[1].' '.$character[2];
+            }else
+            {
+                $name = null;
+            }
+
+            Yumlog::updateOrCreate(
+                [
+                    'user_id' => Auth::user()->id,
+                    'timestamp' => $parts[0],
+                    'character_id' => $character_id,
+                ], 
+                [
+                    'character_name' => $name,
+                    'curse_name' => $parts[3],
+                ]
+            );
+        }
+    }
+
+    public static function processForgive($line, $hide)
     {
         /*
             $parts[0] = timestamp | 1379020415 
