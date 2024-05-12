@@ -23,9 +23,9 @@
                             {{ __('Search') }}
                         </x-nav-link>
                         
-                        <!-- <x-nav-link :href="route('leaderboards.index')" :active="request()->routeIs('leaderboards.*')">
-                            {{ __('Leaderboards') }}
-                        </x-nav-link> -->
+                        <x-nav-link :href="route('news.index')" :active="request()->routeIs('news.index')">
+                            {{ __('News') }}
+                        </x-nav-link>
 
                         <x-dropdown align="left" width="56" :active="request()->routeIs('leaderboards.*')">
                             <x-slot name="trigger">
@@ -202,6 +202,9 @@
                 @endauth
                 <x-responsive-nav-link :href="route('search')" :active="request()->routeIs('search')">
                     {{ __('Search') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('news.index')" :active="request()->routeIs('news.index')">
+                    {{ __('News') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('leaderboards.index')" :active="request()->routeIs('leaderboards.*')">
                     {{ __('Leaderboards') }}
