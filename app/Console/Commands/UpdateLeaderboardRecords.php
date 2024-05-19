@@ -104,7 +104,7 @@ class UpdateLeaderboardRecords extends Command
                 
                 $time_alive = ($result->lives[1]->timestamp - $result->lives[0]->timestamp);
 
-                if($time_alive <= 3696 )
+                if($time_alive <= 3800 )
                 {
                     $ghost = 0;
                     $record = LeaderboardRecord::where('object_id', $object->object_id)
