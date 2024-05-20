@@ -50,6 +50,13 @@
                     </select>
                     
                 </div>
+
+                <div>
+                    <div class="uppercase text-sm font-bold mb-1 text-skin-inverted dark:text-skin-inverted-dark">
+                        Search
+                    </div>
+                    <input type="text" class="h-7 leading-3 bg-gray-300 dark:bg-slate-800 dark:text-gray-300" id="query" wire:model="query" wire:keyup="updateQuery()" placeholder="Search..">
+                </div>
             </div>
 
             <div class="w-full mx-auto flex flex-col flex-1 overflow-x-auto">

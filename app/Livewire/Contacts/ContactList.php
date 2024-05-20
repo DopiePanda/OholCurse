@@ -23,6 +23,8 @@ class ContactList extends Component
     public $take;
     public $order;
 
+    public $query;
+
     public $contacts;
     public $result_count;
 
@@ -44,8 +46,14 @@ class ContactList extends Component
 
         $this->contacts = UserContact::with('player')
                         ->where('user_id', Auth::user()->id)
-                        ->where('type', $this->selected)
-                        ->skip($this->skip)
+                        ->where('type', $this->selected);
+
+        if($this->query != null)
+        {
+            $this->contacts = $this->contacts->where('nickname', 'like', '%'.$this->query.'%');
+        }
+
+        $this->contacts = $this->contacts->skip($this->skip)
                         ->take($this->take)
                         ->orderBy('created_at', $this->order)
                         ->get();
@@ -73,6 +81,7 @@ class ContactList extends Component
     {
         $this->skip = 0;
         $this->selected = $type;
+        $this->query = null;
     }
 
     /*
@@ -114,10 +123,15 @@ class ContactList extends Component
 
     public function updateLimit()
     {
-        //$this->getContacts($this->selected);
+        
     }
 
     public function updateOrder()
+    {
+
+    }
+
+    public function updateQuery()
     {
 
     }
