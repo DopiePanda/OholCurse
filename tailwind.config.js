@@ -94,8 +94,8 @@ export default {
                 skin: 'var(--color-brightness)',
             },
             animation: {
-                marquee: 'marquee 15s linear infinite',
-                marquee2: 'marquee2 15s linear infinite',
+                marquee: 'marquee 30s linear infinite',
+                marquee2: 'marquee2 30s linear infinite',
               },
               keyframes: {
                 marquee: {
