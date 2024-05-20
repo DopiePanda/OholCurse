@@ -41,8 +41,14 @@ class ContactList extends Component
     public function render()
     {
         $this->result_count = UserContact::where('user_id', Auth::user()->id)
-                                ->where('type', $this->selected)
-                                ->count();
+                                ->where('type', $this->selected);
+
+        if($this->query != null)
+        {
+            $this->result_count = $this->result_count->where('nickname', 'like', '%'.$this->query.'%');
+        }
+
+        $this->result_count = $this->result_count->count();
 
         $this->contacts = UserContact::with('player')
                         ->where('user_id', Auth::user()->id)
