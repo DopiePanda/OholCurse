@@ -6,6 +6,11 @@
                     @if(isset($profile->leaderboard_id) && !empty($profile->leaderboard_id) && !empty($profile->leaderboard_name))
                         @if($contact)
                             <div class="flex lg:flex-row justify-center items-center font-semibold">
+                                @can('view all user contacts')
+                                    <span class="mx-2">
+                                        <i wire:click="$dispatch('openModal', { component: 'contacts.admin-modal', arguments: {hash: '{{$profile->player_hash}}', leaderboard: '{{$profile->leaderboard_name}}'}})"class="fa-solid fa-address-card text-gray-400"></i>
+                                    </span>
+                                @endcan
                                 <span class="text-4xl">{{ $contact->nickname }}</span>
                                 @auth
                                     <button class="mx-2" wire:click="$dispatch('openModal', {component: 'contacts.manage', arguments: {hash: '{{$profile->player_hash}}'}})">
@@ -19,12 +24,17 @@
                                     </button>
                                 @endauth
                             </div>
-                            <a class="text-left" href="https://onehouronelife.com/fitnessServer/server.php?action=leaderboard_detail&id={{ $profile->leaderboard_id}}"
+                            <a class="inline-block text-left" href="https://onehouronelife.com/fitnessServer/server.php?action=leaderboard_detail&id={{ $profile->leaderboard_id}}"
                                 target="_blank">
                                 <div title="{{ $profile->player_hash }}">{{ $profile->leaderboard_name }}</div>
                             </a>
                         @else
                             <div class="flex flex-row justify-center items-center font-semibold">
+                                @can('view all user contacts')
+                                    <span class="inline-block mx-2">
+                                        <i wire:click="$dispatch('openModal', { component: 'contacts.admin-modal', arguments: {hash: '{{$profile->player_hash}}', leaderboard: '{{$profile->leaderboard_name}}'}})"class="fa-solid fa-address-card text-gray-400"></i>
+                                    </span>
+                                @endcan
                                 <a href="https://onehouronelife.com/fitnessServer/server.php?action=leaderboard_detail&id={{ $profile->leaderboard_id}}"
                                     target="_blank">
                                     <span class="font-semibold text-4xl">{{ $profile->leaderboard_name }}</span>
