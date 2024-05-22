@@ -19,6 +19,10 @@
                             <div class="absolute left-0 bottom-0 ml-1 mb-1 px-2 text-sm rounded-full bg-red-500 uppercase text-white">
                                 {{ $article->type }}
                             </div>
+                            <div class="absolute right-0 bottom-0 ml-1 mb-1 px-2 text-sm rounded-full bg-red-500 uppercase text-white">
+                                <i class="fa-solid fa-eye"></i>
+                                {{ $article->views }}
+                            </div>
                         </div>
                         <div class="p-2 font-serif text-xl font-bold">
                             {{ $article->title }}

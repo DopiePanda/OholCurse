@@ -36,5 +36,8 @@ class Article extends Component
                 'updated' => $image->updated_at,
             ];
         }
+
+        $this->article->views = $this->article->views + 1;
+        $this->article->save();
     }
 }
