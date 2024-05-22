@@ -32,7 +32,7 @@
 
                 @foreach($ads as $ad)
                     @if($loop->parent->index == $ad->index)
-                        <div class="max-w-96 border border-gray-400 flex flex-col">
+                        <div class="mx-auto max-w-96 border border-gray-400 flex flex-col">
                             @if($ad->url)
                                 <a href="{{ $ad->url }}">
                             @endif
