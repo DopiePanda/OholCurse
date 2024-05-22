@@ -17,6 +17,7 @@
         </span>
         -->
     </div>
+    <div class="mt-4 italic font-bold py-2 px-4 rounded-full bg-gray-400 inline-block">Views: {{ $article->views }}</div>
     <div class="mt-4 text-6xl font-bold">{{ $article->title }}</div>
     <div class="mt-4 pt-2 text-lg">
         {!! nl2br($article->content) !!}
