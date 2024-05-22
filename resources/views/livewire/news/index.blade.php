@@ -13,8 +13,8 @@
         <div class="grow my-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
             @foreach($articles as $article)
                 <div class="mx-auto max-w-96 border border-gray-400 flex flex-col">
-                    <a class="block w-full h-full" href="{{ route('news.article', ['id' => $article->id, 'slug' => $article->slug]) }}">
-                        <div class="relative border-2 border-black grow">
+                    <a class="flex flex-col block w-full h-full" href="{{ route('news.article', ['id' => $article->id, 'slug' => $article->slug]) }}">
+                        <div class="grow relative border-2 border-black grow">
                             <img class="object-cover w-full h-full" src="{{ asset($article->images->first()->image_url ?? 'MISSING') }}" />
                             <div class="absolute left-0 bottom-0 ml-1 mb-1 px-2 text-sm rounded-full bg-red-500 uppercase text-white">
                                 {{ $article->type }}
@@ -24,7 +24,7 @@
                                 {{ $article->views }}
                             </div>
                         </div>
-                        <div class="p-2 font-serif text-xl font-bold">
+                        <div class="shrink p-2 font-serif text-xl font-bold">
                             {{ $article->title }}
                         </div>
                     </a>
