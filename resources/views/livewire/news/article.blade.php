@@ -2,6 +2,10 @@
 
     @section("page-title", "- $article->title" ?? 'Read this article now')
 
+    @section("before-head-end")
+        <meta property="og:image" content="{{ asset($images['primary'] ? $images['primary']['image_url'] : 'MISSING') }}" />
+    @endsection
+
     <span class="px-2 py-1 bg-skin-fill dark:bg-skin-fill-dark rounded">
         <a href="{{ route('news.index') }}">
             <i class="fa-regular fa-square-caret-left text-white"> Back</i>
