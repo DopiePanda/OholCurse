@@ -12,8 +12,12 @@ class Download extends Component
     public $ads;
     public $progress;
 
-    public function mount()
+    public function mount($id)
     {
+        $ad = NewsAd::find($id);
+        $ad->clicks = $ad->clicks + 1;
+        $ad->save();
+        
         $this->ads = NewsAd::limit(10)->get()->random(2);
         $this->progress = 1;
     }

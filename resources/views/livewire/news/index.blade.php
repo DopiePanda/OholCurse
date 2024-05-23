@@ -35,6 +35,8 @@
                         <div class="w-full mx-auto max-w-96 border border-gray-400 flex flex-col">
                             @if($ad->url)
                                 <a href="{{ $ad->url }}">
+                            @else
+                                <a href="{{ route('news.download', ['id' => $ad->id]) }}">
                             @endif
                                 
                             <div class="grow relative border-2 border-black grow">
