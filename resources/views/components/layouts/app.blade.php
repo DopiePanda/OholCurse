@@ -45,10 +45,6 @@
         <div id="background" class="z-10 flex flex-col min-h-screen bg-gray-100 dark:bg-slate-800">
             <x-includes.navigation/>
 
-            @if(request()->routeIs('search'))
-                <livewire:news.marquee />
-            @endif
-
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="z-20 bg-white dark:bg-slate-700 shadow">
