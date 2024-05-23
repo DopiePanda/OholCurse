@@ -26,16 +26,20 @@
 
                 let time = 2000;
 
+                var times = {{ $progress }}
+
                 function setRandomTime()
                 {
                     time = Math.random(minTime, maxTime);
                 }
 
-
-                setInterval(() => {
-                    $wire.$dispatch('increase-bar')
-                    setRandomTime();
-                }, time)
+                if(progress < 100)
+                {
+                    setInterval(() => {
+                        $wire.$dispatch('increase-bar')
+                        setRandomTime();
+                    }, time)
+                }
             </script>
         @endscript
     </div>

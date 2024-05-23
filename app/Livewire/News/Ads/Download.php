@@ -17,7 +17,7 @@ class Download extends Component
         $ad = NewsAd::find($id);
         $ad->clicks = $ad->clicks + 1;
         $ad->save();
-        
+
         $this->ads = NewsAd::limit(10)->get()->random(2);
         $this->progress = 1;
     }
