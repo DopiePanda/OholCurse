@@ -41,7 +41,7 @@
         <div class="basis-1/5 shrink">
             <div class="grid grid-cols-1 gap-2 w-96">
                 @foreach($ads as $ad)
-                <div class="mx-auto max-w-96 border border-gray-400 flex flex-col">
+                <div class="bg-white mx-auto max-w-96 border border-gray-400 flex flex-col">
                     <a class="flex flex-col block w-full h-full" href="{{ route('news.download', ['id' => $ad->id]) }}">
                         <div class="grow relative border-2 border-black grow">
                             <img class="object-cover w-full h-full" src="{{ asset($ad->image_url ?? 'MISSING') }}" />
