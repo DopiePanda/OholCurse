@@ -46,7 +46,7 @@
                         <div class="grow relative border-2 border-black grow">
                             <img class="object-cover w-full h-full" src="{{ asset($ad->image_url ?? 'MISSING') }}" />
                         </div>
-                        <div class="shrink p-2 font-serif text-xl font-bold">
+                        <div class="uppercase text-center shrink p-2 font-serif text-xl font-bold">
                             {{ $ad->title }}
                         </div>
                     </a>
