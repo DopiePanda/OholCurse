@@ -41,6 +41,7 @@ use App\Livewire\Content\Browse;
 
 use App\Livewire\News\Index as NewsIndex;
 use App\Livewire\News\Article as NewsArticle;
+use App\Livewire\News\Ads\Download as NewsDownload;
 
 use App\Livewire\Roadmap\Ideas;
 use App\Livewire\Roadmap\Ideas\Create as IdeaCreate;
@@ -111,6 +112,8 @@ Route::middleware('web')->group(function() {
     Route::prefix('/news')->name('news.')->group(function () {
         Route::get('/', NewsIndex::class)->name('index');
         Route::get('/article/{id}-{slug}', NewsArticle::class)->name('article');
+
+        Route::get('/ads/{id}', NewsDownload::class)->name('download');
     });
 
     Route::get('/wanted/berries', BerryPoster::class)->name('wanted.berries');
