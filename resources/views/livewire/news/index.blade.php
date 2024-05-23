@@ -35,15 +35,17 @@
                         <div class="w-full mx-auto max-w-96 border border-gray-400 flex flex-col">
                             @if($ad->url)
                                 <a href="{{ $ad->url }}">
+                            @else
+                                <a href="{{ route('news.download', ['id' => $ad->id]) }}">
                             @endif
                                 
-                            <div class="relative border-2 border-black grow">
+                            <div class="grow relative border-2 border-black grow">
                                 <img class="object-cover w-full h-full" src="{{ asset($ad->image_url) }}" />
                                 <div class="absolute left-0 bottom-0 ml-1 mb-1 px-2 text-sm rounded-full bg-red-500 uppercase text-white">
                                     AD
                                 </div>
                             </div>
-                            <div class="p-2 uppercase text-center font-serif text-xl font-bold">
+                            <div class="shrink p-2 uppercase text-center font-serif text-xl font-bold">
                                 {{ $ad->title }}
                             </div>
 

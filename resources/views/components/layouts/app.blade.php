@@ -45,10 +45,6 @@
         <div id="background" class="z-10 flex flex-col min-h-screen bg-gray-100 dark:bg-slate-800">
             <x-includes.navigation/>
 
-            @if(request()->routeIs('search'))
-                <livewire:news.marquee />
-            @endif
-
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="z-20 bg-white dark:bg-slate-700 shadow">
@@ -75,7 +71,17 @@
                 </div> 
                 <div class="z-20 basis-2/4 text-center">
                     @if(env('DONATION_BANNER') == 'true')
-                        <span id="donationBanner" class="text-skin-muted dark:text-skin-muted-dark cursor-default">Want to help support the website?</span> <a href="{{ env('DONATION_URL') }}" target="_blank" class="text-skin-base dark:text-skin-base-dark">Donate a coffee</a>
+                        <span id="donationBanner" class="text-skin-muted dark:text-skin-muted-dark cursor-default">
+                            Want to help support the website?
+                        </span> 
+                        <a href="{{ env('DONATION_URL') }}" target="_blank" class="text-skin-base dark:text-skin-base-dark">
+                            Donate a coffee
+                        </a>
+                        <div>
+                            <a class="text-skin-base dark:text-skin-base-dark" href="{{ route('privacy-policy') }}">
+                                Privacy Policy
+                            </a>
+                        </div>
                     @endif
                 </div>
                 <div class="z-10 basis-1/4 text-right">

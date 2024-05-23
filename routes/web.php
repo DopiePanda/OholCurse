@@ -16,6 +16,7 @@ use App\Http\Controllers\MapLeaderboardController;
 use App\Http\Controllers\GuideController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PlayerReportController;
+use App\Http\Controllers\PrivacyPolicyController;
 use App\Http\Controllers\ReportVerificationController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TestController;
@@ -31,6 +32,7 @@ use App\Livewire\PlayerInteractions;
 use App\Livewire\Player\Lives as PlayerLives;
 use App\Livewire\Player\Statistics as PlayerStatistics;
 use App\Livewire\Map\Leaderboard;
+use App\Livewire\Wanted\Poster as BerryPoster;
 use App\Livewire\Modals\Charts\LeaderboardRecords;
 use App\Livewire\Admin\Search\CharacterMovement;
 
@@ -39,6 +41,7 @@ use App\Livewire\Content\Browse;
 
 use App\Livewire\News\Index as NewsIndex;
 use App\Livewire\News\Article as NewsArticle;
+use App\Livewire\News\Ads\Download as NewsDownload;
 
 use App\Livewire\Roadmap\Ideas;
 use App\Livewire\Roadmap\Ideas\Create as IdeaCreate;
@@ -109,7 +112,13 @@ Route::middleware('web')->group(function() {
     Route::prefix('/news')->name('news.')->group(function () {
         Route::get('/', NewsIndex::class)->name('index');
         Route::get('/article/{id}-{slug}', NewsArticle::class)->name('article');
+
+        Route::get('/ads/{id}', NewsDownload::class)->name('download');
     });
+
+    Route::get('/wanted/berries', BerryPoster::class)->name('wanted.berries');
+
+    Route::get('/privacy-policy', [PrivacyPolicyController::class, 'read'])->name('privacy-policy');
 
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -30,8 +30,7 @@ class NewsAdResource extends Resource
                 Forms\Components\TextInput::make('user_id')
                     ->required()
                     ->numeric()
-                    ->default(Auth::user()->id)
-                    ->hidden(),
+                    ->default(Auth::user()->id),
                 Forms\Components\TextInput::make('index')
                     ->required()
                     ->numeric(),
