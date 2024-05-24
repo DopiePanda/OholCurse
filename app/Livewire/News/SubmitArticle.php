@@ -49,7 +49,7 @@ class SubmitArticle extends Component
     {
         $validated = $this->validate();
         // Store the file in the "photos" directory, with "public" visibility in a configured "s3" disk
-        $image = $this->image->store(path: 'assets/news-articles');
+        $image = $this->image->storePublicly(path: 'assets/news-articles');
         $slug = Str::of($this->title)->slug('-');
 
         $article = NewsArticle::create([
