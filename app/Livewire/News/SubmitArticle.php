@@ -11,6 +11,7 @@ use Auth;
 
 use App\Models\NewsArticle;
 use App\Models\NewsArticleImage;
+use App\Models\NewsAgency;
 
 class SubmitArticle extends Component
 {
@@ -37,7 +38,7 @@ class SubmitArticle extends Component
 
     public function mount()
     {
-
+        $this->agencies = NewsAgency::all();
     }
 
     public function render()
@@ -49,12 +50,13 @@ class SubmitArticle extends Component
     {
         $validated = $this->validate();
         // Store the file in the "photos" directory, with "public" visibility in a configured "s3" disk
-        $image = $this->image->storePublicly(path: 'assets/news-articles');
+        $image = $this->image->storePublicly('assets/news-articles', 'public');
         $slug = Str::of($this->title)->slug('-');
 
         $article = NewsArticle::create([
             'type' => 'report',
             'enabled' => 0,
+            'slug' => $slug,
             'title' => $this->title,
             'content' => $this->content,
             'author' => $this->author,
@@ -69,6 +71,7 @@ class SubmitArticle extends Component
         ]);
 
         $this->submitted = true;
+        $this->resetForm();
     }
 
     public function resetForm()
