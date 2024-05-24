@@ -77,7 +77,12 @@
                 @endif
             </div>
             <div class="mt-2 text-sm italic">
-                {{ $comment->created_at }}
+                Posted at: {{ $comment->created_at->format('Y-m-d H:i') }}
+                @if($comment->created_at != $comment->updated_at)
+                    <div>
+                        Edited/deleted at: {{ $comment->updated_at->format('Y-m-d H:i') }}
+                    </div>
+                @endif
             </div>
         </div>
         @forelse ($comment->replies as $reply)
@@ -104,7 +109,12 @@
                     @endif
                 </div>
                 <div class="mt-2 text-sm italic">
-                    {{ $reply->created_at }}
+                    Posted at: {{ $reply->created_at->format('Y-m-d H:i') }}
+                    @if($reply->created_at != $reply->updated_at)
+                        <div>
+                            Edited/deleted at: {{ $reply->updated_at->format('Y-m-d H:i') }}
+                        </div>
+                    @endif
                 </div>     
             </div>
         @empty
