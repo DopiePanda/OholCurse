@@ -3,7 +3,10 @@
     @section("page-title", "- $article->title" ?? 'Read this article now')
 
     @section("before-head-end")
+        <meta content="OHOLCurse - Cursed Times" property="og:site_name" />
         <meta property="og:image" content="{{ asset($images['primary'] ? $images['primary']['image_url'] : 'MISSING') }}" />
+        <meta content="OHOLCurse - {{ $article->title }}" property="og:title" />
+        <meta content="{{ $article->content }}" property="og:description" />
     @endsection
 
     <span class="px-2 py-1 bg-skin-fill dark:bg-skin-fill-dark rounded">
