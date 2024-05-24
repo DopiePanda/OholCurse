@@ -3,16 +3,15 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\GameLeaderboard;
 
-class GameLeaderboardPolicy
+class ProfileBadgePolicy
 {
-        /**
+    /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        if($user->can('view game leaderboards'))
+        if($user->can('view profile badges'))
         {
             return true;
         }
@@ -25,7 +24,7 @@ class GameLeaderboardPolicy
      */
     public function view(User $user, Yumlog $yumlog): bool
     {
-        if($user->can('view game leaderboards'))
+        if($user->can('view profile badges'))
         {
             return true;
         }
@@ -38,7 +37,7 @@ class GameLeaderboardPolicy
      */
     public function create(User $user): bool
     {
-        if($user->can('create game leaderboards'))
+        if($user->can('create profile badges'))
         {
             return true;
         }
@@ -51,7 +50,7 @@ class GameLeaderboardPolicy
      */
     public function update(User $user, GameLeaderboard $leaderboard): bool
     {
-        if($user->can('edit game leaderboards'))
+        if($user->can('edit profile badges'))
         {
             return true;
         }
@@ -64,7 +63,7 @@ class GameLeaderboardPolicy
      */
     public function delete(User $user, GameLeaderboard $leaderboard): bool
     {
-        if($user->can('delete game leaderboards'))
+        if($user->can('delete profile badges'))
         {
             return true;
         }

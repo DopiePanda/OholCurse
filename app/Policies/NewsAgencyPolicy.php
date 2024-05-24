@@ -3,16 +3,23 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\GameLeaderboard;
 
-class GameLeaderboardPolicy
+class NewsAgencyPolicy
 {
-        /**
+    /**
+     * Create a new policy instance.
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        if($user->can('view game leaderboards'))
+        if($user->can('view news agencies'))
         {
             return true;
         }
@@ -23,13 +30,8 @@ class GameLeaderboardPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Yumlog $yumlog): bool
+    public function view(User $user, NewsAd $ad): bool
     {
-        if($user->can('view game leaderboards'))
-        {
-            return true;
-        }
-
         return false;
     }
 
@@ -38,7 +40,7 @@ class GameLeaderboardPolicy
      */
     public function create(User $user): bool
     {
-        if($user->can('create game leaderboards'))
+        if($user->can('create news agencies'))
         {
             return true;
         }
@@ -49,9 +51,9 @@ class GameLeaderboardPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, GameLeaderboard $leaderboard): bool
+    public function update(User $user, NewsAd $ad): bool
     {
-        if($user->can('edit game leaderboards'))
+        if($user->can('update news agencies'))
         {
             return true;
         }
@@ -62,9 +64,9 @@ class GameLeaderboardPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, GameLeaderboard $leaderboard): bool
+    public function delete(User $user, NewsAd $ad): bool
     {
-        if($user->can('delete game leaderboards'))
+        if($user->can('delete news agencies'))
         {
             return true;
         }
@@ -75,7 +77,7 @@ class GameLeaderboardPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Yumlog $yumlog): bool
+    public function restore(User $user, NewsAd $ad): bool
     {
         return false;
     }
@@ -83,7 +85,7 @@ class GameLeaderboardPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Yumlog $yumlog): bool
+    public function forceDelete(User $user, NewsAd $ad): bool
     {
         return false;
     }

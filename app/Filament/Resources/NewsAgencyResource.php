@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\NewsArticleAuthorResource\Pages;
-use App\Filament\Resources\NewsArticleAuthorResource\RelationManagers;
-use App\Models\NewsArticleAuthor;
+use App\Filament\Resources\NewsAgencyResource\Pages;
+use App\Filament\Resources\NewsAgencyResource\RelationManagers;
+use App\Models\NewsAgency;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,13 +13,11 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-use Filament\Forms\Components\Select;
-
-class NewsArticleAuthorResource extends Resource
+class NewsAgencyResource extends Resource
 {
-    protected static ?string $model = NewsArticleAuthor::class;
+    protected static ?string $model = NewsAgency::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
     protected static ?string $navigationGroup = 'News';
 
@@ -27,12 +25,13 @@ class NewsArticleAuthorResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('article_id')
+                Forms\Components\TextInput::make('name')
                     ->required()
-                    ->relationship('article', 'title'),
-                Select::make('user_id')
-                    ->required()
-                    ->relationship('user', 'username'),
+                    ->maxLength(255),
+                Forms\Components\FileUpload::make('image_url')
+                    ->image(),
+                Forms\Components\TextInput::make('tag')
+                    ->maxLength(255),
             ]);
     }
 
@@ -40,19 +39,19 @@ class NewsArticleAuthorResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('article.title')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('user.username')
-                    ->sortable()
-                    ->label('Author'),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\ImageColumn::make('image_url'),
+                Tables\Columns\TextColumn::make('tag')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: false),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: false),
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -77,9 +76,9 @@ class NewsArticleAuthorResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListNewsArticleAuthors::route('/'),
-            'create' => Pages\CreateNewsArticleAuthor::route('/create'),
-            'edit' => Pages\EditNewsArticleAuthor::route('/{record}/edit'),
+            'index' => Pages\ListNewsAgencies::route('/'),
+            'create' => Pages\CreateNewsAgency::route('/create'),
+            'edit' => Pages\EditNewsAgency::route('/{record}/edit'),
         ];
     }
 }

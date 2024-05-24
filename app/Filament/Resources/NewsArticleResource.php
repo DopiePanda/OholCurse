@@ -7,6 +7,7 @@ use App\Filament\Resources\NewsArticleResource\RelationManagers;
 use Filament\Forms\Set;
 use Filament\Forms\Get;
 use App\Models\NewsArticle;
+use App\Models\NewsAgency;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -23,7 +24,7 @@ class NewsArticleResource extends Resource
 {
     protected static ?string $model = NewsArticle::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-newspaper';
 
     protected static ?string $navigationGroup = 'News';
 
@@ -47,18 +48,23 @@ class NewsArticleResource extends Resource
                     ->required()
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->maxLength(255),
                 Forms\Components\TextInput::make('views')
                     ->required()
                     ->numeric()
                     ->default(0)
                     ->hidden(),
+                Forms\Components\TextInput::make('author')
+                    ->maxLength(255),
+                Select::make('agency')
+                    ->options(NewsAgency::all()->pluck('name', 'name'))
+                    ->searchable(),
+                Forms\Components\TextInput::make('slug')
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\Toggle::make('enabled')
                     ->required(),
                 Forms\Components\Hidden::make('is_slug_changed_manually')
-                    ->default(false)
+                    ->default(true)
                     ->dehydrated(false),
             ]);
     }
@@ -73,11 +79,13 @@ class NewsArticleResource extends Resource
                     ->boolean(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('slug')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('views')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('author')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('agency')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
