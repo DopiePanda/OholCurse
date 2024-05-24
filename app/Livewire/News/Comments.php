@@ -15,6 +15,9 @@ class Comments extends Component
     public $user_comment;
     public $replies_to = null;
 
+    public $edit_comment_id;
+    public $edit_comment_content;
+
 
     public function mount($article)
     {
@@ -58,8 +61,35 @@ class Comments extends Component
     public function deleteComment($id)
     {
         $comment = NewsArticleComment::find($id);
-        $comment->comment = 'Comment deleted by user';
+
+        if($comment->user_id == Auth::id())
+        {
+            $comment->comment = 'Comment deleted by user';
+            $comment->save();
+        }
+
+        $this->getComments();
+    }
+
+    public function editComment($id)
+    {
+        $comment = NewsArticleComment::find($id);
+
+        if($comment->user_id == Auth::id())
+        {
+            $this->edit_comment_id = $comment->id;
+            $this->edit_comment_content = $comment->comment;
+        }
+    }
+
+    public function saveComment()
+    {
+        $comment = NewsArticleComment::find($this->edit_comment_id);
+        $comment->comment = $this->edit_comment_content;
         $comment->save();
+
+        $this->edit_comment_id = null;
+        $this->edit_comment_content = null;
 
         $this->getComments();
     }

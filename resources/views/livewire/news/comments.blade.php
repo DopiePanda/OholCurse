@@ -59,14 +59,22 @@
                 @if(Auth::user())
                     - <span wire:click="setReply({{ $comment->id }})" class="italic cursor-pointer hover:color-skin-base dark:hover:color-skin-base-dark">Reply</span>
                     @if($comment->user_id == Auth::user()->id)
+                        - <span wire:click="editComment({{ $comment->id }})" class="italic cursor-pointer text-gray-600">Edit</span>
                         - <span wire:click="deleteComment({{ $comment->id }})" class="italic cursor-pointer text-red-600">Delete</span>
                     @endif
-                @endif
-
-                
+                @endif  
             </div>
             <div>
-                {{ $comment->comment }}
+                @if($edit_comment_id != $comment->id)
+                    {{ $comment->comment }}
+                @else
+                    <div>
+                        <textarea class="w-full" wire:model="edit_comment_content"></textarea>
+                    </div>
+                    <div>
+                        <input class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark" type="button" wire:click="saveComment" value="Update comment"/>
+                    </div>
+                @endif
             </div>
             <div class="mt-2 text-sm italic">
                 {{ $comment->created_at }}
@@ -78,12 +86,22 @@
                     <span>{{ $reply->user->username }}</span>
                     @if(Auth::user())
                         @if($reply->user_id == Auth::user()->id)
+                            - <span wire:click="editComment({{ $reply->id }})" class="italic cursor-pointer text-gray-600">Edit</span>
                             - <span wire:click="deleteComment({{ $reply->id }})" class="italic cursor-pointer text-red-600">Delete</span>
                         @endif
                     @endif
                 </div>
                 <div class="grow">
-                    {{ $reply->comment }}
+                    @if($edit_comment_id != $reply->id)
+                        {{ $reply->comment }}
+                    @else
+                        <div>
+                            <textarea class="w-full" wire:model="edit_comment_content"></textarea>
+                        </div>
+                        <div>
+                            <input class="p-2 text-white bg-skin-fill dark:bg-skin-fill-dark" type="button" wire:click="saveComment" value="Update comment"/>
+                        </div>
+                    @endif
                 </div>
                 <div class="mt-2 text-sm italic">
                     {{ $reply->created_at }}
