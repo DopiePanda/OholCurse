@@ -21,7 +21,7 @@ class NewsArticleImageResource extends Resource
 {
     protected static ?string $model = NewsArticleImage::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-photo';
 
     protected static ?string $navigationGroup = 'News';
 

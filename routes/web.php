@@ -41,6 +41,7 @@ use App\Livewire\Content\Browse;
 
 use App\Livewire\News\Index as NewsIndex;
 use App\Livewire\News\Article as NewsArticle;
+use App\Livewire\News\SubmitArticle as NewsSubmission;
 use App\Livewire\News\Ads\Download as NewsDownload;
 
 use App\Livewire\Roadmap\Ideas;
@@ -138,9 +139,7 @@ Route::middleware('web')->group(function() {
 
         Route::get('/roadmap/ideas/create', IdeaCreate::class)->name('roadmap.idea.create');
 
-        Route::get('/phpinfo', function () {
-            abort(419);
-        });
+        Route::get('/news/submit', NewsSubmission::class)->name('news.submit');
 
         Route::prefix('/content')->name('content.')->group(function () {
             Route::get('/browse', Browse::class)->name('browse');
@@ -148,7 +147,6 @@ Route::middleware('web')->group(function() {
         });
 
         Route::get('/search/movement', CharacterMovement::class)->name('search.movement');
-
         Route::get('/select2/ajax', [Select2Controller::class, 'handle'])->name('select2.ajax');
         
         Route::impersonate();

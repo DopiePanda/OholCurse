@@ -1,5 +1,6 @@
 <div class="text-center">
-    <div class="mt-12 bg-gray-200 rounded-lg p-4">
+    <div class="group mt-12 bg-gray-200 rounded-lg p-4">
+
         <div class="grid grid-cols-2 gap-2">
             @foreach ($ads as $ad)
                 <div>
@@ -7,6 +8,7 @@
                 </div> 
             @endforeach
         </div>
+
         <div class="mt-4 text-4xl text-skin-base dark:text-skin-base-dark">Please wait while the application installs</div>
 
         <div class="mt-8 w-full bg-gray-200 rounded-full dark:bg-gray-700">
@@ -14,9 +16,11 @@
                 {{ $progress }}%
             </div>
         </div>
+
         <div class="mt-2 text-lg italic text-center text-gray-800">Installing MilkweedExtractorV203.c</div>
-        <div class="py-4">
-            <div class="mt-4 inline-block mx-auto p-2 text-white bg-skin-fill dark:bg-skin-fill-dark rounded-lg hover:hidden pointer-cursor">Cancel install</div>
+
+        <div class="group-hover:hidden py-4">
+            <div class="mt-4 inline-block mx-auto p-2 text-white bg-skin-fill dark:bg-skin-fill-dark rounded-lg pointer-cursor hover:hidden">Cancel install</div>
         </div>
         
         @script
@@ -33,13 +37,11 @@
                     time = Math.random(minTime, maxTime);
                 }
 
-                if(progress < 100)
-                {
-                    setInterval(() => {
-                        $wire.$dispatch('increase-bar')
-                        setRandomTime();
-                    }, time)
-                }
+                setInterval(() => {
+                    $wire.$dispatch('increase-bar')
+                    setRandomTime();
+                }, time)
+
             </script>
         @endscript
     </div>

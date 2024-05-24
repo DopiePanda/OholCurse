@@ -2,8 +2,8 @@
 
     @section("page-title", "- The hottest OHOL news")
 
-    <div class="flex flex-rows gap-2">
-        <div class="basis-1/5 shrink">
+    <div class="flex flex-cols lg:flex-rows gap-2">
+        <div class="hidden lg:block basis-1/5 shrink">
 
         </div>
 
@@ -15,7 +15,7 @@
             </div>
 
             <!-- Articles - Reports -->
-            <div class="grow my-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div class="grow my-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 @foreach($articles as $article)
                     <div class="mx-auto max-w-96 border border-gray-400 flex flex-col">
                         <a class="flex flex-col block w-full h-full" href="{{ route('news.article', ['id' => $article->id, 'slug' => $article->slug]) }}">
@@ -38,12 +38,12 @@
             </div>
         </div>
 
-        <div class="basis-1/5 shrink">
+        <div class="hidden lg:block basis-1/5 shrink">
             <div class="grid grid-cols-1 gap-2 w-96">
                 @foreach($ads as $ad)
                 <div class="bg-white mx-auto max-w-96 border border-gray-400 flex flex-col">
                     <a class="flex flex-col block w-full h-full" href="{{ route('news.download', ['id' => $ad->id]) }}">
-                        <div class="grow relative border-2 border-black grow">
+                        <div class="grow relative border-2 border-black">
                             <img class="object-cover w-full h-full" src="{{ asset($ad->image_url ?? 'MISSING') }}" />
                         </div>
                         <div class="uppercase text-center shrink p-2 font-serif text-xl font-bold">
