@@ -43,6 +43,8 @@ class RelationSearch extends ModalComponent
 
     public function search()
     {
+        $this->input = trim($this->input);
+        
         $this->validate([
             'origin_hash' => 'required',
             'input' => 'required|exists:App\Models\Leaderboard,leaderboard_name|different:origin.leaderboard_name',
