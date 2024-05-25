@@ -24,6 +24,11 @@
                     </div>
                 </div>
             </form>
+
+            <div wire:loading class="w-full mx-auto text-center mt-12 text-primary-500">
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                <div class="text-skin-muted dark:text-skin-muted-dark">Searching for previous relationships</div>
+            </div>
         </div>
     </div>
 
