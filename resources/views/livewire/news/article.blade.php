@@ -5,8 +5,8 @@
     @section("before-head-end")
         <meta content="OHOLCurse - Cursed Times" property="og:site_name" />
         <meta property="og:image" content="{{ asset($images['primary'] ? $images['primary']['image_url'] : 'MISSING') }}" />
-        <meta content="OHOLCurse - {{ $article->title }}" property="og:title" />
-        <meta content="{{ $article->content }}" property="og:description" />
+        <meta content="{{ $article->title }}" property="og:title" />
+        <meta content="{{ Str::take($article->content, 200).' ..' }}" property="og:description" />
     @endsection
 
     <span class="px-2 py-1 bg-skin-fill dark:bg-skin-fill-dark rounded">
@@ -14,18 +14,48 @@
             <i class="fa-regular fa-square-caret-left text-white"> Back</i>
         </a>
     </span>
+
+    <div class="mt-4 py-2 text-6xl font-bold">
+        {{ $article->title }}
+    </div>
+
     <div class="mt-1 bg-gray-800 p-2">
         <div>
             <img class="mx-auto object-cover" src="{{ asset($images['primary'] ? $images['primary']['image_url'] : 'MISSING') }}" />
         </div>
-        <!--
-        <span class="px-2 py-1 rounded bg-white">
-            Article by: 
-        </span>
-        -->
+
+        @if($images['primary']['caption'])
+            <div class="p-2 text-gray-200 italic">
+                Caption: {{ $images['primary']['caption'] }}
+            </div>
+        @endif
+
     </div>
-    <div class="mt-4 italic font-bold py-2 px-4 rounded-full bg-gray-400 inline-block">Views: {{ $article->views }}</div>
-    <div class="mt-4 text-6xl font-bold">{{ $article->title }}</div>
+
+    <div class="flex flex-rows py-2 px-2 bg-gray-300">
+        <div class="grow">
+            @if($article->author)
+                <div class="font-bold">
+                    <span>Author: {{ $article->author }}</span>
+                    @if($article->agency)
+                        ({{ $article->agency }})
+                    @endif
+                </div>
+            @endif
+            <div class="mt-1 text-sm">
+                Published: {{ $article->created_at->format('Y-m-d H:i') }} 
+                @if($article->created_at != $article->updated_at) 
+                | Updated: {{ $article->updated_at->format('Y-m-d H:i') }}
+                @endif
+            </div>
+        </div>
+        <div class="grow content-center text-right">
+            <span class="font-bold">
+                <i class="fa-solid fa-eye text-skin-base dark:text-skin-base-dark"></i> {{ $article->views }}
+            </span>
+        </div>
+    </div>
+    
     <div class="mt-4 pt-2 text-lg">
         {!! nl2br($article->content) !!}
     </div>

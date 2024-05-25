@@ -6,20 +6,24 @@ use Livewire\Component;
 
 use App\Models\NewsArticle;
 use App\Models\NewsAd;
+use App\Models\NewsAgency;
 
 class Index extends Component
 {
     public $articles;
+    public $agencies;
     public $ads;
 
-    public $ads_displayed;
+    public $article_categories;
+    public $active_filter;
 
     public function mount()
     {
         $this->articles = NewsArticle::with('images')->where('enabled', 1)->orderBy('id', 'desc')->get();
-        $this->ads = NewsAd::where('enabled', 1)->orderBy('id', 'desc')->get();
+        $this->article_categories = $this->articles->pluck('type')->unique();
 
-        $this->ads_displayed = [];
+        $this->ads = NewsAd::where('enabled', 1)->orderBy('id', 'desc')->get();
+        $this->agencies = NewsAgency::withCount('articles')->get();
     }
 
     public function render()
@@ -27,8 +31,31 @@ class Index extends Component
         return view('livewire.news.index');
     }
 
-    public function addToDisplayedAds($id)
+    public function filterByType($type)
     {
-        array_push($this->ads_displayed, $id);
+        $this->articles = NewsArticle::with('images')
+            ->where('enabled', 1)
+            ->where('type', $type)
+            ->orderBy('id', 'desc')
+            ->get();
+
+        $this->active_filter = 'Type: '.$type;
+    }
+
+    public function filterByAgency($agency)
+    {
+        $this->articles = NewsArticle::with('images')
+            ->where('enabled', 1)
+            ->where('agency', $agency)
+            ->orderBy('id', 'desc')
+            ->get();
+
+        $this->active_filter = 'Agency: '.$agency;
+    }
+
+    public function resetFilters()
+    {
+        $this->articles = NewsArticle::with('images')->where('enabled', 1)->orderBy('id', 'desc')->get();
+        $this->active_filter = null;
     }
 }
