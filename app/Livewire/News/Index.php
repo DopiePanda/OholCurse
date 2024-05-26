@@ -22,7 +22,7 @@ class Index extends Component
         $this->articles = NewsArticle::with('images')->where('enabled', 1)->orderBy('id', 'desc')->get();
         $this->article_categories = $this->articles->pluck('type')->unique();
 
-        $this->ads = NewsAd::where('enabled', 1)->orderBy('id', 'desc')->get();
+        $this->ads = NewsAd::inRandomOrder()->limit(3)->get();
         $this->agencies = NewsAgency::withCount('articles')->get();
     }
 
