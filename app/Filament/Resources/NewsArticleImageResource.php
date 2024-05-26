@@ -68,11 +68,11 @@ class NewsArticleImageResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('image_url'),
                 Tables\Columns\TextColumn::make('article.title')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('caption')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('image_url'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -82,6 +82,7 @@ class NewsArticleImageResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('article_id', 'desc')
             ->filters([
                 //
             ])

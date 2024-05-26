@@ -54,11 +54,11 @@ class NewsAdResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.username')
-                    ->sortable(),
                 Tables\Columns\IconColumn::make('enabled')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('index')
+                Tables\Columns\TextColumn::make('user.username')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('clicks')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\ImageColumn::make('image_url'),
@@ -75,6 +75,7 @@ class NewsAdResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('clicks', 'desc')
             ->filters([
                 //
             ])
