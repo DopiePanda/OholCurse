@@ -40,6 +40,7 @@ class Index extends Component
             ->get();
 
         $this->active_filter = 'Type: '.$type;
+        $this->agencies = NewsAgency::withCount('articles')->get();
     }
 
     public function filterByAgency($agency)
@@ -51,11 +52,13 @@ class Index extends Component
             ->get();
 
         $this->active_filter = 'Agency: '.$agency;
+        $this->agencies = NewsAgency::withCount('articles')->get();
     }
 
     public function resetFilters()
     {
         $this->articles = NewsArticle::with('images')->where('enabled', 1)->orderBy('id', 'desc')->get();
         $this->active_filter = null;
+        $this->agencies = NewsAgency::withCount('articles')->get();
     }
 }
