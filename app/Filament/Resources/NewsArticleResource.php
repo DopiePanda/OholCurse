@@ -20,6 +20,7 @@ use Filament\Tables\Filters\Filter;
 
 use Filament\Forms\Components\Select;
 
+use Auth;
 use Str;
 
 class NewsArticleResource extends Resource
@@ -62,12 +63,21 @@ class NewsArticleResource extends Resource
                     ->searchable(),
                 Forms\Components\TextInput::make('slug')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->disabled()
+                    ->dehydrated(),
+                Forms\Components\TextInput::make('user_id')
+                    ->required()
+                    ->numeric()
+                    ->default(Auth::user()->id)
+                    ->disabled()
+                    ->dehydrated(),
                 Forms\Components\Toggle::make('enabled')
-                    ->required(),
+                    ->required()
+                    ->default(false),
                 Forms\Components\Hidden::make('is_slug_changed_manually')
-                    ->default(true)
-                    ->dehydrated(false),
+                    ->default(false)
+                    ->dehydrated(true),
             ]);
     }
 

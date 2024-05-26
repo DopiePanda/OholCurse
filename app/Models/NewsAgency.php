@@ -9,4 +9,9 @@ class NewsAgency extends Model
 {
 
     protected $guarded = ['id'];
+
+    public function articles() 
+    {
+        return $this->hasMany(NewsArticle::class, 'agency', 'name');
+    }
 }

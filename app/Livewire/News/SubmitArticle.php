@@ -17,10 +17,13 @@ class SubmitArticle extends Component
 {
     use WithFileUploads;
 
-    #[Validate('image|max:1024')] // 1MB Max
+    #[Validate('required|image|max:1024|dimensions:min_width=350,min_height=350')] // 1MB Max
     public $image;
 
-    #[Validate('required|string|min:10|max:100')]
+    #[Validate('required|string|in:report,life,guide,music')]
+    public $type;
+
+    #[Validate('required|string|min:10|max:70')]
     public $title;
 
     #[Validate('required|string|min:100|max:5000')]
@@ -29,7 +32,7 @@ class SubmitArticle extends Component
     #[Validate('nullable')]
     public $author;
 
-    #[Validate('nullable|in:news_agencies,name')] // 1MB Max
+    #[Validate('sometimes|exists:news_agencies,name|nullable')]
     public $agency;
 
     public $agencies;
@@ -39,6 +42,7 @@ class SubmitArticle extends Component
     public function mount()
     {
         $this->agencies = NewsAgency::all();
+        $this->type = 'report';
     }
 
     public function render()
@@ -49,12 +53,12 @@ class SubmitArticle extends Component
     public function submit()
     {
         $validated = $this->validate();
-        // Store the file in the "photos" directory, with "public" visibility in a configured "s3" disk
-        $image = $this->image->storePublicly('assets/news-articles', 'public');
+        
         $slug = Str::of($this->title)->slug('-');
 
         $article = NewsArticle::create([
-            'type' => 'report',
+            'user_id' => Auth::id(),
+            'type' => $this->type,
             'enabled' => 0,
             'slug' => $slug,
             'title' => $this->title,
@@ -62,6 +66,9 @@ class SubmitArticle extends Component
             'author' => $this->author,
             'agency' => $this->agency,
         ]);
+
+        // Store the file in the "assets/news-articles" directory, on the "public" disk
+        $image = $this->image->storePublicly('assets/news-articles', 'public');
 
         $article_image = NewsArticleImage::create([
             'article_id' => $article->id,

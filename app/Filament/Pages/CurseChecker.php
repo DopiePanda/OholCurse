@@ -30,9 +30,13 @@ class CurseChecker extends Page
 
     public function search()
     {
+        $this->hash = trim($this->hash);
+        
         $this->validate([
             'hash' => 'required|string|exists:leaderboards,player_hash',
         ]);
+
+        $this->results = collect([]);
 
         $forgives = CurseLog::select('player_hash')
             ->where('reciever_hash', $this->hash)
