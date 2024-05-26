@@ -20,10 +20,11 @@
                 <div class="text-lg font-bold">Filters</div>
                 @if($active_filter)
                     <div class="p-2 bg-gray-300">
-                        <div class="italic">Active filter:</div> 
                         <div>
-                            {{ $active_filter }}
-                            <span>(Remove filter)</span>
+                            <span class="capitalize">{{ $active_filter }}</span>
+                        </div>
+                        <div class="inline-block mt-6 px-4 py-2 bg-skin-fill dark:bg-skin-fill-dark text-white cursor-pointer" wire:click="resetFilters()">
+                            Remove filter
                         </div>
                     </div>
                 @endif
