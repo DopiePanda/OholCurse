@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 use Auth;
@@ -31,15 +32,20 @@ class NewsArticleImageResource extends Resource
             ->schema([
                 Select::make('article_id')
                     ->required()
-                    ->relationship('article', 'title'),
-                Forms\Components\TextInput::make('user_id')
-                    ->required()
-                    ->numeric()
-                    ->default(Auth::user()->id),
+                    ->relationship(
+                        name: 'article', 
+                        titleAttribute: 'title',
+                        modifyQueryUsing: fn (Builder $query) => $query->orderBy('id', 'desc'),
+                        )
+                    ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->title} // Article ID: {$record->id}")
+                    ->searchable()
+                    ->preload(),
                 Forms\Components\TextInput::make('position')
                     ->required()
                     ->maxLength(255)
-                    ->default('primary'),
+                    ->default('primary')
+                    ->disabled()
+                    ->dehydrated(),
                 Forms\Components\TextInput::make('caption')
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('image_url')
@@ -49,6 +55,12 @@ class NewsArticleImageResource extends Resource
                     ->visibility('public')
                     ->preserveFilenames()
                     ->required(),
+                Forms\Components\TextInput::make('user_id')
+                    ->required()
+                    ->numeric()
+                    ->default(Auth::user()->id)
+                    ->disabled()
+                    ->dehydrated(),
             ]);
     }
 
@@ -56,14 +68,8 @@ class NewsArticleImageResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('article_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('article.title')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('position')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('caption')
                     ->searchable(),
                 Tables\Columns\ImageColumn::make('image_url'),
