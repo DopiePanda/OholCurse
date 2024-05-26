@@ -85,15 +85,24 @@ class NewsArticleResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('type')
-                    ->searchable(),
                 Tables\Columns\IconColumn::make('enabled')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('type')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'report' => 'success',
+                        'life' => 'primary',
+                        'guide' => 'warning',
+                        'music' => 'danger',
+                        'weather' => 'info',
+                    })
+                    ->formatStateUsing(fn (string $state): string => __(ucfirst("{$state}"))),
+
                 Tables\Columns\TextColumn::make('views')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('author')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('agency')
@@ -107,6 +116,7 @@ class NewsArticleResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('id', 'desc')
             ->filters([
                 Filter::make('show_only_disabled')
                     ->query(fn (Builder $query): Builder => $query->where('enabled', false))

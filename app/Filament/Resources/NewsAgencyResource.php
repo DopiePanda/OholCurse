@@ -41,9 +41,9 @@ class NewsAgencyResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('image_url'),
                 Tables\Columns\TextColumn::make('tag')
                     ->searchable(),
+                Tables\Columns\ImageColumn::make('image_url'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -53,6 +53,7 @@ class NewsAgencyResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('tag', 'asc')
             ->filters([
                 //
             ])
