@@ -23,7 +23,7 @@
                         <div class="italic">Active filter:</div> 
                         <div>
                             {{ $active_filter }}
-                            <span>(Remove filter)</span>
+                            <span wire:click="resetFilters()">(Remove filter)</span>
                         </div>
                     </div>
                 @endif
