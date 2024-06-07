@@ -23,7 +23,16 @@ class Lives extends Component
 
     public function mount($hash)
     {
-        $this->hash = $hash;
+        if(strlen($hash) < 40)
+        {
+            $leaderboard = Leaderboard::where('leaderboard_id', $hash)->first();
+            $this->hash = $leaderboard->player_hash;
+        }
+        else
+        {
+            $this->hash = $hash;
+        }
+        
         $this->take = 25;
         $this->order = 'desc';
     }

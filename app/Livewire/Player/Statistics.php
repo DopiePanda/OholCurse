@@ -44,7 +44,16 @@ class Statistics extends Component
 
         $this->start_time = microtime(true);
 
-        $this->hash = $hash;
+        if(strlen($hash) < 40)
+        {
+            $leaderboard = Leaderboard::where('leaderboard_id', $hash)->first();
+            $this->hash = $leaderboard->player_hash;
+        }
+        else
+        {
+            $this->hash = $hash;
+        }
+        
         $this->eve_lives = 0;
 
         $this->getPlayerStats();

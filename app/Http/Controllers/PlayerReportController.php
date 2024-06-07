@@ -22,6 +22,8 @@ use App\Models\User;
 class PlayerReportController extends Controller
 {
 
+    private $hash;
+
     public function fetch(Request $request, $hash)
     {
         $time_start = microtime(true);
@@ -34,6 +36,12 @@ class PlayerReportController extends Controller
             }
         }
 
+        if(strlen($hash) < 40)
+        {
+            $leaderboard = Leaderboard::where('leaderboard_id', $hash)->first();
+            $hash = $leaderboard->player_hash;
+        }
+        
         // All curses/forgives/trusts sent
         $sent = CurseLog::with('leaderboard', 'scores', 'contact')
                         ->select('type', 'timestamp', 'character_id', 'reciever_hash')
@@ -216,19 +224,29 @@ class PlayerReportController extends Controller
             $status = [1];
         }
 
+        if(strlen($hash) < 40)
+        {
+            $leaderboard = Leaderboard::where('leaderboard_id', $hash)->first();
+            $this->hash = $leaderboard->player_hash;
+        }
+        else
+        {
+            $this->hash = $hash;
+        }
+
         $time_start = microtime(true);
 
-        $name = Leaderboard::where('player_hash', $hash)
+        $name = Leaderboard::where('player_hash', $this->hash)
                     ->select('leaderboard_name', 'leaderboard_id')
                     ->orderBy('id', 'desc')
                     ->first();
 
-        $curse_count = CurseLog::where('reciever_hash', $hash)
+        $curse_count = CurseLog::where('reciever_hash', $this->hash)
                     ->where('type', 'curse')
                     ->count();
 
         $reports = Yumlog::select(DB::raw("(COUNT(character_id)) as count"), 'character_name', 'character_id', 'curse_name', 'gender', 'age', 'died_to', 'timestamp', 'status')
-                    ->where('player_hash', $hash)
+                    ->where('player_hash', $this->hash)
                     ->where('verified', 1)
                     ->where('visible', 1)
                     ->whereIn('status', $status)
@@ -239,11 +257,11 @@ class PlayerReportController extends Controller
                     ->get();
 
         $donator = User::where('donator', 1)
-                ->where('player_hash', $hash)
+                ->where('player_hash', $this->hash)
                 ->first() ?? null;
 
         return view('player.reports', [
-            'hash' => $hash, 
+            'hash' => $this->hash, 
             'name' => $name, 
             'reports' => $reports,
             'donator' => $donator,
@@ -273,10 +291,21 @@ class PlayerReportController extends Controller
     {
         $time_start = microtime(true);
 
-        $player = Leaderboard::where('player_hash', $hash)
+        if(strlen($hash) < 40)
+        {
+            $player = Leaderboard::where('leaderboard_id', $hash)
+                            ->select('leaderboard_name', 'leaderboard_id','player_hash')
+                            ->orderBy('id', 'desc')
+                            ->first();
+        }
+        else
+        {
+            $player = Leaderboard::where('player_hash', $hash)
                             ->select('leaderboard_name', 'leaderboard_id')
                             ->orderBy('id', 'desc')
                             ->first();
+        }
+
         if($player)
         {
             $records = LeaderboardRecord::with('lifeName:character_id,name', 'leaderboard:id,enabled,object_id,label,image', 'currentRecord:game_leaderboard_id,leaderboard_id,character_id,amount,timestamp')
