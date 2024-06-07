@@ -101,7 +101,7 @@ class NewsArticleResource extends Resource
                 Tables\Columns\TextColumn::make('views')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('title')
+                Tables\Columns\TextColumn::make('user.username')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('author')
                     ->searchable(),
