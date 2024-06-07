@@ -10,6 +10,7 @@ use Symfony\Component\HttpClient\HttpClient;
 use Goutte\Client;
 
 use App\Models\Yumlog;
+use App\Models\LifeNameLog;
 
 class DiscordBotController extends Controller
 {
@@ -160,5 +161,12 @@ class DiscordBotController extends Controller
 
             return response()->json($payload);
         }
+    }
+
+    public function searchLifeNameLogs()
+    {
+        $lives = LifeNameLog::where('name', 'like', $data['first_name'].' '.$data['last_name'] ?? null)
+            ->limit(10)
+            ->get();
     }
 }
