@@ -50,5 +50,10 @@ class LeaderboardRecord extends Model
         return $this->hasOne(LeaderboardRecord::class, 'game_leaderboard_id', 'game_leaderboard_id')->where('ghost', 1)->orderBy('amount', 'desc');
     }
 
+    public function getFormattedTimestampAttribute()
+    {
+        return $this->formatted_timestamp->format('Y-m-d H:i');
+    }
+
 
 }
