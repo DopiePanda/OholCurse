@@ -1,4 +1,4 @@
-<div class="py-6 bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark text-gray-400">
+<div class="z-50 pt-6 pb-8 bg-skin-fill-wrapper dark:bg-skin-fill-wrapper-dark text-gray-400" style="z-index: 50 !important;">
 
     <div class="text-4xl text-center">
         <div><img class="mx-auto h-20" src="{{ asset($leaderboard->image) }}" /></div>
@@ -9,8 +9,8 @@
         <canvas id="recordChart"></canvas>
     </div>
     
-    <div class="mt-6 relative overflow-x-auto mx-auto sm:px-6 lg:px-8">
-        <table class="mx-auto mt-1 text-center border border-gray-400 shadow-lg">
+    <div class="z-50 mt-6 relative overflow-x-auto mx-auto sm:px-6 lg:px-8">
+        <table class="z-50 mx-auto mt-1 text-center border border-gray-400 shadow-lg">
             <thead>
                 <tr class="border-b border-gray-400 text-white bg-skin-fill dark:bg-skin-fill-dark">
                     <td class="p-4 text-white border-r border-gray-400">#</td>
