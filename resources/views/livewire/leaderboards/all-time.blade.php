@@ -75,9 +75,9 @@
                                     
                                 </td>
                                 <td class="p-4 border border-gray-400">
-                                    @if(isset($result->character->player_hash) && isset($result->playerName->leaderboard_name)) 
+                                    @if(isset($result->character->player_hash) && isset($result->player->leaderboard_name)) 
                                         <a class="font-semibold text-skin-base dark:text-skin-base-dark" href="{{ route('player.interactions', ['hash' => $result->character->player_hash]) }}">
-                                            {{ $result->playerName->contact->nickname ?? $result->playerName->leaderboard_name }}
+                                            {{ $result->playerName->contact->nickname ?? $result->player->leaderboard_name }}
                                         </a>
                                     @else
                                         <span title="Check again after 9AM tomorrow for updated data">
