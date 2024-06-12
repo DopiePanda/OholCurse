@@ -32,6 +32,7 @@ use App\Livewire\PlayerInteractions;
 use App\Livewire\Player\Lives as PlayerLives;
 use App\Livewire\Player\Statistics as PlayerStatistics;
 use App\Livewire\Map\Leaderboard;
+use App\Livewire\Leaderboards\AllTime as LeaderboardAllTime;
 use App\Livewire\Wanted\Poster as BerryPoster;
 use App\Livewire\Modals\Charts\LeaderboardRecords;
 use App\Livewire\Admin\Search\CharacterMovement;
@@ -97,9 +98,7 @@ Route::middleware('web')->group(function() {
         Route::get('/weekly', [LeaderboardController::class, 'weekly'])->name('weekly');
         Route::get('/weekly/object/{object_id}', [LeaderboardController::class, 'getObjectLeaderboard'])->name('weekly.single');
         Route::get('/weekly/multi/{id}', [LeaderboardController::class, 'getMultiObjectsLeaderboard'])->name('weekly.multi');
-        Route::get('/all-time', [LeaderboardController::class, 'allTime'])->name('all-time');
-        Route::get('/all-time/ghost', [LeaderboardController::class, 'allTimeGhost'])->name('all-time-ghost');
-
+        Route::get('/all-time', LeaderboardAllTime::class)->name('all-time');
     });
 
     Route::get('/families/index', [FamilyController::class, 'index'])->name('families.index');
