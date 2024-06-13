@@ -74,7 +74,7 @@
                                 {{ __('Name generator') }}
                             </x-dropdown-link>
                             @auth
-                                @if(auth()->user()->hasAnyRole(['trusted', 'mod', 'admin', 'anti-griefer', 'system']))
+                                @if(auth()->user()->can('use map distance calculator'))
                                     <x-dropdown-link :href="route('tools.calculator.map')">
                                         {{ __('Travel calculator') }}
                                     </x-dropdown-link>

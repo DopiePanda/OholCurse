@@ -66,19 +66,25 @@
                     @forelse($results as $result)
                         @if($result->leaderboard->enabled == 1)
                             <tr class="even:bg-gray-300 odd:bg-white dark:even:bg-slate-700 dark:odd:bg-slate-800 dark:text-gray-300">
-                                <td wire:click="$dispatch('openModal', { component: 'leaderboards.chart-modal', arguments: { leaderboard_id: {{ $result->game_leaderboard_id }} }})" class=" p-4 border border-gray-400">
+                                <td wire:click="$dispatch('openModal', { component: 'leaderboards.chart-modal', arguments: { leaderboard_id: {{ $result->game_leaderboard_id }}, ghost: {{ $filter_ghosts ? 1 : 0 }} }})" class=" p-4 border border-gray-400">
                                     <img class="mx-auto h-10" src="{{ asset($result->leaderboard->image) }}" />
                                     <div class="mt-1 text-sm font-semibold">{{ $result->leaderboard->label }}</div>
                                 </td>
-                                <td wire:click="$dispatch('openModal', { component: 'leaderboards.chart-modal', arguments: { leaderboard_id: {{ $result->game_leaderboard_id }} }})" class="p-4 text-xl font-bold border border-gray-400">
-                                    {{ $result->amount ?? 0 }}
+                                <td wire:click="$dispatch('openModal', { component: 'leaderboards.chart-modal', arguments: { leaderboard_id: {{ $result->game_leaderboard_id }}, ghost: {{ $filter_ghosts ? 1 : 0 }} }})" class="p-4 text-xl font-bold border border-gray-400">
+                                    {{ $filter_ghosts ? $result->currentGhostRecord->amount : $result->currentRecord->amount ?? 0 }}
                                     
                                 </td>
                                 <td class="p-4 border border-gray-400">
-                                    @if(isset($result->character->player_hash) && isset($result->player->leaderboard_name)) 
-                                        <a class="font-semibold text-skin-base dark:text-skin-base-dark" href="{{ route('player.interactions', ['hash' => $result->character->player_hash]) }}">
-                                            {{ $result->playerName->contact->nickname ?? $result->player->leaderboard_name }}
-                                        </a>
+                                    @if(isset($result->currentRecord->character->player_hash) && isset($result->currentRecord->player->leaderboard_name))
+                                        @if($filter_ghosts)
+                                            <a class="font-semibold text-skin-base dark:text-skin-base-dark" href="{{ route('player.interactions', ['hash' => $result->currentGhostRecord->character->player_hash]) }}">
+                                                {{ $result->currentGhostRecord->player->contact->nickname ?? $result->currentGhostRecord->player->leaderboard_name }}
+                                            </a>
+                                        @else
+                                            <a class="font-semibold text-skin-base dark:text-skin-base-dark" href="{{ route('player.interactions', ['hash' => $result->currentRecord->character->player_hash]) }}">
+                                                {{ $result->currentRecord->player->contact->nickname ?? $result->currentRecord->player->leaderboard_name }}
+                                            </a>
+                                        @endif
                                     @else
                                         <span title="Check again after 9AM tomorrow for updated data">
                                             - LEADERBOARD MISSING -
@@ -89,8 +95,8 @@
                                         - playing as -
                                     </div>
                                     <div class="mt-1 text-sm text-black lowercase capitalize dark:text-gray-200">
-                                        @if(isset($result->lifeName->name)) 
-                                            {{ $result->lifeName->name }} 
+                                        @if(isset($result->currentRecord->lifeName->name)) 
+                                            {{ $filter_ghosts ? $result->currentGhostRecord->lifeName->name : $result->currentRecord->lifeName->name }} 
                                         @else
                                             <span title="Check again after 9AM tomorrow for updated data">
                                                 (- NAME MISSING -)
@@ -99,12 +105,10 @@
                                     </div>
                                 </td>
                                 <td class="p-4 border border-gray-400">
-                                    @if(isset($result->timestamp))
-                                        {{ date('Y-m-d H:i', $result->timestamp) }}
+                                    @if($filter_ghosts)
+                                        {{ date('Y-m-d H:i', $result->currentGhostRecord->timestamp) ?? "(- DATE MISSING -)" }}
                                     @else
-                                        <span title="Check again after 9AM tomorrow for updated data">
-                                            (- DATE MISSING -)
-                                        </span>
+                                        {{ date('Y-m-d H:i', $result->currentRecord->timestamp) ?? "(- DATE MISSING -)" }}
                                     @endif
                                 </td>
                             </tr>

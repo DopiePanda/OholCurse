@@ -25,6 +25,8 @@ class Statistics extends Component
     public $hours_played;
     public $children_born;
     public $foods_eaten;
+    public $food_lives;
+    public $all_lives;
     public $eve_lives;
     public $ghost_lives;
     public $times_killed;
@@ -76,7 +78,8 @@ class Statistics extends Component
     {
         $lives = $this->getLivesLived();   
         $children = $this->getChildrenBorn($lives);
-        $foods = $this->getFoodsEaten($lives); 
+        $foods = $this->getFoodsEaten($lives);
+        $food_lives = $this->getFoodLives();
         
         $names_recieved = $this->sortPopularNames($lives, 'recieved', 10);
         $names_given = $this->sortPopularNames($children, 'given', 10);
@@ -190,6 +193,13 @@ class Statistics extends Component
         $this->top_foods_eaten = $grouped->take(25);
 
         return $grouped;
+    }
+
+    public function getFoodLives()
+    {
+        $food_logs_release_date = 1701458586;
+        $this->all_lives  = LifeLog::where('player_hash', $this->hash)->where('age', '>', 3)->where('type', 'death')->count();
+        $this->food_lives  = LifeLog::where('player_hash', $this->hash)->where('age', '>', 3)->where('type', 'death')->where('timestamp', '>', $food_logs_release_date)->count();
     }
 
     public function sortPopularNames($collection, $type, $limit)
