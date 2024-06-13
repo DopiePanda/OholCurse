@@ -26,22 +26,32 @@
                     <div class="px-4 py-8 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark rounded-xl">
                         <div class="text-3xl md:text-4xl lg:text-5xl text-skin-base dark:text-skin-base-dark">{{ round($hours_played, 1) ?? 0 }}</div>
                         <div class="mt-2 uppercase text-sm text-gray-800 dark:text-gray-400">Hours played</div>
+                        <div class="mt-2 uppercase text-sm text-gray-800 dark:text-gray-400">Hours played to life Ratio:</div>
+                        <div class="mt-2 uppercase text-sm text-skin-base dark:text-skin-base-dark">{{ round(($hours_played ?? 0) / $all_lives, 2) }}</div>
                     </div>
                     <div class="px-4 py-8 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark rounded-xl">
                         <div class="text-3xl md:text-4xl lg:text-5xl text-skin-base dark:text-skin-base-dark">{{ $children_born ?? 0 }}</div>
                         <div class="mt-2 uppercase text-sm text-gray-800 dark:text-gray-400">Children born</div>
+                        <div class="mt-2 uppercase text-sm text-gray-800 dark:text-gray-400">Childred to life Ratio:</div>
+                        <div class="mt-2 uppercase text-sm text-skin-base dark:text-skin-base-dark">{{ round(($children_born ?? 0) / $all_lives, 2) }}</div>
                     </div>
                     <div class="px-4 py-8 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark rounded-xl">
                         <div class="text-3xl md:text-4xl lg:text-5xl text-skin-base dark:text-skin-base-dark">{{ $foods_eaten ?? 0 }}</div>
                         <div class="mt-2 uppercase text-sm text-gray-800 dark:text-gray-400">Food items eaten</div>
+                        <div class="mt-2 uppercase text-sm text-gray-800 dark:text-gray-400">Food to life Ratio:</div>
+                        <div class="mt-2 uppercase text-sm text-skin-base dark:text-skin-base-dark">{{ round(($foods_eaten ?? 0) / $food_lives, 2) }}</div>
                     </div>
                     <div class="px-4 py-8 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark rounded-xl">
                         <div class="text-3xl md:text-4xl lg:text-5xl text-skin-base dark:text-skin-base-dark">{{ $eve_lives ?? 0 }}</div>
                         <div class="mt-2 uppercase text-sm text-gray-800 dark:text-gray-400">Eve lives</div>
+                        <div class="mt-2 uppercase text-sm text-gray-800 dark:text-gray-400">Eve to Life Ratio:</div>
+                        <div class="mt-2 uppercase text-sm text-skin-base dark:text-skin-base-dark">{{ round(($eve_lives ?? 0) / $all_lives, 4) }}</div>
                     </div>
                     <div class="px-4 py-8 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark rounded-xl">
                         <div class="text-3xl md:text-4xl lg:text-5xl text-skin-base dark:text-skin-base-dark">{{ $ghost_lives['filtered'] ?? 0 }}</div>
                         <div class="mt-2 uppercase text-sm text-gray-800 dark:text-gray-400">Ghost lives</div>
+                        <div class="mt-2 uppercase text-sm text-gray-800 dark:text-gray-400">Ghost to life Ratio:</div>
+                        <div class="mt-2 uppercase text-sm text-skin-base dark:text-skin-base-dark">{{ round(($ghost_lives['filtered'] ?? 0) / $food_lives, 4) }}</div>
                     </div>
                     <div class="px-4 py-8 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark rounded-xl">
                         <div class="text-3xl md:text-4xl lg:text-5xl text-skin-base dark:text-skin-base-dark">{{ $times_killed ?? 0 }}</div>
@@ -131,6 +141,7 @@
                                 <th class="w-1/3 text-center p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border-b border-gray-600">Placement</th>
                                 <th class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border-b border-gray-600">Item</th>
                                 <th class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border-b border-gray-600">Amount</th>
+                                <th class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border-b border-gray-600">Life Ratio</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -139,6 +150,7 @@
                                     <td class="p-2 text-center border-b border-gray-400 dark:border-gray-800">#{{ $loop->index+1 }}</td>
                                     <td class="p-2 border-b border-gray-400 dark:border-gray-800">{{ explode('#', $key)[0] }}</td>
                                     <td class="p-2 border-b border-gray-400 dark:border-gray-800">{{ count($value) }}</td>
+                                    <td class="p-2 border-b border-gray-400 dark:border-gray-800">{{ round(count($value) / $food_lives, 2) }}</td>
                                 </tr>
                             @empty
                                 

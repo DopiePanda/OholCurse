@@ -21,39 +21,24 @@ class AllTime extends Component
         $this->filter_ghosts = false;
         $this->order_by_col = "game_leaderboard_id";
         $this->order_by_dir = "desc";
-        //$this->getAllTimeRecords();
     }
 
     public function render()
     {
-        $this->results = LeaderboardRecord::with('leaderboard', 'lifeName', 'playerName', 'player', 'character')
+        $this->results = LeaderboardRecord::with('leaderboard', 'lifeName', 'playerName', 'player', 'character', 'currentRecord', 'currentGhostRecord')
                     ->select('game_leaderboard_id', DB::raw("(MAX(amount)) as amount"), 'character_id', 'leaderboard_id', 'timestamp')
                     ->where('game_leaderboard_id', '!=', null)
                     ->where('ghost', $this->filter_ghosts)
-                    ->orderBy($this->order_by_col, $this->order_by_dir)
+                    ->orderByRaw("$this->order_by_col ".strtoupper($this->order_by_dir))
                     ->groupBy('game_leaderboard_id')
                     ->get();
 
         return view('livewire.leaderboards.all-time');
     }
 
-    public function getAllTimeRecords()
-    {
-        $this->results = LeaderboardRecord::with('leaderboard', 'lifeName', 'playerName', 'player', 'character')
-                    ->select('game_leaderboard_id', DB::raw("(MAX(amount)) as amount"), 'character_id', 'leaderboard_id', 'timestamp')
-                    ->where('game_leaderboard_id', '!=', null)
-                    ->where('ghost', $this->filter_ghosts)
-                    ->orderBy($this->order_by_col, $this->order_by_dir)
-                    ->groupBy('game_leaderboard_id')
-                    ->get();
-    }
-
     public function toggleGhostRecords()
     {
         $this->filter_ghosts = !$this->filter_ghosts;
-    
-
-        //$this->getAllTimeRecords();
     }
 
     public function setOrderByColumn()
