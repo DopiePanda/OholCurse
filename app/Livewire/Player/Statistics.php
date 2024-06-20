@@ -30,6 +30,7 @@ class Statistics extends Component
     public $eve_lives;
     public $ghost_lives;
     public $times_killed;
+    public $player_kills;
 
     public $female_names_recieved, $female_names_given;
     public $male_names_recieved, $male_names_given;
@@ -76,14 +77,14 @@ class Statistics extends Component
 
     public function getPlayerStats()
     {
-        $lives = $this->getLivesLived();   
+        $lives = $this->getLivesLived();
+        //$kills = $this->getPlayerKills();
         $children = $this->getChildrenBorn($lives);
         $foods = $this->getFoodsEaten($lives);
         $food_lives = $this->getFoodLives();
         
         $names_recieved = $this->sortPopularNames($lives, 'recieved', 10);
         $names_given = $this->sortPopularNames($children, 'given', 10);
-
     }
 
     public function getLivesLived()
@@ -153,6 +154,24 @@ class Statistics extends Component
         })->count();
 
         return $life_collect;
+    }
+
+    public function getPlayerKills()
+    {
+        $player_lives = LifeLog::where('player_hash', $this->hash)->where('type', 'death')->pluck('character_id');
+        
+        $player_kills = 0;
+
+        foreach ($player_lives as $life)
+        {
+            $kill = LifeLog::where('died_to', 'killer_'.$life)->where('type', 'death')->first();
+            if($kill)
+            {
+                $player_kills = $player_kills + 1;
+            }
+        }
+        
+        $this->player_kills = $player_kills;
     }
 
     public function getChildrenBorn($collection)
