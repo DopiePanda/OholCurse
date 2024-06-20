@@ -56,6 +56,12 @@
                     <div class="px-4 py-8 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark rounded-xl">
                         <div class="text-3xl md:text-4xl lg:text-5xl text-skin-base dark:text-skin-base-dark">{{ $times_killed ?? 0 }}</div>
                         <div class="mt-2 uppercase text-sm text-gray-800 dark:text-gray-400">Times murdered</div>
+                        @if(isset($times_killed) && isset($player_kills))
+                        <div class="mt-2 uppercase text-sm text-gray-800 dark:text-gray-400">Kill to death Ratio:</div>
+                        <div class="mt-2 uppercase text-sm text-skin-base dark:text-skin-base-dark">
+                                {{ round(($times_killed ?? 0) / ($player_kills ?? 0), 4) }}  
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

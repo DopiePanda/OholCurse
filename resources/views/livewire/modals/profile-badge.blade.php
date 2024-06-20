@@ -7,7 +7,7 @@
             @endif
 
             <div class="text-amber-300 mb-2">
-                Art by: <div class="inline font-bold">{{ $badge->badge->creator_name }}</div>
+                Credit: <div class="inline font-bold">{{ $badge->badge->creator_name }}</div>
             </div>
 
             @if($badge->badge->creator_url)
@@ -19,7 +19,7 @@
         <div class="text-6xl font-bold">
             {{ $badge->badge->name }}
         </div>
-        <div class="mt-2 text-md">
+        <div class="px-1 lg:px-8 mt-2 text-md">
             {{ $badge->badge->description }}
         </div>
         <div class="mt-4 italics text-xs">
