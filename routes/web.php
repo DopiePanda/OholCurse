@@ -20,6 +20,7 @@ use App\Http\Controllers\PrivacyPolicyController;
 use App\Http\Controllers\ReportVerificationController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\YumlifeController;
 
 use App\Http\Controllers\Tools\Select2Controller;
 use App\Http\Controllers\Objects\PhexDataImporter;
@@ -36,6 +37,7 @@ use App\Livewire\Leaderboards\AllTime as LeaderboardAllTime;
 use App\Livewire\Wanted\Poster as BerryPoster;
 use App\Livewire\Modals\Charts\LeaderboardRecords;
 use App\Livewire\Admin\Search\CharacterMovement;
+use App\Livewire\Admin\Player\BirthCheck;
 
 use App\Livewire\Content\Upload;
 use App\Livewire\Content\Browse;
@@ -74,6 +76,8 @@ Route::middleware('web')->group(function() {
 
     Route::get('/internal/session/get', [SessionController::class, 'getSession'])->name('session.get');
     Route::post('/internal/session/set', [SessionController::class, 'setSession'])->name('session.set');
+
+    Route::get('/redirect/profile/{name}', [YumlifeController::class, 'findPlayerProfile']);
 
     Route::prefix('/player')->name('player.')->group(function () {
         Route::get('/hash/{hash}', PlayerInteractions::class)->name('curses');
@@ -149,6 +153,8 @@ Route::middleware('web')->group(function() {
         Route::get('/select2/ajax', [Select2Controller::class, 'handle'])->name('select2.ajax');
         
         Route::impersonate();
+
+        Route::get('/griefer/births', BirthCheck::class);
     });
 
     
