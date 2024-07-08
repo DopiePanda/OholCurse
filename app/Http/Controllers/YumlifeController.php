@@ -24,7 +24,7 @@ class YumlifeController extends Controller
         }
         else
         {
-            return abort(404);
+            return view('player.account-missing');
         }
     }
 }
