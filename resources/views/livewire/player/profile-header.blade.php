@@ -50,6 +50,10 @@
                         (Missing Leaderboard Name)
                     @endif
                 </h2>
+                @if($profile->leaderboard_id)
+                    <div class="text-gray-400 text-xs font-bold">ID: {{ $profile->leaderboard_id }} </div>
+                @endif
+                
                 <div class="z-60 mt-2 flex flex-row justify-start space-x-2">
                     @if(count($badges) > 0)
                         @foreach ($badges as $badge)
