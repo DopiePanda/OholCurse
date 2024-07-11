@@ -32,7 +32,15 @@ class PlayerInteractions extends Component
         if(strlen($hash) < 40)
         {
             $leaderboard = Leaderboard::where('leaderboard_id', $hash)->first();
-            $this->hash = $leaderboard->player_hash;
+            if($leaderboard)
+            {
+                $this->hash = $leaderboard->player_hash;
+            }
+            else
+            {
+                return abort(404);
+            }
+            
         }
         else
         {
