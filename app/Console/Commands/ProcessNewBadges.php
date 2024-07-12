@@ -63,7 +63,7 @@ class ProcessNewBadges extends Command
                     ProfileBadge::updateOrCreate(
                         [
                             'player_hash' => $entry->life->player_hash,
-                            'badge_id' => 1,
+                            'badge_id' => 11,
                         ], 
                         [
                             'achieved_at' => $entry->timestamp
