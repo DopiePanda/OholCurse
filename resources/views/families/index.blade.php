@@ -35,21 +35,30 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center text-xl">
                 @forelse ($eves as $eve)
                     @if($eve->name && $eve->name->name)
-                    <a href="{{ route('families.view', ['character_id' => $eve->character_id]) }}">
                         <div class="bg-white border border-blue-400 p-4 text-skin-base rounded-lg font-bold hover:bg-skin-fill hover:text-white dark:bg-slate-700 dark:text-skin-base-dark dark:border-0 dark:hover:bg-skin-fill-dark dark:hover:text-gray-200 [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]">
-                            <div class="mt-2 text-3xl">
-                                {{ explode(' ', $eve->name->name)[1] ?? '' }}
-                            </div>
+                            <a href="{{ route('families.view', ['character_id' => $eve->character_id]) }}">
+                                <div class="mt-2 text-3xl">
+                                    {{ explode(' ', $eve->name->name)[1] ?? '' }}
+                                </div>
+                            </a>
                             
-                            <div class="mt-2 text-sm capitalize italic text-gray-600 dark:text-gray-400">
+                            <div class="inline-block mt-2 text-sm capitalize italic text-gray-600 dark:text-gray-400">
+                                <a href="{{ route('player.interactions', ['hash' => $eve->leaderboard->player_hash]) }}">
+                                    Founder: 
+                                    <span class="text-gray-400 dark:text-white" >
+                                        {{ $eve->leaderboard->leaderboard_name ?? 'MISSING' }}
+                                    </span>
+                                </a>
+                            </div>
+
+                            <div class="mt-1 text-sm capitalize italic text-gray-600 dark:text-gray-400">
                                 Founded: {{ date('Y-m-d H:i', $eve->timestamp) ?? '' }}
                             </div>
 
-                            <div class="mt-2 text-sm capitalize italic text-gray-600 dark:text-gray-400">
+                            <div class="mt-1 text-sm capitalize italic text-gray-600 dark:text-gray-400">
                                 Biome: {{ $eve->family_type ?? '' }}
                             </div>
                         </div>
-                    </a>
                     @endif  
                 @empty
                     
