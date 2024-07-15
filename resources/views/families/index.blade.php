@@ -21,11 +21,11 @@
                 <div class="mt-6 bg-skin-fill dark:bg-skin-fill-dark p-3 rounded-lg">
                     <div class="text-sm">
                         Estimated world west movement last 24 hours:
-                        <div class="text-lg">{{ $eve_count_day * 320 }}</div>
+                        <div class="text-lg">{{ $eve_count_day * 320 / 4 }}</div>
                     </div>
                     <div class="mt-1 text-sm">
                         Estimated world west movement last 7 days: 
-                        <div class="text-lg">{{ $eve_count_week * 320 }}</div>
+                        <div class="text-lg">{{ $eve_count_week * 320 / 4 }}</div>
                     </div>
                 </div>
             </div>

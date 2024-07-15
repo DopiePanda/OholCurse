@@ -43,6 +43,7 @@ class ProcessNewBadges extends Command
         $this->methmanBadge(11);
         $this->trustJasonBadge(12);
         $this->curseJasonBadge(4);
+        $this->astronautBadge(13);
 
         $end_time = microtime(true) - $time;
         $this->line("Completed in $end_time seconds");
@@ -169,6 +170,46 @@ class ProcessNewBadges extends Command
             }
 
             $this->line("Found a Jason truster");
+        }
+    }
+
+    public function astronautBadge($badge_id)
+    {
+        $this->badge_id = $badge_id;
+
+        $map_entries = MapLog::with('life:character_id,player_hash', 'name:character_id,name')
+                        ->select('character_id', 'timestamp', 'object_id')
+                        ->where('timestamp', '>=', $this->two_days_ago)
+                        ->where('object_id', 4959)
+                        ->where('character_id', '!=', -1)
+                        ->groupBy('character_id')
+                        ->orderBy('timestamp', 'asc')
+                        ->get();
+
+        foreach($map_entries as $entry)
+        {      
+            if($entry->life)
+            {
+                $badge_count = ProfileBadge::whereIn('badge_id', [3, 5, 7])
+                    ->where('player_hash')
+                    ->first();
+
+                if(!$badge_count)
+                {
+                    ProfileBadge::updateOrCreate(
+                        [
+                            'player_hash' => $entry->life->player_hash,
+                            'badge_id' => $this->badge_id,
+                        ], 
+                        [
+                            'achieved_at' => $entry->timestamp
+                        ]
+                    );
+                }
+            }
+
+            Log::channel('sync')->info($entry->life->player_hash ?? 'missing'." got badge ".$badge_id);
+            $this->line("New Astronaut found!");
         }
     }
 }
