@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 use App\Models\LifeLog;
 use App\Models\Family;
@@ -18,17 +19,39 @@ class FamilyController extends Controller
 
     public function index()
     {
-        $eves = LifeLog::where('type', 'birth')
+        $eves = LifeLog::with('leaderboard')
+                        ->where('type', 'birth')
                         ->where('pos_x', '>', -190000000)
                         ->where('pos_x', '<', 5000000)
                         ->where('parent_id', 0)
-                        ->select('id', 'character_id', 'parent_id', 'family_type', 'timestamp')
+                        ->select('id', 'character_id', 'player_hash', 'parent_id', 'family_type', 'timestamp')
                         ->with('name:character_id,name')
                         ->take(50)
                         ->orderBy('id', 'desc')
                         ->get();
 
-        return view('families.index', ['eves' => $eves]);
+        $day_period = Carbon::now()->subDays(2)->timestamp;
+        $week_period = Carbon::now()->subDays(7)->timestamp;
+
+        $eve_count_last_24_hours = LifeLog::with('leaderboard')
+            ->where('type', 'birth')
+            ->where('pos_x', '>', -190000000)
+            ->where('pos_x', '<', 5000000)
+            ->where('timestamp', '>=', $day_period)
+            ->where('parent_id', 0)
+            ->select('id')
+            ->count();
+
+        $eve_count_last_7_days = LifeLog::with('leaderboard')
+            ->where('type', 'birth')
+            ->where('pos_x', '>', -190000000)
+            ->where('pos_x', '<', 5000000)
+            ->where('timestamp', '>=', $week_period)
+            ->where('parent_id', 0)
+            ->select('id')
+            ->count();
+
+        return view('families.index', ['eves' => $eves, 'eve_count_day' => $eve_count_last_24_hours, 'eve_count_week' => $eve_count_last_7_days]);
     }
 
     public function view($character_id)
