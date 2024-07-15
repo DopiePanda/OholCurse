@@ -179,6 +179,21 @@ class ProcessMapLog extends Command
                                     'character_id'=> $array[4],
                                 ];
                             }
+
+                            if($array[1] > 500000)
+                            {
+                                if($array[4] != -1 && $array[4] != 0)
+                                {
+                                    $this->payload[] = [
+                                        'timestamp' => ($this->timestamp_start + $array[0]),
+                                        'pos_x'=> $array[1],
+                                        'pos_y'=> $array[2],
+                                        'object_id'=> $object[0],
+                                        'use'=> $object[1] ?? null,
+                                        'character_id'=> $array[4],
+                                    ];
+                                };
+                            }
                         }
                     }
                 }
