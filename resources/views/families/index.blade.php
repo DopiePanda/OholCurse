@@ -12,12 +12,31 @@
     </x-slot>
     <div class="grow py-1">
 
+        <div class="w-1/3 mx-auto text-white p-4 bg-white dark:bg-slate-700 text-center">
+            <div class="py-4">
+                <div class="text-6xl">{{ $eve_count_week }}</div>
+                <div class="mt-1 text-xl">Eve's last 7 days</div>
+                
+
+                <div class="mt-6 bg-skin-fill dark:bg-skin-fill-dark p-3 rounded-lg">
+                    <div class="text-sm">
+                        Estimated world west movement last 24 hours:
+                        <div class="text-lg">{{ $eve_count_day * 320 }}</div>
+                    </div>
+                    <div class="mt-1 text-sm">
+                        Estimated world west movement last 7 days: 
+                        <div class="text-lg">{{ $eve_count_week * 320 }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center text-xl">
                 @forelse ($eves as $eve)
                     @if($eve->name && $eve->name->name)
                     <a href="{{ route('families.view', ['character_id' => $eve->character_id]) }}">
-                        <div class="bg-white border border-blue-400 p-4 text-blue-400 rounded-lg font-bold hover:bg-blue-400 hover:text-white dark:bg-slate-700 dark:text-red-500 dark:border-0 dark:hover:bg-red-500 dark:hover:text-gray-200">
+                        <div class="bg-white border border-blue-400 p-4 text-skin-base rounded-lg font-bold hover:bg-skin-fill hover:text-white dark:bg-slate-700 dark:text-skin-base-dark dark:border-0 dark:hover:bg-skin-fill-dark dark:hover:text-gray-200 [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]">
                             <div class="mt-2 text-3xl">
                                 {{ explode(' ', $eve->name->name)[1] ?? '' }}
                             </div>

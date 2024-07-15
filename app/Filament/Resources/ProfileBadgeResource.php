@@ -41,6 +41,11 @@ class ProfileBadgeResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('badge.name')
                     ->numeric()
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('player.leaderboard_name')
+                    ->numeric()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('player_hash')
                     ->searchable(),

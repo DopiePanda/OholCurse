@@ -105,8 +105,10 @@ Route::middleware('web')->group(function() {
         Route::get('/all-time', LeaderboardAllTime::class)->name('all-time');
     });
 
-    Route::get('/families/index', [FamilyController::class, 'index'])->name('families.index');
-    Route::get('/families/view/{character_id}', [FamilyController::class, 'view'])->name('families.view');
+    Route::prefix('/families')->name('families.')->group(function () {
+        Route::get('/', [FamilyController::class, 'index'])->name('index');
+        Route::get('/view/{character_id}', [FamilyController::class, 'view'])->name('view');
+    });
 
     Route::prefix('/tools')->name('tools.')->group(function () {
         Route::get('/names', CharacterNames::class)->name('names');
