@@ -15,7 +15,7 @@
         <div class="w-1/3 mx-auto text-white p-4 bg-white dark:bg-slate-700 text-center">
             <div class="py-4">
                 <div class="text-6xl">{{ $eve_count_week }}</div>
-                <div class="mt-1 text-xl">Eve's last 7 days</div>
+                <div class="mt-1 text-xl">Eves last 7 days</div>
                 
 
                 <div class="mt-6 bg-skin-fill dark:bg-skin-fill-dark p-3 rounded-lg">

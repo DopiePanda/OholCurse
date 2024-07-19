@@ -14,6 +14,7 @@ use Goutte\Client;
 use App\Models\Yumlog;
 
 use App\Http\Controllers\Api\DiscordBotController;
+use App\Http\Controllers\Api\EllabotController;
 
 
 /*
@@ -43,6 +44,9 @@ Route::get('/yumlife', function(Request $request) {
     print_r($data);
 });
 
+Route::prefix('/ellabot')->name('ellabot.')->group(function () {
+    Route::post('/message', [EllabotController::class, 'message']);
+});
 
 Route::post('/discord/bot', function(Request $request) {
     $data = $request->input();

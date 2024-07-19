@@ -16,15 +16,18 @@ class ProfileHeader extends Component
     public $badges;
 
     public $hash;
+    public $donator;
 
     protected $listeners = [
         'contactSaved' => 'refresh',
         'contactDeleted' => '$refresh'
     ];
 
-    public function mount($hash)
+    public function mount($hash, $donator)
     {
         $this->hash = $hash;
+        $this->donator = $donator;
+        
         $this->profile = Leaderboard::where('player_hash', $this->hash)->first();
 
         if(Auth::user())

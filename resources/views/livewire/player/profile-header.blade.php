@@ -54,15 +54,20 @@
                     <div class="text-gray-400 text-xs font-bold">ID: {{ $profile->leaderboard_id }} </div>
                 @endif
                 
-                <div class="z-60 mt-2 flex flex-row justify-start space-x-2">
-                    @if(count($badges) > 0)
-                        @foreach ($badges as $badge)
-                            <div wire:click="$dispatch('openModal', {component: 'modals.profile-badge', arguments: {hash: '{{ $hash }}', badge_id: {{$badge->id}}}})">
-                                <img class="h-8 hue-rotate-skin saturate-skin contrast-skin brightness-skin" src="{{ asset($badge->badge->image_small) }}" alt="{{ $badge->badge->name }}" title="{{ $badge->badge->name }}" />
-                            </div>
-                        @endforeach
-                    @endif
-               </div>
+                @if($donator != null && $donator->show_badges == "hide")
+
+                @else
+                    <div class="z-60 mt-2 flex flex-row justify-start space-x-2">
+                        @if(count($badges) > 0)
+                            @foreach ($badges as $badge)
+                                <div wire:click="$dispatch('openModal', {component: 'modals.profile-badge', arguments: {hash: '{{ $hash }}', badge_id: {{$badge->id}}}})">
+                                    <img class="h-8 hue-rotate-skin saturate-skin contrast-skin brightness-skin" src="{{ asset($badge->badge->image_small) }}" alt="{{ $badge->badge->name }}" title="{{ $badge->badge->name }}" />
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+               @endif
+
             </div>
             <div class="pt-1 ml-4 self-center inline-block">
                 <div class="group relative ml-2 inline-block" wire:click="$dispatch('openModal', {component: 'modals.relation-search', arguments: {hash: '{{ $hash }}'}})">

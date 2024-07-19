@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -96,6 +97,8 @@ Route::middleware('web')->group(function() {
         Route::get('/', Ideas::class)->name('index');
     });
 
+
+
     Route::prefix('/leaderboards')->name('leaderboards.')->group(function () {
         Route::get('/', [LeaderboardController::class, 'index'])->name('index');
         Route::get('/daily', Leaderboard::class)->name('daily');
@@ -130,6 +133,7 @@ Route::middleware('web')->group(function() {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::patch('/profile/timezone', [ProfileController::class, 'updateTimezone'])->name('timezone.update');
+        Route::patch('/profile/badges', [ProfileController::class, 'updateBadges'])->name('badges.update');
         Route::patch('/profile/background', [ProfileController::class, 'updateBackground'])->name('background.update');
         Route::patch('/profile/theme', [ProfileController::class, 'updateTheme'])->name('theme.update');
         Route::patch('/profile/darkmode', [ProfileController::class, 'updateDarkmode'])->name('darkmode.update');

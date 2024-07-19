@@ -64,7 +64,6 @@ class LifeLogResource extends Resource
                 
                 
                 TextColumn::make('family_type')
-                ->hidden(fn ($livewire) => $livewire->getTableFilterState('type')['value'] === 'death')
                 ->sortable(),
 
                 TextColumn::make('name.name')
@@ -82,10 +81,8 @@ class LifeLogResource extends Resource
                     return $query
                         ->where('parent_id', 'like', $search.'%');
                 }),
-                TextColumn::make('age')
-                ->hidden(fn ($livewire) => $livewire->getTableFilterState('type')['value'] === 'birth'),
+                TextColumn::make('age'),
                 TextColumn::make('died_to')
-                ->hidden(fn ($livewire) => $livewire->getTableFilterState('type')['value'] === 'birth')
                 ->sortable(),
                 TextColumn::make('pos_x')
                 ->sortable(),

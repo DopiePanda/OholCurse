@@ -3,10 +3,13 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 use App\Models\Badge;
 use App\Models\ProfileBadge;
 use App\Models\MapLog;
+use App\Models\LifeLog;
 use App\Models\CurseLog;
 
 use Log;
@@ -44,9 +47,11 @@ class ProcessNewBadges extends Command
         $this->trustJasonBadge(12);
         $this->curseJasonBadge(4);
         $this->astronautBadge(13);
+        $this->bbBonesBadge(14);
+        $this->lifeIsHardBadge(15);
 
         $end_time = microtime(true) - $time;
-        $this->line("Completed in $end_time seconds");
+        Log::channel('sync')->info("Completed in $end_time seconds");
     }
 
     public function methmanBadge($badge_id)
@@ -210,6 +215,92 @@ class ProcessNewBadges extends Command
 
             Log::channel('sync')->info($entry->life->player_hash ?? 'missing'." got badge ".$badge_id);
             $this->line("New Astronaut found!");
+        }
+    }
+
+    public function bbBonesBadge($badge_id)
+    {
+        $this->badge_id = $badge_id;
+
+        $ts = Carbon::now()->subDays(2);
+        
+        $lives = DB::table('life_logs')
+            ->selectRaw('player_hash,count(character_id) as count')
+            ->havingRaw('count(character_id) >= 50')
+            ->where('type', 'death')
+            ->where('age', '<=', 1)
+            ->where('timestamp', '>=', $ts->timestamp)
+            ->orderBy('count', 'DESC')
+            ->groupBy('player_hash')
+            ->get();
+
+        foreach ($lives as $life) 
+        {
+            ProfileBadge::updateOrCreate(
+                [
+                    'player_hash' => $life->player_hash,
+                    'badge_id' => $this->badge_id,
+                ], 
+                [
+                    'achieved_at' => time()
+                ]
+            );
+        } 
+
+        $this->line("Found ". count($lives) . " lives");
+    }
+
+    public function lifeIsHardBadge($badge_id)
+    {
+        $this->badge_id = $badge_id;
+
+        $ts = Carbon::now()->subDays(7);
+
+        $lives = LifeLog::distinct('died_to')
+            ->where('type', 'death')
+            ->where('timestamp', '>', $ts->timestamp)
+            ->where('died_to', 'not like', 'killer_%')
+            ->orderBy('player_hash')
+            ->get();
+
+        $sorted_lives = [];
+
+        foreach($lives as $life)
+        {
+            
+            if(array_key_exists($life->player_hash, $sorted_lives))
+            {
+                if(!in_array($life->died_to, $sorted_lives[$life->player_hash]))
+                {
+                    if(Str::contains($life->died_to, 'killer_') == false)
+                    {
+                        $sorted_lives[$life->player_hash][] = $life->died_to;
+                    }
+                }
+            }
+            else
+            {
+                if(Str::contains($life->died_to, 'killer_') == false)
+                {
+                    $sorted_lives[$life->player_hash][] = $life->died_to;
+                }
+            }
+        }
+
+        foreach($sorted_lives as $key => $value)
+        {
+            if(count($value) >= 10)
+            {
+                ProfileBadge::updateOrCreate(
+                    [
+                        'player_hash' => $key,
+                        'badge_id' => $this->badge_id,
+                    ], 
+                    [
+                        'achieved_at' => time()
+                    ]
+                );
+            }
         }
     }
 }

@@ -10,7 +10,7 @@
 
     <x-slot name="header">
 
-        <livewire:player.profile-header :hash="$hash">
+        <livewire:player.profile-header :hash="$hash" :donator="$donator">
 
     </x-slot>
 
