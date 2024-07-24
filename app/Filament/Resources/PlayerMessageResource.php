@@ -28,10 +28,10 @@ class PlayerMessageResource extends Resource
                 Forms\Components\TextInput::make('server_ip')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('bot_id')
+                Forms\Components\TextInput::make('timestamp')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('timestamp')
+                Forms\Components\TextInput::make('bot_id')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('life_id')
@@ -58,27 +58,38 @@ class PlayerMessageResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('server_ip')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('bot_id')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('timestamp')
-                    ->numeric()
+                    ->sortable()
+                    ->dateTime('Y-m-d H:i:s'),
+                Tables\Columns\TextColumn::make('server_ip')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('bot_id')
+                    ->numeric() 
                     ->sortable(),
+                Tables\Columns\TextColumn::make('life.leaderboard.leaderboard_name')
+                    ->numeric()
+                    ->sortable()
+                    ->url(fn (PlayerMessage $record): string => route('player.curses', ['hash' => $record->life->player_hash ?? 'missing']))
+                    ->openUrlInNewTab()
+                    ->placeholder('AWAITING LOG'),
                 Tables\Columns\TextColumn::make('life_id')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable(),  
                 Tables\Columns\TextColumn::make('life_name')
-                    ->searchable(),
+                    ->searchable()
+                    ->url(fn (PlayerMessage $record): string => route('player.lives', ['hash' => $record->life->player_hash ?? 'missing']))
+                    ->openUrlInNewTab(),
                 Tables\Columns\TextColumn::make('message')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('pos_x')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('pos_y')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -88,6 +99,8 @@ class PlayerMessageResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('timestamp', 'desc')
+            ->defaultPaginationPageOption(50)
             ->filters([
                 //
             ])
