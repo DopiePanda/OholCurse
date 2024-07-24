@@ -3,17 +3,15 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\UserContact;
-use Illuminate\Auth\Access\Response;
 
-class UserContactPolicy
+class PlayerMessagePolicy
 {
-    /**
+        /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        if($user->can('can view user contacts'))
+        if($user->can('view player messages'))
         {
             return true;
         }
@@ -26,6 +24,11 @@ class UserContactPolicy
      */
     public function view(User $user, UserContact $userContact): bool
     {
+        if($user->can('view player messages'))
+        {
+            return true;
+        }
+
         return false;
     }
 
@@ -34,7 +37,7 @@ class UserContactPolicy
      */
     public function create(User $user): bool
     {
-        if($user->can('can create user contacts'))
+        if($user->can('create player messages'))
         {
             return true;
         }
@@ -47,6 +50,11 @@ class UserContactPolicy
      */
     public function update(User $user, UserContact $userContact): bool
     {
+        if($user->can('update player messages'))
+        {
+            return true;
+        }
+
         return false;
     }
 
@@ -55,6 +63,11 @@ class UserContactPolicy
      */
     public function delete(User $user, UserContact $userContact): bool
     {
+        if($user->can('delete player messages'))
+        {
+            return true;
+        }
+
         return false;
     }
 

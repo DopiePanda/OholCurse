@@ -7,7 +7,7 @@
     @endsection
 
     <x-slot name="header">
-        <livewire:player.profile-header :hash="$hash">
+        <livewire:player.profile-header :hash="$hash" :donator="$donator">
     </x-slot>
     <div class="w-full lg:grow lg:max-w-6xl flex flex-col">
 

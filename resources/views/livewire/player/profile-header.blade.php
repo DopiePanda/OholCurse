@@ -7,9 +7,18 @@
                         @if($contact)
                             <div class="flex lg:flex-row justify-center items-center font-semibold">
                                 @can('view all user contacts')
-                                    <span class="mx-2">
-                                        <i wire:click="$dispatch('openModal', { component: 'contacts.admin-modal', arguments: {hash: '{{$profile->player_hash}}', leaderboard: '{{$profile->leaderboard_name}}'}})"class="fa-solid fa-address-card text-gray-400"></i>
-                                    </span>
+                                    <div>
+                                        <div>
+                                            <span class="block mx-2">
+                                                <i wire:click="$dispatch('openModal', { component: 'contacts.admin-modal', arguments: {hash: '{{$profile->player_hash}}', leaderboard: '{{$profile->leaderboard_name}}'}})"class="fa-solid fa-address-card text-gray-400"></i>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="mx-2">
+                                                <i wire:click="$dispatch('openModal', { component: 'admin.player.messages', arguments: {hash: '{{$profile->player_hash}}'}})"class="fa-solid fa-message text-gray-400"></i>
+                                            </span>
+                                        </div>
+                                    </div>
                                 @endcan
                                 <span class="text-4xl">{{ $contact->nickname }}</span>
                                 @auth
@@ -31,9 +40,18 @@
                         @else
                             <div class="flex flex-row justify-center items-center font-semibold">
                                 @can('view all user contacts')
-                                    <span class="inline-block mx-2">
-                                        <i wire:click="$dispatch('openModal', { component: 'contacts.admin-modal', arguments: {hash: '{{$profile->player_hash}}', leaderboard: '{{$profile->leaderboard_name}}'}})"class="fa-solid fa-address-card text-gray-400"></i>
-                                    </span>
+                                    <div>
+                                        <div>
+                                            <span class="block mx-2">
+                                                <i wire:click="$dispatch('openModal', { component: 'contacts.admin-modal', arguments: {hash: '{{$profile->player_hash}}', leaderboard: '{{$profile->leaderboard_name}}'}})"class="fa-solid fa-address-card text-gray-400"></i>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="mx-2">
+                                                <i wire:click="$dispatch('openModal', { component: 'admin.player.messages', arguments: {hash: '{{$profile->player_hash}}'}})"class="fa-solid fa-message text-gray-400"></i>
+                                            </span>
+                                        </div>
+                                    </div>
                                 @endcan
                                 <a href="https://onehouronelife.com/fitnessServer/server.php?action=leaderboard_detail&id={{ $profile->leaderboard_id}}"
                                     target="_blank">
@@ -54,15 +72,20 @@
                     <div class="text-gray-400 text-xs font-bold">ID: {{ $profile->leaderboard_id }} </div>
                 @endif
                 
-                <div class="z-60 mt-2 flex flex-row justify-start space-x-2">
-                    @if(count($badges) > 0)
-                        @foreach ($badges as $badge)
-                            <div wire:click="$dispatch('openModal', {component: 'modals.profile-badge', arguments: {hash: '{{ $hash }}', badge_id: {{$badge->id}}}})">
-                                <img class="h-8 hue-rotate-skin saturate-skin contrast-skin brightness-skin" src="{{ asset($badge->badge->image_small) }}" alt="{{ $badge->badge->name }}" title="{{ $badge->badge->name }}" />
-                            </div>
-                        @endforeach
-                    @endif
-               </div>
+                @if($donator != null && $donator->show_badges == "hide")
+
+                @else
+                    <div class="z-60 mt-2 flex flex-row justify-start space-x-2">
+                        @if(count($badges) > 0)
+                            @foreach ($badges as $badge)
+                                <div wire:click="$dispatch('openModal', {component: 'modals.profile-badge', arguments: {hash: '{{ $hash }}', badge_id: {{$badge->id}}}})">
+                                    <img class="h-8 hue-rotate-skin saturate-skin contrast-skin brightness-skin" src="{{ asset($badge->badge->image_small) }}" alt="{{ $badge->badge->name }}" title="{{ $badge->badge->name }}" />
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+               @endif
+
             </div>
             <div class="pt-1 ml-4 self-center inline-block">
                 <div class="group relative ml-2 inline-block" wire:click="$dispatch('openModal', {component: 'modals.relation-search', arguments: {hash: '{{ $hash }}'}})">

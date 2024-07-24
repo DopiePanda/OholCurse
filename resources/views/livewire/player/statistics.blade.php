@@ -12,7 +12,7 @@
 
     <x-slot name="header">
 
-        <livewire:player.profile-header :hash="$hash">
+        <livewire:player.profile-header :hash="$hash" :donator="$donator">
 
     </x-slot>
     <div class="grow w-full min-w-7xl flex flex-col">

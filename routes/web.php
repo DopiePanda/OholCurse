@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -28,6 +29,7 @@ use App\Http\Controllers\Objects\PhexDataImporter;
 use App\Livewire\Dashboard;
 use App\Livewire\Home;
 use App\Livewire\CharacterNames;
+use App\Livewire\GameStats;
 use App\Livewire\Statistics;
 use App\Livewire\PlayerInteractions;
 use App\Livewire\Player\Lives as PlayerLives;
@@ -90,11 +92,14 @@ Route::middleware('web')->group(function() {
 
     Route::get('/names', CharacterNames::class)->name('names');
     Route::get('/statistics', Statistics::class)->name('statistics');
+    Route::get('/stats', GameStats::class)->name('gamestats');
     Route::get('/chart', LeaderboardRecords::class)->name('statistics');
 
     Route::prefix('/roadmap')->name('roadmap.')->group(function () {
         Route::get('/', Ideas::class)->name('index');
     });
+
+
 
     Route::prefix('/leaderboards')->name('leaderboards.')->group(function () {
         Route::get('/', [LeaderboardController::class, 'index'])->name('index');
@@ -130,6 +135,7 @@ Route::middleware('web')->group(function() {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::patch('/profile/timezone', [ProfileController::class, 'updateTimezone'])->name('timezone.update');
+        Route::patch('/profile/badges', [ProfileController::class, 'updateBadges'])->name('badges.update');
         Route::patch('/profile/background', [ProfileController::class, 'updateBackground'])->name('background.update');
         Route::patch('/profile/theme', [ProfileController::class, 'updateTheme'])->name('theme.update');
         Route::patch('/profile/darkmode', [ProfileController::class, 'updateDarkmode'])->name('darkmode.update');

@@ -1,7 +1,7 @@
 <section>
     <header>
         <h2 class="text-lg font-medium text-skin-base dark:text-skin-base-dark">
-            {{ __('EXCLUSIVE: Animated profile background') }}
+            {{ __('DONATOR EXCLUSIVE: Animated profile background') }}
         </h2>
 
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">

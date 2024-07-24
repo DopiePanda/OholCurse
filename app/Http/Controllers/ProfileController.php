@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\TimezoneUpdateRequest;
+use App\Http\Requests\BadgeUpdateRequest;
 use App\Http\Requests\BackgroundUpdateRequest;
 use App\Http\Requests\ThemeUpdateRequest;
 use App\Http\Requests\DarkmodeUpdateRequest;
@@ -58,6 +59,19 @@ class ProfileController extends Controller
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'timezone-updated');
+    }
+
+    /**
+     * Update the user's background.
+     */
+    public function updateBadges(BadgeUpdateRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        $request->user()->show_badges = $validated['show_badges'];
+        $request->user()->save();
+
+        return Redirect::route('profile.edit')->with('status', 'badges-updated');
     }
 
     /**
