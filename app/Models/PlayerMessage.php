@@ -12,4 +12,9 @@ class PlayerMessage extends Model
     protected $casts = [
         'items' => 'json'
     ];
+
+    public function life()
+    {
+        return $this->hasOne(LifeLog::class, 'character_id', 'life_id');
+    }
 }
