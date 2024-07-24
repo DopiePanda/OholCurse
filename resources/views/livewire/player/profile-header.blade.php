@@ -7,9 +7,18 @@
                         @if($contact)
                             <div class="flex lg:flex-row justify-center items-center font-semibold">
                                 @can('view all user contacts')
-                                    <span class="mx-2">
-                                        <i wire:click="$dispatch('openModal', { component: 'contacts.admin-modal', arguments: {hash: '{{$profile->player_hash}}', leaderboard: '{{$profile->leaderboard_name}}'}})"class="fa-solid fa-address-card text-gray-400"></i>
-                                    </span>
+                                    <div>
+                                        <div>
+                                            <span class="block mx-2">
+                                                <i wire:click="$dispatch('openModal', { component: 'contacts.admin-modal', arguments: {hash: '{{$profile->player_hash}}', leaderboard: '{{$profile->leaderboard_name}}'}})"class="fa-solid fa-address-card text-gray-400"></i>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="mx-2">
+                                                <i wire:click="$dispatch('openModal', { component: 'admin.player.messages', arguments: {hash: '{{$profile->player_hash}}'}})"class="fa-solid fa-message text-gray-400"></i>
+                                            </span>
+                                        </div>
+                                    </div>
                                 @endcan
                                 <span class="text-4xl">{{ $contact->nickname }}</span>
                                 @auth
@@ -31,9 +40,18 @@
                         @else
                             <div class="flex flex-row justify-center items-center font-semibold">
                                 @can('view all user contacts')
-                                    <span class="inline-block mx-2">
-                                        <i wire:click="$dispatch('openModal', { component: 'contacts.admin-modal', arguments: {hash: '{{$profile->player_hash}}', leaderboard: '{{$profile->leaderboard_name}}'}})"class="fa-solid fa-address-card text-gray-400"></i>
-                                    </span>
+                                    <div>
+                                        <div>
+                                            <span class="block mx-2">
+                                                <i wire:click="$dispatch('openModal', { component: 'contacts.admin-modal', arguments: {hash: '{{$profile->player_hash}}', leaderboard: '{{$profile->leaderboard_name}}'}})"class="fa-solid fa-address-card text-gray-400"></i>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="mx-2">
+                                                <i wire:click="$dispatch('openModal', { component: 'admin.player.messages', arguments: {hash: '{{$profile->player_hash}}'}})"class="fa-solid fa-message text-gray-400"></i>
+                                            </span>
+                                        </div>
+                                    </div>
                                 @endcan
                                 <a href="https://onehouronelife.com/fitnessServer/server.php?action=leaderboard_detail&id={{ $profile->leaderboard_id}}"
                                     target="_blank">

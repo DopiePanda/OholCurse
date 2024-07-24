@@ -56,7 +56,7 @@ class EllabotController extends Controller
             'items.backpack.2' => 'nullable|numeric|max_digits:4',
             'items.backpack.3' => 'nullable|numeric|max_digits:4',
             'items.backpack.4' => 'nullable|numeric|max_digits:4',
-            'timestamp' => 'required|numeric|max_digits:10'
+            'timestamp' => 'required|decimal:2|between:0000000000.00,9999999999.99'
         ]);
     
         if ($validator->fails()) 
@@ -99,5 +99,20 @@ class EllabotController extends Controller
             'pos_y' => $pos[1],
             'items' => $payload['items'],
         ]);
+    }
+
+    public function status(Request $request)
+    {
+        return response('Online', 200)
+            ->header('Content-Type', 'text/plain');
+    }
+
+    public function token(Request $request)
+    {
+        if($this->tokenAuth($request->header('token')))
+        {
+            return response('Valid token', 200)
+                ->header('Content-Type', 'text/plain');
+        }
     }
 }

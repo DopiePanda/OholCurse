@@ -46,6 +46,8 @@ Route::get('/yumlife', function(Request $request) {
 
 Route::prefix('/ellabot')->name('ellabot.')->group(function () {
     Route::post('/message', [EllabotController::class, 'message']);
+    Route::post('/status', [EllabotController::class, 'status']);
+    Route::post('/token', [EllabotController::class, 'token']);
 });
 
 Route::post('/discord/bot', function(Request $request) {

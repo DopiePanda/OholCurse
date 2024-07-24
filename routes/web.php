@@ -29,6 +29,7 @@ use App\Http\Controllers\Objects\PhexDataImporter;
 use App\Livewire\Dashboard;
 use App\Livewire\Home;
 use App\Livewire\CharacterNames;
+use App\Livewire\GameStats;
 use App\Livewire\Statistics;
 use App\Livewire\PlayerInteractions;
 use App\Livewire\Player\Lives as PlayerLives;
@@ -91,6 +92,7 @@ Route::middleware('web')->group(function() {
 
     Route::get('/names', CharacterNames::class)->name('names');
     Route::get('/statistics', Statistics::class)->name('statistics');
+    Route::get('/stats', GameStats::class)->name('gamestats');
     Route::get('/chart', LeaderboardRecords::class)->name('statistics');
 
     Route::prefix('/roadmap')->name('roadmap.')->group(function () {
