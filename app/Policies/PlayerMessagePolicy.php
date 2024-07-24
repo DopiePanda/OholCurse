@@ -48,7 +48,7 @@ class PlayerMessagePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, UserContact $userContact): bool
+    public function update(User $user): bool
     {
         if($user->can('update player messages'))
         {
@@ -61,7 +61,7 @@ class PlayerMessagePolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, UserContact $userContact): bool
+    public function delete(User $user): bool
     {
         if($user->can('delete player messages'))
         {
@@ -74,7 +74,7 @@ class PlayerMessagePolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, UserContact $userContact): bool
+    public function restore(User $user): bool
     {
         return false;
     }
@@ -82,7 +82,7 @@ class PlayerMessagePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, UserContact $userContact): bool
+    public function forceDelete(User $user): bool
     {
         return false;
     }
