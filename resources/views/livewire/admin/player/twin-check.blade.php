@@ -1,6 +1,6 @@
 <div class="w-full">
     <div class="text-4xl text-center text-skin-base dark:text-skin-base-dark">
-        Find griefers being born in by a player hash
+        Find griefers twinning with a specified player hash
     </div>
     <div class="mx-auto w-1/3 px-8 py-4 mt-6 bg-gray-200">
         <div class="mb-2">
@@ -28,10 +28,10 @@
 
     <div wire:loading class="w-full mx-auto text-center mt-12 text-primary-500">
         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-        <div class="text-skin-muted dark:text-skin-muted-dark">Searching for previous relationships</div>
+        <div class="text-skin-muted dark:text-skin-muted-dark">Searching for griefer twin lives</div>
     </div>
 
-    @if($children && count($children) > 0)
+    @if($siblings && count($siblings) > 0)
     <div class="mt-4 mb-2 text-gray-400 text-4xl text-center">
         Results for {{ $leaderboard->leaderboard_name }}
     </div>
@@ -39,6 +39,7 @@
         <table class="w-full table-fixed text-left">
             <thead>
                 <tr class="text-left">
+                    <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border-b border-gray-600">#</td>
                     <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border-b border-gray-600">Date</td>
                     <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border-b border-gray-600">Nickname</td>
                     <td class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border-b border-gray-600">Leaderboard</td>
@@ -51,8 +52,9 @@
                 </tr>
             </thead>
             <tbody>
-            @forelse ($children as $child)
+            @forelse ($siblings as $child)
                 <tr class="bg-skin-fill-muted dark:bg-skin-fill-muted-dark dark:text-gray-300">
+                    <td class="p-2 border-b border-gray-400 dark:border-gray-800">{{ $loop->index }}</td>
                     <td class="p-2 border-b border-gray-400 dark:border-gray-800">{{ date('Y-m-d H:i', $child->timestamp) }}</td>
                     <td class="p-2 border-b border-gray-400 dark:border-gray-800">{{ $child->griefer->group->name ?? $child->player_hash }}</td>
                     <td class="p-2 border-b border-gray-400 dark:border-gray-800">

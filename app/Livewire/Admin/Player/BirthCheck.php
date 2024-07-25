@@ -8,9 +8,12 @@ use DB;
 
 use App\Models\GrieferProfile;
 use App\Models\LifeLog;
+use App\Models\Leaderboard;
 
 class BirthCheck extends Component
 {
+    public $leaderboard;
+
     public $profiles;
     public $hash;
     public $lives;
@@ -39,6 +42,8 @@ class BirthCheck extends Component
 
     public function search()
     {
+        $this->leaderboard = Leaderboard::where('player_hash', $this->hash)->first();
+
         $this->lives = LifeLog::select('character_id')
             ->where('player_hash', $this->hash)
             ->where('type', 'death')
