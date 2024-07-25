@@ -40,6 +40,7 @@ use App\Livewire\Wanted\Poster as BerryPoster;
 use App\Livewire\Modals\Charts\LeaderboardRecords;
 use App\Livewire\Admin\Search\CharacterMovement;
 use App\Livewire\Admin\Player\BirthCheck;
+use App\Livewire\Admin\Player\TwinCheck;
 
 use App\Livewire\Content\Upload;
 use App\Livewire\Content\Browse;
@@ -157,12 +158,14 @@ Route::middleware('web')->group(function() {
             Route::get('/upload', Upload::class)->name('upload');
         });
 
+        Route::get('/search/births', BirthCheck::class);
+        Route::get('/search/twins', TwinCheck::class);
         Route::get('/search/movement', CharacterMovement::class)->name('search.movement');
         Route::get('/select2/ajax', [Select2Controller::class, 'handle'])->name('select2.ajax');
         
         Route::impersonate();
 
-        Route::get('/griefer/births', BirthCheck::class);
+        
     });
 
     
