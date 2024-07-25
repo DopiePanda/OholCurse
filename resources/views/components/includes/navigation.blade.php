@@ -67,6 +67,9 @@
                             </x-slot>
         
                             <x-slot name="content">
+                                <x-dropdown-link :href="route('game-stats')">
+                                    {{ __('Game statistics') }}
+                                </x-dropdown-link>
                                 <x-dropdown-link :href="route('tools.names')">
                                     {{ __('Name generator') }}
                                 </x-dropdown-link>
