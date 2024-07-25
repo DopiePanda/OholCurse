@@ -19,6 +19,11 @@ class Messages extends ModalComponent
 
     public function mount($hash)
     {
+        if(auth()->user()->can('view player messages') != true)
+        {
+            return redirect(route('search'));
+        }
+
         $this->leaderboard = Leaderboard::where('player_hash', $hash)->first();
 
         $this->character_ids = LifeLog::select('character_id')

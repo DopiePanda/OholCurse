@@ -62,7 +62,6 @@ class PlayerMessageResource extends Resource
                     ->sortable()
                     ->dateTime('Y-m-d H:i:s'),
                 Tables\Columns\TextColumn::make('server_ip')
-                    ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('bot_id')
                     ->numeric() 
@@ -72,16 +71,17 @@ class PlayerMessageResource extends Resource
                     ->sortable()
                     ->url(fn (PlayerMessage $record): string => route('player.curses', ['hash' => $record->life->player_hash ?? 'missing']))
                     ->openUrlInNewTab()
-                    ->placeholder('AWAITING LOG'),
+                    ->placeholder('AWAITING LOG')
+                    ->searchable(isIndividual: true),
                 Tables\Columns\TextColumn::make('life_id')
                     ->numeric()
                     ->sortable(),  
                 Tables\Columns\TextColumn::make('life_name')
-                    ->searchable()
+                    ->searchable(isIndividual: true)
                     ->url(fn (PlayerMessage $record): string => route('player.lives', ['hash' => $record->life->player_hash ?? 'missing']))
                     ->openUrlInNewTab(),
                 Tables\Columns\TextColumn::make('message')
-                    ->searchable(),
+                    ->searchable(isIndividual: true),
                 Tables\Columns\TextColumn::make('pos_x')
                     ->numeric()
                     ->sortable()

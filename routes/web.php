@@ -92,7 +92,7 @@ Route::middleware('web')->group(function() {
 
     Route::get('/names', CharacterNames::class)->name('names');
     Route::get('/statistics', Statistics::class)->name('statistics');
-    Route::get('/stats', GameStats::class)->name('gamestats');
+    Route::get('/stats', GameStats::class)->name('game-stats');
     Route::get('/chart', LeaderboardRecords::class)->name('statistics');
 
     Route::prefix('/roadmap')->name('roadmap.')->group(function () {

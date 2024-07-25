@@ -13,6 +13,11 @@ class AdminModal extends ModalComponent
 
     public function mount($hash, $leaderboard)
     {
+        if(auth()->user()->can('view all user contacts') != true)
+        {
+            return redirect(route('search'));
+        }
+
         $this->leaderboard = $leaderboard;
         $this->records = UserContact::with('user', 'olgc', 'phex')
             ->where('hash', $hash)
