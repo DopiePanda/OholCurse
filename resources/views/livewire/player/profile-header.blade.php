@@ -13,11 +13,13 @@
                                                 <i wire:click="$dispatch('openModal', { component: 'contacts.admin-modal', arguments: {hash: '{{$profile->player_hash}}', leaderboard: '{{$profile->leaderboard_name}}'}})"class="fa-solid fa-address-card text-gray-400"></i>
                                             </span>
                                         </div>
-                                        <div>
-                                            <span class="mx-2">
-                                                <i wire:click="$dispatch('openModal', { component: 'admin.player.messages', arguments: {hash: '{{$profile->player_hash}}'}})"class="fa-solid fa-message text-gray-400"></i>
-                                            </span>
-                                        </div>
+                                        @can('view player messages')
+                                            <div>
+                                                <span class="mx-2">
+                                                    <i wire:click="$dispatch('openModal', { component: 'admin.player.messages', arguments: {hash: '{{$profile->player_hash}}'}})"class="fa-solid fa-message text-gray-400"></i>
+                                                </span>
+                                            </div>
+                                        @endcan
                                     </div>
                                 @endcan
                                 <span class="text-4xl">{{ $contact->nickname }}</span>
@@ -46,11 +48,13 @@
                                                 <i wire:click="$dispatch('openModal', { component: 'contacts.admin-modal', arguments: {hash: '{{$profile->player_hash}}', leaderboard: '{{$profile->leaderboard_name}}'}})"class="fa-solid fa-address-card text-gray-400"></i>
                                             </span>
                                         </div>
-                                        <div>
-                                            <span class="mx-2">
-                                                <i wire:click="$dispatch('openModal', { component: 'admin.player.messages', arguments: {hash: '{{$profile->player_hash}}'}})"class="fa-solid fa-message text-gray-400"></i>
-                                            </span>
-                                        </div>
+                                        @can('view player messages')
+                                            <div>
+                                                <span class="mx-2">
+                                                    <i wire:click="$dispatch('openModal', { component: 'admin.player.messages', arguments: {hash: '{{$profile->player_hash}}'}})"class="fa-solid fa-message text-gray-400"></i>
+                                                </span>
+                                            </div>
+                                        @endcan
                                     </div>
                                 @endcan
                                 <a href="https://onehouronelife.com/fitnessServer/server.php?action=leaderboard_detail&id={{ $profile->leaderboard_id}}"
