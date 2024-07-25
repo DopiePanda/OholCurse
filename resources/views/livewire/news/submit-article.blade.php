@@ -29,7 +29,8 @@
             <div class="py-2">
                 <label class="block text-md uppercase font-bold" for="type">Article Type (Required)</label>
                 <select wire:model="type" class="w-full" id="type">
-                    <option value="report">News Report</option>
+                    <option value="report">OHOL Report</option>
+                    <option value="ahap">AHAP Report</option>
                     <option value="life">Life Story</option>
                     <option value="guide">Game Guide</option>
                     <option value="music">Song Recommendation</option>
