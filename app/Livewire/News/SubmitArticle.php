@@ -20,7 +20,7 @@ class SubmitArticle extends Component
     #[Validate('required|image|max:1024|dimensions:min_width=350,min_height=350')] // 1MB Max
     public $image;
 
-    #[Validate('required|string|in:report,life,guide,music')]
+    #[Validate('required|string|in:report,life,ahap,guide,music')]
     public $type;
 
     #[Validate('required|string|min:10|max:70')]
