@@ -31,6 +31,7 @@
                 <select wire:model="type" class="w-full" id="type">
                     <option value="report">OHOL Report</option>
                     <option value="ahap">AHAP Report</option>
+                    <option value="comic">Comic/drawing</option>
                     <option value="life">Life Story</option>
                     <option value="guide">Game Guide</option>
                     <option value="music">Song Recommendation</option>

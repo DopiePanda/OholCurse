@@ -37,7 +37,14 @@ class NewsArticleResource extends Resource
             ->schema([
                 Select::make('type')
                     ->required()
-                    ->options(['report' => 'Report', 'life' => 'Life Story', 'guide' => 'Guide', 'music' => 'Music']),
+                    ->options([
+                        'report' => 'OHOL Report', 
+                        'ahap' => 'AHAP Report', 
+                        'life' => 'Life Story', 
+                        'comic' => 'Comic/drawing', 
+                        'guide' => 'Guide', 
+                        'music' => 'Music'
+                    ]),
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255)
@@ -91,7 +98,9 @@ class NewsArticleResource extends Resource
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'report' => 'success',
+                        'ahap' => 'danger',
                         'life' => 'primary',
+                        'comic' => 'warning',
                         'guide' => 'warning',
                         'music' => 'danger',
                         'weather' => 'info',

@@ -21,6 +21,12 @@
                 <input wire:model="filter_dt" type="checkbox" />
             </div>
         </div>
+        <div class="mb-2">
+            <div>Born at same time</div>
+            <div class="mt-1">
+                <input wire:model="filter_time" type="checkbox" />
+            </div>
+        </div>
         <div class="mt-2">
             <button class="py-2 text-white block bg-green-500 w-full h-full" type="button" wire:click="search()">Search</button>
         </div>
@@ -35,7 +41,7 @@
     <div class="mt-4 mb-2 text-gray-400 text-4xl text-center">
         Results for {{ $leaderboard->leaderboard_name }}
     </div>
-    <div class="mx-auto w-2/3 mt-6 p-4">
+    <div class="mx-auto w-full mt-6 p-4">
         <table class="w-full table-fixed text-left">
             <thead>
                 <tr class="text-left">
@@ -55,7 +61,7 @@
             @forelse ($siblings as $child)
                 <tr class="bg-skin-fill-muted dark:bg-skin-fill-muted-dark dark:text-gray-300">
                     <td class="p-2 border-b border-gray-400 dark:border-gray-800">{{ $loop->index }}</td>
-                    <td class="p-2 border-b border-gray-400 dark:border-gray-800">{{ date('Y-m-d H:i', $child->timestamp) }}</td>
+                    <td class="p-2 border-b border-gray-400 dark:border-gray-800">{{ date('Y-m-d H:i:s', $child->timestamp) }}</td>
                     <td class="p-2 border-b border-gray-400 dark:border-gray-800">{{ $child->griefer->group->name ?? $child->player_hash }}</td>
                     <td class="p-2 border-b border-gray-400 dark:border-gray-800">
                         <a href="{{ route('player.interactions', ['hash' => $child->player_hash]) }}" target="_blank">
