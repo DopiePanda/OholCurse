@@ -35,7 +35,7 @@
     <div class="mt-4 mb-2 text-gray-400 text-4xl text-center">
         Results for {{ $leaderboard->leaderboard_name }}
     </div>
-    <div class="mx-auto w-2/3 mt-6 p-4">
+    <div class="mx-auto w-3/4 mt-6 p-4">
         <table class="w-full table-fixed text-left">
             <thead>
                 <tr class="text-left">
@@ -53,7 +53,7 @@
             <tbody>
             @forelse ($children as $child)
                 <tr class="bg-skin-fill-muted dark:bg-skin-fill-muted-dark dark:text-gray-300">
-                    <td class="p-2 border-b border-gray-400 dark:border-gray-800">{{ date('Y-m-d H:i', $child->timestamp) }}</td>
+                    <td class="p-2 border-b border-gray-400 dark:border-gray-800">{{ date('Y-m-d H:i:s', $child->timestamp) }}</td>
                     <td class="p-2 border-b border-gray-400 dark:border-gray-800">{{ $child->griefer->group->name ?? $child->player_hash }}</td>
                     <td class="p-2 border-b border-gray-400 dark:border-gray-800">
                         <a href="{{ route('player.interactions', ['hash' => $child->player_hash]) }}" target="_blank">

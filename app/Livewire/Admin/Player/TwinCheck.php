@@ -22,6 +22,7 @@ class TwinCheck extends Component
 
     public $filter_sid;
     public $filter_dt;
+    public $filter_time;
 
     public function mount()
     {
@@ -42,18 +43,25 @@ class TwinCheck extends Component
     {
         $this->leaderboard = Leaderboard::where('player_hash', $this->hash)->first();
 
-        $this->lives = LifeLog::select('parent_id')
+        $this->lives = LifeLog::select('parent_id', 'timestamp')
             ->where('player_hash', $this->hash)
             ->where('type', 'birth')
-            ->get()
-            ->pluck('parent_id');
+            ->get();
+
+        $lives = $this->lives->pluck('parent_id');
+        $timestamps = $this->lives->pluck('timestamp');
 
         //dd($this->lives);
 
         $this->siblings = LifeLog::with('name', 'leaderboard', 'griefer', 'death')
-            ->whereIn('parent_id', $this->lives)
+            ->whereIn('parent_id', $lives)
             ->whereIn('player_hash', $this->profiles)
             ->where('parent_id', '!=', '0');
+        
+        if($this->filter_time)
+        {
+            $this->siblings = $this->siblings->whereIn('timestamp', $timestamps);
+        }
 
         if($this->filter_dt)
         {

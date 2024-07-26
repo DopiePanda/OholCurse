@@ -20,7 +20,7 @@ class SubmitArticle extends Component
     #[Validate('required|image|max:1024|dimensions:min_width=350,min_height=350')] // 1MB Max
     public $image;
 
-    #[Validate('required|string|in:report,life,ahap,guide,music')]
+    #[Validate('required|string|in:report,life,ahap,comic,guide,music')]
     public $type;
 
     #[Validate('required|string|min:10|max:70')]
@@ -56,10 +56,12 @@ class SubmitArticle extends Component
         
         $slug = Str::of($this->title)->slug('-');
 
+        $enabled = auth()->user()->can('create news articles') ? 1 : 0;
+
         $article = NewsArticle::create([
             'user_id' => Auth::id(),
             'type' => $this->type,
-            'enabled' => 0,
+            'enabled' => $enabled,
             'slug' => $slug,
             'title' => $this->title,
             'content' => $this->content,
