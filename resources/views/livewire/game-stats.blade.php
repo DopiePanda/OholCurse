@@ -1,8 +1,6 @@
 <div class="w-full md:w-3/4 lg:max-w-6xl">
 
-    @section("page-title")
-        Game Statistics
-    @endsection
+    @section("page-title")- Game Statistics @endsection
 
     <div class="w-full lg:grow lg:max-w-6xl flex flex-col">
 
