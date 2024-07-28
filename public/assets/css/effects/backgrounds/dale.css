@@ -1,0 +1,58 @@
+
+#donationBanner{
+    color: white;
+}
+
+#donationLink{
+    color: white !important;
+    font-weight: bold;
+}
+  
+  @keyframes floating {
+    0% {
+      transform: translateY(0%) rotate(-55deg);
+    }
+    50% {
+      transform: translateY(300%) rotate(55deg);
+    }
+    100% {
+      transform: translateY(0%) rotate(-55deg);
+    }
+  }
+  @-webkit-keyframes floating {
+    0% {
+      -webkit-transform: translateY(0%);
+    }
+    50% {
+      -webkit-transform: translateY(300%);
+    }
+    100% {
+      -webkit-transform: translateY(0%);
+    }
+  }
+
+  @keyframes hor-movement {
+    from {
+        margin-left: 0%;
+    }
+    to {
+        margin-left: 96%;
+    }
+}
+
+@keyframes ver-movement {
+    from {
+        margin-top: 5%;
+    }
+    to {
+        margin-top: 42%;
+    }
+}
+
+.dvd-screen-animation {
+    animation-name: hor-movement, ver-movement;
+    animation-duration: 3.141s, 1.414s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: linear;
+}

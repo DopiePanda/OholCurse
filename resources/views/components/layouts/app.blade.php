@@ -73,12 +73,15 @@
                     @if(env('DONATION_BANNER') == 'true')
                         <span id="donationBanner" class="text-skin-muted dark:text-skin-muted-dark cursor-default">
                             Want to help support the website?
+                            <div class="mt-3">
+                                <a href="{{ env('DONATION_URL') }}" id="donationLink" target="_blank" class="border rounded-full py-1 px-4 text-lg text-skin-base dark:text-skin-base-dark">
+                                    <i class="fa-solid fa-mug-hot mr-1 text-skin-base dark:text-skin-base-dark"></i> Donate a coffee
+                                </a>
+                            </div>
                         </span> 
-                        <a href="{{ env('DONATION_URL') }}" target="_blank" class="text-skin-base dark:text-skin-base-dark">
-                            Donate a coffee
-                        </a>
-                        <div>
-                            <a class="text-skin-base dark:text-skin-base-dark" href="{{ route('privacy-policy') }}">
+                        
+                        <div class="mt-4">
+                            <a class="text-gray-400" href="{{ route('privacy-policy') }}">
                                 Privacy Policy
                             </a>
                         </div>

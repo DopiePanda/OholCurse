@@ -31,6 +31,10 @@
             @include('effects.backgrounds.hearts')
         @endif
 
+        @if($donator->background == 'dale')
+            @include('effects.backgrounds.dale')
+        @endif
+
         @if($donator->background == 'dots')
             @include('effects.backgrounds.dots')
         @endif
