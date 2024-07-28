@@ -141,6 +141,30 @@
                     </div>
                 </div>
             </div>
+
+            <div class="text-5xl mt-6 mb-4 text-center text-skin-base dark:text-skin-base-dark">Top 10 Trusted Players</div>
+            <div class="relative my-6 bg-skin-fill-muted dark:bg-skin-fill-muted-dark border border-skin-base dark:border-skin-base-dark rounded-xl overflow-x-auto">
+                <table class="w-full table-fixed text-left">
+                    <thead>
+                        <tr class="text-left">
+                            <th class="w-1/3 text-center p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border-b border-gray-600">Placement</th>
+                            <th class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border-b border-gray-600">Leaderboard name</th>
+                            <th class="p-2 bg-skin-fill dark:bg-skin-fill-dark text-white border-b border-gray-600">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($trusted as $trust)
+                            <tr class="text-white">
+                                <td class="p-2 text-center @if(!$loop->last) border-b @endif border-gray-400 dark:border-gray-800">#{{ $loop->index+1 }}</td>
+                                <td class="p-2 @if(!$loop->last) border-b @endif border-gray-400 dark:border-gray-800">{{ $trust->leaderboard->leaderboard_name }}</td>
+                                <td class="p-2 @if(!$loop->last) border-b @endif border-gray-400 dark:border-gray-800">{{ $trust->count }}</td>
+                            </tr>
+                        @empty
+                            
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
         @php
                 $time_end = microtime(true);
