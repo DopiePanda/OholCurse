@@ -5,8 +5,10 @@ namespace App\Livewire;
 use Livewire\Component;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
+use DB;
 
 use App\Models\LifeLog;
+use App\Models\CurseLog;
 
 class GameStats extends Component
 {
@@ -15,20 +17,12 @@ class GameStats extends Component
     public $time;
     public $date;
 
-    public $lives, $deaths;
-    public $accounts;
-    public $minutes_played;
-
-    public $males, $females;
-    public $artic, $language, $jungle, $desert;
-
-    public $eves, $eve_first, $eve_last, $eve_movement;
+    public $lives, $deaths, $eves, $trusted;
 
     public function mount()
     {
         $this->time = microtime(true);
         $this->getData();
-        //$this->initData();
     }
 
     public function render()
@@ -36,42 +30,6 @@ class GameStats extends Component
         return view('livewire.game-stats');
     }
 
-    public function setCache()
-    {
-        $ts = Carbon::now()->subDays($this->days);
-
-        $lives = LifeLog::select('age', 'player_hash', 'gender', 'family_type', 'timestamp', 'created_at')
-            ->where('type', 'death')
-            ->where('timestamp', '>=', $ts->timestamp)
-            ->get();
-
-        $this->lives = $lives;
-
-        $this->minutes_played = $lives->pluck('age')->sum();
-        $this->accounts = $lives->unique('player_hash')->count();
-
-        $this->males = $lives->where('gender', 'male')->count();
-        $this->females = $lives->where('gender', 'female')->count();
-
-        $this->artic = $lives->where('family_tpe', 'arctic')->count();
-        $this->language = $lives->where('family_tpe', 'language')->count();
-        $this->jungle = $lives->where('family_tpe', 'jungle')->count();
-        $this->desert = $lives->where('family_tpe', 'desert')->count();
-
-        $this->eves = LifeLog::select('pos_x', 'character_id')
-            ->where('type', 'birth')
-            ->where('timestamp', '>=', $ts->timestamp)
-            ->where('parent_id', '')
-            ->where('pos_x', '>', -1000000)
-            ->where('pos_x', '<', 50000)
-            ->orderBy('id', 'asc')
-            ->get();
-
-        $this->eve_first = $this->eves->first();
-        $this->eve_last = $this->eves->last();
-        $this->eve_movement = $this->eve_first->pos_x - $this->eve_last->pos_x;
-    
-    }
 
     public function getData()
     {
@@ -111,23 +69,18 @@ class GameStats extends Component
                 ->selectRaw("MAX(pos_x) AS eve_pos_first")
                 ->first();
         });
-    }
 
-    public function initData()
-    {
-        $this->minutes_played = $this->lives->pluck('age')->sum();
-        $this->accounts = $this->lives->unique('player_hash')->count();
+        $this->trusted = Cache::remember('stats_trusted', $seconds, function () use ($ts) {
+            return CurseLog::select(DB::raw("DISTINCT player_hash"), 'reciever_hash', DB::raw("COUNT(id) as count"))
+            ->with('leaderboard')
+            ->where('type', 'trust')
+            ->groupBy('reciever_hash')
+            ->orderBy('count', 'desc')
+            ->limit(10)
+            ->get();
 
-        $this->males = $this->lives->where('gender', 'male')->count();
-        $this->females = $this->lives->where('gender', 'female')->count();
-
-        $this->artic = $this->lives->where('family_tpe', 'arctic')->count();
-        $this->language = $this->lives->where('family_tpe', 'language')->count();
-        $this->jungle = $this->lives->where('family_tpe', 'jungle')->count();
-        $this->desert = $this->lives->where('family_tpe', 'desert')->count();
-
-        $this->eve_first = $this->eves->first();
-        $this->eve_last = $this->eves->last();
-        $this->eve_movement = $this->eve_first->pos_x - $this->eve_last->pos_x;
+            $this->trusted = $this->trusted->unqiue('player_hash');
+            $this->trusted = $this->trusted->values()->all();        
+        });
     }
 }
