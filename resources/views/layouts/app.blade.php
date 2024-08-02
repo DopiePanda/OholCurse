@@ -60,7 +60,7 @@
             </main>
 
             <div class="z-30 py-4 sm:px-4 flex flex-row items-end">
-                <div class="z-20 basis-1/4 text-left">
+                <div class="z-20 shrink md:basis-1/4 text-left">
                     @can('access admin panel')
                         <div class="fixed bottom-0 left-0 pb-4 pl-4">
                             <a class="z-30" href="/admin" title="Admin panel">
@@ -69,12 +69,12 @@
                         </div>
                     @endcan
                 </div> 
-                <div class="z-20 basis-2/4 text-center">
+                <div class="z-20 grow md:basis-2/4 text-center">
                     @if(env('DONATION_BANNER') == 'true')
                         <span id="donationBanner" class="text-skin-muted dark:text-skin-muted-dark cursor-default">
                             Want to help support the website?
                             <div class="mt-3">
-                                <a href="{{ env('DONATION_URL') }}" id="donationLink" target="_blank" class="border rounded-full py-1 px-4 text-lg text-skin-base dark:text-skin-base-dark">
+                                <a href="{{ env('DONATION_URL') }}" id="donationLink" target="_blank" class="border rounded-full py-1 px-2 lg:px-4 text-lg text-skin-base dark:text-skin-base-dark">
                                     <i class="fa-solid fa-mug-hot mr-1 text-skin-base dark:text-skin-base-dark"></i> Donate a coffee
                                 </a>
                             </div>
@@ -87,7 +87,7 @@
                         </div>
                     @endif
                 </div>
-                <div class="z-10 basis-1/4 text-right">
+                <div class="z-10 shrink md:basis-1/4 text-right">
                     @if(env('CHAT_ENABLED') == 'true')
                         @auth
                             <livewire:conversations.inbox />

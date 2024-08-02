@@ -77,6 +77,12 @@ class LifeLog extends Model
         return $this->children()->with('grandchildren');
     }
 
+    public function messages(): HasMany
+    {
+        return $this->hasMany(PlayerMessage::class, 'life_id', 'character_id');
+    }
+
+
     public function getFamilyAttribute()
     {
         return !$this->parent_id ? $this->children->prepend($this) : $this->parent->children->prepend($this->parent);
