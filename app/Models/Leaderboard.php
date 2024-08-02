@@ -23,6 +23,11 @@ class Leaderboard extends Model
         return $this->hasMany(LeaderboardRecord::class, 'leaderboard_id', 'leaderboard_id');
     }
 
+    public function lives(): HasMany
+    {
+        return $this->hasMany(LifeLog::class, 'player_hash', 'player_hash');
+    }
+
     public function contact()
     {
         return $this->hasOne(UserContact::class, 'hash', 'player_hash')->where('user_id', Auth::user()->id ?? null);

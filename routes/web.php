@@ -8,6 +8,7 @@ use Carbon\Carbon;
 
 use App\Http\Controllers\CurseLogController;
 use App\Http\Controllers\CurseScraperController;
+use App\Http\Controllers\DonationController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\LeaderboardScraperController;
@@ -165,7 +166,7 @@ Route::middleware('web')->group(function() {
         
         Route::impersonate();
 
-        
+        Route::get('/donations', [DonationController::class, 'get']);
     });
 
     
